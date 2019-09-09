@@ -1,13 +1,12 @@
-import * as dbTypes from '../db'
-import { status, adapterTypes } from '../constants'
+import { adapterTypes, status } from './constants'
+import * as dbTypes from './db'
 
 interface RunResult {
-    data: { result: string | null }
-    error: boolean | null
-    jobRunId: string
-    taskRunId: string
-    status: status
-    amount?: number
+  data: { result?: string }
+  error: boolean | null
+  jobRunId: string
+  taskRunId: string
+  status: status
 }
 
 export interface IBridgeType
@@ -40,6 +39,7 @@ export interface IJobRun
   createdAt: string
   finishedAt: string
   status: string
+  payment: number
 }
 
 export interface IJobSpec extends dbTypes.JobSpec {
@@ -56,6 +56,7 @@ export interface ITaskRun
   updatedAt: Date
   type: adapterTypes
   minimumConfirmations: number
+  status: string
 }
 export interface ITaskSpec {
   id: number

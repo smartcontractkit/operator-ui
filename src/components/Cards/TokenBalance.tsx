@@ -1,14 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import numeral from 'numeral'
-import { BigNumber } from 'bignumber.js'
+import { PaddedCard, Tooltip } from '@chainlink/styleguide'
 import Typography from '@material-ui/core/Typography'
-import PaddedCard from '@chainlink/styleguide/components/PaddedCard'
-import Tooltip from '@chainlink/styleguide/components/Tooltip'
+import { BigNumber } from 'bignumber.js'
+import numeral from 'numeral'
+import React, { FC } from 'react'
 
 const WEI_PER_TOKEN = new BigNumber(10 ** 18)
 
-const formatBalance = val => {
+const formatBalance = (val: string) => {
   const b = new BigNumber(val)
   const tokenBalance = b.dividedBy(WEI_PER_TOKEN).toNumber()
   return {
@@ -17,8 +15,9 @@ const formatBalance = val => {
   }
 }
 
-const valAndTooltip = ({ value, error }) => {
-  let val, tooltip
+const valAndTooltip = ({ value, error }: OwnProps) => {
+  let val: string
+  let tooltip: string
 
   if (error) {
     val = error
@@ -29,13 +28,20 @@ const valAndTooltip = ({ value, error }) => {
   } else {
     const balance = formatBalance(value)
     val = balance.formatted
-    tooltip = balance.unformatted
+    tooltip = balance.unformatted.toString()
   }
 
   return { val, tooltip }
 }
 
-const TokenBalance = props => {
+// CHECKME
+interface OwnProps {
+  title: string
+  value?: string
+  error?: string
+}
+
+const TokenBalance: FC<OwnProps> = props => {
   const { val, tooltip } = valAndTooltip(props)
 
   return (
@@ -44,18 +50,12 @@ const TokenBalance = props => {
         {props.title}
       </Typography>
       <Typography variant="body1" color="textSecondary">
-        <Tooltip title={tooltip} placement="left">
+        <Tooltip title={tooltip}>
           <span>{val}</span>
         </Tooltip>
       </Typography>
     </PaddedCard>
   )
-}
-
-TokenBalance.propTypes = {
-  title: PropTypes.string.isRequired,
-  value: PropTypes.string,
-  error: PropTypes.string
 }
 
 export default TokenBalance

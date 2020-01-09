@@ -1,14 +1,20 @@
 import { Reducer } from 'redux'
 import { Actions } from './actions'
 
-export type State = Record<string, any>
+export interface State {
+  to?: string
+}
 
-const INITIAL_STATE: State = {}
+const INITIAL_STATE: State = {
+  to: undefined,
+}
 
 const reducer: Reducer<State, Actions> = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'UPSERT_ACCOUNT_BALANCE':
-      return { ...state, ...action.data.accountBalances }
+    case 'REDIRECT':
+      return { ...state, to: action.to }
+    case 'MATCH_ROUTE':
+      return { ...state, to: undefined }
     default:
       return state
   }

@@ -1,0 +1,14 @@
+**/node_modules/**
+**/generated/**
+**/dist/**
+**/artifacts/**
+**/public/**
+**/build/**
+**/coverage/**
+**/schema/**
+.yarn
+
+# Ignore TS definition and map files
+**/**.d.ts
+**/**.d.ts.map
+.github/**/*.yml

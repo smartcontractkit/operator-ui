@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -e
+
+yarn run setup
+yarn run test:ci
+
+./bin/codecov -s operator_ui/coverage

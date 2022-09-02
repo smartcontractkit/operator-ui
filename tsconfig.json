@@ -1,12 +1,12 @@
 {
-  "extends": "../tsconfig.cjs.json",
+  "extends": "./tsconfig.cjs.json",
   "compilerOptions": {
     "module": "esnext",
     "baseUrl": ".",
     "paths": {
       "*": ["*", "src/*", "support/*", "@types/*"]
     },
-    "outDir": "../core/web/assets",
+    "noEmit": true,
     "allowJs": true
   },
   "include": ["src", "@types", "__tests__", "support"]

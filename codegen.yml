@@ -1,15 +1,15 @@
 overwrite: true
 schema:
-  - '../core/web/schema/**/*'
-  - '!../core/web/schema/*.go'
+  - "./schema/**/*"
+  - "!./schema/*.go"
 documents:
-  - 'src/**/!(*.d).{ts,tsx}'
-  - '**/*.graphql'
+  - "src/**/!(*.d).{ts,tsx}"
+  - "**/*.graphql"
 generates:
   src/types/generated/graphql.d.ts:
     plugins:
-      - 'typescript'
-      - 'typescript-operations'
+      - "typescript"
+      - "typescript-operations"
     config:
       immutableTypes: true
       enumsAsTypes: true
@@ -19,7 +19,7 @@ generates:
 
   ./graphql.schema.json:
     plugins:
-      - 'introspection'
+      - "introspection"
 
   src/types/generated/possibleTypes.ts:
     plugins:

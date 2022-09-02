@@ -2,3 +2,5 @@
 src/types/*
 graphql.schema.json
 coverage
+node_modules
+artifacts

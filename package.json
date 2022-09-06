@@ -15,12 +15,9 @@
     "test": "jest",
     "test:ci": "yarn test --reporters jest-silent-reporter --maxWorkers=50%",
     "watch": "yarn test --watchAll --notify",
-    "clean": "tsc -b --clean && rimraf -rf artifacts tmp dist",
+    "clean": "rimraf -rf artifacts tmp dist coverage",
     "build": "NODE_ENV=production webpack --config webpack.prod.js",
-    "presetup": "yarn generate",
-    "setup": "tsc -b",
-    "depcheck": "echo '@chainlink/operator-ui' && depcheck --ignore-dirs=dist || true",
-    "generate": "graphql-codegen --config codegen.yml"
+    "setup": "tsc && graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@apollo/client": "^3.4.16",
@@ -103,7 +100,6 @@
     "clean-webpack-plugin": "^4.0.0",
     "compression-webpack-plugin": "^8.0.1",
     "css-loader": "^3.6.0",
-    "depcheck": "^0.9.2",
     "fetch-mock": "^9.11.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",

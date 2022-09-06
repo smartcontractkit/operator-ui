@@ -6,6 +6,10 @@
   "linked": [],
   "access": "restricted",
   "baseBranch": "main",
+  "snapshot": {
+    "useCalculatedVersion": true,
+    "prereleaseTemplate": "{commit}"
+  },
   "updateInternalDependencies": "patch",
   "ignore": []
 }

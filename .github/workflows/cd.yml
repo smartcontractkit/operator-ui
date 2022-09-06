@@ -1,0 +1,47 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  snapshot:
+    name: Snapshot Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Collect Metrics
+        id: collect-gha-metrics
+        uses: smartcontractkit/push-gha-metrics-action@v1
+        with:
+          basic-auth: ${{ secrets.GRAFANA_CLOUD_BASIC_AUTH }}
+          hostname: ${{ secrets.GRAFANA_CLOUD_HOST }}
+          this-job-name: Snapshot Release
+        continue-on-error: true
+
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: yarn
+
+      - name: Run yarn install
+        run: yarn install --frozen-lockfile
+
+      - name: Setup project
+        run: yarn setup
+
+      - name: Build project
+        env:
+          CHAINLINK_VERSION: 1.8.0@UNKNOWN
+          CHAINLINK_BASEURL: '' 
+        run: yarn build
+
+      - name: Create snapshot release
+        env:
+          GH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+        run: ./scripts/snapshot-release.sh 
+        

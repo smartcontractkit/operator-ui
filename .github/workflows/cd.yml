@@ -57,5 +57,6 @@ jobs:
         env:
           HAS_CHANGES: ${{ steps.changesets.outputs.hasChangesets }}
           GH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+          DEBUG: 'true'
         run: yarn -s release
         working-directory: scripts

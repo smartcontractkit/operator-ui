@@ -56,7 +56,7 @@ jobs:
       - name: Create ${{ fromJSON('["Official","Snapshot"]')[ steps.changesets.outputs.hasChangesets == 'true'] }} Release 
         env:
           HAS_CHANGES: ${{ steps.changesets.outputs.hasChangesets }}
-          GH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEBUG: 'true'
         run: yarn -s release
         working-directory: scripts

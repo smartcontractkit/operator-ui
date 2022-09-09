@@ -6,3 +6,4 @@ node_modules
 artifacts
 tsconfig.tsbuildinfo
 .npmrc
+assets

@@ -13,8 +13,6 @@ cd "$gitRoot" >/dev/null || exit 1
 # Update package version with snapshot
 yarn changeset version --snapshot
 
-# Create .npmrc for publishing
-echo '//npm.pkg.github.com/:_authToken=${GH_TOKEN}' >.npmrc
-echo '@smartcontractkit:registry=https://npm.pkg.github.com/' >>.npmrc
-
-yarn changeset publish --no-git-tag --snapshot
+npm pack --pack-destination assets
+gh release create "v$(jq -r '.version' package.json)" ./assets/*.tgz -F CHANGELOG.md
+rm -r assets

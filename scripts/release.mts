@@ -81,6 +81,8 @@ async function checkIfReleaseExists(gitTag: string): Promise<boolean> {
 }
 
 async function pkgToTarball(packDir: string) {
+  await fs.ensureDir(packDir)
+
   const packOutput = await $`npm pack --pack-destination ${packDir} --json`
   const packInfos: NpmPack[] = JSON.parse(packOutput.stdout)
   const [packInfo] = packInfos

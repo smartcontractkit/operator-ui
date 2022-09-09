@@ -40,8 +40,22 @@ jobs:
           CHAINLINK_BASEURL: '' 
         run: yarn build
 
-      - name: Create snapshot release
+      - name: Create Release Pull Request 
+        id: changesets
+        uses: changesets/action@v1
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run yarn install for scripts
+        run: yarn install --frozen-lockfile
+        working-directory: scripts
+
+      # If we have changesets, that means that we have not done an official release yet,
+      # as when releases are created, all changesets are consumed.
+      # Indexing a JSON array via truthy evaluation results in index 1, whereas a falsy evaluation results in index 0
+      - name: Create ${{ fromJSON('["Official","Snapshot"]')[ steps.changesets.outputs.hasChangesets == 'true'] }} Release 
+        env:
+          HAS_CHANGES: ${{ steps.changesets.outputs.hasChangesets }}
           GH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
-        run: ./scripts/snapshot-release.sh 
-        
+        run: yarn -s release
+        working-directory: scripts

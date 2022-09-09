@@ -46,9 +46,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Change directory to release scripts
+        run: cd scripts
+        
       - name: Run yarn install for scripts
         run: yarn install --frozen-lockfile
-        working-directory: scripts
 
       # If we have changesets, that means that we have not done an official release yet,
       # as when releases are created, all changesets are consumed.
@@ -58,4 +60,3 @@ jobs:
           HAS_CHANGES: ${{ steps.changesets.outputs.hasChangesets }}
           GH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
         run: yarn -s release
-        working-directory: scripts

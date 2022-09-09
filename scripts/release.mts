@@ -3,9 +3,10 @@
  * Publish snapshot releases as a tarball to github releases
  */
 import 'zx/globals'
+const isDebug = process.env.ACTIONS_RUNNER_DEBUG || process.env.DEBUG
 
 async function main() {
-  if (!process.env.DEBUG) {
+  if (!isDebug) {
     $.verbose = false
   }
   await checkExternalScriptDependencies()
@@ -96,7 +97,7 @@ async function pkgToTarball(packDir: string) {
  */
 
 function debug(...params: Parameters<typeof chalk['blue']>): void {
-  if (process.env.DEBUG) {
+  if (isDebug) {
     console.debug(chalk.blue('DEBUG:'), chalk.blue(...params))
   }
 }

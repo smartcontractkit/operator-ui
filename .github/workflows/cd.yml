@@ -6,8 +6,8 @@ on:
       - "main"
 
 jobs:
-  snapshot:
-    name: Snapshot Release
+  release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Collect Metrics
@@ -16,7 +16,7 @@ jobs:
         with:
           basic-auth: ${{ secrets.GRAFANA_CLOUD_BASIC_AUTH }}
           hostname: ${{ secrets.GRAFANA_CLOUD_HOST }}
-          this-job-name: Snapshot Release
+          this-job-name: Release
         continue-on-error: true
 
       - name: Checkout the repo
@@ -48,7 +48,7 @@ jobs:
 
       - name: Change directory to release scripts
         run: cd scripts
-        
+
       - name: Run yarn install for scripts
         run: yarn install --frozen-lockfile
 

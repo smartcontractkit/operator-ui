@@ -13,3 +13,4 @@ Using swc leads to significant performance gains in both CI and CD, with a 60% r
 - Update jest snapshots based on JSON parsing changes in jsdom upgrade
 - Update gitignore to exclude yarn error logs
 - Fix serve config
+- Remove unused autobind decorator

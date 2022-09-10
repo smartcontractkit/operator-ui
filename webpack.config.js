@@ -5,23 +5,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 const webpack = require('webpack')
-
 const isDev = process.env.NODE_ENV === 'development'
 const extensions = ['.js', '.ts', '.tsx']
-
 module.exports = {
   mode: isDev ? 'development' : 'production',
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: 'babel-loader',
-      },
-      {
-        test: /\.tsx?$/,
-        exclude: /node_modules/,
-        use: 'babel-loader',
+        test: /\.(t|j)sx?$/,
+        exclude: /(node_modules)/,
+        use: {
+          // `.swcrc` can be used to configure swc
+          loader: 'swc-loader',
+        },
       },
       {
         test: /\.css$/i,

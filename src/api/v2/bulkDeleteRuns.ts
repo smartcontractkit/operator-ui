@@ -1,5 +1,4 @@
 import * as jsonapi from 'utils/json-api-client'
-import { boundMethod } from 'autobind-decorator'
 import * as models from 'core/store/models'
 
 /**
@@ -12,10 +11,9 @@ const DELETE_ENDPOINT = '/v2/bulk_delete_runs'
 export class BulkDeleteRuns {
   constructor(private api: jsonapi.Api) {}
 
-  @boundMethod
-  public bulkDeleteJobRuns(
+  public bulkDeleteJobRuns = (
     bulkDeleteRunRequest: models.BulkDeleteRunRequest,
-  ): Promise<jsonapi.ApiResponse<null>> {
+  ): Promise<jsonapi.ApiResponse<null>> => {
     return this.destroy(bulkDeleteRunRequest)
   }
 

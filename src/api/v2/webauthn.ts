@@ -1,5 +1,4 @@
 import * as jsonapi from 'utils/json-api-client'
-import { boundMethod } from 'autobind-decorator'
 import * as models from 'core/store/models'
 
 const REGISTRATION_ENDPOINT = '/v2/enroll_webauthn'
@@ -7,17 +6,15 @@ const REGISTRATION_ENDPOINT = '/v2/enroll_webauthn'
 export class WebAuthn {
   constructor(private api: jsonapi.Api) {}
 
-  @boundMethod
-  public beginKeyRegistration(
+  public beginKeyRegistration = (
     request: models.BeginWebAuthnRegistrationV2Request,
-  ): Promise<jsonapi.ApiResponse<models.BeginWebAuthnRegistrationV2>> {
+  ): Promise<jsonapi.ApiResponse<models.BeginWebAuthnRegistrationV2>> => {
     return this.create(request)
   }
 
-  @boundMethod
-  public finishKeyRegistration(
+  public finishKeyRegistration = (
     request: models.FinishWebAuthnRegistrationV2Request,
-  ): Promise<jsonapi.ApiResponse<models.FinishWebAuthnRegistrationV2>> {
+  ): Promise<jsonapi.ApiResponse<models.FinishWebAuthnRegistrationV2>> => {
     return this.put(request)
   }
 

@@ -1,5 +1,4 @@
 import * as jsonapi from 'utils/json-api-client'
-import { boundMethod } from 'autobind-decorator'
 import * as models from 'core/store/models'
 
 /**
@@ -15,15 +14,13 @@ export class LogConfig {
   /**
    * Get log configuration variables
    */
-  @boundMethod
-  public getLogConfig(): Promise<jsonapi.ApiResponse<models.LogConfig>> {
+  public getLogConfig = (): Promise<jsonapi.ApiResponse<models.LogConfig>> => {
     return this.show()
   }
 
-  @boundMethod
-  public updateLogConfig(
+  public updateLogConfig = (
     request: models.LogConfigRequest,
-  ): Promise<jsonapi.ApiResponse<models.LogConfig>> {
+  ): Promise<jsonapi.ApiResponse<models.LogConfig>> => {
     return this.update(request)
   }
 

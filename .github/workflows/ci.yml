@@ -2,11 +2,13 @@ name: CI
 
 on:
   push:
-  pull_request:
 
 jobs:
   unit-tests:
-    name: Unit Tests
+    strategy:
+      matrix:
+        shard: [1/3, 2/3, 3/3]
+    name: Unit Tests ${{ matrix.shard }}
     runs-on: ubuntu-latest
     steps:
       - name: Collect Metrics
@@ -15,7 +17,7 @@ jobs:
         with:
           basic-auth: ${{ secrets.GRAFANA_CLOUD_BASIC_AUTH }}
           hostname: ${{ secrets.GRAFANA_CLOUD_HOST }}
-          this-job-name: Unit Tests
+          this-job-name: Unit Tests ${{ matrix.shard }}
         continue-on-error: true
 
       - name: Checkout the repo
@@ -34,7 +36,7 @@ jobs:
         run: yarn setup
 
       - name: Run tests
-        run: yarn run test:ci
+        run: yarn run test:ci --shard=${{ matrix.shard }}
         
       # - name: Upload coverage
       #   run: ./bin/codecov -s operator_ui/coverage

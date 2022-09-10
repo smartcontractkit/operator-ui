@@ -17,7 +17,7 @@
     "start": "NODE_ENV=development webpack serve --config webpack.dev.js",
     "serve": "serve artifacts -p 3000",
     "test": "jest",
-    "test:ci": "yarn test --reporters jest-silent-reporter --maxWorkers=50%",
+    "test:ci": "yarn test --reporters jest-silent-reporter",
     "watch": "yarn test --watchAll --notify",
     "clean": "rimraf -rf artifacts tmp dist coverage",
     "build": "NODE_ENV=production webpack --config webpack.prod.js",

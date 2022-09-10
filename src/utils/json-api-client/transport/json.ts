@@ -36,7 +36,9 @@ export interface PaginatedRequestParams {
 export interface ApiResponse<T extends AttributesObject | null>
   extends JsonApiResponse<
     T extends Array<infer U>
-      ? ResourceObject<U>[]
+      ? U extends AttributesObject
+        ? ResourceObject<U>[]
+        : never
       : T extends AttributesObject
       ? ResourceObject<T>
       : null
@@ -53,9 +55,15 @@ export interface ApiResponse<T extends AttributesObject | null>
  * If T is a single attribute object, then the api response is a single resource object, otherwise null.
  */
 export interface PaginatedApiResponse<
-  T extends AttributesObject,
+  T extends AttributesObject | null,
 > extends JsonApiResponse<
-    T extends Array<infer U> ? ResourceObject<U>[] : ResourceObject<T>,
+    T extends Array<infer U>
+      ? U extends AttributesObject
+        ? ResourceObject<U>[]
+        : never
+      : T extends AttributesObject
+      ? ResourceObject<T>
+      : never,
     ErrorsObject[],
     never,
     {
@@ -83,7 +91,11 @@ export class Api {
   public DELETE = this.methodFactory(http.Method.DELETE)
 
   private methodFactory(method: http.Method) {
-    return <Params, T, NamedPathParams extends object = object>(
+    return <
+      Params,
+      T extends AttributesObject | null,
+      NamedPathParams extends object = object,
+    >(
       url: string,
       raw?: boolean,
     ): Method<Params, T, NamedPathParams> => {
@@ -129,7 +141,11 @@ export class Api {
  * @param params The parameters to the json-api endpoint
  * @param namedPathParams The named path parameters to the json-api endpoint
  */
-type Method<TParams, T, TNamedPathParams extends object = object> = (
+type Method<
+  TParams,
+  T extends AttributesObject | null,
+  TNamedPathParams extends object = object,
+> = (
   params?: Partial<TParams>,
   namedPathParams?: TNamedPathParams,
 ) => Promise<ResponseType<TParams, T>>
@@ -143,7 +159,10 @@ type Method<TParams, T, TNamedPathParams extends object = object> = (
  * or will be serialized to the query string of the url of the request if it is a `GET` HTTP request.
  * @template T The model of the data to be returned by the endpoint.
  */
-type ResponseType<TParams, T> = TParams extends PaginatedRequestParams
+type ResponseType<
+  TParams,
+  T extends AttributesObject | null,
+> = TParams extends PaginatedRequestParams
   ? PaginatedApiResponse<T>
   : ApiResponse<T>
 

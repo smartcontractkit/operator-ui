@@ -1,5 +1,4 @@
 import * as jsonapi from 'utils/json-api-client'
-import { boundMethod } from 'autobind-decorator'
 import * as models from 'core/store/models'
 
 export const ENDPOINT = '/v2/chains/evm'
@@ -7,28 +6,24 @@ const UPDATE_ENDPOINT = `${ENDPOINT}/:id`
 export class Chains {
   constructor(private api: jsonapi.Api) {}
 
-  @boundMethod
-  public getChains(): Promise<jsonapi.ApiResponse<models.Chain[]>> {
+  public getChains = (): Promise<jsonapi.ApiResponse<models.Chain[]>> => {
     return this.index()
   }
 
-  @boundMethod
-  public createChain(
+  public createChain = (
     request: models.CreateChainRequest,
-  ): Promise<jsonapi.ApiResponse<models.Chain>> {
+  ): Promise<jsonapi.ApiResponse<models.Chain>> => {
     return this.create(request)
   }
 
-  @boundMethod
-  public destroyChain(id: string): Promise<jsonapi.ApiResponse<null>> {
+  public destroyChain = (id: string): Promise<jsonapi.ApiResponse<null>> => {
     return this.destroy(undefined, { id })
   }
 
-  @boundMethod
-  public updateChain(
+  public updateChain = (
     id: string,
     req: models.UpdateChainRequest,
-  ): Promise<jsonapi.ApiResponse<models.Chain>> {
+  ): Promise<jsonapi.ApiResponse<models.Chain>> => {
     return this.update(req, { id })
   }
 

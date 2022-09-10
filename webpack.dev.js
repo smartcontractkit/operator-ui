@@ -6,7 +6,7 @@ module.exports = Object.assign(webpackBase, {
   devtool: 'inline-source-map',
   devServer: {
     port: 3000,
-    contentBase: './dist',
+    static: './artifacts',
     historyApiFallback: true,
     hot: true,
   },

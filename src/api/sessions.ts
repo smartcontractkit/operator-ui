@@ -1,6 +1,5 @@
 import * as jsonapi from 'utils/json-api-client'
 import { Api } from 'utils/json-api-client'
-import { boundMethod } from 'autobind-decorator'
 import * as models from 'core/store/models'
 import * as sessionsController from 'core/web/sessions_controller'
 
@@ -18,17 +17,15 @@ const DESTROY_ENDPOINT = '/sessions'
 export class Sessions {
   constructor(private api: Api) {}
 
-  @boundMethod
-  public createSession(
+  public createSession = (
     sessionRequest: models.SessionRequest,
-  ): Promise<jsonapi.ApiResponse<sessionsController.Session>> {
+  ): Promise<jsonapi.ApiResponse<sessionsController.Session>> => {
     return this.create(sessionRequest)
   }
 
-  @boundMethod
-  public destroySession(): Promise<
+  public destroySession = (): Promise<
     jsonapi.ApiResponse<sessionsController.Session>
-  > {
+  > => {
     return this.destroy()
   }
 

@@ -39,7 +39,7 @@ const extractSpecFields = <T extends {}, K extends keyof T>(
   // For every key, check for the existence of an another field of the same name
   // with an 'Env' suffix
   const scopedKeys = keys.filter((key) => {
-    const envKey = `${key}Env` as K
+    const envKey = `${key as string}Env` as K
     if (Object.prototype.hasOwnProperty.call(spec, envKey)) {
       // We are relying on this always being a boolean but we can't guarantee it
       return !spec[envKey]

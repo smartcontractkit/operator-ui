@@ -55,7 +55,7 @@ const LogConfigurationForm = withStyles(styles)(
     const dispatch = useDispatch()
     const formik = useFormik({
       initialValues,
-      onSubmit: async (values) => {
+      onSubmit: async (values: LogConfig) => {
         try {
           const updateData = {
             level: values.level,
@@ -65,7 +65,7 @@ const LogConfigurationForm = withStyles(styles)(
 
           dispatch(notifySuccess(() => <>Logging Configuration Updated</>, {}))
         } catch (e) {
-          dispatch(notifyError(ErrorMessage, e))
+          dispatch(notifyError(ErrorMessage, e as Error))
         }
       },
     })

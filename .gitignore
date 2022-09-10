@@ -7,3 +7,4 @@ artifacts
 tsconfig.tsbuildinfo
 .npmrc
 assets
+yarn-error.log

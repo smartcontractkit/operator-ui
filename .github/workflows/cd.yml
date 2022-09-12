@@ -83,6 +83,5 @@ jobs:
       - name: Create Release 
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEBUG: true
         run: yarn -s release
         working-directory: scripts

@@ -3,7 +3,7 @@
  * Publish snapshot releases as a tarball to github releases
  */
 import 'zx/globals'
-import readChangesets from '@changesets/read'
+import * as readChangesets from '@changesets/read'
 
 async function main() {
   if (!process.env.DEBUG) {
@@ -56,7 +56,9 @@ async function createGithubRelease(
 }
 
 async function maybeConsumeVersions() {
-  const hasChanges = await readChangesets('.').then((sets) => sets.length > 0)
+  const hasChanges = await readChangesets
+    .default('.')
+    .then((sets) => sets.length > 0)
   if (!hasChanges) {
     log(`Attempting to create official release...`)
     return

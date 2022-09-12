@@ -3,7 +3,10 @@
  * Publish snapshot releases as a tarball to github releases
  */
 import 'zx/globals'
-import * as readChangesets from '@changesets/read'
+import _readChangesets from '@changesets/read'
+// See https://github.com/changesets/changesets/issues/622
+const readChangesets =
+  _readChangesets.default as typeof import('@changesets/read/dist/declarations/src/index.js')['default']
 
 async function main() {
   if (!process.env.DEBUG) {
@@ -56,11 +59,9 @@ async function createGithubRelease(
 }
 
 async function maybeConsumeVersions() {
-  const hasChanges = await readChangesets
-    .default('.')
-    .then((sets) => sets.length > 0)
+  const hasChanges = await readChangesets('.').then((sets) => sets.length > 0)
   if (!hasChanges) {
-    log(`Attempting to create official release...`)
+    log(`Attempting to create release....`)
     return
   }
 
@@ -114,9 +115,7 @@ async function pkgToTarball(packDir: string) {
  * Helper functions
  */
 function log(...params: Parameters<typeof chalk['gray']>): void {
-  if (process.env.DEBUG) {
-    console.debug(chalk.gray(...params))
-  }
+  console.log(chalk.gray(...params))
 }
 function debug(...params: Parameters<typeof chalk['blue']>): void {
   if (process.env.DEBUG) {

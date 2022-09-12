@@ -6,6 +6,42 @@ on:
       - "main"
 
 jobs:
+  # Whenever the main branch is updated with changesets
+  # We create a PR that has the output of "changeset version"
+  # as the diff against the main branch
+  #
+  # If a PR already exists, we update the existing PR instead
+  upsert-pull-request:
+    name: Upsert PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Collect Metrics
+        id: collect-gha-metrics
+        uses: smartcontractkit/push-gha-metrics-action@v1
+        with:
+          basic-auth: ${{ secrets.GRAFANA_CLOUD_BASIC_AUTH }}
+          hostname: ${{ secrets.GRAFANA_CLOUD_HOST }}
+          this-job-name: Upsert PR 
+        continue-on-error: true
+
+      - name: Checkout the repo
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: yarn
+
+      - name: Run yarn install
+        run: yarn install --frozen-lockfile
+        
+      - name: Upsert Release Pull Request 
+        id: changesets
+        uses: changesets/action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   release:
     name: Release
     runs-on: ubuntu-latest
@@ -40,22 +76,12 @@ jobs:
           CHAINLINK_BASEURL: '' 
         run: yarn build
 
-      - name: Create Release Pull Request 
-        id: changesets
-        uses: changesets/action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Run yarn install for scripts
         run: yarn install --frozen-lockfile
         working-directory: scripts
 
-      # If we have changesets, that means that we have not done an official release yet,
-      # as when releases are created, all changesets are consumed.
-      # Indexing a JSON array via truthy evaluation results in index 1, whereas a falsy evaluation results in index 0
-      - name: Create ${{ fromJSON('["Official","Snapshot"]')[ steps.changesets.outputs.hasChangesets == 'true'] }} Release 
+      - name: Create Release 
         env:
-          HAS_CHANGES: ${{ steps.changesets.outputs.hasChangesets }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEBUG: true
         run: yarn -s release

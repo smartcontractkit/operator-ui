@@ -19,18 +19,14 @@ async function main() {
   const { gitTag, filename } = await pkgToTarball(packDir)
 
   if (await checkIfReleaseExists(gitTag)) {
-    warn(`Release under tag "${gitTag}" already exists, skipping release...`)
-    process.exit(0)
+    warn(`Release under tag "${gitTag}" already exists, skipping...`)
+    return
   }
 
-  await $`gh release create ${gitTag} ${packDir}/${filename} -F ${changelogPath}`
-  fs.remove(packDir)
+  await createGithubRelease(packDir, filename, gitTag, changelogPath)
 }
 main()
 
-/**
- * Types
- */
 interface NpmPack {
   id: string
   name: string
@@ -41,6 +37,22 @@ interface NpmPack {
   integrity: string
   filename: string
   files: { path: string; size: number; mode: number }[]
+}
+
+async function createGithubRelease(
+  packDir: string,
+  filename: string,
+  gitTag: string,
+  changelogPath: string,
+) {
+  const asset = `${packDir}/${filename}`
+  log(
+    `Creating release with tag "${gitTag}" with asset "${asset}" and changelog of ${changelogPath}`,
+  )
+  await $`gh release create ${gitTag} ${packDir}/${filename} -F ${changelogPath}`
+  log(`Cleaning up...`)
+  log(`Removing ${packDir}`)
+  fs.remove(packDir)
 }
 
 async function maybeConsumeVersions() {
@@ -85,6 +97,7 @@ async function checkIfReleaseExists(gitTag: string): Promise<boolean> {
 async function pkgToTarball(packDir: string) {
   await fs.ensureDir(packDir)
 
+  log(`Creating tarball of package to ${packDir}...`)
   const packOutput = await $`npm pack --pack-destination ${packDir} --json`
   const packInfos: NpmPack[] = JSON.parse(packOutput.stdout)
   const [packInfo] = packInfos
@@ -98,7 +111,11 @@ async function pkgToTarball(packDir: string) {
 /**
  * Helper functions
  */
-
+function log(...params: Parameters<typeof chalk['gray']>): void {
+  if (process.env.DEBUG) {
+    console.debug(chalk.gray(...params))
+  }
+}
 function debug(...params: Parameters<typeof chalk['blue']>): void {
   if (process.env.DEBUG) {
     console.debug(chalk.blue('DEBUG:'), chalk.blue(...params))

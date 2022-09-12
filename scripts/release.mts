@@ -3,6 +3,7 @@
  * Publish snapshot releases as a tarball to github releases
  */
 import 'zx/globals'
+import readChangesets from '@changesets/read'
 
 async function main() {
   if (!process.env.DEBUG) {
@@ -43,12 +44,13 @@ interface NpmPack {
 }
 
 async function maybeConsumeVersions() {
-  const hasChanges = process.env.HAS_CHANGES === 'true'
+  const hasChanges = await readChangesets('.').then((sets) => sets.length > 0)
   if (!hasChanges) {
-    warn('No changesets to version, skipping consumption of changesets')
+    log(`Attempting to create official release...`)
     return
   }
 
+  log(`Attempting to create snapshot release...`)
   await $`yarn changeset version --snapshot`
 }
 

@@ -9,7 +9,6 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
 import { createExplorerConnectionMiddleware } from './middleware'
 import reducer from './reducers'
-
 const middleware: Middleware[] = [
   thunkMiddleware,
   createExplorerConnectionMiddleware(),
@@ -17,7 +16,7 @@ const middleware: Middleware[] = [
 
 const composeEnhancers = composeWithDevTools({})
 
-function createStore<S, A extends Action>(
+function createStoreWith<S, A extends Action>(
   reducer: Reducer<S, A>,
   middleware: Middleware[],
 ) {
@@ -26,5 +25,7 @@ function createStore<S, A extends Action>(
     composeEnhancers(applyMiddleware(...[...middleware])),
   )
 }
+export type StoreDispatch = ReturnType<typeof createStore>['dispatch']
+const createStore = () => createStoreWith(reducer, middleware)
 
-export default () => createStore(reducer, middleware)
+export default createStore

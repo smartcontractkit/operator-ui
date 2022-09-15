@@ -70,6 +70,11 @@ declare module 'core/store/models' {
     enabled: ?boolean
   }
 
+  export interface BuildInfo {
+    commitSHA: string
+    version: string
+  }
+
   export type Chain = {
     config: Record<string, JSONPrimitive>
     enabled: boolean

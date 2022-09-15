@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
@@ -13,8 +13,9 @@ import {
   withStyles,
   WithStyles,
 } from '@material-ui/core/styles'
-
-import { extractBuildInfo } from 'src/utils/extractBuildInfo'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import { selectBuildInfo } from 'src/selectors/buildInfo'
+import { fetchBuildInfo } from 'src/actionCreators'
 
 const styles = (theme: Theme) => {
   return createStyles({
@@ -24,11 +25,14 @@ const styles = (theme: Theme) => {
     },
   })
 }
-
-interface Props extends WithStyles<typeof styles> {}
+type Props = WithStyles<typeof styles>
 
 export const NodeInfoCard = withStyles(styles)(({ classes }: Props) => {
-  const { version, sha } = extractBuildInfo()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchBuildInfo())
+  }, [])
+  const buildInfo = useSelector(selectBuildInfo, shallowEqual)
 
   return (
     <Card>
@@ -39,7 +43,7 @@ export const NodeInfoCard = withStyles(styles)(({ classes }: Props) => {
             <TableCell className={classes.cell}>
               <Typography>Version</Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                {version}
+                {buildInfo.version}
               </Typography>
             </TableCell>
           </TableRow>
@@ -47,7 +51,7 @@ export const NodeInfoCard = withStyles(styles)(({ classes }: Props) => {
             <TableCell className={classes.cell}>
               <Typography>SHA</Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                {sha}
+                {buildInfo.commitSHA}
               </Typography>
             </TableCell>
           </TableRow>

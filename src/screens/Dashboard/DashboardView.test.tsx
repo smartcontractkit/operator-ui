@@ -1,6 +1,5 @@
 import * as React from 'react'
-
-import { renderWithRouter, screen } from 'support/test-utils'
+import { BuildInfoProvider, renderWithRouter, screen } from 'support/test-utils'
 import { MockedProvider, MockedResponse } from '@apollo/client/testing'
 
 import { DashboardView } from './DashboardView'
@@ -12,9 +11,11 @@ describe('DashboardView', () => {
     const mocks: MockedResponse[] = []
 
     renderWithRouter(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <DashboardView />
-      </MockedProvider>,
+      <BuildInfoProvider>
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <DashboardView />
+        </MockedProvider>
+      </BuildInfoProvider>,
     )
 
     expect(await findByText('Activity')).toBeInTheDocument()

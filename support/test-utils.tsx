@@ -1,12 +1,13 @@
 import React from 'react'
-import { Provider as ReduxProvider } from 'react-redux'
+import { Provider, Provider as ReduxProvider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 import { render, RenderOptions, RenderResult } from '@testing-library/react'
-
+import configureStore from 'redux-mock-store'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 
 import createStore from 'src/createStore'
 import { theme } from 'src/theme'
+import thunk from 'redux-thunk'
 
 const AllTheProviders: React.FC = ({ children }) => {
   return (
@@ -44,6 +45,17 @@ const renderWithRouter = (
       options,
     ),
   }
+}
+
+export const BuildInfoProvider: React.FC = (props) => {
+  const middlewares = [thunk]
+  const store = configureStore(middlewares)({
+    buildInfo: {
+      commitSHA: '6989a388ef26d981e771fec6710dc65bcc8fb5af',
+      version: '1.0.0',
+    },
+  })
+  return <Provider store={store}>{props.children}</Provider>
 }
 
 export * from '@testing-library/react'

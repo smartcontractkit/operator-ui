@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import Paper from '@material-ui/core/Paper'
 import {
@@ -8,8 +8,9 @@ import {
   WithStyles,
 } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-
-import { extractBuildInfo } from 'utils/extractBuildInfo'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import { selectBuildInfo } from 'src/selectors/buildInfo'
+import { fetchBuildInfo } from 'src/actionCreators'
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -28,22 +29,26 @@ const styles = (theme: Theme) =>
     },
   })
 
-interface Props extends WithStyles<typeof styles> {}
+type Props = WithStyles<typeof styles>
 
 export const BuildInfoFooter = withStyles(styles)(({ classes }: Props) => {
-  const { version, sha } = extractBuildInfo()
+  const buildInfo = useSelector(selectBuildInfo, shallowEqual)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchBuildInfo())
+  }, [])
 
   return (
     <Paper className={classes.style}>
       <Typography>
-        Chainlink Node {version} at commit{' '}
+        Chainlink Node {buildInfo.version} at commit{' '}
         <a
           target="_blank"
           rel="noopener noreferrer"
-          href={`https://github.com/smartcontractkit/chainlink/commit/${sha}`}
+          href={`https://github.com/smartcontractkit/chainlink/commit/${buildInfo.commitSHA}`}
           className={classes.bareAnchor}
         >
-          {sha}
+          {buildInfo.commitSHA}
         </a>
       </Typography>
     </Paper>

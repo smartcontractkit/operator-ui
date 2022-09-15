@@ -71,9 +71,6 @@ jobs:
         run: yarn setup
 
       - name: Build project
-        env:
-          CHAINLINK_VERSION: 1.8.0@UNKNOWN
-          CHAINLINK_BASEURL: '' 
         run: yarn build
 
       - name: Run yarn install for scripts

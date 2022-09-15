@@ -15,7 +15,7 @@
     "prettier:check": "yarn prettier . --check --ignore-unknown",
     "prettier:write": "yarn prettier . --write --ignore-unknown",
     "start": "NODE_ENV=development webpack serve --config webpack.dev.js",
-    "serve": "serve artifacts -p 3000",
+    "serve": "serve artifacts -p 3000 -c ../serve.json",
     "test": "jest",
     "test:ci": "yarn test --reporters jest-silent-reporter",
     "watch": "yarn test --watchAll --notify",

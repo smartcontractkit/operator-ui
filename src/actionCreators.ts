@@ -6,12 +6,21 @@ import * as api from './api'
 import { Sessions } from './api/sessions'
 import { RunStatus } from './core/store/models'
 import { AppState } from './reducers'
+import { INITIAL_STATE as BUILD_INFO_INITIAL_STATE } from './reducers/buildInfo'
 import {
+  Actions,
   AuthActionType,
+  ErrorAction,
+  FetchBuildInfoActionType,
+  FetchBuildInfoFailedAction,
+  FetchBuildInfoRequestedAction,
+  FetchBuildInfoSucceededAction,
   NotifyActionType,
   ResourceActionType,
 } from './reducers/actions'
 
+import { StoreDispatch } from './createStore'
+import { selectBuildInfo } from './selectors/buildInfo'
 export type GetNormalizedData<T extends AnyFunc> =
   ReturnType<T> extends ThunkAction<any, any, any, UpsertAction<infer A>>
     ? A
@@ -26,13 +35,21 @@ type Errors =
 
 type RestAction = 'UPSERT' | 'DELETE'
 
-const createErrorAction = (error: Error, type: string) => ({
+const createErrorAction = (
+  error: Error,
+  type: ErrorAction['type'],
+): ErrorAction => ({
   type,
   error: error.stack,
+  errors: [],
 })
 
 const curryErrorHandler =
-  (dispatch: Dispatch, type: string) => (error: Error) => {
+  (
+    dispatch: import('./createStore').StoreDispatch,
+    type: ErrorAction['type'],
+  ) =>
+  (error: Error) => {
     if (error instanceof jsonapi.AuthenticationError) {
       sendSignOut(dispatch)
     } else {
@@ -45,7 +62,7 @@ export const notifySuccess = (component: React.ReactNode, props: object) => {
     type: NotifyActionType.NOTIFY_SUCCESS,
     component,
     props,
-  }
+  } as const
 }
 
 export const notifySuccessMsg = (msg: string) => ({
@@ -53,11 +70,12 @@ export const notifySuccessMsg = (msg: string) => ({
   msg,
 })
 
-export const notifyError = (component: React.ReactNode, error: Error) => ({
-  type: NotifyActionType.NOTIFY_ERROR,
-  component,
-  error,
-})
+export const notifyError = (component: React.ReactNode, error: Error) =>
+  ({
+    type: NotifyActionType.NOTIFY_ERROR,
+    component,
+    error,
+  } as const)
 
 export const notifyErrorMsg = (msg: string) => ({
   type: NotifyActionType.NOTIFY_ERROR_MSG,
@@ -87,13 +105,14 @@ const signInSuccessAction = (doc: UnboxApi<Sessions['createSession']>) => {
   return {
     type: AuthActionType.RECEIVE_SIGNIN_SUCCESS,
     authenticated: doc.data.attributes.authenticated,
-  }
+  } as const
 }
 
-const signInFailAction = () => ({ type: AuthActionType.RECEIVE_SIGNIN_FAIL })
+const signInFailAction = () =>
+  ({ type: AuthActionType.RECEIVE_SIGNIN_FAIL } as const)
 
 function sendSignIn(data: Parameter<Sessions['createSession']>) {
-  return (dispatch: Dispatch) => {
+  return (dispatch: StoreDispatch) => {
     dispatch({ type: AuthActionType.REQUEST_SIGNIN })
     return api.sessions
       .createSession(data)
@@ -206,10 +225,11 @@ function sendSignIn(data: Parameter<Sessions['createSession']>) {
   }
 }
 
-export const receiveSignoutSuccess = () => ({
-  type: AuthActionType.RECEIVE_SIGNOUT_SUCCESS,
-  authenticated: false,
-})
+export const receiveSignoutSuccess = () =>
+  ({
+    type: AuthActionType.RECEIVE_SIGNOUT_SUCCESS,
+    authenticated: false,
+  } as const)
 
 function sendSignOut(dispatch: Dispatch) {
   return api.sessions
@@ -304,10 +324,11 @@ const RECEIVE_CREATE_SUCCESS_ACTION = {
   type: ResourceActionType.RECEIVE_CREATE_SUCCESS,
 }
 
-const receiveDeleteSuccess = (id: string) => ({
-  type: ResourceActionType.RECEIVE_DELETE_SUCCESS,
-  id,
-})
+const receiveDeleteSuccess = (id: string) =>
+  ({
+    type: ResourceActionType.RECEIVE_DELETE_SUCCESS,
+    id,
+  } as const)
 
 export const submitSignIn = (data: Parameter<Sessions['createSession']>) =>
   sendSignIn(data)
@@ -422,14 +443,7 @@ function request<
   prefix: RestAction,
   requestData: (...args: TApiArgs) => TApiResp,
   normalizeData: (dataToNormalize: UnboxPromise<TApiResp>) => TNormalizedData,
-): (
-  ...args: TApiArgs
-) => ThunkAction<
-  Promise<void>,
-  AppState,
-  void,
-  UpsertAction<TNormalizedData> | Action<string>
-> {
+): (...args: TApiArgs) => ThunkAction<Promise<void>, AppState, void, Actions> {
   const requestType =
     prefix === 'UPSERT' ? `REQUEST_${type}` : `REQUEST_${prefix}_${type}`
   const responseType =
@@ -437,7 +451,7 @@ function request<
   const successType = `${prefix}_${type}`
 
   return (...args: TApiArgs) => {
-    return (dispatch) => {
+    return (dispatch: Dispatch) => {
       dispatch({ type: requestType })
 
       return requestData(...args)
@@ -447,6 +461,55 @@ function request<
         })
         .catch(handleError(dispatch))
         .finally(() => dispatch({ type: responseType }))
+    }
+  }
+}
+
+export function fetchBuildInfo(): ThunkAction<
+  Promise<void>,
+  AppState,
+  void,
+  Actions
+> {
+  return async (dispatch: StoreDispatch, getState) => {
+    const requestAction: FetchBuildInfoRequestedAction = {
+      type: FetchBuildInfoActionType.FETCH_BUILD_INFO_REQUESTED,
+    }
+    dispatch(requestAction)
+
+    // check the store to see if it exists already
+    // so we can avoid hitting the backend more than once
+    const existingBuildInfo = selectBuildInfo(getState())
+    if (
+      existingBuildInfo.commitSHA !== BUILD_INFO_INITIAL_STATE.commitSHA &&
+      existingBuildInfo.version !== BUILD_INFO_INITIAL_STATE.version
+    ) {
+      const successAction: FetchBuildInfoSucceededAction = {
+        type: FetchBuildInfoActionType.FETCH_BUILD_INFO_SUCCEEDED,
+        buildInfo: existingBuildInfo,
+      }
+      dispatch(successAction)
+
+      return
+    }
+
+    try {
+      const buildInfo = await api.v2.buildInfo.show()
+      const successAction: FetchBuildInfoSucceededAction = {
+        type: FetchBuildInfoActionType.FETCH_BUILD_INFO_SUCCEEDED,
+        buildInfo,
+      }
+      dispatch(successAction)
+    } catch (e) {
+      const failureAction: FetchBuildInfoFailedAction = {
+        type: FetchBuildInfoActionType.FETCH_BUILD_INFO_FAILED,
+        error: e as Error,
+      }
+      // no-op for now, just incase we need to explicitly handle this later on
+      dispatch(failureAction)
+      // we still use handle error here, since we want to catch auth errors
+      // to auto logout the user
+      handleError(dispatch)(e as Error)
     }
   }
 }

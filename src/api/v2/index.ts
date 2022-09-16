@@ -6,10 +6,11 @@ import { Jobs } from './jobs'
 import { LogConfig } from './logConfig'
 import { Nodes } from './nodes'
 import { WebAuthn } from './webauthn'
-
+import { BuildInfo } from './buildInfo'
 export class V2 {
   constructor(private api: Api) {}
 
+  public buildInfo = new BuildInfo(this.api)
   public bulkDeleteRuns = new BulkDeleteRuns(this.api)
   public chains = new Chains(this.api)
   public logConfig = new LogConfig(this.api)

@@ -1,3 +1,4 @@
+import { BuildInfo } from 'core/store/models'
 import React from 'react'
 import { Action } from 'redux'
 import * as jsonapi from 'utils/json-api-client'
@@ -61,6 +62,19 @@ export interface NotifyErrorAction
   error: {
     errors: jsonapi.ErrorItem[]
   }
+}
+
+/**
+ * @deprecated
+ */
+export interface ErrorAction
+  extends Action<
+    | AuthActionType.RECEIVE_SIGNIN_ERROR
+    | ResourceActionType.RECEIVE_CREATE_ERROR
+    | ResourceActionType.RECEIVE_DELETE_ERROR
+  > {
+  error?: string
+  errors: []
 }
 
 /**
@@ -146,6 +160,7 @@ export enum ResourceActionType {
   UPSERT_JOB_RUNS = 'UPSERT_JOB_RUNS',
   UPSERT_TRANSACTION = 'UPSERT_TRANSACTION',
   UPSERT_TRANSACTIONS = 'UPSERT_TRANSACTIONS',
+  UPSERT_BUILD_INFO = 'UPSERT_BUILD_INFO',
 }
 
 /**
@@ -237,6 +252,25 @@ export interface UpsertJobRunsAction
   }
 }
 
+export enum FetchBuildInfoActionType {
+  FETCH_BUILD_INFO_REQUESTED = 'FETCH_BUILD_INFO_REQUESTED',
+  FETCH_BUILD_INFO_SUCCEEDED = 'FETCH_BUILD_INFO_SUCCEEDED',
+  FETCH_BUILD_INFO_FAILED = 'FETCH_BUILD_INFO_FAILED',
+}
+
+export interface FetchBuildInfoRequestedAction
+  extends Action<FetchBuildInfoActionType.FETCH_BUILD_INFO_REQUESTED> {}
+
+export interface FetchBuildInfoSucceededAction
+  extends Action<FetchBuildInfoActionType.FETCH_BUILD_INFO_SUCCEEDED> {
+  buildInfo: BuildInfo
+}
+
+export interface FetchBuildInfoFailedAction
+  extends Action<FetchBuildInfoActionType.FETCH_BUILD_INFO_FAILED> {
+  error: Error
+}
+
 export interface UpsertJobRunAction
   extends Action<ResourceActionType.UPSERT_JOB_RUN> {
   data: {
@@ -272,6 +306,10 @@ export type Actions =
   | MatchRouteAction
   | NotifySuccessAction
   | NotifySuccessMsgAction
+  | FetchBuildInfoFailedAction
+  | FetchBuildInfoRequestedAction
+  | FetchBuildInfoSucceededAction
+  | ErrorAction
   | NotifyErrorAction
   | NotifyErrorMsgAction
   | RequestSigninAction

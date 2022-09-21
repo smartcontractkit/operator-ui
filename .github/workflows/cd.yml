@@ -69,6 +69,8 @@ jobs:
 
       - name: Setup project
         run: yarn setup
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Build project
         run: yarn build

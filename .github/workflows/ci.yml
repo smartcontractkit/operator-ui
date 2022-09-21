@@ -34,7 +34,9 @@ jobs:
 
       - name: Setup project
         run: yarn setup
-
+        env:
+          GH_TOKEN: ${{ github.token }}
+          
       - name: Run tests
         run: yarn run test:ci --shard=${{ matrix.shard }}
         

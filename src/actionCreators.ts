@@ -235,7 +235,16 @@ function sendSignOut(dispatch: Dispatch) {
   return api.sessions
     .destroySession()
     .then(() => dispatch(receiveSignoutSuccess()))
-    .catch(curryErrorHandler(dispatch, AuthActionType.RECEIVE_SIGNIN_ERROR))
+    .catch((err: Error) => {
+      if (err instanceof jsonapi.AuthenticationError) {
+        // If it is an auth error, it means the auth token has expired
+        // we can safely redirect to the sign-in page as a result
+        dispatch(receiveSignoutSuccess())
+        return
+      }
+
+      dispatch(createErrorAction(err, AuthActionType.RECEIVE_SIGNIN_ERROR))
+    })
 }
 
 // Base64 to ArrayBuffer

@@ -1,15 +1,10 @@
 import React from 'react'
 
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
+import {createStyles, Theme, withStyles, WithStyles,} from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
-import { TaskRunStatusIcon } from 'src/components/Icons/TaskRunStatusIcon'
-import { TaskRunStatus } from 'src/utils/taskRunStatus'
+import {TaskRunStatusIcon} from 'src/components/Icons/TaskRunStatusIcon'
+import {TaskRunStatus} from 'src/utils/taskRunStatus'
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -49,7 +44,15 @@ export interface Props
 
 export const TaskRunItem = withStyles(styles)(
   ({ attrs, classes, dotID, output, error, type }: Props) => {
-    const status = error ? TaskRunStatus.ERROR : TaskRunStatus.COMPLETE
+    let status: TaskRunStatus
+
+    if (error) {
+      status = TaskRunStatus.ERROR
+    } else if (output == 'null') {
+      status = TaskRunStatus.PENDING
+    } else {
+      status = TaskRunStatus.COMPLETE
+    }
 
     return (
       <div className={classes.root}>

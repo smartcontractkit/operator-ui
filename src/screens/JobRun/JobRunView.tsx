@@ -59,15 +59,24 @@ export const JobRunView = ({ run }: Props) => {
 
   // Generate a list of attributes which will get added to the stratify array.
   // We do this so we can display the correct status icon in the TaskList DAG
-  const attrs = run.taskRuns.reduce(
-    (acc, run) => ({
+  const attrs = run.taskRuns.reduce((acc, run) => {
+    let status: TaskRunStatus
+
+    if (run.error) {
+      status = TaskRunStatus.ERROR
+    } else if (run.output == 'null') {
+      status = TaskRunStatus.PENDING
+    } else {
+      status = TaskRunStatus.COMPLETE
+    }
+
+    return {
       ...acc,
       [run.dotID]: {
-        status: run.error ? TaskRunStatus.ERROR : TaskRunStatus.COMPLETE,
+        status,
       },
-    }),
-    {},
-  )
+    }
+  }, {})
 
   return (
     <Content>

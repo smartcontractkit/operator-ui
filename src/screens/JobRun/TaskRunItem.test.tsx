@@ -40,4 +40,19 @@ describe('TaskRunItemCard', () => {
     expect(queryByText(run.error as string)).toBeInTheDocument()
     expect(queryByText(': result,data')).toBeInTheDocument()
   })
+
+  it('renders details of the pending task run', async () => {
+    const run = buildTaskRun({
+      error: null,
+      output: 'null',
+    })
+
+    renderComponent({ ...run, attrs: { type: run.type, path: 'result,data' } })
+
+    // The pending icon
+    expect(queryByTestId('pending-run-icon')).toBeInTheDocument()
+    expect(queryByText(run.dotID)).toBeInTheDocument()
+    expect(queryByText(run.type)).toBeInTheDocument()
+    expect(queryByText(': result,data')).toBeInTheDocument()
+  })
 })

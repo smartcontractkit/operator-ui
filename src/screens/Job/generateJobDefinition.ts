@@ -215,7 +215,6 @@ export const generateJobDefinition = (
           'chunkSize',
           'backoffInitialDelay',
           'backoffMaxDelay',
-          'maxGasPriceGWei',
         ),
         ...extractObservationSourceField(job),
       }

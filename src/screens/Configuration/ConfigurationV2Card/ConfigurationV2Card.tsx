@@ -4,8 +4,6 @@ import { gql, useQuery } from '@apollo/client'
 
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
 import Grid from '@material-ui/core/Grid'
@@ -26,23 +24,6 @@ export const ConfigurationV2Card = () => {
     fetchPolicy: 'cache-and-network',
   })
 
-  var user: string[] = []
-  if (data != undefined) {
-    user = data?.configv2.user.split(/\n/).map((l) => {
-      return l
-    })
-  } else {
-    user = []
-  }
-  var effective: string[] = []
-  if (data != undefined) {
-    effective = data?.configv2.effective.split(/\n/).map((l) => {
-      return l
-    })
-  } else {
-    effective = []
-  }
-
   return (
     <>
       <Grid item xs={12}>
@@ -50,7 +31,7 @@ export const ConfigurationV2Card = () => {
           title="TOML Configuration (user-specified)"
           error={error?.message}
           loading={loading}
-          entries={user}
+          toml={data?.configv2.user}
           showHead
         />
       </Grid>
@@ -59,7 +40,7 @@ export const ConfigurationV2Card = () => {
           title="TOML Configuration (effective)"
           error={error?.message}
           loading={loading}
-          entries={effective}
+          toml={data?.configv2.effective}
           showHead
         />
       </Grid>
@@ -68,7 +49,7 @@ export const ConfigurationV2Card = () => {
 }
 
 interface Props {
-  entries: Array<string>
+  toml?: string
   loading: boolean
   showHead?: boolean
   title?: string
@@ -87,7 +68,7 @@ const FetchingRow = () => <SpanRow>...</SpanRow>
 
 const ErrorRow: React.FC = ({ children }) => <SpanRow>{children}</SpanRow>
 
-const TOMLCard = ({ loading, entries, error = '', title }: Props) => {
+const TOMLCard = ({ loading, toml, error = '', title }: Props) => {
   if (error) {
     return <ErrorRow>{error}</ErrorRow>
   }
@@ -96,18 +77,14 @@ const TOMLCard = ({ loading, entries, error = '', title }: Props) => {
     return <FetchingRow />
   }
 
+  let styles = {marginLeft: '1em'};
+
   return (
     <Card>
       {title && <CardHeader title={title} />}
-      <Table>
-        <TableBody>
-          {entries.map((k, i) => (
-            <TableRow key={title + k + i}>
-              <TableCell>{k}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+        <pre style={styles}>
+          <code>{toml}</code>
+        </pre>
     </Card>
   )
 }

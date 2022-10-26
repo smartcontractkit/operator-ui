@@ -99,14 +99,10 @@ const TOMLCard = ({ loading, entries, error = '', title }: Props) => {
   return (
     <Card>
       {title && <CardHeader title={title} />}
-      {/* <Table size="small"> */}
       <Table>
         <TableBody>
           {entries.map((k, i) => (
-            <TableRow
-              key={title + k + i}
-              // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
+            <TableRow key={title + k + i}>
               <TableCell>{k}</TableCell>
             </TableRow>
           ))}

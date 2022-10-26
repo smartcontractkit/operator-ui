@@ -6,6 +6,7 @@ import { LoggingCard } from 'src/pages/Configuration/LoggingCard'
 import { JobRuns } from 'src/pages/Configuration/JobRuns'
 
 import { ConfigurationCard } from './ConfigurationCard/ConfigurationCard'
+import { ConfigurationV2Card } from './ConfigurationV2Card/ConfigurationV2Card'
 import { NodeInfoCard } from './NodeInfoCard/NodeInfoCard'
 
 export const ConfigurationView = () => {
@@ -13,7 +14,12 @@ export const ConfigurationView = () => {
     <Content>
       <Grid container>
         <Grid item sm={12} md={8}>
-          <ConfigurationCard />
+          <Grid container>
+            <Grid item xs={12}>
+              <ConfigurationCard />
+            </Grid>
+            <ConfigurationV2Card />
+          </Grid>
         </Grid>
         <Grid item sm={12} md={4}>
           <Grid container>

@@ -104,7 +104,6 @@ export const ChainsView: React.FC<Props> = ({
                 <TableRow>
                   <TableCell>Chain ID</TableCell>
                   <TableCell>Enabled</TableCell>
-                  <TableCell>Created</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

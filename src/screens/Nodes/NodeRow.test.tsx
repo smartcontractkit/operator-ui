@@ -32,10 +32,8 @@ describe('NodeRow', () => {
 
     renderComponent(node)
 
-    expect(queryByText('1')).toBeInTheDocument()
     expect(queryByText('node1')).toBeInTheDocument()
     expect(queryByText('42')).toBeInTheDocument()
-    expect(queryByText('1 minute ago')).toBeInTheDocument()
   })
 
   it('links to the row details', async () => {
@@ -44,7 +42,7 @@ describe('NodeRow', () => {
     renderComponent(node)
 
     const link = getByRole('link', { name: /1/i })
-    expect(link).toHaveAttribute('href', '/nodes/1')
+    expect(link).toHaveAttribute('href', '/nodes/node1')
 
     userEvent.click(link)
 

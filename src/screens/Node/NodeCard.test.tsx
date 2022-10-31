@@ -24,11 +24,9 @@ describe('NodeCard', () => {
 
     renderComponent(node)
 
-    expect(queryByText(node.id)).toBeInTheDocument()
     expect(queryByText(node.chain.id)).toBeInTheDocument()
     expect(queryByText(node.httpURL)).toBeInTheDocument()
     expect(queryByText(node.wsURL)).toBeInTheDocument()
-    expect(queryByText('1 minute ago')).toBeInTheDocument()
   })
 
   it('calls delete', () => {

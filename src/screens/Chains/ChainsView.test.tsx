@@ -27,7 +27,6 @@ describe('ChainsView', () => {
 
     expect(queryByText('Chain ID')).toBeInTheDocument()
     expect(queryByText('Enabled')).toBeInTheDocument()
-    expect(queryByText('Created')).toBeInTheDocument()
 
     expect(queryByText('5')).toBeInTheDocument()
     expect(queryByText('42')).toBeInTheDocument()

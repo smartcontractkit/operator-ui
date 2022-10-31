@@ -24,8 +24,6 @@ describe('NodeView', () => {
     renderComponent(node)
 
     expect(getByRole('heading', { name: node.name })).toBeInTheDocument()
-    expect(getByText('ID')).toBeInTheDocument()
-    expect(getByText(node.id)).toBeInTheDocument()
   })
 
   it('handles opens a confirmation modal and handles delete', async () => {

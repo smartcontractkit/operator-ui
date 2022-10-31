@@ -21,11 +21,6 @@ const List = ({ nodes, nodeFilter }: Props) => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell>
-            <Typography variant="body1" color="textSecondary">
-              ID
-            </Typography>
-          </TableCell>
 
           <TableCell>
             <Typography variant="body1" color="textSecondary">
@@ -36,12 +31,6 @@ const List = ({ nodes, nodeFilter }: Props) => {
           <TableCell>
             <Typography variant="body1" color="textSecondary">
               EVM Chain ID
-            </Typography>
-          </TableCell>
-
-          <TableCell>
-            <Typography variant="body1" color="textSecondary">
-              Created
             </Typography>
           </TableCell>
 

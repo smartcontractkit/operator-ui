@@ -34,7 +34,6 @@ describe('ChainRow', () => {
 
     expect(queryByText('5')).toBeInTheDocument()
     expect(queryByText('true')).toBeInTheDocument()
-    expect(queryByText('1 minute ago')).toBeInTheDocument()
   })
 
   it('links to the row details', async () => {

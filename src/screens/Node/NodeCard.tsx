@@ -14,7 +14,6 @@ import {
   DetailsCardItemTitle,
   DetailsCardItemValue,
 } from 'src/components/Cards/DetailsCard'
-import { TimeAgo } from 'src/components/TimeAgo'
 
 interface Props {
   node: NodePayload_Fields
@@ -60,21 +59,10 @@ export const NodeCard: React.FC<Props> = ({ node, onDelete }) => {
       }
     >
       <Grid container>
-        <Grid item xs={12} sm={4} md={3}>
-          <DetailsCardItemTitle title="ID" />
-          <DetailsCardItemValue value={node.id} />
-        </Grid>
 
         <Grid item xs={12} sm={4} md={3}>
           <DetailsCardItemTitle title="EVM Chain ID" />
           <DetailsCardItemValue value={node.chain.id} />
-        </Grid>
-
-        <Grid item xs={12} sm={4} md={2}>
-          <DetailsCardItemTitle title="Created" />
-          <DetailsCardItemValue>
-            <TimeAgo tooltip>{node.createdAt}</TimeAgo>
-          </DetailsCardItemValue>
         </Grid>
 
         <Grid item xs={false} sm={false} md={4}></Grid>

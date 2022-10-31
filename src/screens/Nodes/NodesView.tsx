@@ -94,10 +94,8 @@ export const NodesView: React.FC<Props> = ({
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>ID</TableCell>
                   <TableCell>Name</TableCell>
                   <TableCell>EVM Chain ID</TableCell>
-                  <TableCell>Created</TableCell>
                   <TableCell>State</TableCell>
                 </TableRow>
               </TableHead>

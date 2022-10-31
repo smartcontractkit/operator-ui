@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { tableStyles } from 'components/Table'
-import { TimeAgo } from 'components/TimeAgo'
 import Link from 'components/Link'
 
 import { withStyles, WithStyles } from '@material-ui/core/styles'
@@ -23,9 +22,6 @@ export const ChainRow = withStyles(tableStyles)(({ chain, classes }: Props) => {
 
       <TableCell>{chain.enabled.toString()}</TableCell>
 
-      <TableCell>
-        <TimeAgo tooltip>{chain.createdAt}</TimeAgo>
-      </TableCell>
     </TableRow>
   )
 })

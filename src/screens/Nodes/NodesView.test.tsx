@@ -25,13 +25,8 @@ describe('NodesView', () => {
 
     expect(getAllByRole('row')).toHaveLength(3)
 
-    expect(queryByText('ID')).toBeInTheDocument()
     expect(queryByText('Name')).toBeInTheDocument()
     expect(queryByText('EVM Chain ID')).toBeInTheDocument()
-    expect(queryByText('Created')).toBeInTheDocument()
-
-    expect(queryByText('1')).toBeInTheDocument()
-    expect(queryByText('2')).toBeInTheDocument()
 
     expect(queryByText('1-2 of 2'))
   })
@@ -60,20 +55,13 @@ describe('NodesView', () => {
     userEvent.paste(searchInput, 'node1')
 
     expect(getAllByRole('row')).toHaveLength(2)
-    expect(queryByText('1')).toBeInTheDocument()
-
-    // By id
-    userEvent.clear(searchInput)
-    userEvent.paste(searchInput, '1')
-
-    expect(getAllByRole('row')).toHaveLength(2)
-    expect(queryByText('1')).toBeInTheDocument()
+    expect(queryByText('node1')).toBeInTheDocument()
 
     // By EVM ID
     userEvent.clear(searchInput)
     userEvent.paste(searchInput, '5')
 
     expect(getAllByRole('row')).toHaveLength(2)
-    expect(queryByText('2')).toBeInTheDocument()
+    expect(queryByText('node2')).toBeInTheDocument()
   })
 })

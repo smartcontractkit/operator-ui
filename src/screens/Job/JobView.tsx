@@ -107,7 +107,6 @@ const JOB_PAYLOAD__SPEC = gql`
       fromAddress
     }
     ... on BootstrapSpec {
-      id
       contractID
       relay
       monitoringEndpoint

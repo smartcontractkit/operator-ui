@@ -543,7 +543,6 @@ observationSource = """
       gasLimit: 1000,
       spec: {
         __typename: 'BootstrapSpec',
-        id: '',
         contractID: '0x0000000000000000000000000000000000000000',
         relay: 'evm',
         relayConfig: {
@@ -564,7 +563,6 @@ schemaVersion = 1
 name = "bootstrap"
 externalJobID = "00000000-0000-0000-0000-0000000000001"
 gasLimit = 1_000
-id = ""
 contractID = "0x0000000000000000000000000000000000000000"
 relay = "evm"
 monitoringEndpoint = "https://monitoring.endpoint"

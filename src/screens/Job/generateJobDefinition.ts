@@ -245,7 +245,6 @@ export const generateJobDefinition = (
         ...extractJobFields(job),
         ...extractSpecFields(
           job.spec,
-          'id',
           'contractID',
           'relay',
           'relayConfig',

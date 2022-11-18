@@ -67,6 +67,7 @@ const drawerStyles = ({ palette, spacing }: Theme) =>
 interface DrawerProps extends WithStyles<typeof drawerStyles> {
   authenticated: boolean
   drawerOpen: boolean
+  isFeedsManagerFeatureEnabled: boolean
   toggleDrawer: () => void
   submitSignOut: () => void
 }
@@ -78,6 +79,7 @@ const Drawer = withStyles(drawerStyles)(
     authenticated,
     classes,
     submitSignOut,
+    isFeedsManagerFeatureEnabled,
   }: DrawerProps) => {
     return (
       <MuiDrawer
@@ -102,6 +104,18 @@ const Drawer = withStyles(drawerStyles)(
                 className={classes.menuitem}
               />
             ))}
+            {isFeedsManagerFeatureEnabled && (
+              <ListItem
+                button
+                component={() => (
+                  <BaseLink href={'/feeds_manager'}>
+                    <ListItemText primary="Feeds Manager" />
+                  </BaseLink>
+                )}
+                className={classes.menuitem}
+              />
+            )}
+
             {authenticated && (
               <ListItem
                 button
@@ -147,56 +161,58 @@ const navStyles = ({ palette, spacing }: Theme) =>
 
 interface NavProps extends WithStyles<typeof navStyles> {
   authenticated: boolean
+  isFeedsManagerFeatureEnabled: boolean
 }
 
-const Nav = withStyles(navStyles)(({ authenticated, classes }: NavProps) => {
-  const { pathname } = useLocation()
-  const isFeedsManagerFeatureEnabled = useFeatureFlag(Feature.FeedsManager)
+const Nav = withStyles(navStyles)(
+  ({ authenticated, classes, isFeedsManagerFeatureEnabled }: NavProps) => {
+    const { pathname } = useLocation()
 
-  return (
-    <Typography variant="body1" component="div">
-      <List className={classes.horizontalNav}>
-        {NAV_ITEMS.map(([navItemPath, text]) => (
-          <ListItem key={navItemPath} className={classes.horizontalNavItem}>
-            <BaseLink
-              key={navItemPath}
-              href={navItemPath}
-              className={classNames(
-                classes.horizontalNavLink,
-                pathname.startsWith(navItemPath) && classes.activeNavLink,
-              )}
-            >
-              {text}
-            </BaseLink>
-          </ListItem>
-        ))}
-        {/* Feeds Manager link hidden behind a feature flag. This is temporary until we
-        enable this for everyone */}
-        {isFeedsManagerFeatureEnabled && (
-          <ListItem className={classes.horizontalNavItem}>
-            <BaseLink
-              href={'/feeds_manager'}
-              className={classNames(
-                classes.horizontalNavLink,
-                pathname.includes('/feeds_manager') && classes.activeNavLink,
-              )}
-            >
-              Feeds Manager
-            </BaseLink>
-          </ListItem>
-        )}
-        {authenticated && (
-          <>
-            <ListItem className={classes.horizontalNavItem}>
-              <SettingsMenu />
-              <AccountMenu />
+    return (
+      <Typography variant="body1" component="div">
+        <List className={classes.horizontalNav}>
+          {NAV_ITEMS.map(([navItemPath, text]) => (
+            <ListItem key={navItemPath} className={classes.horizontalNavItem}>
+              <BaseLink
+                key={navItemPath}
+                href={navItemPath}
+                className={classNames(
+                  classes.horizontalNavLink,
+                  pathname.startsWith(navItemPath) && classes.activeNavLink,
+                )}
+              >
+                {text}
+              </BaseLink>
             </ListItem>
-          </>
-        )}
-      </List>
-    </Typography>
-  )
-})
+          ))}
+          {/* Feeds Manager link hidden behind a feature flag. This is temporary until we
+        enable this for everyone */}
+          {isFeedsManagerFeatureEnabled && (
+            <ListItem className={classes.horizontalNavItem}>
+              <BaseLink
+                href={'/feeds_manager'}
+                className={classNames(
+                  classes.horizontalNavLink,
+                  pathname.includes('/feeds_manager') && classes.activeNavLink,
+                )}
+              >
+                Feeds Manager
+              </BaseLink>
+            </ListItem>
+          )}
+          {authenticated && (
+            <>
+              <ListItem className={classes.horizontalNavItem}>
+                <SettingsMenu />
+                <AccountMenu />
+              </ListItem>
+            </>
+          )}
+        </List>
+      </Typography>
+    )
+  },
+)
 
 const styles = ({ palette, spacing, zIndex }: Theme) =>
   createStyles({
@@ -218,34 +234,21 @@ interface Props extends WithStyles<typeof styles> {
   onResize: (width: number, height: number) => void
 }
 
-interface State {
-  drawerOpen: boolean
-}
+const Header = withStyles(styles)(
+  ({
+    authenticated,
+    classes,
+    fetchCount,
+    drawerContainer,
+    onResize,
+    submitSignOut,
+  }: Props) => {
+    const [drawerOpen, setDrawerOpen] = React.useState(false)
+    const isFeedsManagerFeatureEnabled = useFeatureFlag(Feature.FeedsManager)
 
-class Header extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      drawerOpen: false,
+    const toggleDrawer = () => {
+      setDrawerOpen(!drawerOpen)
     }
-    this.toggleDrawer = this.toggleDrawer.bind(this)
-  }
-
-  toggleDrawer() {
-    this.setState({
-      drawerOpen: !this.state.drawerOpen,
-    })
-  }
-
-  render() {
-    const {
-      authenticated,
-      classes,
-      fetchCount,
-      drawerContainer,
-      onResize,
-      submitSignOut,
-    } = this.props
 
     return (
       <AppBar className={classes.appBar} color="default" position="absolute">
@@ -270,13 +273,18 @@ class Header extends React.Component<Props, State> {
                     <Hidden mdUp>
                       <IconButton
                         aria-label="open drawer"
-                        onClick={this.toggleDrawer}
+                        onClick={toggleDrawer}
                       >
                         <MenuIcon />
                       </IconButton>
                     </Hidden>
                     <Hidden smDown>
-                      <Nav authenticated={authenticated} />
+                      <Nav
+                        authenticated={authenticated}
+                        isFeedsManagerFeatureEnabled={
+                          isFeedsManagerFeatureEnabled
+                        }
+                      />
                     </Hidden>
                   </Grid>
                 </Grid>
@@ -286,16 +294,17 @@ class Header extends React.Component<Props, State> {
         </ReactResizeDetector>
         <Portal container={drawerContainer}>
           <Drawer
-            toggleDrawer={this.toggleDrawer}
-            drawerOpen={this.state.drawerOpen}
+            isFeedsManagerFeatureEnabled={isFeedsManagerFeatureEnabled}
+            toggleDrawer={toggleDrawer}
+            drawerOpen={drawerOpen}
             authenticated={authenticated}
             submitSignOut={submitSignOut}
           />
         </Portal>
       </AppBar>
     )
-  }
-}
+  },
+)
 
 const mapStateToProps = (state: any) => ({
   authenticated: state.authentication.allowed,

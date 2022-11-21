@@ -80,6 +80,7 @@ const JOB_PAYLOAD__SPEC = gql`
     }
     ... on VRFSpec {
       evmChainID
+      gasLanePrice
       coordinatorAddress
       fromAddresses
       minIncomingConfirmations
@@ -107,7 +108,6 @@ const JOB_PAYLOAD__SPEC = gql`
       fromAddress
     }
     ... on BootstrapSpec {
-      id
       contractID
       relay
       monitoringEndpoint

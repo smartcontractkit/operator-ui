@@ -215,6 +215,7 @@ export const generateJobDefinition = (
           'chunkSize',
           'backoffInitialDelay',
           'backoffMaxDelay',
+          'gasLanePrice',
         ),
         ...extractObservationSourceField(job),
       }
@@ -245,7 +246,6 @@ export const generateJobDefinition = (
         ...extractJobFields(job),
         ...extractSpecFields(
           job.spec,
-          'id',
           'contractID',
           'relay',
           'relayConfig',

@@ -461,6 +461,7 @@ juelsPerFeeCoinSource = "1000000000"
         chunkSize: 25,
         backoffInitialDelay: '1m',
         backoffMaxDelay: '1h',
+        gasLanePrice: '200 gwei',
       },
       observationSource:
         '    fetch    [type=http method=POST url="http://localhost:8001" requestData="{\\"hi\\": \\"hello\\"}"];\n    parse    [type=jsonparse path="data,result"];\n    multiply [type=multiply times=100];\n    fetch -> parse -> multiply;\n',
@@ -486,6 +487,7 @@ batchFulfillmentGasMultiplier = 1
 chunkSize = 25
 backoffInitialDelay = "1m"
 backoffMaxDelay = "1h"
+gasLanePrice = "200 gwei"
 observationSource = """
     fetch    [type=http method=POST url="http://localhost:8001" requestData="{\\\\"hi\\\\": \\\\"hello\\\\"}"];
     parse    [type=jsonparse path="data,result"];
@@ -543,7 +545,6 @@ observationSource = """
       gasLimit: 1000,
       spec: {
         __typename: 'BootstrapSpec',
-        id: '',
         contractID: '0x0000000000000000000000000000000000000000',
         relay: 'evm',
         relayConfig: {
@@ -564,7 +565,6 @@ schemaVersion = 1
 name = "bootstrap"
 externalJobID = "00000000-0000-0000-0000-0000000000001"
 gasLimit = 1_000
-id = ""
 contractID = "0x0000000000000000000000000000000000000000"
 relay = "evm"
 monitoringEndpoint = "https://monitoring.endpoint"

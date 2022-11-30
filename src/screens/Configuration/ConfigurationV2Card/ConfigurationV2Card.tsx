@@ -14,6 +14,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Typography from '@material-ui/core/Typography'
 
 export const CONFIG_V2_QUERY = gql`
   query FetchConfigV2 {
@@ -38,7 +39,7 @@ export const ConfigurationV2Card = () => {
           <Card>
             <CardHeader title="TOML Configuration" />
             <TOMLPanel
-              title="v2 config dump"
+              title="V2 config dump:"
               error={error?.message}
               loading={loading}
               toml={data?.configv2.user}
@@ -113,15 +114,17 @@ const TOMLPanel = ({ loading, toml, error = '', title, expanded }: Props) => {
   const styles = { display: 'block' }
 
   return (
-    <ExpansionPanel defaultExpanded={expanded}>
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-        {title}
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails style={styles}>
-        <SyntaxHighlighter language="toml" style={prism}>
-          {toml}
-        </SyntaxHighlighter>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+    <Typography>
+      <ExpansionPanel defaultExpanded={expanded}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          {title}
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails style={styles}>
+          <SyntaxHighlighter language="toml" style={prism}>
+            {toml}
+          </SyntaxHighlighter>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    </Typography>
   )
 }

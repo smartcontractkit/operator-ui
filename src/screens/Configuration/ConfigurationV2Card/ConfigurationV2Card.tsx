@@ -8,6 +8,9 @@ import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
 import Grid from '@material-ui/core/Grid'
 
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism'
+
 export const CONFIG_V2_QUERY = gql`
   query FetchConfigV2 {
     configv2 {
@@ -29,7 +32,7 @@ export const ConfigurationV2Card = () => {
       <>
         <Grid item xs={12}>
           <TOMLCard
-            title="TOML Configuration (config dump)"
+            title="TOML Configuration (v2 config dump)"
             error={error?.message}
             loading={loading}
             toml={data?.configv2.user}
@@ -93,14 +96,13 @@ const TOMLCard = ({ loading, toml, error = '', title }: Props) => {
     return <FetchingRow />
   }
 
-  const styles = { marginLeft: '1em' }
-
+    //TODO expandable, start collapsed should be possible
   return (
     <Card>
       {title && <CardHeader title={title} />}
-      <pre style={styles}>
-        <code>{toml}</code>
-      </pre>
+      <SyntaxHighlighter language="toml" style={prism}>
+        {toml}
+      </SyntaxHighlighter>
     </Card>
   )
 }

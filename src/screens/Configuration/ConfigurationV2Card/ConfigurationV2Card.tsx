@@ -24,6 +24,22 @@ export const ConfigurationV2Card = () => {
     fetchPolicy: 'cache-and-network',
   })
 
+  if (data?.configv2.effective == 'N/A') {
+    return (
+      <>
+        <Grid item xs={12}>
+          <TOMLCard
+            title="TOML Configuration (config dump)"
+            error={error?.message}
+            loading={loading}
+            toml={data?.configv2.user}
+            showHead
+          />
+        </Grid>
+      </>
+    )
+  }
+
   return (
     <>
       <Grid item xs={12}>
@@ -77,14 +93,14 @@ const TOMLCard = ({ loading, toml, error = '', title }: Props) => {
     return <FetchingRow />
   }
 
-  let styles = {marginLeft: '1em'};
+  const styles = { marginLeft: '1em' }
 
   return (
     <Card>
       {title && <CardHeader title={title} />}
-        <pre style={styles}>
-          <code>{toml}</code>
-        </pre>
+      <pre style={styles}>
+        <code>{toml}</code>
+      </pre>
     </Card>
   )
 }

@@ -44,7 +44,7 @@ export const ConfigurationCard = () => {
 
   return (
     <KeyValueListCard
-      title="ENV Configuration (legacy)"
+      title="ENV Configuration"
       error={error?.message}
       loading={loading}
       entries={entries}

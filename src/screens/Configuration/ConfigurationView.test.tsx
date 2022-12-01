@@ -18,7 +18,7 @@ describe('ConfigurationView', () => {
       </BuildInfoProvider>,
     )
 
-    expect(await findByText('ENV Configuration (legacy)')).toBeInTheDocument()
+    expect(await findByText('ENV Configuration')).toBeInTheDocument()
     expect(await findByText('Node')).toBeInTheDocument()
     expect(await findByText('Job Runs')).toBeInTheDocument()
     expect(await findByText('Logging')).toBeInTheDocument()

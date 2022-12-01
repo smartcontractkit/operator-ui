@@ -3,6 +3,7 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 
 import { KeyValueListCard } from 'src/components/Cards/KeyValueListCard'
+import {isNil} from "lodash";
 
 export const CONFIG__ITEMS_FIELDS = gql`
   fragment Config_ItemsFields on ConfigItem {
@@ -44,11 +45,11 @@ export const ConfigurationCard = () => {
 
   return (
     <KeyValueListCard
-      title="ENV Configuration (legacy)"
+      title="ENV Configuration"
       error={error?.message}
       loading={loading}
       entries={entries}
-      showHead
+      showHead={isNil(error?.message)}
     />
   )
 }

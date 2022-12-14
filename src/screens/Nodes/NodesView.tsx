@@ -26,6 +26,7 @@ export const NODES_PAYLOAD__RESULTS_FIELDS = gql`
     name
     createdAt
     state
+    sendOnly
   }
 `
 
@@ -97,13 +98,14 @@ export const NodesView: React.FC<Props> = ({
                   <TableCell>Name</TableCell>
                   <TableCell>EVM Chain ID</TableCell>
                   <TableCell>State</TableCell>
+                  <TableCell>Type</TableCell>
                 </TableRow>
               </TableHead>
 
               <TableBody>
                 {filteredNodes.length === 0 && (
                   <TableRow>
-                    <TableCell component="th" scope="row" colSpan={3}>
+                    <TableCell component="th" scope="row" colSpan={4}>
                       No nodes found
                     </TableCell>
                   </TableRow>

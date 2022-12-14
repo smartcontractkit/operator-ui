@@ -34,6 +34,12 @@ Now navigate to http://localhost:3000.
 
 If sign-in doesn't work, check your network console, it's probably a CORS issue. You may need to run your chainlink node with `ALLOW_ORIGINS=http://localhost:3000` set.
 
+## Running Tests
+
+```
+yarn test
+```
+
 ## Contributing
 
 ### Versioning

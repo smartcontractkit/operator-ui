@@ -80,6 +80,7 @@ const JOB_PAYLOAD__SPEC = gql`
     }
     ... on VRFSpec {
       evmChainID
+      gasLanePrice
       coordinatorAddress
       fromAddresses
       minIncomingConfirmations

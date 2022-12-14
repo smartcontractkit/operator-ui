@@ -461,6 +461,7 @@ juelsPerFeeCoinSource = "1000000000"
         chunkSize: 25,
         backoffInitialDelay: '1m',
         backoffMaxDelay: '1h',
+        gasLanePrice: '200 gwei',
       },
       observationSource:
         '    fetch    [type=http method=POST url="http://localhost:8001" requestData="{\\"hi\\": \\"hello\\"}"];\n    parse    [type=jsonparse path="data,result"];\n    multiply [type=multiply times=100];\n    fetch -> parse -> multiply;\n',
@@ -486,6 +487,7 @@ batchFulfillmentGasMultiplier = 1
 chunkSize = 25
 backoffInitialDelay = "1m"
 backoffMaxDelay = "1h"
+gasLanePrice = "200 gwei"
 observationSource = """
     fetch    [type=http method=POST url="http://localhost:8001" requestData="{\\\\"hi\\\\": \\\\"hello\\\\"}"];
     parse    [type=jsonparse path="data,result"];

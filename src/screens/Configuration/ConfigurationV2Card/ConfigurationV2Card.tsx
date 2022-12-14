@@ -7,6 +7,14 @@ import CardHeader from '@material-ui/core/CardHeader'
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
 import Grid from '@material-ui/core/Grid'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Typography from '@material-ui/core/Typography'
 
 export const CONFIG_V2_QUERY = gql`
   query FetchConfigV2 {
@@ -24,25 +32,46 @@ export const ConfigurationV2Card = () => {
     fetchPolicy: 'cache-and-network',
   })
 
+  if (data?.configv2.effective == 'N/A') {
+    return (
+      <>
+        <Grid item xs={12}>
+          <Card>
+            <CardHeader title="TOML Configuration" />
+            <TOMLPanel
+              title="V2 config dump:"
+              error={error?.message}
+              loading={loading}
+              toml={data?.configv2.user}
+              showHead
+            />
+          </Card>
+        </Grid>
+      </>
+    )
+  }
+
   return (
     <>
       <Grid item xs={12}>
-        <TOMLCard
-          title="TOML Configuration (user-specified)"
-          error={error?.message}
-          loading={loading}
-          toml={data?.configv2.user}
-          showHead
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TOMLCard
-          title="TOML Configuration (effective)"
-          error={error?.message}
-          loading={loading}
-          toml={data?.configv2.effective}
-          showHead
-        />
+        <Card>
+          <CardHeader title="TOML Configuration" />
+          <TOMLPanel
+            title="User specified:"
+            error={error?.message}
+            loading={loading}
+            toml={data?.configv2.user}
+            showHead
+            expanded={true}
+          />
+          <TOMLPanel
+            title="Effective (with defaults):"
+            error={error?.message}
+            loading={loading}
+            toml={data?.configv2.effective}
+            showHead
+          />
+        </Card>
       </Grid>
     </>
   )
@@ -54,6 +83,7 @@ interface Props {
   showHead?: boolean
   title?: string
   error?: string
+  expanded?: boolean
 }
 
 const SpanRow: React.FC = ({ children }) => (
@@ -68,7 +98,7 @@ const FetchingRow = () => <SpanRow>...</SpanRow>
 
 const ErrorRow: React.FC = ({ children }) => <SpanRow>{children}</SpanRow>
 
-const TOMLCard = ({ loading, toml, error = '', title }: Props) => {
+const TOMLPanel = ({ loading, toml, error = '', title, expanded }: Props) => {
   if (error) {
     return <ErrorRow>{error}</ErrorRow>
   }
@@ -77,14 +107,24 @@ const TOMLCard = ({ loading, toml, error = '', title }: Props) => {
     return <FetchingRow />
   }
 
-  let styles = {marginLeft: '1em'};
+  if (!title) {
+    title = 'TOML'
+  }
+
+  const styles = { display: 'block' }
 
   return (
-    <Card>
-      {title && <CardHeader title={title} />}
-        <pre style={styles}>
-          <code>{toml}</code>
-        </pre>
-    </Card>
+    <Typography>
+      <ExpansionPanel defaultExpanded={expanded}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          {title}
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails style={styles}>
+          <SyntaxHighlighter language="toml" style={prism}>
+            {toml}
+          </SyntaxHighlighter>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    </Typography>
   )
 }

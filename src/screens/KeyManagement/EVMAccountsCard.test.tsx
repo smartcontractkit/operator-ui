@@ -32,7 +32,7 @@ describe('ETHKeysCard', () => {
     expect(queryByText('Chain ID')).toBeInTheDocument()
     expect(queryAllByText('Enabled')).toHaveLength(3)
     expect(queryByText('LINK Balance')).toBeInTheDocument()
-    expect(queryByText('ETH Balance')).toBeInTheDocument()
+    expect(queryByText('Native Token Balance')).toBeInTheDocument()
     expect(queryByText('Created')).toBeInTheDocument()
 
     expect(

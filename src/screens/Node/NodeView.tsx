@@ -20,6 +20,7 @@ export const NODE_PAYLOAD_FIELDS = gql`
     wsURL
     createdAt
     state
+    sendOnly
   }
 `
 

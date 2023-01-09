@@ -72,7 +72,7 @@ export const AccountBalanceCard: React.FC<Props> = ({
               </Grid>
 
               <Grid item xs={6}>
-                <DetailsCardItemTitle title="ETH Balance" />
+                <DetailsCardItemTitle title="Native Token Balance" />
                 <DetailsCardItemValue value={ethKey.ethBalance || '--'} />
               </Grid>
 

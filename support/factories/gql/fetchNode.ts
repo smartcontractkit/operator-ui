@@ -17,6 +17,7 @@ export function buildNodePayloadFields(
       id: '42',
     },
     state: '',
+    sendOnly: false,
     ...overrides,
   }
 }

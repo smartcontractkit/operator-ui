@@ -15,6 +15,7 @@ export function buildNode(
     },
     createdAt: minuteAgo,
     state: '',
+    sendOnly: false,
     ...overrides,
   }
 }

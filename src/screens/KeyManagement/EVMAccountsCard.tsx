@@ -37,7 +37,7 @@ export const EVMAccountsCard: React.FC<Props> = ({
             <TableCell>Chain ID</TableCell>
             <TableCell>Enabled</TableCell>
             <TableCell>LINK Balance</TableCell>
-            <TableCell>ETH Balance</TableCell>
+            <TableCell>Native Token Balance</TableCell>
             <TableCell>Created</TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>

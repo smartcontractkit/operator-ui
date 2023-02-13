@@ -27,7 +27,7 @@ describe('TabRuns', () => {
           Run Page
         </Route>
       </>,
-      { initialEntries: [`/jobs/1/runs?page=${page}&per=${per}`] },
+      { initialEntries: [`/jobs/1/runs?page=${page}&size=${per}`] },
     )
   }
 

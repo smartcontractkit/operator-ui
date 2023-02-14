@@ -20,7 +20,7 @@ export const TabRuns: React.FC<Props> = ({ fetchMore, job }) => {
     pageSize: number
   }>({
     page: parseInt(params.get('page') || '1', 10),
-    pageSize: parseInt(params.get('per') || '10', 10),
+    pageSize: parseInt(params.get('size') || '10', 10),
   })
 
   React.useEffect(() => {

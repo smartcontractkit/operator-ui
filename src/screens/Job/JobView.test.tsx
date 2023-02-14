@@ -118,7 +118,7 @@ describe('JobView', () => {
       },
     })
 
-    renderComponent({ job, runsCount: 1 }, '/jobs/1/runs?page=1&per=1')
+    renderComponent({ job, runsCount: 1 }, '/jobs/1/runs?page=1&size=1')
 
     userEvent.click(getByRole('button', { name: /next-page/i }))
 

@@ -105,7 +105,7 @@ const JOB_PAYLOAD__SPEC = gql`
       pollPeriod
       runTimeout
       evmChainID
-      fromAddress
+      fromAddresses
     }
     ... on BootstrapSpec {
       contractID

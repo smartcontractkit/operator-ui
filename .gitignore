@@ -8,3 +8,6 @@ tsconfig.tsbuildinfo
 .npmrc
 assets
 yarn-error.log
+
+# OS specific
+.DS_Store

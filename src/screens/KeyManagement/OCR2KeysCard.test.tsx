@@ -17,12 +17,10 @@ function renderComponent(cardProps: OCR2KeysCardProps) {
 
 describe('OCR2KeysCard', () => {
   let promise: Promise<any>
-  let handleCreate: jest.Mock
   let handleDelete: jest.Mock
 
   beforeEach(() => {
     promise = Promise.resolve()
-    handleCreate = jest.fn()
     handleDelete = jest.fn(() => promise)
   })
 
@@ -36,7 +34,6 @@ describe('OCR2KeysCard', () => {
           results: bundles,
         },
       },
-      onCreate: handleCreate,
       onDelete: handleDelete,
     })
 
@@ -73,7 +70,6 @@ describe('OCR2KeysCard', () => {
     renderComponent({
       loading: false,
       errorMsg: 'error message',
-      onCreate: handleCreate,
       onDelete: handleDelete,
     })
 

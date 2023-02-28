@@ -579,4 +579,49 @@ chainID = 1_337
     expect(output.definition).toEqual(expectedOutput)
     expect(output.envDefinition).toEqual('')
   })
+
+  it('generates a valid blockhashstore definition', () => {
+    const job: JobPayload_Fields = {
+      id: '1',
+      type: 'blockhashstore',
+      schemaVersion: 1,
+      name: 'blockhashstore',
+      externalJobID: '00000000-0000-0000-0000-0000000000001',
+      maxTaskDuration: '0s',
+      gasLimit: 1000,
+      spec: {
+        __typename: 'BlockhashStoreSpec',
+        evmChainID: '42161',
+        fromAddresses: ['0x52926EF10c19E810a52f11e942E502B15c7E2fEE'],
+        coordinatorV1Address: '0x3cCad4715152693fE3BC4460591e3D3Fbd071b42',
+        coordinatorV2Address: '0xD427446551a93F4686799EDEcA33Bbb741115a5b',
+        blockhashStoreAddress: '0x5C210eF41CD1a72de73bF76eC39637bB0d3d7BEE',
+        pollPeriod: '300ms',
+        waitBlocks: 30,
+        lookbackBlocks: 240,
+        runTimeout: "10s",
+      },
+      observationSource: '',
+      ...otherJobFields,
+    }
+
+    const expectedOutput = `type = "blockhashstore"
+schemaVersion = 1
+name = "blockhashstore"
+externalJobID = "00000000-0000-0000-0000-0000000000001"
+gasLimit = 1_000
+coordinatorV1Address = "0x3cCad4715152693fE3BC4460591e3D3Fbd071b42"
+coordinatorV2Address = "0xD427446551a93F4686799EDEcA33Bbb741115a5b"
+waitBlocks = 30
+lookbackBlocks = 240
+blockhashStoreAddress = "0x5C210eF41CD1a72de73bF76eC39637bB0d3d7BEE"
+pollPeriod = "300ms"
+runTimeout = "10s"
+evmChainID = "42161"
+fromAddresses = [ "0x52926EF10c19E810a52f11e942E502B15c7E2fEE" ]
+`
+    const output = generateJobDefinition(job)
+    expect(output.definition).toEqual(expectedOutput)
+    expect(output.envDefinition).toEqual('')
+  })
 })

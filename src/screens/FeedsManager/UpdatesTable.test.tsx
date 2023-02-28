@@ -38,6 +38,9 @@ describe('UpdatesTable', () => {
     const rows = getAllByRole('row')
     expect(rows).toHaveLength(3)
 
+    if (approvedProposal.name) {
+      expect(rows[1]).toHaveTextContent(approvedProposal.name)
+    }
     expect(rows[1]).toHaveTextContent(approvedProposal.id)
     expect(rows[1]).toHaveTextContent(approvedProposal.externalJobID as string)
     expect(rows[1]).toHaveTextContent(
@@ -45,6 +48,9 @@ describe('UpdatesTable', () => {
     )
     expect(rows[1]).toHaveTextContent('1 minute ago')
 
+    if (rejectedProposal.name) {
+      expect(rows[1]).toHaveTextContent(rejectedProposal.name)
+    }
     expect(rows[2]).toHaveTextContent(rejectedProposal.id)
     expect(rows[2]).toHaveTextContent('--')
     expect(rows[2]).toHaveTextContent(

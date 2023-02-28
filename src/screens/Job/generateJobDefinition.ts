@@ -235,7 +235,7 @@ export const generateJobDefinition = (
           'pollPeriod',
           'runTimeout',
           'evmChainID',
-          'fromAddress',
+          'fromAddresses',
         ),
         ...extractObservationSourceField(job),
       }

@@ -44,6 +44,7 @@ export const FEEDS_MANAGER_FIELDS = gql`
 export const FEEDS_MANAGER__JOB_PROPOSAL_FIELDS = gql`
   fragment FeedsManager_JobProposalsFields on JobProposal {
     id
+    name
     externalJobID
     remoteUUID
     status

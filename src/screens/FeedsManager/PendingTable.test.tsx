@@ -27,8 +27,12 @@ describe('PendingTable', () => {
     renderComponent([proposal])
 
     expect(queryByText('ID')).toBeInTheDocument()
+    expect(queryByText('Name')).toBeInTheDocument()
     expect(queryByText('Last Proposed')).toBeInTheDocument()
 
+    if (proposal.name) {
+      expect(queryByText(proposal.name)).toBeInTheDocument()
+    }
     expect(queryByText(proposal.id)).toBeInTheDocument()
     expect(queryByText('1 minute ago')).toBeInTheDocument()
   })

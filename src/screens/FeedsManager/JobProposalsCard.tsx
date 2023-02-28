@@ -57,7 +57,11 @@ export const search =
 function matchSimple(proposal: FeedsManager_JobProposalsFields, term: string) {
   const match = searchIncludes(term)
 
-  const dataset: string[] = [proposal.id, proposal.remoteUUID]
+  const dataset: string[] = [
+    proposal.id,
+    proposal.remoteUUID,
+    proposal.name ?? '',
+  ]
   if (proposal.externalJobID) {
     dataset.push(proposal.externalJobID)
   }

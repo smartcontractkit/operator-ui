@@ -23,6 +23,7 @@ export const PendingTable = withStyles(tableStyles)(
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
+            <TableCell>Name</TableCell>
             <TableCell>Last Proposed</TableCell>
           </TableRow>
         </TableHead>
@@ -39,6 +40,7 @@ export const PendingTable = withStyles(tableStyles)(
                 </Link>
               </TableCell>
 
+              <TableCell>{proposal.name || '--'}</TableCell>
               <TableCell>
                 <TimeAgo tooltip>{proposal.latestSpec.createdAt}</TimeAgo>
               </TableCell>

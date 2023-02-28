@@ -27,9 +27,13 @@ describe('InactiveTable', () => {
     renderComponent([proposal])
 
     expect(queryByText('ID')).toBeInTheDocument()
+    expect(queryByText('Name')).toBeInTheDocument()
     expect(queryByText('Latest Version')).toBeInTheDocument()
     expect(queryByText('Last Proposed')).toBeInTheDocument()
 
+    if (proposal.name) {
+      expect(queryByText(proposal.name)).toBeInTheDocument()
+    }
     expect(queryByText(proposal.id)).toBeInTheDocument()
     expect(queryByText(proposal.latestSpec.version)).toBeInTheDocument()
     expect(queryByText('1 minute ago')).toBeInTheDocument()

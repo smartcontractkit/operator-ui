@@ -34,6 +34,7 @@ export function buildPendingJobProposal(
 
   return {
     id: '100',
+    name: 'LINK / USD | OCR1 | contract 0x961924A4d9B3538e8CfB0e85dbEcD5B19EC34d39',
     remoteUUID: '00000000-0000-0000-0000-000000000001',
     status: 'PENDING',
     pendingUpdate: false,
@@ -53,6 +54,7 @@ export function buildApprovedJobProposal(
 
   return {
     id: '200',
+    name: 'LINK / USD | OCR1 | contract 0x961924A4d9B3538e8CfB0e85dbEcD5B19EC34d39',
     remoteUUID: '00000000-0000-0000-0000-000000000002',
     externalJobID: '00000000-0000-0000-0000-000000000002',
     status: 'APPROVED',
@@ -73,6 +75,7 @@ export function buildRejectedJobProposal(
 
   return {
     id: '300',
+    name: 'LINK / USD | OCR1 | contract 0x961924A4d9B3538e8CfB0e85dbEcD5B19EC34d39',
     remoteUUID: '00000000-0000-0000-0000-000000000003',
     status: 'REJECTED',
     pendingUpdate: false,
@@ -92,6 +95,7 @@ export function buildCancelledJobProposal(
 
   return {
     id: '400',
+    name: 'LINK / USD | OCR1 | contract 0x961924A4d9B3538e8CfB0e85dbEcD5B19EC34d39',
     remoteUUID: '00000000-0000-0000-0000-000000000004',
     status: 'CANCELLED',
     pendingUpdate: false,

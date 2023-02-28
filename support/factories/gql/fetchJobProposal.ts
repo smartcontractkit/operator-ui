@@ -11,6 +11,7 @@ export function buildJobProposal(
     status: 'PENDING',
     externalJobID: null,
     specs: [buildJobProposalSpec()],
+    pendingUpdate: false,
     ...overrides,
   }
 }

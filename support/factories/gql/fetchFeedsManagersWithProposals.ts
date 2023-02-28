@@ -107,6 +107,25 @@ export function buildCancelledJobProposal(
   }
 }
 
+// buildDeletedJobProposal builds an cancelled job proposal.
+export function buildDeletedJobProposal(
+  overrides?: Partial<FeedsManager_JobProposalsFields>,
+): FeedsManager_JobProposalsFields {
+  const minuteAgo = isoDate(Date.now() - MINUTE_MS)
+
+  return {
+    id: '400',
+    remoteUUID: '00000000-0000-0000-0000-000000000004',
+    status: 'DELETED',
+    pendingUpdate: true,
+    latestSpec: {
+      createdAt: minuteAgo,
+      version: 1,
+    },
+    ...overrides,
+  }
+}
+
 // buildJobProposals builds a list of job proposals each containing a different
 // status for a FetchFeedsManagersWithProposals query
 export function buildJobProposals(): FeedsManager_JobProposalsFields[] {
@@ -115,5 +134,6 @@ export function buildJobProposals(): FeedsManager_JobProposalsFields[] {
     buildApprovedJobProposal(),
     buildRejectedJobProposal(),
     buildCancelledJobProposal(),
+    buildDeletedJobProposal(),
   ]
 }

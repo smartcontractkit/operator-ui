@@ -27,10 +27,14 @@ describe('ApprovedTable', () => {
     renderComponent([proposal])
 
     expect(queryByText('ID')).toBeInTheDocument()
+    expect(queryByText('Name')).toBeInTheDocument()
     expect(queryByText('External Job ID')).toBeInTheDocument()
     expect(queryByText('Latest Version')).toBeInTheDocument()
     expect(queryByText('Last Proposed')).toBeInTheDocument()
 
+    if (proposal.name) {
+      expect(queryByText(proposal.name)).toBeInTheDocument()
+    }
     expect(queryByText(proposal.id)).toBeInTheDocument()
     expect(queryByText(proposal.externalJobID as string)).toBeInTheDocument()
     expect(queryByText(proposal.latestSpec.version)).toBeInTheDocument()

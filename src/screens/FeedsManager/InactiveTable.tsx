@@ -24,6 +24,7 @@ export const InactiveTable = withStyles(tableStyles)(
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
+            <TableCell>Name</TableCell>
             <TableCell>Latest Version</TableCell>
             <TableCell>Last Proposed</TableCell>
             <TableCell></TableCell>
@@ -42,6 +43,7 @@ export const InactiveTable = withStyles(tableStyles)(
                 </Link>
               </TableCell>
 
+              <TableCell>{proposal.name || '--'}</TableCell>
               <TableCell>{proposal.latestSpec.version}</TableCell>
               <TableCell>
                 <TimeAgo tooltip>{proposal.latestSpec.createdAt}</TimeAgo>

@@ -23,6 +23,7 @@ export const UpdatesTable = withStyles(tableStyles)(
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
+            <TableCell>Name</TableCell>
             <TableCell>External Job ID</TableCell>
             <TableCell>Latest Version</TableCell>
             <TableCell>Last Proposed</TableCell>
@@ -40,6 +41,7 @@ export const UpdatesTable = withStyles(tableStyles)(
                   {proposal.id}
                 </Link>
               </TableCell>
+              <TableCell>{proposal.name || '--'}</TableCell>
               <TableCell>{proposal.externalJobID || '--'}</TableCell>
               <TableCell>{proposal.latestSpec.version}</TableCell>
               <TableCell>

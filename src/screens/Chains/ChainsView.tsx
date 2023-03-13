@@ -11,9 +11,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
 
-import BaseLink from 'src/components/BaseLink'
 import { BetaAlert } from './BetaAlert'
-import Button from 'src/components/Button'
 import { ChainRow } from './ChainRow'
 import Content from 'src/components/Content'
 import { Heading1 } from 'src/components/Heading/Heading1'
@@ -73,22 +71,8 @@ export const ChainsView: React.FC<Props> = ({
           <BetaAlert />
         </Grid>
 
-        <Grid item xs={9}>
+        <Grid item xs={12}>
           <Heading1>Chains</Heading1>
-        </Grid>
-
-        <Grid item xs={3}>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Button
-                variant="secondary"
-                component={BaseLink}
-                href={'/chains/new'}
-              >
-                New Chain
-              </Button>
-            </Grid>
-          </Grid>
         </Grid>
 
         <Grid item xs={12}>

@@ -23,6 +23,7 @@ const tabToStatus: { [key: number]: string } = {
   2: 'APPROVED',
   3: 'REJECTED',
   4: 'CANCELLED',
+  5: 'DELETED',
 }
 
 const styles = (theme: Theme) => {
@@ -84,6 +85,7 @@ export const JobProposalsCard = withStyles(styles)(
       APPROVED: number
       REJECTED: number
       CANCELLED: number
+      DELETED: number
     } = React.useMemo(() => {
       const tabBadgeCounts = {
         PENDING: 0,
@@ -91,6 +93,7 @@ export const JobProposalsCard = withStyles(styles)(
         APPROVED: 0,
         REJECTED: 0,
         CANCELLED: 0,
+        DELETED: 0,
       }
 
       proposals.forEach((p) => {
@@ -110,6 +113,10 @@ export const JobProposalsCard = withStyles(styles)(
               break
             case 'REJECTED':
               tabBadgeCounts['REJECTED']++
+
+              break
+            case 'DELETED':
+              tabBadgeCounts['DELETED']++
 
               break
             default:
@@ -158,6 +165,8 @@ export const JobProposalsCard = withStyles(styles)(
           return <InactiveTable proposals={proposals} />
         case 'APPROVED':
           return <ApprovedTable proposals={proposals} />
+        case 'DELETED':
+          return <InactiveTable proposals={proposals} />
         default:
           return null
       }
@@ -236,6 +245,18 @@ export const JobProposalsCard = withStyles(styles)(
                   data-testid="cancelled-badge"
                 >
                   Cancelled
+                </Badge>
+              }
+            />
+            <Tab
+              label={
+                <Badge
+                  color="primary"
+                  badgeContent={tabBadgeCounts.DELETED}
+                  className={classes.badge}
+                  data-testid="deleted-badge"
+                >
+                  Deleted
                 </Badge>
               }
             />

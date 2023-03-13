@@ -55,12 +55,16 @@ const styles = (theme: Theme) => {
     editContainer: {
       flex: 1,
     },
-    actionsContainer: {},
+    actionsContainer: {
+      flex: 1,
+      textAlign: 'right',
+    },
   })
 }
 
 interface Props extends WithStyles<typeof styles> {
   specs: ReadonlyArray<JobProposal_SpecsFields>
+  proposal: JobProposalPayloadFields
   onApprove: (specID: string) => void
   onReject: (specID: string) => void
   onCancel: (specID: string) => void
@@ -88,7 +92,15 @@ const confirmationDialogText = {
 }
 
 export const SpecsView = withStyles(styles)(
-  ({ classes, onApprove, onCancel, onReject, onUpdateSpec, specs }: Props) => {
+  ({
+    classes,
+    onApprove,
+    onCancel,
+    onReject,
+    onUpdateSpec,
+    specs,
+    proposal,
+  }: Props) => {
     const [confirmationDialog, setConfirmationDialog] =
       React.useState<ConfirmationDialogArgs | null>(null)
     const [isEditing, setIsEditing] = React.useState(false)
@@ -112,7 +124,11 @@ export const SpecsView = withStyles(styles)(
       return sorted.sort((a, b) => b.version - a.version)
     }, [specs])
 
-    const renderActions = (status: SpecStatus, specID: string) => {
+    const renderActions = (
+      status: SpecStatus,
+      specID: string,
+      proposal: JobProposalPayloadFields,
+    ) => {
       switch (status) {
         case 'PENDING':
           return (
@@ -125,7 +141,7 @@ export const SpecsView = withStyles(styles)(
                 Reject
               </Button>
 
-              {latestSpec.id === specID && (
+              {latestSpec.id === specID && proposal.status !== 'DELETED' && (
                 <Button
                   variant="contained"
                   color="primary"
@@ -134,32 +150,59 @@ export const SpecsView = withStyles(styles)(
                   Approve
                 </Button>
               )}
+
+              {latestSpec.id === specID &&
+                proposal.status === 'DELETED' &&
+                proposal.pendingUpdate && (
+                  <>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => openConfirmationDialog('cancel', specID)}
+                    >
+                      Cancel
+                    </Button>
+
+                    <Typography color="error">
+                      This proposal was deleted. Cancel the spec to delete any
+                      running jobs
+                    </Typography>
+                  </>
+                )}
             </>
           )
         case 'APPROVED':
           return (
-            <Button
-              variant="contained"
-              onClick={() => openConfirmationDialog('cancel', specID)}
-            >
-              Cancel
-            </Button>
+            <>
+              <Button
+                variant="contained"
+                onClick={() => openConfirmationDialog('cancel', specID)}
+              >
+                Cancel
+              </Button>
+
+              {proposal.status === 'DELETED' && proposal.pendingUpdate && (
+                <Typography color="error">
+                  This proposal was deleted. Cancel the spec to delete any
+                  running jobs
+                </Typography>
+              )}
+            </>
           )
         case 'CANCELLED':
-          if (latestSpec.id !== specID) {
-            return null
+          if (latestSpec.id === specID && proposal.status !== 'DELETED') {
+            return (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => openConfirmationDialog('approve', specID)}
+              >
+                Approve
+              </Button>
+            )
           }
 
-          return (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => openConfirmationDialog('approve', specID)}
-            >
-              Approve
-            </Button>
-          )
-
+          return null
         default:
           return null
       }
@@ -193,7 +236,8 @@ export const SpecsView = withStyles(styles)(
                 <div className={classes.editContainer}>
                   {idx === 0 &&
                     (spec.status === 'PENDING' ||
-                      spec.status === 'CANCELLED') && (
+                      spec.status === 'CANCELLED') &&
+                    proposal.status !== 'DELETED' && (
                       <Button
                         variant="contained"
                         onClick={() => setIsEditing(true)}
@@ -203,7 +247,7 @@ export const SpecsView = withStyles(styles)(
                     )}
                 </div>
                 <div className={classes.actionsContainer}>
-                  {renderActions(spec.status, spec.id)}
+                  {renderActions(spec.status, spec.id, proposal)}
                 </div>
               </div>
 

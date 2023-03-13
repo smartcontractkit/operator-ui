@@ -8,6 +8,7 @@ import {
   buildApprovedJobProposal,
   buildCancelledJobProposal,
   buildRejectedJobProposal,
+  buildDeletedJobProposal,
 } from 'support/factories/gql/fetchFeedsManagersWithProposals'
 import { JobProposalsCard } from './JobProposalsCard'
 
@@ -30,19 +31,22 @@ describe('JobProposalsCard', () => {
       buildApprovedJobProposal({ pendingUpdate: true }),
       buildRejectedJobProposal({ pendingUpdate: true }),
       buildCancelledJobProposal({ pendingUpdate: true }),
+      buildDeletedJobProposal({ pendingUpdate: true }),
+      buildDeletedJobProposal({ pendingUpdate: false }),
     ]
 
     renderWithRouter(<JobProposalsCard proposals={proposals} />)
 
-    expect(getByTestId('updates-badge')).toHaveTextContent('3')
+    expect(getByTestId('updates-badge')).toHaveTextContent('4')
     expect(getByTestId('approved-badge')).toHaveTextContent('1')
     expect(getByTestId('rejected-badge')).toHaveTextContent('1')
     expect(getByTestId('cancelled-badge')).toHaveTextContent('1')
+    expect(getByTestId('deleted-badge')).toHaveTextContent('1')
 
     userEvent.click(getByRole('tab', { name: /updates/i }))
 
     const rows = await findAllByRole('row')
-    expect(rows).toHaveLength(4)
+    expect(rows).toHaveLength(5)
   })
 
   it('renders the approved job proposals', async () => {
@@ -73,6 +77,17 @@ describe('JobProposalsCard', () => {
     renderWithRouter(<JobProposalsCard proposals={proposals} />)
 
     userEvent.click(getByRole('tab', { name: /cancelled/i }))
+
+    const rows = await findAllByRole('row')
+    expect(rows).toHaveLength(2)
+  })
+
+  it('renders the deleted job proposals', async () => {
+    const proposals = buildJobProposals()
+
+    renderWithRouter(<JobProposalsCard proposals={proposals} />)
+
+    userEvent.click(getByRole('tab', { name: /deleted/i }))
 
     const rows = await findAllByRole('row')
     expect(rows).toHaveLength(2)

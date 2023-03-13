@@ -177,4 +177,26 @@ describe('JobProposalView', () => {
       expect(queryByText(/edit/i)).toBeNull()
     })
   })
+
+  describe('deleted proposal', () => {
+    let proposal: JobProposalPayloadFields
+
+    beforeEach(() => {
+      proposal = buildJobProposal({
+        status: 'DELETED',
+        specs: [buildJobProposalSpec({ status: 'APPROVED' })],
+      })
+    })
+
+    it('renders a rejected job proposal', async () => {
+      renderComponent(proposal)
+
+      expect(queryByText('Deleted')).toBeInTheDocument()
+
+      expect(getByTestId('codeblock')).toHaveTextContent(
+        proposal.specs[0].definition,
+      )
+      expect(queryByText(/edit/i)).toBeNull()
+    })
+  })
 })

@@ -219,7 +219,7 @@ const RegionalNavComponent = ({
               alignItems="center"
               className={classes.mainRow}
             >
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 {chain && (
                   <Typography
                     variant="h5"
@@ -229,31 +229,6 @@ const RegionalNavComponent = ({
                     Chain {chain.id || chainId}
                   </Typography>
                 )}
-              </Grid>
-              <Grid item xs={6} className={classes.actions}>
-                <Link href={`/chains/${chainId}/nodes/new`}>
-                  <Button
-                    className={classes.regionalNavButton}
-                    variant="secondary"
-                  >
-                    Add Node
-                  </Button>
-                </Link>
-                <Link href={`/chains/${chainId}/edit`}>
-                  <Button
-                    className={classes.regionalNavButton}
-                    variant="secondary"
-                  >
-                    Update Chain
-                  </Button>
-                  <Button
-                    className={classes.regionalNavButton}
-                    onClick={() => setModalOpen(true)}
-                    variant="danger"
-                  >
-                    Delete Chain
-                  </Button>
-                </Link>
               </Grid>
             </Grid>
           </Grid>
@@ -277,17 +252,6 @@ const RegionalNavComponent = ({
                   )}
                 >
                   Nodes
-                </Link>
-              </ListItem>
-              <ListItem className={classes.horizontalNavItem}>
-                <Link
-                  href={`/chains/${chainId}/config-overrides`}
-                  className={classNames(
-                    classes.horizontalNavLink,
-                    navOverridesActive && classes.activeNavLink,
-                  )}
-                >
-                  Config Overrides
                 </Link>
               </ListItem>
             </List>

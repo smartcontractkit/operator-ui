@@ -29,8 +29,8 @@ export const PendingTable = withStyles(tableStyles)(
         </TableHead>
 
         <TableBody>
-          {proposals?.map((proposal, idx) => (
-            <TableRow key={idx} className={classes.row} hover>
+          {proposals?.map((proposal) => (
+            <TableRow key={proposal.id} className={classes.row} hover>
               <TableCell className={classes.cell} component="th" scope="row">
                 <Link
                   className={classes.link}

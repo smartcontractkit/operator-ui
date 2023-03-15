@@ -10,7 +10,6 @@ import Notifications from 'pages/Notifications'
 import PrivateRoute from './PrivateRoute'
 
 import { ChainsScreen } from 'screens/Chains/ChainsScreen'
-import ChainsNew from 'pages/Chains/New'
 import ChainShow from 'pages/Chains/Show'
 import NotFound from 'pages/NotFound'
 
@@ -61,9 +60,6 @@ const Private = ({ classes }: { classes: { content: string } }) => {
 
               <PrivateRoute exact path="/chains">
                 <ChainsScreen />
-              </PrivateRoute>
-              <PrivateRoute exact path="/chains/new">
-                <ChainsNew />
               </PrivateRoute>
 
               <PrivateRoute path="/chains/:chainId">

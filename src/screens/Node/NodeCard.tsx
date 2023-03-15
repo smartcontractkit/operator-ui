@@ -1,13 +1,6 @@
 import React from 'react'
 
-import DeleteIcon from '@material-ui/icons/Delete'
 import Grid from '@material-ui/core/Grid'
-import IconButton from '@material-ui/core/IconButton'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
 
 import {
   DetailsCard,
@@ -17,47 +10,11 @@ import {
 
 interface Props {
   node: NodePayload_Fields
-  onDelete: () => void
 }
 
-export const NodeCard: React.FC<Props> = ({ node, onDelete }) => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-
-  const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
-
-  const onDeleteClick = () => {
-    onDelete()
-    setAnchorEl(null)
-  }
-
+export const NodeCard: React.FC<Props> = ({ node }) => {
   return (
-    <DetailsCard
-      actions={
-        <div>
-          <IconButton onClick={handleOpen} aria-label="open-menu">
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={onDeleteClick}>
-              <ListItemIcon>
-                <DeleteIcon />
-              </ListItemIcon>
-              <ListItemText>Delete</ListItemText>
-            </MenuItem>
-          </Menu>
-        </div>
-      }
-    >
+    <DetailsCard>
       <Grid container>
 
         <Grid item xs={12} sm={4} md={3}>

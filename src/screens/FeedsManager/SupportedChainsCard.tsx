@@ -348,9 +348,9 @@ export const SupportedChainsCard = withStyles(styles)(
           }
         />
 
-        {cfgs.map((cfg, idx) => (
+        {cfgs.map((cfg) => (
           <ExpansionPanel
-            key={idx}
+            key={cfg.id}
             defaultExpanded={false}
             classes={{
               root: classes.panel,
@@ -463,26 +463,6 @@ const OCRJobTypeRow = withStyles(styles)(
       return null
     }
 
-    const renderBootstrap = () => (
-      <Grid item xs={12} sm={1} md={5}>
-        <DetailsCardItemTitle title="Multiaddr" />
-        <DetailsCardItemValue value={cfg.multiaddr} />
-      </Grid>
-    )
-
-    const renderOracle = () => (
-      <>
-        <Grid item xs={12} sm={1} md={5}>
-          <DetailsCardItemTitle title="P2P Peer ID" />
-          <DetailsCardItemValue value={cfg.p2pPeerID} />
-        </Grid>
-        <Grid item xs={12} sm={1} md={5}>
-          <DetailsCardItemTitle title="OCR Key ID" />
-          <DetailsCardItemValue value={cfg.keyBundleID} />
-        </Grid>
-      </>
-    )
-
     return (
       <>
         <Grid item xs={12} sm={1} md={2}>
@@ -494,7 +474,7 @@ const OCRJobTypeRow = withStyles(styles)(
           </div>
         </Grid>
 
-        {cfg.isBootstrap ? renderBootstrap() : renderOracle()}
+        {cfg.isBootstrap ? renderBootstrap(cfg) : renderOracle(cfg)}
       </>
     )
   },
@@ -510,26 +490,6 @@ const OCR2JobTypeRow = withStyles(styles)(
       return null
     }
 
-    const renderBootstrap = () => (
-      <Grid item xs={12} sm={1} md={5}>
-        <DetailsCardItemTitle title="Multiaddr" />
-        <DetailsCardItemValue value={cfg.multiaddr} />
-      </Grid>
-    )
-
-    const renderOracle = () => (
-      <>
-        <Grid item xs={12} sm={1} md={5}>
-          <DetailsCardItemTitle title="P2P Peer ID" />
-          <DetailsCardItemValue value={cfg.p2pPeerID} />
-        </Grid>
-        <Grid item xs={12} sm={1} md={5}>
-          <DetailsCardItemTitle title="OCR Key ID" />
-          <DetailsCardItemValue value={cfg.keyBundleID} />
-        </Grid>
-      </>
-    )
-
     return (
       <>
         <Grid item xs={12} sm={1} md={2}>
@@ -541,8 +501,36 @@ const OCR2JobTypeRow = withStyles(styles)(
           </div>
         </Grid>
 
-        {cfg.isBootstrap ? renderBootstrap() : renderOracle()}
+        {cfg.isBootstrap ? renderBootstrap(cfg) : renderOracle(cfg)}
       </>
     )
   },
+)
+
+const renderBootstrap = (
+  cfg:
+    | FeedsManager_ChainConfigFields['ocr2JobConfig']
+    | FeedsManager_ChainConfigFields['ocr1JobConfig'],
+) => (
+  <Grid item xs={12} sm={1} md={5}>
+    <DetailsCardItemTitle title="Multiaddr" />
+    <DetailsCardItemValue value={cfg.multiaddr} />
+  </Grid>
+)
+
+const renderOracle = (
+  cfg:
+    | FeedsManager_ChainConfigFields['ocr2JobConfig']
+    | FeedsManager_ChainConfigFields['ocr1JobConfig'],
+) => (
+  <>
+    <Grid item xs={12} sm={1} md={5}>
+      <DetailsCardItemTitle title="P2P Peer ID" />
+      <DetailsCardItemValue value={cfg.p2pPeerID} />
+    </Grid>
+    <Grid item xs={12} sm={1} md={5}>
+      <DetailsCardItemTitle title="OCR Key ID" />
+      <DetailsCardItemValue value={cfg.keyBundleID} />
+    </Grid>
+  </>
 )

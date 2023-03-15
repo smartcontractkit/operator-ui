@@ -22,6 +22,7 @@ export const JOB_PROPOSAL_PAYLOAD_FIELDS = gql`
       ...JobProposal_SpecsFields
     }
     status
+    pendingUpdate
   }
 `
 
@@ -59,6 +60,7 @@ export const JobProposalView: React.FC<Props> = ({
       <Grid container spacing={32}>
         <Grid item xs={12}>
           <SpecsView
+            proposal={proposal}
             specs={proposal.specs}
             onReject={onReject}
             onApprove={onApprove}

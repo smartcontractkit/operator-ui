@@ -5,9 +5,6 @@ import { NodeResource } from './ChainNodes'
 import RegionalNav from './RegionalNav'
 import { Resource, Chain } from 'core/store/models'
 import { ChainNodes } from './ChainNodes'
-import { ChainConfig } from './ChainConfig'
-import NewChainNode from './NewChainNode'
-import UpdateChain from './UpdateChain'
 
 export type ChainResource = Resource<Chain>
 
@@ -42,15 +39,6 @@ export const ChainsShow = () => {
     <>
       <RegionalNav chainId={chainId} chain={chain} />
       <Switch>
-        <Route path={`${path}/nodes/new`}>
-          {chain && <NewChainNode chain={chain} />}
-        </Route>
-        <Route path={`${path}/edit`}>
-          {chain && <UpdateChain chain={chain} />}
-        </Route>
-        <Route path={`${path}/config-overrides`}>
-          {chain && <ChainConfig chain={chain} />}
-        </Route>
         <Route path={`${path}`}>
           {chain && <ChainNodes nodes={nodes} chain={chain} />}
         </Route>

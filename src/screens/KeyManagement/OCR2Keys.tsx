@@ -3,12 +3,10 @@ import React from 'react'
 import { gql, useMutation } from '@apollo/client'
 import { useDispatch } from 'react-redux'
 
-import { useMutationErrorHandler } from 'src/hooks/useMutationErrorHandler'
-import {
-  deleteSuccessNotification,
-} from './notifications'
+import { deleteSuccessNotification } from './notifications'
 import { OCR2KeysCard } from './OCR2KeysCard'
 import { useOCR2KeysQuery } from 'src/hooks/queries/useOCR2KeysQuery'
+import { useQueryErrorHandler } from 'hooks/useQueryErrorHandler'
 
 export const DELETE_OCR2_KEY_BUNDLE_MUTATION = gql`
   mutation DeleteOCR2KeyBundle($id: ID!) {
@@ -27,9 +25,10 @@ export const DELETE_OCR2_KEY_BUNDLE_MUTATION = gql`
  */
 export const OCR2Keys = () => {
   const dispatch = useDispatch()
-  const { handleMutationError } = useMutationErrorHandler()
+  const { handleQueryError } = useQueryErrorHandler()
   const { data, loading, error, refetch } = useOCR2KeysQuery({
     fetchPolicy: 'network-only',
+    onError: handleQueryError,
   })
 
   const [deleteOCR2KeyBundle] = useMutation<
@@ -55,7 +54,7 @@ export const OCR2Keys = () => {
           break
       }
     } catch (e) {
-      handleMutationError(e)
+      handleQueryError(e)
     }
   }
 

@@ -41,7 +41,7 @@ export const OCR2KeysCard: React.FC<Props> = ({
     null,
   )
 
-  if (errorMsg === "Unauthorized") {
+  if (errorMsg === 'Unauthorized') {
     /**
      * Redirect to the index to trigger login with a loss of
      * authorization.  This approach is currently used because
@@ -58,7 +58,7 @@ export const OCR2KeysCard: React.FC<Props> = ({
             title="Off-Chain Reporting 2 Keys"
             subheader="Authorization Failure"
           />
-          <meta http-equiv="Refresh" content="0; url='/'" />
+          <meta httpEquiv="Refresh" content="0; url='/'" />
         </Card>
       </>
     )
@@ -81,7 +81,9 @@ export const OCR2KeysCard: React.FC<Props> = ({
           </TableHead>
           <TableBody>
             <LoadingRow visible={loading} />
-            <NoContentRow visible={data?.ocr2KeyBundles.results?.length === 0} />
+            <NoContentRow
+              visible={data?.ocr2KeyBundles.results?.length === 0}
+            />
             <ErrorRow msg={errorMsg} />
 
             {data?.ocr2KeyBundles.results?.map((bundle, idx) => (

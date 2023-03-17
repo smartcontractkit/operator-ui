@@ -15,6 +15,7 @@ import { TaskListCard } from 'src/components/Cards/TaskListCard'
 import { TaskRunsCard } from './TaskRunsCard'
 import { JSONCard } from './JSONCard'
 import { TaskRunStatus } from 'src/utils/taskRunStatus'
+import { parseDot } from 'utils/parseDot'
 
 export const JOB_RUN_PAYLOAD__TASK_RUNS_FIELDS = gql`
   fragment JobRunPayload_TaskRunsFields on TaskRun {
@@ -59,7 +60,8 @@ export const JobRunView = ({ run }: Props) => {
 
   // Generate a list of attributes which will get added to the stratify array.
   // We do this so we can display the correct status icon in the TaskList DAG
-  const attrs = run.taskRuns.reduce((acc, run) => {
+  type Attributes = Record<string, { status: TaskRunStatus }>
+  const attrs = run.taskRuns.reduce<Attributes>((acc, run) => {
     let status: TaskRunStatus
 
     if (run.error) {
@@ -77,6 +79,18 @@ export const JobRunView = ({ run }: Props) => {
       },
     }
   }, {})
+
+  //When there are no errors, taskRun is empty so attributes are not set, we
+  //must insert attributes
+  if (run.allErrors.length == 0) {
+    const graph = parseDot(`digraph {${run.job.observationSource}}`)
+    graph.forEach((node) => {
+      attrs[node.id] = {
+        ...node.attributes,
+        status: TaskRunStatus.COMPLETE,
+      }
+    })
+  }
 
   return (
     <Content>

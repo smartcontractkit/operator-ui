@@ -66,16 +66,6 @@ describe('OCR2KeysCard', () => {
     expect(queryByRole('progressbar')).toBeInTheDocument()
   })
 
-  it('renders an error message', () => {
-    renderComponent({
-      loading: false,
-      errorMsg: 'error message',
-      onDelete: handleDelete,
-    })
-
-    expect(queryByText('error message')).toBeInTheDocument()
-  })
-
   it('calls onDelete', async () => {
     const bundle = buildOCR2KeyBundle()
     renderComponent({

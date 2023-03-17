@@ -89,6 +89,6 @@ describe('useQueryErrorHandler', () => {
   it('renders a generic message in an alert as a default', () => {
     renderComponent('generic message') // A string type is not handled and falls to the default
 
-    expect(getByText('An error occured')).toBeInTheDocument()
+    expect(getByText('An error occurred')).toBeInTheDocument()
   })
 })

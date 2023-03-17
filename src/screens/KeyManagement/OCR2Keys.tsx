@@ -26,7 +26,7 @@ export const DELETE_OCR2_KEY_BUNDLE_MUTATION = gql`
 export const OCR2Keys = () => {
   const dispatch = useDispatch()
   const { handleQueryError } = useQueryErrorHandler()
-  const { data, loading, error, refetch } = useOCR2KeysQuery({
+  const { data, loading, refetch } = useOCR2KeysQuery({
     fetchPolicy: 'network-only',
     onError: handleQueryError,
   })
@@ -58,12 +58,5 @@ export const OCR2Keys = () => {
     }
   }
 
-  return (
-    <OCR2KeysCard
-      loading={loading}
-      data={data}
-      errorMsg={error?.message}
-      onDelete={handleDelete}
-    />
-  )
+  return <OCR2KeysCard loading={loading} data={data} onDelete={handleDelete} />
 }

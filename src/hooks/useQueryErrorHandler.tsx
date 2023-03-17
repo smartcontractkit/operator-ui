@@ -19,24 +19,25 @@ export const useQueryErrorHandler = () => {
   React.useEffect(() => {
     if (!error) {
       return
-    } else if (error instanceof ApolloError) {
+    }
+
+    if (error instanceof ApolloError) {
       // Check for an authentication error and logout
-      for (let i = 0; i < error.graphQLErrors.length; i++) {
-        const err = error.graphQLErrors[i]
-        if (err.extensions?.code == 'UNAUTHORIZED') {
+      for (const gqlError of error.graphQLErrors) {
+        if (gqlError.extensions?.code == 'UNAUTHORIZED') {
+          dispatch(
+            notifyErrorMsg(
+              'Unauthorized, please log in with proper credentials',
+            ),
+          )
           dispatch(receiveSignoutSuccess())
           history.push('/signin')
 
           return
         }
       }
-
-      dispatch(notifyErrorMsg(error.message || 'An error occurred'))
-    } else if (error instanceof Error) {
-      dispatch(notifyErrorMsg(error.message || 'An error occurred'))
-    } else {
-      dispatch(notifyErrorMsg('An error occurred'))
     }
+    dispatch(notifyErrorMsg((error as Error).message || 'An error occurred'))
   }, [dispatch, error, history])
 
   return { handleQueryError }

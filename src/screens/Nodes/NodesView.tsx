@@ -24,7 +24,6 @@ export const NODES_PAYLOAD__RESULTS_FIELDS = gql`
       id
     }
     name
-    createdAt
     state
     sendOnly
   }

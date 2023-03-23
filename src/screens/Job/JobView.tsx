@@ -77,6 +77,7 @@ const JOB_PAYLOAD__SPEC = gql`
       transmitterID
       pluginType
       pluginConfig
+      feedID
     }
     ... on VRFSpec {
       evmChainID

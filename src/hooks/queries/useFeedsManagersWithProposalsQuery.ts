@@ -23,6 +23,9 @@ const FEEDS_MANAGER__CHAIN_CONFIG_FIELDS = gql`
       multiaddr
       p2pPeerID
       keyBundleID
+      plugins {
+        median
+      }
     }
   }
 `

@@ -71,6 +71,7 @@ export const EditSupportedChainDialog = ({
     ocr2Multiaddr: cfg.ocr2JobConfig.multiaddr,
     ocr2P2PPeerID: cfg.ocr2JobConfig.p2pPeerID,
     ocr2KeyBundleID: cfg.ocr2JobConfig.keyBundleID,
+    ocr2MedianPluginEnabled: cfg.ocr2JobConfig.plugins.median,
   }
 
   const chainIDs: string[] = chainData

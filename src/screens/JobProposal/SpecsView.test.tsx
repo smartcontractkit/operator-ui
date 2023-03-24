@@ -242,4 +242,22 @@ describe('SpecsView', () => {
       expect(queryByText('Cancel')).not.toBeInTheDocument()
     })
   })
+
+  describe('revoked proposal with pending spec', () => {
+    let specs: ReadonlyArray<JobProposal_SpecsFields>
+    let proposal: JobProposalPayloadFields
+
+    beforeEach(() => {
+      proposal = buildJobProposal({ status: 'REVOKED' })
+      specs = [buildJobProposalSpec({ status: 'PENDING' })]
+    })
+
+    it('renders a revoked job proposal', async () => {
+      renderComponent(specs, proposal)
+
+      expect(getByTestId('codeblock')).toHaveTextContent(specs[0].definition)
+      expect(queryByText(/edit/i)).toBeNull()
+      expect(queryByText('Cancel')).not.toBeInTheDocument()
+    })
+  })
 })

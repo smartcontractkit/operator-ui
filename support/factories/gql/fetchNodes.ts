@@ -1,11 +1,7 @@
-import isoDate, { MINUTE_MS } from 'test-helpers/isoDate'
-
 // buildNode builds a node for the FetchNodes query.
 export function buildNode(
   overrides?: Partial<NodesPayload_ResultsFields>,
 ): NodesPayload_ResultsFields {
-  const minuteAgo = isoDate(Date.now() - MINUTE_MS)
-
   return {
     __typename: 'Node',
     id: '1',
@@ -13,7 +9,6 @@ export function buildNode(
     chain: {
       id: '42',
     },
-    createdAt: minuteAgo,
     state: '',
     sendOnly: false,
     ...overrides,
@@ -22,8 +17,6 @@ export function buildNode(
 
 // buildNodes builds a list of nodes.
 export function buildNodes(): ReadonlyArray<NodesPayload_ResultsFields> {
-  const minuteAgo = isoDate(Date.now() - MINUTE_MS)
-
   return [
     buildNode({
       id: '1',
@@ -31,7 +24,6 @@ export function buildNodes(): ReadonlyArray<NodesPayload_ResultsFields> {
       chain: {
         id: '42',
       },
-      createdAt: minuteAgo,
     }),
     buildNode({
       id: '2',
@@ -39,7 +31,6 @@ export function buildNodes(): ReadonlyArray<NodesPayload_ResultsFields> {
       chain: {
         id: '5',
       },
-      createdAt: minuteAgo,
     }),
   ]
 }

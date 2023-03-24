@@ -6,6 +6,7 @@ import Content from 'components/Content'
 import { EVMAccounts } from './EVMAccounts'
 import { CSAKeys } from './CSAKeys'
 import { OCRKeys } from './OCRKeys'
+import { OCR2Keys } from './OCR2Keys'
 import { P2PKeys } from './P2PKeys'
 
 interface Props {
@@ -20,6 +21,10 @@ export const KeyManagementView: React.FC<Props> = ({
       <Grid container>
         <Grid item xs={12}>
           <OCRKeys />
+        </Grid>
+
+        <Grid item xs={12}>
+          <OCR2Keys />
         </Grid>
 
         <Grid item xs={12}>

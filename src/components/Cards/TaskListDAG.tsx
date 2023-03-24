@@ -119,15 +119,15 @@ function createDag({
     .attr('stroke-width', 6)
     .attr('fill', (node) => {
       switch (node.data.attributes?.status) {
-        case 'in_progress':
+        case TaskRunStatus.PENDING:
           // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
           // @ts-ignore because material UI doesn't update theme types with options
           return theme.palette.warning.main
-        case 'completed':
+        case TaskRunStatus.COMPLETE:
           // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
           // @ts-ignore because material UI doesn't update theme types with options
           return theme.palette.success.main
-        case 'errored':
+        case TaskRunStatus.ERROR:
           return theme.palette.error.main
         default:
           return theme.palette.grey['500']

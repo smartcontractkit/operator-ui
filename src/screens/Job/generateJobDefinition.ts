@@ -188,6 +188,7 @@ export const generateJobDefinition = (
           'relayConfig',
           'pluginType',
           'pluginConfig',
+          'feedID',
         ),
         // We need to call 'extractSpecFields' again here so we get the spec
         // fields displaying in alphabetical order.

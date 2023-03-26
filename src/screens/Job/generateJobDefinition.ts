@@ -242,6 +242,19 @@ export const generateJobDefinition = (
       }
 
       break
+    case 'TransmissionSpec':
+      values = {
+        ...extractJobFields(job),
+        ...extractSpecFields(
+          job.spec,
+          'fromAddresses',
+          'evmChainID',
+          'rpcPort',
+        ),
+        ...extractObservationSourceField(job),
+      }
+
+        break
     case 'BootstrapSpec':
       values = {
         ...extractJobFields(job),

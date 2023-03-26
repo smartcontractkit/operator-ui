@@ -108,6 +108,11 @@ const JOB_PAYLOAD__SPEC = gql`
       evmChainID
       fromAddresses
     }
+    ... on TransmissionSpec {
+      fromAddresses
+      evmChainID
+      rpcPort
+    }
     ... on BootstrapSpec {
       contractID
       relay

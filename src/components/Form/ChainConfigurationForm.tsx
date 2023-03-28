@@ -38,6 +38,7 @@ export type FormValues = {
   ocr2Multiaddr?: string | null
   ocr2P2PPeerID?: string | null
   ocr2KeyBundleID?: string | null
+  ocr2MedianPluginEnabled: boolean
 }
 
 const ValidationSchema = Yup.object().shape({
@@ -81,6 +82,7 @@ const ValidationSchema = Yup.object().shape({
       then: Yup.string().required('Required').nullable(),
     })
     .nullable(),
+  ocr2MedianPluginEnabled: Yup.boolean().required('Required'),
 })
 
 const styles = (theme: Theme) => {
@@ -429,7 +431,23 @@ export const ChainConfigurationForm = withStyles(styles)(
                                     ))}
                                 </Field>
                               </Grid>
+
+                              <Grid item xs={12}>
+                                <Typography>Supported Plugins</Typography>
+                              </Grid>
+
+                              <Grid item xs={12}>
+                                <Field
+                                component={CheckboxWithLabel}
+                                  name="ocr2MedianPluginEnabled"
+                                  type="checkbox"
+                                  Label={{
+                                    label: 'Median',
+                                  }}
+                                />
+                              </Grid>
                             </>
+                            
                           )}
                         </>
                       </Grid>

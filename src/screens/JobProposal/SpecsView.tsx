@@ -141,15 +141,17 @@ export const SpecsView = withStyles(styles)(
                 Reject
               </Button>
 
-              {latestSpec.id === specID && proposal.status !== 'DELETED' && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => openConfirmationDialog('approve', specID)}
-                >
-                  Approve
-                </Button>
-              )}
+              {latestSpec.id === specID &&
+                proposal.status !== 'DELETED' &&
+                proposal.status !== 'REVOKED' && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => openConfirmationDialog('approve', specID)}
+                  >
+                    Approve
+                  </Button>
+                )}
 
               {latestSpec.id === specID &&
                 proposal.status === 'DELETED' &&
@@ -190,7 +192,11 @@ export const SpecsView = withStyles(styles)(
             </>
           )
         case 'CANCELLED':
-          if (latestSpec.id === specID && proposal.status !== 'DELETED') {
+          if (
+            latestSpec.id === specID &&
+            proposal.status !== 'DELETED' &&
+            proposal.status !== 'REVOKED'
+          ) {
             return (
               <Button
                 variant="contained"
@@ -237,7 +243,8 @@ export const SpecsView = withStyles(styles)(
                   {idx === 0 &&
                     (spec.status === 'PENDING' ||
                       spec.status === 'CANCELLED') &&
-                    proposal.status !== 'DELETED' && (
+                    proposal.status !== 'DELETED' &&
+                    proposal.status !== 'REVOKED' && (
                       <Button
                         variant="contained"
                         onClick={() => setIsEditing(true)}

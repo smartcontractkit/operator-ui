@@ -9,6 +9,7 @@ import {
   buildCancelledJobProposal,
   buildRejectedJobProposal,
   buildDeletedJobProposal,
+  buildRevokedJobProposal,
 } from 'support/factories/gql/fetchFeedsManagersWithProposals'
 import { JobProposalsCard } from './JobProposalsCard'
 
@@ -33,6 +34,7 @@ describe('JobProposalsCard', () => {
       buildCancelledJobProposal({ pendingUpdate: true }),
       buildDeletedJobProposal({ pendingUpdate: true }),
       buildDeletedJobProposal({ pendingUpdate: false }),
+      buildRevokedJobProposal({ pendingUpdate: false }),
     ]
 
     renderWithRouter(<JobProposalsCard proposals={proposals} />)
@@ -88,6 +90,17 @@ describe('JobProposalsCard', () => {
     renderWithRouter(<JobProposalsCard proposals={proposals} />)
 
     userEvent.click(getByRole('tab', { name: /deleted/i }))
+
+    const rows = await findAllByRole('row')
+    expect(rows).toHaveLength(2)
+  })
+
+  it('renders the revoked job proposals', async () => {
+    const proposals = buildJobProposals()
+
+    renderWithRouter(<JobProposalsCard proposals={proposals} />)
+
+    userEvent.click(getByRole('tab', { name: /revoked/i }))
 
     const rows = await findAllByRole('row')
     expect(rows).toHaveLength(2)

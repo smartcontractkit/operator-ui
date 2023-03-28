@@ -242,6 +242,28 @@ export const generateJobDefinition = (
       }
 
       break
+    case 'BlockHeaderFeederSpec':
+      values = {
+        ...extractJobFields(job),
+        ...extractSpecFields(
+          job.spec,
+          'coordinatorV1Address',
+          'coordinatorV2Address',
+          'waitBlocks',
+          'lookbackBlocks',
+          'blockhashStoreAddress',
+          'batchBlockhashStoreAddress',
+          'pollPeriod',
+          'runTimeout',
+          'evmChainID',
+          'fromAddresses',
+          'getBlockhashesBatchSize',
+          'storeBlockhashesBatchSize',
+        ),
+        ...extractObservationSourceField(job),
+      }
+      break
+
     case 'BootstrapSpec':
       values = {
         ...extractJobFields(job),

@@ -26,6 +26,7 @@ describe('ChainConfigurationForm', () => {
       ocr2Multiaddr: '',
       ocr2P2PPeerID: '',
       ocr2KeyBundleID: '',
+      ocr2MedianPluginEnabled: false,
     }
 
     render(
@@ -72,6 +73,7 @@ describe('ChainConfigurationForm', () => {
       ocr2Multiaddr: '',
       ocr2P2PPeerID: '',
       ocr2KeyBundleID: '',
+      ocr2MedianPluginEnabled: false,
     }
 
     render(
@@ -126,6 +128,7 @@ describe('ChainConfigurationForm', () => {
       ocr2Multiaddr: '',
       ocr2P2PPeerID: '',
       ocr2KeyBundleID: '',
+      ocr2MedianPluginEnabled: false,
     }
 
     render(

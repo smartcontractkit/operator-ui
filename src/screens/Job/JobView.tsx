@@ -108,6 +108,20 @@ const JOB_PAYLOAD__SPEC = gql`
       evmChainID
       fromAddresses
     }
+    ... on BlockHeaderFeederSpec {
+      coordinatorV1Address
+      coordinatorV2Address
+      waitBlocks
+      lookbackBlocks
+      blockhashStoreAddress
+      batchBlockhashStoreAddress
+      pollPeriod
+      runTimeout
+      evmChainID
+      fromAddresses
+      getBlockhashesBatchSize
+      storeBlockhashesBatchSize
+    }
     ... on BootstrapSpec {
       contractID
       relay

@@ -38,7 +38,10 @@ export type FormValues = {
   ocr2Multiaddr?: string | null
   ocr2P2PPeerID?: string | null
   ocr2KeyBundleID?: string | null
+  ocr2CommitPluginEnabled: boolean
+  ocr2ExecutePluginEnabled: boolean
   ocr2MedianPluginEnabled: boolean
+  ocr2MercuryPluginEnabled: boolean
 }
 
 const ValidationSchema = Yup.object().shape({
@@ -82,7 +85,10 @@ const ValidationSchema = Yup.object().shape({
       then: Yup.string().required('Required').nullable(),
     })
     .nullable(),
+  ocr2CommitPluginEnabled: Yup.boolean().required('Required'),
+  ocr2ExecutePluginEnabled: Yup.boolean().required('Required'),
   ocr2MedianPluginEnabled: Yup.boolean().required('Required'),
+  ocr2MercuryPluginEnabled: Yup.boolean().required('Required'),
 })
 
 const styles = (theme: Theme) => {
@@ -436,13 +442,43 @@ export const ChainConfigurationForm = withStyles(styles)(
                                 <Typography>Supported Plugins</Typography>
                               </Grid>
 
-                              <Grid item xs={12}>
+                              <Grid item xs={6}>
+                                <Field
+                                component={CheckboxWithLabel}
+                                  name="ocr2CommitPluginEnabled"
+                                  type="checkbox"
+                                  Label={{
+                                    label: 'Commit',
+                                  }}
+                                />
+                              </Grid>
+                              <Grid item xs={6}>
+                                <Field
+                                component={CheckboxWithLabel}
+                                  name="ocr2ExecutePluginEnabled"
+                                  type="checkbox"
+                                  Label={{
+                                    label: 'Execute',
+                                  }}
+                                />
+                              </Grid>
+                              <Grid item xs={6}>
                                 <Field
                                 component={CheckboxWithLabel}
                                   name="ocr2MedianPluginEnabled"
                                   type="checkbox"
                                   Label={{
                                     label: 'Median',
+                                  }}
+                                />
+                              </Grid>
+                              <Grid item xs={6}>
+                                <Field
+                                component={CheckboxWithLabel}
+                                  name="ocr2MercuryPluginEnabled"
+                                  type="checkbox"
+                                  Label={{
+                                    label: 'Mercury',
                                   }}
                                 />
                               </Grid>

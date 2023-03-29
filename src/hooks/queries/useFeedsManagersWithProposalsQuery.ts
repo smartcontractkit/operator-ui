@@ -24,7 +24,10 @@ const FEEDS_MANAGER__CHAIN_CONFIG_FIELDS = gql`
       p2pPeerID
       keyBundleID
       plugins {
+        commit
+        execute
         median
+        mercury
       }
     }
   }

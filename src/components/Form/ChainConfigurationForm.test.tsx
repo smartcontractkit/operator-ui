@@ -26,7 +26,10 @@ describe('ChainConfigurationForm', () => {
       ocr2Multiaddr: '',
       ocr2P2PPeerID: '',
       ocr2KeyBundleID: '',
+      ocr2CommitPluginEnabled: false,
+      ocr2ExecutePluginEnabled: false,
       ocr2MedianPluginEnabled: false,
+      ocr2MercuryPluginEnabled: false,
     }
 
     render(
@@ -73,7 +76,10 @@ describe('ChainConfigurationForm', () => {
       ocr2Multiaddr: '',
       ocr2P2PPeerID: '',
       ocr2KeyBundleID: '',
+      ocr2CommitPluginEnabled: false,
+      ocr2ExecutePluginEnabled: false,
       ocr2MedianPluginEnabled: false,
+      ocr2MercuryPluginEnabled: false,
     }
 
     render(
@@ -128,7 +134,10 @@ describe('ChainConfigurationForm', () => {
       ocr2Multiaddr: '',
       ocr2P2PPeerID: '',
       ocr2KeyBundleID: '',
+      ocr2CommitPluginEnabled: false,
+      ocr2ExecutePluginEnabled: false,
       ocr2MedianPluginEnabled: false,
+      ocr2MercuryPluginEnabled: false,
     }
 
     render(

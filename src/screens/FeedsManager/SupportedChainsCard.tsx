@@ -221,7 +221,7 @@ export const SupportedChainsCard = withStyles(styles)(
                 values.ocr2P2PPeerID !== '' ? values.ocr2P2PPeerID : null,
               ocr2KeyBundleID:
                 values.ocr2KeyBundleID != '' ? values.ocr2KeyBundleID : null,
-              ocr2Plugins: `{"median":${values.ocr2MedianPluginEnabled}}`
+              ocr2Plugins: `{"commit":${values.ocr2CommitPluginEnabled},"execute":${values.ocr2ExecutePluginEnabled},"median":${values.ocr2MedianPluginEnabled},"mercury":${values.ocr2MercuryPluginEnabled}}`
             },
           },
         })
@@ -293,7 +293,7 @@ export const SupportedChainsCard = withStyles(styles)(
                 values.ocr2P2PPeerID !== '' ? values.ocr2P2PPeerID : null,
               ocr2KeyBundleID:
                 values.ocr2KeyBundleID != '' ? values.ocr2KeyBundleID : null,
-              ocr2Plugins: `{"median":${values.ocr2MedianPluginEnabled}}`
+                ocr2Plugins: `{"commit":${values.ocr2CommitPluginEnabled},"execute":${values.ocr2ExecutePluginEnabled},"median":${values.ocr2MedianPluginEnabled},"mercury":${values.ocr2MercuryPluginEnabled}}`
             },
           },
         })

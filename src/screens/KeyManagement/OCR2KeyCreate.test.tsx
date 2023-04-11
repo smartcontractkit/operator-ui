@@ -9,7 +9,10 @@ import { OCR2_KEY_FAMILY } from 'hooks/queries/useOCR2KeysQuery'
 import userEvent from '@testing-library/user-event'
 const { queryByText } = screen
 
-function renderComponent(cardProps: OCR2KeysCreateProps, mocks: any[]) {
+function renderOCR2KeysCreateWithMocks(
+  cardProps: OCR2KeysCreateProps,
+  mocks: any[],
+) {
   render(
     <MockedProvider mocks={mocks} addTypename={true}>
       <OCR2KeysCreate {...cardProps} />
@@ -40,7 +43,7 @@ describe('OCR2KeysCard creation', () => {
     },
   }
 
-  const myObject = {
+  const ocr2KeysCreateProps: OCR2KeysCreateProps = {
     showCreateKeyDialog: true,
     setToggleCreateKeyDialog(val: boolean) {
       this.showCreateKeyDialog = val
@@ -49,18 +52,11 @@ describe('OCR2KeysCard creation', () => {
   }
 
   jest
-    .spyOn(myObject, 'setToggleCreateKeyDialog')
-    .mockImplementation(() => myObject.showCreateKeyDialog)
+    .spyOn(ocr2KeysCreateProps, 'setToggleCreateKeyDialog')
+    .mockImplementation(() => ocr2KeysCreateProps.showCreateKeyDialog)
 
   it('renders the create dialog with chain types', async () => {
-    renderComponent(
-      {
-        showCreateKeyDialog: myObject.showCreateKeyDialog,
-        setToggleCreateKeyDialog: myObject.setToggleCreateKeyDialog,
-        onCreate: myObject.onCreate,
-      },
-      [familyMocks],
-    )
+    renderOCR2KeysCreateWithMocks(ocr2KeysCreateProps, [familyMocks])
 
     expect(
       await screen.findByText(`Create OCR2 Key Bundle`),
@@ -78,11 +74,11 @@ describe('OCR2KeysCard creation', () => {
   })
 
   it('renders the create dialog and trigger onCreate', async () => {
-    renderComponent(
+    renderOCR2KeysCreateWithMocks(
       {
-        showCreateKeyDialog: myObject.showCreateKeyDialog,
-        setToggleCreateKeyDialog: myObject.setToggleCreateKeyDialog,
-        onCreate: myObject.onCreate,
+        showCreateKeyDialog: ocr2KeysCreateProps.showCreateKeyDialog,
+        setToggleCreateKeyDialog: ocr2KeysCreateProps.setToggleCreateKeyDialog,
+        onCreate: ocr2KeysCreateProps.onCreate,
       },
       [familyMocks],
     )
@@ -99,10 +95,10 @@ describe('OCR2KeysCard creation', () => {
     userEvent.click(await screen.findByText(`Cancel`))
 
     //should close the dialog without calling onCreate
-    expect(myObject.onCreate).toBeCalledTimes(0)
+    expect(ocr2KeysCreateProps.onCreate).toBeCalledTimes(0)
 
     //should open the dialog again
-    myObject.setToggleCreateKeyDialog(true)
+    ocr2KeysCreateProps.setToggleCreateKeyDialog(true)
 
     expect(queryByText(`SOLANA`)).toBeInTheDocument()
     userEvent.click(await screen.findByText(`SOLANA`))
@@ -112,7 +108,7 @@ describe('OCR2KeysCard creation', () => {
     userEvent.click(await screen.findByText(`Create`))
 
     //should call onCreate with the selected chain type
-    expect(myObject.onCreate).toBeCalledTimes(1)
-    expect(myObject.onCreate).toBeCalledWith('NEW-CHAIN-1')
+    expect(ocr2KeysCreateProps.onCreate).toBeCalledTimes(1)
+    expect(ocr2KeysCreateProps.onCreate).toBeCalledWith('NEW-CHAIN-1')
   })
 })

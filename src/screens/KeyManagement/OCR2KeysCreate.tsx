@@ -20,7 +20,7 @@ export const OCR2KeysCreate: React.FC<Props> = ({
   >(undefined)
 
   const handleChainTypeChange = (
-    event: React.ChangeEvent<{ value: unknown }>,
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setCreateOCR2KeyType(event.target.value as string)
   }
@@ -37,16 +37,17 @@ export const OCR2KeysCreate: React.FC<Props> = ({
   if (loading || error) return <div />
 
   const supportedChainFamilies: Array<string> = data?.__type.enumValues.map(
-    (chainFamily: { name: any }) => {
+    (chainFamily: { name: string }) => {
       return chainFamily.name
     },
   )
-  createOCR2KeyType == undefined &&
+  if (!createOCR2KeyType) {
     setCreateOCR2KeyType(supportedChainFamilies[0])
+  }
 
   return (
     <ConfirmationDialog
-      open={!!showCreateKeyDialog}
+      open={showCreateKeyDialog}
       maxWidth={false}
       title="Create OCR2 Key Bundle"
       body={
@@ -58,7 +59,6 @@ export const OCR2KeysCreate: React.FC<Props> = ({
           label="Chain type"
           value={createOCR2KeyType}
           onChange={handleChainTypeChange}
-          onError={() => setCreateOCR2KeyType(undefined)}
           helperText="Create OCR2 Key bundle"
         >
           {supportedChainFamilies?.map((chain) => (
@@ -70,9 +70,7 @@ export const OCR2KeysCreate: React.FC<Props> = ({
       }
       confirmButtonText="Create"
       confirmButtonEnabled={!createOCR2KeyType}
-      onConfirm={() => {
-        createOCR2KeyHandler()
-      }}
+      onConfirm={createOCR2KeyHandler}
       cancelButtonText="Cancel"
       onCancel={() => setToggleCreateKeyDialog(false)}
     />

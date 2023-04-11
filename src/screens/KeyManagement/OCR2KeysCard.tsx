@@ -33,7 +33,7 @@ export const OCR2KeysCard: React.FC<Props> = ({
   const [confirmDeleteID, setConfirmDeleteID] = React.useState<string | null>(
     null,
   )
-  const [toggleCreateOCR2KeyDialog, setToggleCreateOCR2KeyDialog] =
+  const [showOCR2CreationDialog, setShowOCR2CreationDialog] =
     React.useState<boolean>(false)
 
   return (
@@ -44,7 +44,7 @@ export const OCR2KeysCard: React.FC<Props> = ({
             <Button
               variant="outlined"
               color="primary"
-              onClick={() => setToggleCreateOCR2KeyDialog(true)}
+              onClick={() => setShowOCR2CreationDialog(true)}
             >
               New OCR2 Key
             </Button>
@@ -94,8 +94,8 @@ export const OCR2KeysCard: React.FC<Props> = ({
       />
       <OCR2KeysCreate
         onCreate={onCreate}
-        showCreateKeyDialog={toggleCreateOCR2KeyDialog}
-        setToggleCreateKeyDialog={setToggleCreateOCR2KeyDialog}
+        showCreateKeyDialog={showOCR2CreationDialog}
+        setToggleCreateKeyDialog={setShowOCR2CreationDialog}
       />
     </>
   )

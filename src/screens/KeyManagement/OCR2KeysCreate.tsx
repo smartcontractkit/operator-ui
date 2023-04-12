@@ -7,7 +7,7 @@ import { useOCR2KeyFamilyQuery } from 'hooks/queries/useOCR2KeysQuery'
 export interface Props {
   showCreateKeyDialog: boolean
   setToggleCreateKeyDialog: (toggleCreateKeyDialog: boolean) => void
-  onCreate: (chainType: string) => Promise<any>
+  onCreate: (chainType: string) => Promise<void>
 }
 
 export const OCR2KeysCreate: React.FC<Props> = ({

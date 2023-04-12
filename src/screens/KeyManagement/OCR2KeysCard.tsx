@@ -20,8 +20,8 @@ export interface Props {
   loading: boolean
   data?: FetchOcr2KeyBundles
   errorMsg?: string
-  onDelete: (id: string) => Promise<any>
-  onCreate: (chainType: string) => Promise<any>
+  onDelete: (id: string) => Promise<void>
+  onCreate: (chainType: string) => Promise<void>
 }
 
 export const OCR2KeysCard: React.FC<Props> = ({

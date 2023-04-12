@@ -74,14 +74,7 @@ describe('OCR2KeysCard creation', () => {
   })
 
   it('renders the create dialog and trigger onCreate', async () => {
-    renderOCR2KeysCreateWithMocks(
-      {
-        showCreateKeyDialog: ocr2KeysCreateProps.showCreateKeyDialog,
-        setToggleCreateKeyDialog: ocr2KeysCreateProps.setToggleCreateKeyDialog,
-        onCreate: ocr2KeysCreateProps.onCreate,
-      },
-      [familyMocks],
-    )
+    renderOCR2KeysCreateWithMocks(ocr2KeysCreateProps, [familyMocks])
 
     expect(
       await screen.findByText(`Create OCR2 Key Bundle`),

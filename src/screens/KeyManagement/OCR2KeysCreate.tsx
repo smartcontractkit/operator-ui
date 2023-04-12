@@ -19,6 +19,9 @@ export const OCR2KeysCreate: React.FC<Props> = ({
     string | undefined
   >(undefined)
 
+  const { loading, error, data } = useOCR2KeyFamilyQuery()
+  if (loading || error) return <div />
+
   const handleChainTypeChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -32,9 +35,6 @@ export const OCR2KeysCreate: React.FC<Props> = ({
     }
     onCreate(createOCR2KeyType)
   }
-
-  const { loading, error, data } = useOCR2KeyFamilyQuery()
-  if (loading || error) return <div />
 
   const supportedChainFamilies: Array<string> = data?.__type.enumValues.map(
     (chainFamily: { name: string }) => {

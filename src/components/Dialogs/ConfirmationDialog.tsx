@@ -30,6 +30,7 @@ const DialogActions = withStyles((theme) => ({
 type Props = Pick<DialogProps, 'open' | 'onClose' | 'maxWidth'> & {
   body: string | React.ReactNode
   confirmButtonText?: string
+  confirmButtonEnabled?: boolean
   cancelButtonText?: string
   title: string
   onConfirm: () => void
@@ -40,6 +41,7 @@ export const ConfirmationDialog: React.FC<Props> = ({
   body,
   cancelButtonText,
   confirmButtonText,
+  confirmButtonEnabled,
   maxWidth,
   onClose,
   onCancel,
@@ -65,7 +67,12 @@ export const ConfirmationDialog: React.FC<Props> = ({
             {cancelButtonText}
           </Button>
         )}
-        <Button onClick={onConfirm} variant="contained" color="primary">
+        <Button
+          onClick={onConfirm}
+          variant="contained"
+          color="primary"
+          disabled={!!confirmButtonEnabled}
+        >
           {confirmButtonText || 'Confirm'}
         </Button>
       </DialogActions>

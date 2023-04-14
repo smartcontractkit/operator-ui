@@ -9,16 +9,16 @@ import {
 import { MockedProvider, MockedResponse } from '@apollo/client/testing'
 import userEvent from '@testing-library/user-event'
 
-import {
-  OCR2Keys,
-  DELETE_OCR2_KEY_BUNDLE_MUTATION,
-} from './OCR2Keys'
+import { OCR2Keys } from './OCR2Keys'
 import {
   buildOCR2KeyBundle,
   buildOCR2KeyBundles,
 } from 'support/factories/gql/fetchOCR2KeyBundles'
 import Notifications from 'pages/Notifications'
-import { OCR2_KEY_BUNDLES_QUERY } from 'src/hooks/queries/useOCR2KeysQuery'
+import {
+  OCR2_KEY_BUNDLES_QUERY,
+  DELETE_OCR2_KEY_BUNDLE_MUTATION,
+} from 'src/hooks/queries/useOCR2KeysQuery'
 import { waitForLoading } from 'support/test-helpers/wait'
 
 const { findByText, getByRole, queryByText } = screen

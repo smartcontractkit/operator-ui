@@ -13,32 +13,42 @@ import { ConfirmationDialog } from 'src/components/Dialogs/ConfirmationDialog'
 import { LoadingRow } from 'src/components/TableRow/LoadingRow'
 import { NoContentRow } from 'src/components/TableRow/NoContentRow'
 import { OCR2KeyBundleRow } from './OCR2KeyBundleRow'
+import Button from '@material-ui/core/Button'
+import { OCR2KeysCreate } from 'screens/KeyManagement/OCR2KeysCreate'
 
 export interface Props {
   loading: boolean
   data?: FetchOcr2KeyBundles
   errorMsg?: string
-  onDelete: (id: string) => Promise<any>
+  onDelete: (id: string) => Promise<void>
+  onCreate: (chainType: string) => Promise<void>
 }
 
-/**
- * This card follows the form and structure of OCRKeysCard but
- * does NOT yet offer a 'create' button as there are architecture
- * decisions TBD because OCR2 keys require association with a
- * chain family (e.g. EVM, Starknet, Solana) - but that list of
- * chains is becoming a more and more fluid/dynamic collection
- * and we need to consider how to offer this information from
- * the core to a client (in this case the operator UI)
- */
-export const OCR2KeysCard: React.FC<Props> = ({ data, loading, onDelete }) => {
+export const OCR2KeysCard: React.FC<Props> = ({
+  data,
+  loading,
+  onDelete,
+  onCreate,
+}) => {
   const [confirmDeleteID, setConfirmDeleteID] = React.useState<string | null>(
     null,
   )
+  const [showOCR2CreationDialog, setShowOCR2CreationDialog] =
+    React.useState<boolean>(false)
 
   return (
     <>
       <Card>
         <CardHeader
+          action={
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => setShowOCR2CreationDialog(true)}
+            >
+              New OCR2 Key
+            </Button>
+          }
           title="Off-Chain Reporting 2 Keys"
           subheader="Manage your Off-Chain Reporting 2 Key Bundles"
         />
@@ -81,6 +91,11 @@ export const OCR2KeysCard: React.FC<Props> = ({ data, loading, onDelete }) => {
         }}
         cancelButtonText="Cancel"
         onCancel={() => setConfirmDeleteID(null)}
+      />
+      <OCR2KeysCreate
+        onCreate={onCreate}
+        showCreateKeyDialog={showOCR2CreationDialog}
+        setToggleCreateKeyDialog={setShowOCR2CreationDialog}
       />
     </>
   )

@@ -56,7 +56,7 @@ function createDag({
     .sugiyama()
     .size([width - 150, height])
     .layering(d3dag.layeringSimplex())
-    .decross(d3dag.decrossOpt())
+    .decross(d3dag.decrossTwoLayer())
     .coord(d3dag.coordVert())(dag)
 
   const line = d3

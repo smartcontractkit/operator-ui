@@ -45,7 +45,7 @@ jobs:
         shardIndex: [1, 2, 3, 4]
         shardTotal: [4]
 
-    name: Unit Tests ${{ matrix.shardIndex }}
+    name: Unit Tests ${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
     runs-on: ubuntu-latest
     steps:
       - name: Collect Metrics
@@ -59,6 +59,8 @@ jobs:
         
       - name: Checkout the repo
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # required by CodCov
 
       - name: Setup node
         uses: actions/setup-node@v3
@@ -76,6 +78,9 @@ jobs:
 
       - name: Run tests
         run: yarn run test:ci --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+              
+      - name: Upload CodCov coverage report
+        run: ./bin/codecov -s ./coverage
 
       - name: Rename unit-test coverage report as belonging to the shard ${{ matrix.shardIndex }}
         run: mv coverage/lcov.info coverage/${{matrix.shardIndex}}_lcov.info
@@ -86,9 +91,6 @@ jobs:
         with:
           name: unit-tests-coverage
           path: ./coverage/${{matrix.shardIndex}}_lcov.info
-              
-      - name: Upload CodCov coverage report
-        run: ./bin/codecov -s operator_ui/coverage
   
   sonarqube:
     name: SonarQube Scan

@@ -2,24 +2,16 @@ name: CI
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
+
 
 jobs:
-  unit-tests:
-    strategy:
-      matrix:
-        shard: [1/4, 2/4, 3/4, 4/4]
-    name: Unit Tests ${{ matrix.shard }}
+  eslint:
+    name: ESLint (non-blocking)
     runs-on: ubuntu-latest
     steps:
-      - name: Collect Metrics
-        id: collect-gha-metrics
-        uses: smartcontractkit/push-gha-metrics-action@v1
-        with:
-          basic-auth: ${{ secrets.GRAFANA_CLOUD_BASIC_AUTH }}
-          hostname: ${{ secrets.GRAFANA_CLOUD_HOST }}
-          this-job-name: Unit Tests ${{ matrix.shard }}
-        continue-on-error: true
-
       - name: Checkout the repo
         uses: actions/checkout@v2
 
@@ -28,17 +20,105 @@ jobs:
         with:
           node-version: "18"
           cache: yarn
-
+      
       - name: Run yarn install
         run: yarn install --frozen-lockfile
-
+      
       - name: Setup project
         run: yarn setup
         env:
           GH_TOKEN: ${{ github.token }}
-          
-      - name: Run tests
-        run: yarn run test:ci --shard=${{ matrix.shard }}
+
+      - name: Run eslint
+        run: yarn run lint -f json -o eslint-report.json
+
+      - name: Upload ESLint report
+        if: always()
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # v3.1.0
+        with:
+          name: eslint-report
+          path: ./eslint-report.json
+
+  unit-tests:
+    strategy:
+      matrix:
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
+
+    name: Unit Tests ${{ matrix.shardIndex }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Collect Metrics
+        id: collect-gha-metrics
+        uses: smartcontractkit/push-gha-metrics-action@v1
+        with:
+          basic-auth: ${{ secrets.GRAFANA_CLOUD_BASIC_AUTH }}
+          hostname: ${{ secrets.GRAFANA_CLOUD_HOST }}
+          this-job-name: Unit Tests ${{ matrix.shardIndex }}
+        continue-on-error: true
         
-      # - name: Upload coverage
-      #   run: ./bin/codecov -s operator_ui/coverage
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: yarn
+      
+      - name: Run yarn install
+        run: yarn install --frozen-lockfile
+      
+      - name: Setup project
+        run: yarn setup
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Run tests
+        run: yarn run test:ci --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+
+      - name: Rename unit-test coverage report as belonging to the shard ${{ matrix.shardIndex }}
+        run: mv coverage/lcov.info coverage/${{matrix.shardIndex}}_lcov.info
+      
+      - name: Upload unit-test coverage report
+        if: always()
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # v3.1.0
+        with:
+          name: unit-tests-coverage
+          path: ./coverage/${{matrix.shardIndex}}_lcov.info
+              
+      - name: Upload CodCov coverage report
+        run: ./bin/codecov -s operator_ui/coverage
+  
+  sonarqube:
+    name: SonarQube Scan
+    needs: [eslint, unit-tests]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        with:
+          fetch-depth: 0 # fetches all history for all tags and branches to provide more metadata for sonar reports
+      
+      - name: Download all reports
+        uses: actions/download-artifact@9782bd6a9848b53b110e712e20e42d89988822b7 # v3.0.1
+
+      - name: Update ESLint report symlinks
+        run: sed -i 's+/home/runner/work/operator-ui/operator-ui/+/github/workspace/+g' ./eslint-report/eslint-report.json
+
+      - name: Set SonarQube Reports Paths
+        id: sonarqube_report_paths
+        shell: bash
+        run: |
+          echo "sonarqube_coverage_report_paths=$(find -type f -name '*_lcov.info' -printf "%p,")" >> $GITHUB_OUTPUT
+          echo "sonarqube_eslint_report_paths=$(find -type f -name 'eslint-report.json' -printf "%p,")" >> $GITHUB_OUTPUT
+
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@a6ba0aafc293e03de5437af7edbc97f7d3ebc91a # v1.2.0
+        with:
+          args: >
+            -Dsonar.javascript.lcov.reportPaths=${{ steps.sonarqube_report_paths.outputs.sonarqube_coverage_report_paths }}
+            -Dsonar.eslint.reportPaths=${{ steps.sonarqube_report_paths.outputs.sonarqube_eslint_report_paths }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}

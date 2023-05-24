@@ -32,7 +32,7 @@ const extractObservationSourceField = ({
 // Extracts the fields matching the keys from the spec. If another field of of
 // the same name with an 'Env' suffix exists, we remove it from the returned
 // object.
-const extractSpecFields = <T extends {}, K extends keyof T>(
+const extractSpecFields = <T extends NonNullable<unknown>, K extends keyof T>(
   spec: T,
   ...keys: K[]
 ) => {
@@ -53,7 +53,9 @@ const extractSpecFields = <T extends {}, K extends keyof T>(
 
 // Extracts the fields which have a field of the same name with an 'Env' suffix
 // and the 'Env' field returns true.
-const extractEnvValues = <T extends {}, K extends keyof T>(spec: T) => {
+const extractEnvValues = <T extends NonNullable<unknown>, K extends keyof T>(
+  spec: T,
+) => {
   // For every key with an 'Env' suffix, find a key of the same name without the
   // suffix.
   const regex = /(.+)Env$/

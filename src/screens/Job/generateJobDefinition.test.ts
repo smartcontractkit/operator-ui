@@ -601,7 +601,7 @@ chainID = 1_337
         pollPeriod: '300ms',
         waitBlocks: 30,
         lookbackBlocks: 240,
-        runTimeout: "10s",
+        runTimeout: '10s',
       },
       observationSource: '',
       ...otherJobFields,

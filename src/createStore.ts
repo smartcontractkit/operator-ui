@@ -25,7 +25,8 @@ function createStoreWith<S, A extends Action>(
     composeEnhancers(applyMiddleware(...[...middleware])),
   )
 }
-export type StoreDispatch = ReturnType<typeof createStore>['dispatch']
+
 const createStore = () => createStoreWith(reducer, middleware)
+export type StoreDispatch = ReturnType<typeof createStore>['dispatch']
 
 export default createStore

@@ -16,7 +16,9 @@ export class Nodes {
     return this.create(request)
   }
 
-  private index = this.api.fetchResource<{}, models.Node[]>(ENDPOINT)
+  private index = this.api.fetchResource<NonNullable<unknown>, models.Node[]>(
+    ENDPOINT,
+  )
 
   private create = this.api.createResource<
     models.CreateNodeRequest,

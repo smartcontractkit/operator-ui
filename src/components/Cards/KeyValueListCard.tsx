@@ -16,6 +16,17 @@ const renderEntries = (entries: Array<Array<string>>) =>
     </TableRow>
   ))
 
+const SpanRow: React.FC = ({ children }) => (
+  <TableRow>
+    <TableCell component="th" scope="row" colSpan={3}>
+      {children}
+    </TableCell>
+  </TableRow>
+)
+const FetchingRow = () => <SpanRow>...</SpanRow>
+
+const ErrorRow: React.FC = ({ children }) => <SpanRow>{children}</SpanRow>
+
 const renderBody = (
   entries: Array<Array<string>>,
   loading: boolean,
@@ -31,18 +42,6 @@ const renderBody = (
 
   return renderEntries(entries)
 }
-
-const SpanRow: React.FC = ({ children }) => (
-  <TableRow>
-    <TableCell component="th" scope="row" colSpan={3}>
-      {children}
-    </TableCell>
-  </TableRow>
-)
-
-const FetchingRow = () => <SpanRow>...</SpanRow>
-
-const ErrorRow: React.FC = ({ children }) => <SpanRow>{children}</SpanRow>
 
 export interface Props {
   entries: Array<Array<any>>

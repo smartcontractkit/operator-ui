@@ -117,6 +117,7 @@ export type ChainResource = Resource<Chain>
 interface Props extends WithStyles<typeof styles> {
   chainId: string
   chain?: ChainResource
+  // eslint-disable-next-line @typescript-eslint/ban-types
   deleteChain: Function
 }
 

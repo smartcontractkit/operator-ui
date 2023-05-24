@@ -1,8 +1,11 @@
 import React from 'react'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Provider, Provider as ReduxProvider } from 'react-redux'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { MemoryRouter } from 'react-router-dom'
 import { render, RenderOptions, RenderResult } from '@testing-library/react'
 import configureStore from 'redux-mock-store'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { MuiThemeProvider } from '@material-ui/core/styles'
 
 import createStore from 'src/createStore'

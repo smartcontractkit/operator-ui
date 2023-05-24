@@ -27,7 +27,9 @@ export class Chains {
     return this.update(req, { id })
   }
 
-  private index = this.api.fetchResource<{}, models.Chain[]>(ENDPOINT)
+  private index = this.api.fetchResource<NonNullable<unknown>, models.Chain[]>(
+    ENDPOINT,
+  )
 
   private create = this.api.createResource<
     models.CreateChainRequest,

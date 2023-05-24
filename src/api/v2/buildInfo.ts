@@ -7,8 +7,6 @@ export class BuildInfo {
   constructor(private api: jsonapi.Api) {}
 
   public show = (): Promise<models.BuildInfo> =>
-    // /v2/build_info doesn't conform to the typical jsonapi response model,
-    // it just returns raw JSON back
-    //@ts-expect-error
+    //@ts-expect-error /v2/build_info doesn't conform to the typical jsonapi response model, it just returns raw JSON back
     this.api.GET<null, models.BuildInfo>(SHOW_ENDPOINT)()
 }

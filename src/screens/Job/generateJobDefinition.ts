@@ -280,6 +280,14 @@ export const generateJobDefinition = (
       }
 
       break
+
+    case 'GatewaySpec':
+      values = {
+        ...extractJobFields(job),
+        ...extractSpecFields(job.spec, 'gatewayConfig'),
+      }
+
+      break
     default:
       return { definition: '', envDefinition: '' }
     case 'WebhookSpec':

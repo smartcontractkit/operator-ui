@@ -626,4 +626,36 @@ fromAddresses = [ "0x52926EF10c19E810a52f11e942E502B15c7E2fEE" ]
     expect(output.definition).toEqual(expectedOutput)
     expect(output.envDefinition).toEqual('')
   })
+
+  it('generates a valid Gateway definition', () => {
+    const job: JobPayload_Fields = {
+      id: '1',
+      type: 'gateway',
+      schemaVersion: 1,
+      name: 'gateway test',
+      externalJobID: '00000000-0000-0000-0000-0000000000001',
+      maxTaskDuration: '0s',
+      spec: {
+        __typename: 'GatewaySpec',
+        gatewayConfig: {
+          NodeServerConfig: { Port: 8080 },
+        },
+        createdAt: '',
+      },
+      observationSource: '',
+      ...otherJobFields,
+    }
+
+    const expectedOutput = `type = "gateway"
+schemaVersion = 1
+name = "gateway test"
+externalJobID = "00000000-0000-0000-0000-0000000000001"
+
+[gatewayConfig.NodeServerConfig]
+Port = 8_080
+`
+    const output = generateJobDefinition(job)
+    expect(output.definition).toEqual(expectedOutput)
+    expect(output.envDefinition).toEqual('')
+  })
 })

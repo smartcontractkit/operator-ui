@@ -132,6 +132,10 @@ const JOB_PAYLOAD__SPEC = gql`
       contractConfigConfirmations
       createdAt
     }
+    ... on GatewaySpec {
+      gatewayConfig
+      createdAt
+    }
   }
 `
 

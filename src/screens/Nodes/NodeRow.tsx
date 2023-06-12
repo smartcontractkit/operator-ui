@@ -21,7 +21,8 @@ export const NodeRow = withStyles(tableStyles)(({ node, classes }: Props) => {
       </TableCell>
       <TableCell>{node.chain.id}</TableCell>
       <TableCell>{node.state}</TableCell>
-      <TableCell>{node.sendOnly ? "SendOnly" : "Primary"}</TableCell>
+      <TableCell>{node.sendOnly ? 'SendOnly' : 'Primary'}</TableCell>
+      <TableCell>{node.order ? node.order : 'NA'}</TableCell>
     </TableRow>
   )
 })

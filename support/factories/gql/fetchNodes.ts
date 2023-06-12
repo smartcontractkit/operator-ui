@@ -24,6 +24,7 @@ export function buildNodes(): ReadonlyArray<NodesPayload_ResultsFields> {
       chain: {
         id: '42',
       },
+      order: 32,
     }),
     buildNode({
       id: '2',

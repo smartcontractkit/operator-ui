@@ -90,6 +90,7 @@ declare module 'core/store/models' {
     createdAt: time.Time
     updatedAt: time.Time
     state: string
+    order?: number
   }
 
   export type EVMKey = {

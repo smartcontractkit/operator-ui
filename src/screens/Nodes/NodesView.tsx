@@ -26,6 +26,7 @@ export const NODES_PAYLOAD__RESULTS_FIELDS = gql`
     name
     state
     sendOnly
+    order
   }
 `
 
@@ -98,6 +99,7 @@ export const NodesView: React.FC<Props> = ({
                   <TableCell>EVM Chain ID</TableCell>
                   <TableCell>State</TableCell>
                   <TableCell>Type</TableCell>
+                  <TableCell>Order</TableCell>
                 </TableRow>
               </TableHead>
 

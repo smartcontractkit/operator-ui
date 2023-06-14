@@ -27,6 +27,7 @@ describe('NodesView', () => {
 
     expect(queryByText('Name')).toBeInTheDocument()
     expect(queryByText('EVM Chain ID')).toBeInTheDocument()
+    expect(queryByText('Order')).toBeInTheDocument()
 
     expect(queryByText('1-2 of 2'))
   })

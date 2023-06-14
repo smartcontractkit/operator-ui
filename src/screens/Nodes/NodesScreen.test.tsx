@@ -115,6 +115,8 @@ describe('NodesScreen', () => {
     expect(queryByText('node1')).toBeInTheDocument()
     expect(queryByText('node2')).toBeInTheDocument()
     expect(queryByText('1-2 of 3')).toBeInTheDocument()
+    expect(queryByText('32')).toBeInTheDocument() //Node order exists
+    expect(queryByText('NA')).toBeInTheDocument() //Node order does not exist
     expect(getByRole('button', { name: /prev-page/i })).toBeDisabled()
 
     // Page 2

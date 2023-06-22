@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - sonar-test-report
   pull_request:
 
 
@@ -82,6 +83,9 @@ jobs:
       - name: Upload CodCov coverage report
         run: ./bin/codecov -s ./coverage
 
+      - name: PRINT RESULTS (temporary step)
+        run: cat ./coverage/lcov.info  
+
       - name: Rename unit-test coverage report as belonging to the shard ${{ matrix.shardIndex }}
         run: mv coverage/lcov.info coverage/${{matrix.shardIndex}}_lcov.info
       
@@ -119,6 +123,7 @@ jobs:
         uses: sonarsource/sonarqube-scan-action@a6ba0aafc293e03de5437af7edbc97f7d3ebc91a # v1.2.0
         with:
           args: >
+            -Dsonar.log.level=DEBUG
             -Dsonar.javascript.lcov.reportPaths=${{ steps.sonarqube_report_paths.outputs.sonarqube_coverage_report_paths }}
             -Dsonar.eslint.reportPaths=${{ steps.sonarqube_report_paths.outputs.sonarqube_eslint_report_paths }}
         env:

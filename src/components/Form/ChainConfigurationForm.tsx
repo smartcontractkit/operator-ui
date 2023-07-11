@@ -99,6 +99,28 @@ const styles = (theme: Theme) => {
   })
 }
 
+// A custom account address field which clears the input based on the chain id
+// value changing
+const AccountAddrField = (props: FieldAttributes<any>) => {
+  const {
+    values: { chainID, accountAddr },
+    setFieldValue,
+  } = useFormikContext<FormValues>()
+
+  const prevChainID = React.useRef<string>()
+  React.useEffect(() => {
+    prevChainID.current = chainID
+  }, [chainID])
+
+  React.useEffect(() => {
+    if (chainID !== prevChainID.current) {
+      setFieldValue(props.name, '')
+    }
+  }, [chainID, setFieldValue, accountAddr, props.name])
+
+  return <Field {...props} />
+}
+
 export interface Props extends WithStyles<typeof styles> {
   editing?: boolean
   initialValues: FormValues
@@ -444,7 +466,7 @@ export const ChainConfigurationForm = withStyles(styles)(
 
                               <Grid item xs={6}>
                                 <Field
-                                component={CheckboxWithLabel}
+                                  component={CheckboxWithLabel}
                                   name="ocr2CommitPluginEnabled"
                                   type="checkbox"
                                   Label={{
@@ -454,7 +476,7 @@ export const ChainConfigurationForm = withStyles(styles)(
                               </Grid>
                               <Grid item xs={6}>
                                 <Field
-                                component={CheckboxWithLabel}
+                                  component={CheckboxWithLabel}
                                   name="ocr2ExecutePluginEnabled"
                                   type="checkbox"
                                   Label={{
@@ -464,7 +486,7 @@ export const ChainConfigurationForm = withStyles(styles)(
                               </Grid>
                               <Grid item xs={6}>
                                 <Field
-                                component={CheckboxWithLabel}
+                                  component={CheckboxWithLabel}
                                   name="ocr2MedianPluginEnabled"
                                   type="checkbox"
                                   Label={{
@@ -474,7 +496,7 @@ export const ChainConfigurationForm = withStyles(styles)(
                               </Grid>
                               <Grid item xs={6}>
                                 <Field
-                                component={CheckboxWithLabel}
+                                  component={CheckboxWithLabel}
                                   name="ocr2MercuryPluginEnabled"
                                   type="checkbox"
                                   Label={{
@@ -483,7 +505,6 @@ export const ChainConfigurationForm = withStyles(styles)(
                                 />
                               </Grid>
                             </>
-                            
                           )}
                         </>
                       </Grid>
@@ -511,25 +532,3 @@ export const ChainConfigurationForm = withStyles(styles)(
     )
   },
 )
-
-// A custom account address field which clears the input based on the chain id
-// value changoing
-const AccountAddrField = (props: FieldAttributes<any>) => {
-  const {
-    values: { chainID, accountAddr },
-    setFieldValue,
-  } = useFormikContext<FormValues>()
-
-  const prevChainID = React.useRef<string>()
-  React.useEffect(() => {
-    prevChainID.current = chainID
-  }, [chainID])
-
-  React.useEffect(() => {
-    if (chainID !== prevChainID.current) {
-      setFieldValue(props.name, '')
-    }
-  }, [chainID, setFieldValue, accountAddr, props.name])
-
-  return <Field {...props} />
-}

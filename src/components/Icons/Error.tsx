@@ -1,3 +1,4 @@
+/* eslint react/no-unknown-property: 0 */
 import React, { FC, SVGProps } from 'react'
 
 const ErrorIcon: FC<SVGProps<SVGSVGElement>> = (props) => (

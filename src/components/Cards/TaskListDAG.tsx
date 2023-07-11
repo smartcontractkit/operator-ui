@@ -28,8 +28,8 @@ function createDag({
 }: {
   stratify: Stratify[]
   ref: HTMLInputElement
-  setTooltip: Function
-  setIcon: Function
+  setTooltip: (...args: any[]) => any
+  setIcon: (...args: any[]) => any
 }): void {
   const nodeRadius = 18
   const width = ref.offsetWidth
@@ -120,11 +120,11 @@ function createDag({
     .attr('fill', (node) => {
       switch (node.data.attributes?.status) {
         case TaskRunStatus.PENDING:
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore because material UI doesn't update theme types with options
           return theme.palette.warning.main
         case TaskRunStatus.COMPLETE:
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore because material UI doesn't update theme types with options
           return theme.palette.success.main
         case TaskRunStatus.ERROR:

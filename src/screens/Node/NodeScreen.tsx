@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { gql, useQuery } from '@apollo/client'
-import {  useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import { GraphqlErrorHandler } from 'src/components/ErrorHandler/GraphqlErrorHandler'
 import { Loading } from 'src/components/Feedback/Loading'

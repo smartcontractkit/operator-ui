@@ -31,9 +31,7 @@ describe('OCR2KeyBundleRow', () => {
     renderComponent(bundle)
 
     expect(queryByText(`Key ID: ${bundle.id}`)).toBeInTheDocument()
-    expect(
-      queryByText(`Chain Type: ${bundle.chainType}`),
-    ).toBeInTheDocument()
+    expect(queryByText(`Chain Type: ${bundle.chainType}`)).toBeInTheDocument()
     expect(
       queryByText(`Config Public Key: ${bundle.configPublicKey}`),
     ).toBeInTheDocument()

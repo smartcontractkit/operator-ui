@@ -1,5 +1,3 @@
-/* eslint @typescript-eslint/class-name-casing: 'off' */
-
 declare module 'json-api-normalizer' {
   export interface JsonApiResponse<
     TData extends

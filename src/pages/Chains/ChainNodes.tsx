@@ -23,7 +23,7 @@ export const ChainNodes = ({ nodes, chain }: Props) => {
               <CardTitle divider>Nodes</CardTitle>
               <ChainNodesList
                 nodes={nodes}
-                nodeFilter={(node) => node.attributes.evmChainID === chain.id}
+                nodeFilter={(node) => node.attributes.chainID === chain.id}
               />
             </Card>
           </Grid>

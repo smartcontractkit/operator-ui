@@ -36,7 +36,7 @@ function fetchAccountBalancesQuery(
 }
 
 describe('Activity', () => {
-  it('renders the first account balance', async () => {
+  it('renders the first and second account balance', async () => {
     const payload = buildETHKeys()
     const mocks: MockedResponse[] = [fetchAccountBalancesQuery(payload)]
 
@@ -45,7 +45,7 @@ describe('Activity', () => {
     await waitForLoading()
 
     expect(await findByText(payload[0].address)).toBeInTheDocument()
-    expect(queryByText(payload[1].address)).toBeNull()
+    expect(queryByText(payload[1].address)).toBeInTheDocument()
   })
 
   it('renders GQL query errors', async () => {

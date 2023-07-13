@@ -50,7 +50,7 @@ const reducer: Reducer<State, Actions> = (state = INITIAL_STATE, action) => {
     }
     case NotifyActionType.NOTIFY_ERROR: {
       const errors = action.error.errors
-      const notifications = errors.map((e) =>
+      const notifications = errors?.map((e) =>
         buildJsonApiErrorNotification(action, e),
       )
 

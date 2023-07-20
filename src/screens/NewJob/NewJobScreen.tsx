@@ -88,17 +88,18 @@ export const NewJobScreen = () => {
       // the job was created but the service cannot start
       const jobsBefore = beforeCreateJobs.data?.jobs?.results
       const jobsAfter = afterCreateJobs.data?.jobs?.results
-      if (jobsBefore && jobsAfter && jobsBefore.length < jobsAfter.length) {
-        if (e instanceof ApolloError) {
-          dispatch(
-            notifyErrorMsg(
-              'Job successfully created but could not start service: ' +
-                e.message,
-            ),
-          )
-        } else {
-          handleMutationError(e)
-        }
+      if (
+        jobsBefore &&
+        jobsAfter &&
+        jobsBefore.length < jobsAfter.length &&
+        e instanceof ApolloError
+      ) {
+        dispatch(
+          notifyErrorMsg(
+            'Job successfully created but could not start service: ' +
+              e.message,
+          ),
+        )
       } else {
         handleMutationError(e)
       }

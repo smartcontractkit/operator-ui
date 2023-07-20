@@ -34,6 +34,7 @@ if (typeof document !== 'undefined') {
   render(App)
   // Hot Module Replacement
   if (module.hot) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     module.hot.accept('./App', () => render(require('./App').default))
   }
 }

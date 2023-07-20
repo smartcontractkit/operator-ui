@@ -24,6 +24,50 @@ export const CONFIG_V2_QUERY = gql`
     }
   }
 `
+
+const SpanRow: React.FC = ({ children }) => (
+  <TableRow>
+    <TableCell component="th" scope="row" colSpan={3}>
+      {children}
+    </TableCell>
+  </TableRow>
+)
+
+const FetchingRow = () => <SpanRow>...</SpanRow>
+
+const ErrorRow: React.FC = ({ children }) => <SpanRow>{children}</SpanRow>
+
+const TOMLPanel = ({ loading, toml, error = '', title, expanded }: Props) => {
+  if (error) {
+    return <ErrorRow>{error}</ErrorRow>
+  }
+
+  if (loading) {
+    return <FetchingRow />
+  }
+
+  if (!title) {
+    title = 'TOML'
+  }
+
+  const styles = { display: 'block' }
+
+  return (
+    <Typography>
+      <ExpansionPanel defaultExpanded={expanded}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          {title}
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails style={styles}>
+          <SyntaxHighlighter language="toml" style={prism}>
+            {toml}
+          </SyntaxHighlighter>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    </Typography>
+  )
+}
+
 export const ConfigurationV2Card = () => {
   const { data, loading, error } = useQuery<
     FetchConfigV2,
@@ -84,47 +128,4 @@ interface Props {
   title?: string
   error?: string
   expanded?: boolean
-}
-
-const SpanRow: React.FC = ({ children }) => (
-  <TableRow>
-    <TableCell component="th" scope="row" colSpan={3}>
-      {children}
-    </TableCell>
-  </TableRow>
-)
-
-const FetchingRow = () => <SpanRow>...</SpanRow>
-
-const ErrorRow: React.FC = ({ children }) => <SpanRow>{children}</SpanRow>
-
-const TOMLPanel = ({ loading, toml, error = '', title, expanded }: Props) => {
-  if (error) {
-    return <ErrorRow>{error}</ErrorRow>
-  }
-
-  if (loading) {
-    return <FetchingRow />
-  }
-
-  if (!title) {
-    title = 'TOML'
-  }
-
-  const styles = { display: 'block' }
-
-  return (
-    <Typography>
-      <ExpansionPanel defaultExpanded={expanded}>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          {title}
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails style={styles}>
-          <SyntaxHighlighter language="toml" style={prism}>
-            {toml}
-          </SyntaxHighlighter>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-    </Typography>
-  )
 }

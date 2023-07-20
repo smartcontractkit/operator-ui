@@ -16,7 +16,6 @@ export const NodeCard: React.FC<Props> = ({ node }) => {
   return (
     <DetailsCard>
       <Grid container>
-
         <Grid item xs={12} sm={4} md={3}>
           <DetailsCardItemTitle title="EVM Chain ID" />
           <DetailsCardItemValue value={node.chain.id} />

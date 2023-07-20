@@ -1,10 +1,15 @@
 import React from 'react'
 
-import {createStyles, Theme, withStyles, WithStyles,} from '@material-ui/core/styles'
+import {
+  createStyles,
+  Theme,
+  withStyles,
+  WithStyles,
+} from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
-import {TaskRunStatusIcon} from 'src/components/Icons/TaskRunStatusIcon'
-import {TaskRunStatus} from 'src/utils/taskRunStatus'
+import { TaskRunStatusIcon } from 'src/components/Icons/TaskRunStatusIcon'
+import { TaskRunStatus } from 'src/utils/taskRunStatus'
 
 const styles = (theme: Theme) =>
   createStyles({

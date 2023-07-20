@@ -31,7 +31,7 @@ export const NodeInfoCard = withStyles(styles)(({ classes }: Props) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchBuildInfo())
-  }, [])
+  })
   const buildInfo = useSelector(selectBuildInfo, shallowEqual)
 
   return (

@@ -24,7 +24,9 @@ export class LogConfig {
     return this.update(request)
   }
 
-  private show = this.api.fetchResource<{}, models.LogConfig, {}>(ENDPOINT)
+  private show = this.api.fetchResource<object, models.LogConfig, object>(
+    ENDPOINT,
+  )
 
   private update = this.api.updateResource<
     models.LogConfigRequest,

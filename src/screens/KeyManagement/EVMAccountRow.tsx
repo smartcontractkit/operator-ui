@@ -101,7 +101,7 @@ function apiCall({
 }: {
   evmChainID: string
   address: string
-  nextNonce: BigInt | null
+  nextNonce: bigint | null
   abandon: boolean
   enabled: boolean
 }): Promise<ApiResponse<EVMKey>> {
@@ -126,7 +126,7 @@ const UnstyledEVMAccountRow: React.FC<Props> = ({
 
   const [modalOpen, setModalOpen] = useState(false)
   const [enabled, setEnabled] = useState(!ethKey.isDisabled)
-  const [nextNonce, setNextNonce] = useState<BigInt | null>(null)
+  const [nextNonce, setNextNonce] = useState<bigint | null>(null)
   const [abandon, setAbandon] = useState(false)
 
   const onSubmit = (event: React.SyntheticEvent) => {
@@ -155,7 +155,7 @@ const UnstyledEVMAccountRow: React.FC<Props> = ({
   }
 
   async function handleUpdate(
-    nextNonce: BigInt | null,
+    nextNonce: bigint | null,
     abandon: boolean,
     enabled: boolean,
   ) {

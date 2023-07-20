@@ -21,7 +21,6 @@ export const ChainRow = withStyles(tableStyles)(({ chain, classes }: Props) => {
       </TableCell>
 
       <TableCell>{chain.enabled.toString()}</TableCell>
-
     </TableRow>
   )
 })

@@ -90,10 +90,10 @@ describe('JobView', () => {
     const ds1 = queryByText(/ds1/, { selector: 'text' })?.parentNode?.firstChild
     const ds2 = queryByText(/ds2/, { selector: 'text' })?.parentNode?.firstChild
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error because material UI doesn't update theme types with options
     expect(ds1).toHaveAttribute('fill', theme.palette.success.main)
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error because material UI doesn't update theme types with options
     expect(ds2).toHaveAttribute('fill', theme.palette.success.main)
   })

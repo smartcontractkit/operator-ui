@@ -36,7 +36,7 @@ export const BuildInfoFooter = withStyles(styles)(({ classes }: Props) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchBuildInfo())
-  }, [])
+  })
 
   return (
     <Paper className={classes.style}>

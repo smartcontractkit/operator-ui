@@ -141,10 +141,124 @@ const styles = (theme: Theme) => {
   })
 }
 
+const renderBootstrap = (
+  cfg:
+    | FeedsManager_ChainConfigFields['ocr2JobConfig']
+    | FeedsManager_ChainConfigFields['ocr1JobConfig'],
+) => (
+  <Grid item xs={12} sm={1} md={5}>
+    <DetailsCardItemTitle title="Multiaddr" />
+    <DetailsCardItemValue value={cfg.multiaddr} />
+  </Grid>
+)
+
+const renderOracle = (
+  cfg:
+    | FeedsManager_ChainConfigFields['ocr2JobConfig']
+    | FeedsManager_ChainConfigFields['ocr1JobConfig'],
+) => (
+  <>
+    <Grid item xs={12} sm={1} md={5}>
+      <DetailsCardItemTitle title="P2P Peer ID" />
+      <DetailsCardItemValue value={cfg.p2pPeerID} />
+    </Grid>
+    <Grid item xs={12} sm={1} md={5}>
+      <DetailsCardItemTitle title="OCR Key ID" />
+      <DetailsCardItemValue value={cfg.keyBundleID} />
+    </Grid>
+  </>
+)
+
 interface Props extends WithStyles<typeof styles> {
   mgrID: string
   cfgs: ReadonlyArray<FeedsManager_ChainConfigFields>
 }
+
+const jobTypeRowStyles = (theme: Theme) => {
+  return createStyles({
+    jobTypeContainer: {
+      borderLeft: `2px solid ${theme.palette.primary.main}`,
+      marginLeft: -8,
+      paddingLeft: 8,
+    },
+  })
+}
+
+interface FluxMonitorJobTypeRowProps
+  extends WithStyles<typeof jobTypeRowStyles> {
+  cfg: FeedsManager_ChainConfigFields['fluxMonitorJobConfig']
+}
+
+const FluxMonitorJobTypeRow = withStyles(styles)(
+  ({ cfg, classes }: FluxMonitorJobTypeRowProps) => {
+    if (!cfg.enabled) {
+      return null
+    }
+
+    return (
+      <Grid item xs={12} sm={1} md={12}>
+        <div className={classes.jobTypeContainer}>
+          <DetailsCardItemTitle title="Job Type" />
+          <DetailsCardItemValue value="Flux Monitor" />
+        </div>
+      </Grid>
+    )
+  },
+)
+
+interface OCRJobTypeRowProps extends WithStyles<typeof jobTypeRowStyles> {
+  cfg: FeedsManager_ChainConfigFields['ocr1JobConfig']
+}
+
+const OCRJobTypeRow = withStyles(styles)(
+  ({ cfg, classes }: OCRJobTypeRowProps) => {
+    if (!cfg.enabled) {
+      return null
+    }
+
+    return (
+      <>
+        <Grid item xs={12} sm={1} md={2}>
+          <div className={classes.jobTypeContainer}>
+            <DetailsCardItemTitle title="Job Type" />
+            <DetailsCardItemValue
+              value={`OCR ${cfg.isBootstrap ? '(Bootstrap)' : ''}`}
+            />
+          </div>
+        </Grid>
+
+        {cfg.isBootstrap ? renderBootstrap(cfg) : renderOracle(cfg)}
+      </>
+    )
+  },
+)
+
+interface OCR2JobTypeRowProps extends WithStyles<typeof jobTypeRowStyles> {
+  cfg: FeedsManager_ChainConfigFields['ocr2JobConfig']
+}
+
+const OCR2JobTypeRow = withStyles(styles)(
+  ({ cfg, classes }: OCR2JobTypeRowProps) => {
+    if (!cfg.enabled) {
+      return null
+    }
+
+    return (
+      <>
+        <Grid item xs={12} sm={1} md={2}>
+          <div className={classes.jobTypeContainer}>
+            <DetailsCardItemTitle title="Job Type" />
+            <DetailsCardItemValue
+              value={`OCR2 ${cfg.isBootstrap ? '(Bootstrap)' : ''}`}
+            />
+          </div>
+        </Grid>
+
+        {cfg.isBootstrap ? renderBootstrap(cfg) : renderOracle(cfg)}
+      </>
+    )
+  },
+)
 
 export const SupportedChainsCard = withStyles(styles)(
   ({ classes, cfgs, mgrID }: Props) => {
@@ -221,7 +335,7 @@ export const SupportedChainsCard = withStyles(styles)(
                 values.ocr2P2PPeerID !== '' ? values.ocr2P2PPeerID : null,
               ocr2KeyBundleID:
                 values.ocr2KeyBundleID != '' ? values.ocr2KeyBundleID : null,
-              ocr2Plugins: `{"commit":${values.ocr2CommitPluginEnabled},"execute":${values.ocr2ExecutePluginEnabled},"median":${values.ocr2MedianPluginEnabled},"mercury":${values.ocr2MercuryPluginEnabled}}`
+              ocr2Plugins: `{"commit":${values.ocr2CommitPluginEnabled},"execute":${values.ocr2ExecutePluginEnabled},"median":${values.ocr2MedianPluginEnabled},"mercury":${values.ocr2MercuryPluginEnabled}}`,
             },
           },
         })
@@ -293,7 +407,7 @@ export const SupportedChainsCard = withStyles(styles)(
                 values.ocr2P2PPeerID !== '' ? values.ocr2P2PPeerID : null,
               ocr2KeyBundleID:
                 values.ocr2KeyBundleID != '' ? values.ocr2KeyBundleID : null,
-                ocr2Plugins: `{"commit":${values.ocr2CommitPluginEnabled},"execute":${values.ocr2ExecutePluginEnabled},"median":${values.ocr2MedianPluginEnabled},"mercury":${values.ocr2MercuryPluginEnabled}}`
+              ocr2Plugins: `{"commit":${values.ocr2CommitPluginEnabled},"execute":${values.ocr2ExecutePluginEnabled},"median":${values.ocr2MedianPluginEnabled},"mercury":${values.ocr2MercuryPluginEnabled}}`,
             },
           },
         })
@@ -421,118 +535,4 @@ export const SupportedChainsCard = withStyles(styles)(
       </Card>
     )
   },
-)
-
-const jobTypeRowStyles = (theme: Theme) => {
-  return createStyles({
-    jobTypeContainer: {
-      borderLeft: `2px solid ${theme.palette.primary.main}`,
-      marginLeft: -8,
-      paddingLeft: 8,
-    },
-  })
-}
-
-interface FluxMonitorJobTypeRowProps
-  extends WithStyles<typeof jobTypeRowStyles> {
-  cfg: FeedsManager_ChainConfigFields['fluxMonitorJobConfig']
-}
-
-const FluxMonitorJobTypeRow = withStyles(styles)(
-  ({ cfg, classes }: FluxMonitorJobTypeRowProps) => {
-    if (!cfg.enabled) {
-      return null
-    }
-
-    return (
-      <Grid item xs={12} sm={1} md={12}>
-        <div className={classes.jobTypeContainer}>
-          <DetailsCardItemTitle title="Job Type" />
-          <DetailsCardItemValue value="Flux Monitor" />
-        </div>
-      </Grid>
-    )
-  },
-)
-
-interface OCRJobTypeRowProps extends WithStyles<typeof jobTypeRowStyles> {
-  cfg: FeedsManager_ChainConfigFields['ocr1JobConfig']
-}
-
-const OCRJobTypeRow = withStyles(styles)(
-  ({ cfg, classes }: OCRJobTypeRowProps) => {
-    if (!cfg.enabled) {
-      return null
-    }
-
-    return (
-      <>
-        <Grid item xs={12} sm={1} md={2}>
-          <div className={classes.jobTypeContainer}>
-            <DetailsCardItemTitle title="Job Type" />
-            <DetailsCardItemValue
-              value={`OCR ${cfg.isBootstrap ? '(Bootstrap)' : ''}`}
-            />
-          </div>
-        </Grid>
-
-        {cfg.isBootstrap ? renderBootstrap(cfg) : renderOracle(cfg)}
-      </>
-    )
-  },
-)
-
-interface OCR2JobTypeRowProps extends WithStyles<typeof jobTypeRowStyles> {
-  cfg: FeedsManager_ChainConfigFields['ocr2JobConfig']
-}
-
-const OCR2JobTypeRow = withStyles(styles)(
-  ({ cfg, classes }: OCR2JobTypeRowProps) => {
-    if (!cfg.enabled) {
-      return null
-    }
-
-    return (
-      <>
-        <Grid item xs={12} sm={1} md={2}>
-          <div className={classes.jobTypeContainer}>
-            <DetailsCardItemTitle title="Job Type" />
-            <DetailsCardItemValue
-              value={`OCR2 ${cfg.isBootstrap ? '(Bootstrap)' : ''}`}
-            />
-          </div>
-        </Grid>
-
-        {cfg.isBootstrap ? renderBootstrap(cfg) : renderOracle(cfg)}
-      </>
-    )
-  },
-)
-
-const renderBootstrap = (
-  cfg:
-    | FeedsManager_ChainConfigFields['ocr2JobConfig']
-    | FeedsManager_ChainConfigFields['ocr1JobConfig'],
-) => (
-  <Grid item xs={12} sm={1} md={5}>
-    <DetailsCardItemTitle title="Multiaddr" />
-    <DetailsCardItemValue value={cfg.multiaddr} />
-  </Grid>
-)
-
-const renderOracle = (
-  cfg:
-    | FeedsManager_ChainConfigFields['ocr2JobConfig']
-    | FeedsManager_ChainConfigFields['ocr1JobConfig'],
-) => (
-  <>
-    <Grid item xs={12} sm={1} md={5}>
-      <DetailsCardItemTitle title="P2P Peer ID" />
-      <DetailsCardItemValue value={cfg.p2pPeerID} />
-    </Grid>
-    <Grid item xs={12} sm={1} md={5}>
-      <DetailsCardItemTitle title="OCR Key ID" />
-      <DetailsCardItemValue value={cfg.keyBundleID} />
-    </Grid>
-  </>
 )

@@ -117,7 +117,7 @@ export type ChainResource = Resource<Chain>
 interface Props extends WithStyles<typeof styles> {
   chainId: string
   chain?: ChainResource
-  deleteChain: Function
+  deleteChain: (...args: any[]) => any
 }
 
 const DeleteSuccessNotification = ({ id }: any) => (

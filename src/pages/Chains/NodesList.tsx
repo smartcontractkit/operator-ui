@@ -21,7 +21,6 @@ const List = ({ nodes, nodeFilter }: Props) => {
     <Table>
       <TableHead>
         <TableRow>
-
           <TableCell>
             <Typography variant="body1" color="textSecondary">
               Name

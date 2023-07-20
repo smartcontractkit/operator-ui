@@ -14,8 +14,9 @@ interface Props {
 }
 
 export const ChainNodes = ({ nodes, chain }: Props) => {
-  const filterByChainID = (node: NodeResource) =>
-    node.attributes.chainID === chain.id
+  const filterByChainID = function (node: NodeResource): boolean {
+    return node.attributes.chainID === chain.id
+  }
   return (
     <Content>
       {chain && (

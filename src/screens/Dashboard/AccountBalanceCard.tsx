@@ -41,8 +41,8 @@ export const AccountBalanceCard: React.FC<Props> = ({
 }) => {
   const results = data?.ethKeys.results
   const keysByChain: KeysByChainID = {}
-  results?.forEach((key) => {
-    if (keysByChain[key.chain.id] == undefined) {
+  results?.forEach(function (key) {
+    if (keysByChain[key.chain.id] === undefined) {
       keysByChain[key.chain.id] = []
     }
     keysByChain[key.chain.id].push(key as EthKey)
@@ -79,7 +79,7 @@ export const AccountBalanceCard: React.FC<Props> = ({
       )}
 
       {results &&
-        Object.keys(keysByChain).map((chainID) => {
+        Object.keys(keysByChain).map(function (chainID) {
           return (
             <ChainAccountBalanceCard
               key={chainID}

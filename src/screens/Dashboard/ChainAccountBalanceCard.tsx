@@ -26,7 +26,7 @@ export const ChainAccountBalanceCard: React.FC<Props> = ({ keys, chainID }) => {
           {keys &&
             keys.map((key, i) => {
               return (
-                <ListItem disableGutters={true} divider={true} key={i}>
+                <ListItem disableGutters={true} divider={true} key={'acc-balance-'+i.toString()}>
                   <ListItemText
                     primary={
                       <React.Fragment>

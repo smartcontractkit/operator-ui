@@ -41,6 +41,7 @@ const chain1: ChainResource = {
   id: '123',
   type: 'type',
   attributes: {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment,@typescript-eslint/ban-ts-ignore
     // @ts-ignore config not important for this test
     config: 'config',
     enabled: true,
@@ -53,6 +54,7 @@ const chain2: ChainResource = {
   id: '1234',
   type: 'type',
   attributes: {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment,@typescript-eslint/ban-ts-ignore
     // @ts-ignore config not important for this test
     config: 'config',
     enabled: true,

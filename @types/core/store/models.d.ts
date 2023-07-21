@@ -78,7 +78,7 @@ declare module 'core/store/models' {
 
   export type Node = {
     name: string
-    evmChainID: string
+    chainID: string
     httpURL: string
     wsURL: string
     createdAt: time.Time

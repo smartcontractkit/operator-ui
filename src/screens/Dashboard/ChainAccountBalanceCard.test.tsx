@@ -5,17 +5,27 @@ import { EthKey } from 'types/generated/graphql'
 import { buildETHKey } from 'support/factories/gql/fetchAccountBalances'
 import { fromJuels } from 'utils/tokens/link'
 
-const { findByText } = screen
+const { findByText, queryByText } = screen
 
 describe('ChainAccountBalanceCard', () => {
-  function renderComponent(keys: Array<EthKey>, chainID: string) {
-    renderWithRouter(<ChainAccountBalanceCard chainID={chainID} keys={keys} />)
+  function renderComponent(
+    keys: Array<EthKey>,
+    chainID: string,
+    hideHeaderTitle: boolean,
+  ) {
+    renderWithRouter(
+      <ChainAccountBalanceCard
+        chainID={chainID}
+        keys={keys}
+        hideHeaderTitle={hideHeaderTitle}
+      />,
+    )
   }
 
   it('renders the card with one address', async () => {
     const key = buildETHKey()
 
-    renderComponent([key] as Array<EthKey>, '111')
+    renderComponent([key] as Array<EthKey>, '111', false)
 
     expect(await findByText('Account Balances')).toBeInTheDocument()
     expect(await findByText('Chain ID 111')).toBeInTheDocument()
@@ -40,9 +50,9 @@ describe('ChainAccountBalanceCard', () => {
       }),
     ]
 
-    renderComponent(keys as Array<EthKey>, '12345321')
+    renderComponent(keys as Array<EthKey>, '12345321', true)
 
-    expect(await findByText('Account Balances')).toBeInTheDocument()
+    expect(await queryByText('Account Balances')).toBeNull()
     expect(await findByText('Chain ID 12345321')).toBeInTheDocument()
 
     expect(await findByText(keys[0].address)).toBeInTheDocument()

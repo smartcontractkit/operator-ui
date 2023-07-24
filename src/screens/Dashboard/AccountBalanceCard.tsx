@@ -79,12 +79,13 @@ export const AccountBalanceCard: React.FC<Props> = ({
       )}
 
       {results &&
-        Object.keys(keysByChain).map(function (chainID) {
+        Object.keys(keysByChain).map(function (chainID, index) {
           return (
             <ChainAccountBalanceCard
               key={chainID}
               keys={keysByChain[chainID]}
               chainID={chainID}
+              hideHeaderTitle={!!index}
             />
           )
         })}

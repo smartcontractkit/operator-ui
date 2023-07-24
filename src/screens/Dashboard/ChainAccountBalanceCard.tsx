@@ -8,62 +8,76 @@ import {
 import { fromJuels } from 'utils/tokens/link'
 import CardContent from '@material-ui/core/CardContent'
 import CardHeader from '@material-ui/core/CardHeader'
-import Card from '@material-ui/core/Card'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
+import Divider from '@material-ui/core/Divider'
 
 export interface Props {
   keys: Array<EthKey>
   chainID: string
+  hideHeaderTitle: boolean
 }
-export const ChainAccountBalanceCard: React.FC<Props> = ({ keys, chainID }) => {
+export const ChainAccountBalanceCard: React.FC<Props> = ({
+  keys,
+  chainID,
+  hideHeaderTitle,
+}) => {
   return (
-    <Card>
-      <CardHeader title="Account Balances" subheader={'Chain ID ' + chainID} />
+    <>
+      <CardHeader
+        title={!hideHeaderTitle && 'Account Balances'}
+        subheader={'Chain ID ' + chainID}
+      />
+
       <CardContent>
-        <List>
+        <List dense={false} disablePadding={true}>
           {keys &&
             keys.map((key, i) => {
               return (
-                <ListItem
-                  disableGutters={true}
-                  divider={true}
-                  key={'acc-balance-' + i.toString()}
-                >
-                  <ListItemText
-                    primary={
-                      <React.Fragment>
-                        <Grid container spacing={16}>
-                          <Grid item xs={12}>
-                            <DetailsCardItemTitle title="Address" />
-                            <DetailsCardItemValue value={key.address} />
+                <>
+                  <ListItem
+                    disableGutters={true}
+                    key={['acc-balance', chainID.toString(), i.toString()].join(
+                      '-',
+                    )}
+                  >
+                    <ListItemText
+                      primary={
+                        <React.Fragment>
+                          <Grid container spacing={16}>
+                            <Grid item xs={12}>
+                              <DetailsCardItemTitle title="Address" />
+                              <DetailsCardItemValue value={key.address} />
+                            </Grid>
+                            <Grid item xs={6}>
+                              <DetailsCardItemTitle title="Native Token Balance" />
+                              <DetailsCardItemValue
+                                value={key.ethBalance || '--'}
+                              />
+                            </Grid>
+                            <Grid item xs={6}>
+                              <DetailsCardItemTitle title="LINK Balance" />
+                              <DetailsCardItemValue
+                                value={
+                                  key.linkBalance
+                                    ? fromJuels(key.linkBalance)
+                                    : '--'
+                                }
+                              />
+                            </Grid>
                           </Grid>
-                          <Grid item xs={6}>
-                            <DetailsCardItemTitle title="Native Token Balance" />
-                            <DetailsCardItemValue
-                              value={key.ethBalance || '--'}
-                            />
-                          </Grid>
-                          <Grid item xs={6}>
-                            <DetailsCardItemTitle title="LINK Balance" />
-                            <DetailsCardItemValue
-                              value={
-                                key.linkBalance
-                                  ? fromJuels(key.linkBalance)
-                                  : '--'
-                              }
-                            />
-                          </Grid>
-                        </Grid>
-                      </React.Fragment>
-                    }
-                  ></ListItemText>
-                </ListItem>
+                        </React.Fragment>
+                      }
+                    ></ListItemText>
+                  </ListItem>
+                  {/* Don't show divider on the last element */}
+                  {i + 1 < keys.length && <Divider />}
+                </>
               )
             })}
         </List>
       </CardContent>
-    </Card>
+    </>
   )
 }

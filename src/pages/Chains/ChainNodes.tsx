@@ -14,6 +14,9 @@ interface Props {
 }
 
 export const ChainNodes = ({ nodes, chain }: Props) => {
+  const filterByChainID = function (node: NodeResource): boolean {
+    return node.attributes.chainID === chain.id
+  }
   return (
     <Content>
       {chain && (
@@ -21,10 +24,7 @@ export const ChainNodes = ({ nodes, chain }: Props) => {
           <Grid item xs={12}>
             <Card>
               <CardTitle divider>Nodes</CardTitle>
-              <ChainNodesList
-                nodes={nodes}
-                nodeFilter={(node) => node.attributes.evmChainID === chain.id}
-              />
+              <ChainNodesList nodes={nodes} nodeFilter={filterByChainID} />
             </Card>
           </Grid>
         </Grid>

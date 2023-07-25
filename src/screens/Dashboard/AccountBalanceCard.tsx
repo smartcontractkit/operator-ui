@@ -3,10 +3,8 @@ import React from 'react'
 import { gql } from '@apollo/client'
 
 import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
 import Grid from '@material-ui/core/Grid'
 import { DetailsCardItemValue } from 'src/components/Cards/DetailsCard'
-import Link from 'src/components/Link'
 import { ChainAccountBalanceCard } from 'screens/Dashboard/ChainAccountBalanceCard'
 import { EthKey } from 'types/generated/graphql'
 import CardHeader from '@material-ui/core/CardHeader'
@@ -89,14 +87,6 @@ export const AccountBalanceCard: React.FC<Props> = ({
             />
           )
         })}
-
-      {results && results.length > 1 && (
-        <CardActions style={{ marginLeft: 8 }}>
-          <Link href="/keys" color="primary">
-            View more accounts
-          </Link>
-        </CardActions>
-      )}
     </Card>
   )
 }

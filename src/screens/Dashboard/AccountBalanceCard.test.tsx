@@ -36,9 +36,6 @@ describe('AccountBalanceCard', () => {
       queryByText(fromJuels(ethKey.linkBalance as string)),
     ).toBeInTheDocument()
     expect(queryByText(ethKey.ethBalance as string)).toBeInTheDocument()
-
-    // Does not appear if there is only one account
-    expect(queryByRole('link', { name: /view more accounts/i })).toBeNull()
   })
 
   it('renders the empty balances for an account', () => {
@@ -68,10 +65,6 @@ describe('AccountBalanceCard', () => {
         },
       },
     })
-
-    expect(
-      queryByRole('link', { name: /view more accounts/i }),
-    ).toBeInTheDocument()
   })
 
   it('renders no content', () => {

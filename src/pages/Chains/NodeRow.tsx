@@ -21,7 +21,7 @@ export const NodeRow = withStyles(tableStyles)(({ node, classes }: Props) => {
         </Link>
       </TableCell>
 
-      <TableCell>{node.attributes.evmChainID}</TableCell>
+      <TableCell>{node.attributes.chainID}</TableCell>
 
       <TableCell>{node.attributes.state}</TableCell>
     </TableRow>

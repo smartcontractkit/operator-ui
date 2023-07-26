@@ -19,7 +19,7 @@ describe('DashboardView', () => {
     )
 
     expect(await findByText('Activity')).toBeInTheDocument()
-    expect(await findByText('Account Balance')).toBeInTheDocument()
+    expect(await findByText('Account Balances')).toBeInTheDocument()
     expect(await findByText('Recent Jobs')).toBeInTheDocument()
   })
 })

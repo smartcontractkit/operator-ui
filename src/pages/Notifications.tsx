@@ -54,7 +54,7 @@ interface Props extends OwnProps, StateProps {}
 export const Notifications: React.FC<Props> = ({ errors, successes }) => {
   return (
     <div>
-      {errors.length > 0 && <Error notifications={errors} />}
+      {errors?.length > 0 && <Error notifications={errors} />}
       {successes.length > 0 && <Success notifications={successes} />}
     </div>
   )

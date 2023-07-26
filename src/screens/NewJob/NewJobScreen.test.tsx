@@ -10,6 +10,7 @@ import * as storage from 'utils/local-storage'
 import { NewJobScreen, CREATE_JOB_MUTATION } from './NewJobScreen'
 import Notifications from 'pages/Notifications'
 import { PERSIST_SPEC } from './NewJobFormCard/NewJobFormCard'
+import { JOBS_QUERY } from 'screens/Jobs/JobsScreen'
 
 const { findByRole, findByText, getByRole, getByTestId, getByText } = screen
 
@@ -100,5 +101,64 @@ describe('NewJobScreen', () => {
     userEvent.click(getByRole('button', { name: /create job/i }))
 
     expect(await findByText('Mutation Error!')).toBeInTheDocument()
+  })
+
+  it('renders mutation GQL errors but job is created', async () => {
+    const mocks: MockedResponse[] = [
+      {
+        request: {
+          query: JOBS_QUERY,
+          variables: { offset: 0, limit: 1000 },
+        },
+        result: {
+          data: {
+            jobs: {
+              results: [0],
+            },
+          },
+        },
+      },
+      {
+        request: {
+          query: CREATE_JOB_MUTATION,
+          variables: {
+            input: {
+              TOML: 'type = "webhook"',
+            },
+          },
+        },
+        result: {
+          errors: [new GraphQLError('Some error starting service')],
+        },
+      },
+      {
+        request: {
+          query: JOBS_QUERY,
+          variables: { offset: 0, limit: 1000 },
+        },
+        result: {
+          data: {
+            jobs: {
+              results: [0, 0],
+            },
+          },
+        },
+      },
+    ]
+
+    renderComponent(mocks)
+
+    userEvent.paste(
+      getByRole('textbox', { name: /job spec \(toml\) \*/i }),
+      'type = "webhook"',
+    )
+
+    userEvent.click(getByRole('button', { name: /create job/i }))
+
+    expect(
+      await findByText(
+        'Job successfully created but could not start service: Some error starting service',
+      ),
+    ).toBeInTheDocument()
   })
 })

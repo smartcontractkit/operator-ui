@@ -68,6 +68,15 @@ const TOMLPanel = ({ loading, toml, error = '', title, expanded }: Props) => {
   )
 }
 
+const AllowSimplePasswordsNotification = () => {
+  const allowSimplePasswordsNotification = "Starting in 2.6.0, chainlink nodes will no longer AllowSimplePasswords=true for production builds. Any TOML configuration that sets the following line will fail validation checks in `node start` or `node validate`."
+  return (
+    <Card>
+      <CardHeader title={<>{allowSimplePasswordsNotification}</>} />
+  </Card>
+  )
+}
+
 export const ConfigurationV2Card = () => {
   const { data, loading, error } = useQuery<
     FetchConfigV2,
@@ -82,6 +91,7 @@ export const ConfigurationV2Card = () => {
         <Grid item xs={12}>
           <Card>
             <CardHeader title="TOML Configuration" />
+              <AllowSimplePasswordsNotification />
             <TOMLPanel
               title="V2 config dump:"
               error={error?.message}
@@ -100,6 +110,7 @@ export const ConfigurationV2Card = () => {
       <Grid item xs={12}>
         <Card>
           <CardHeader title="TOML Configuration" />
+            <AllowSimplePasswordsNotification />
           <TOMLPanel
             title="User specified:"
             error={error?.message}

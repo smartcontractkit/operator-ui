@@ -21,6 +21,7 @@ const FEEDS_MANAGER__CHAIN_CONFIG_FIELDS = gql`
       enabled
       isBootstrap
       multiaddr
+      forwarderAddress
       p2pPeerID
       keyBundleID
       plugins {

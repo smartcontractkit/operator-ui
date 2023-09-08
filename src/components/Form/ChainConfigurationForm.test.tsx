@@ -30,6 +30,7 @@ describe('ChainConfigurationForm', () => {
       ocr2ExecutePluginEnabled: false,
       ocr2MedianPluginEnabled: false,
       ocr2MercuryPluginEnabled: false,
+      ocr2ForwarderAddress: '',
     }
 
     render(
@@ -80,6 +81,7 @@ describe('ChainConfigurationForm', () => {
       ocr2ExecutePluginEnabled: false,
       ocr2MedianPluginEnabled: false,
       ocr2MercuryPluginEnabled: false,
+      ocr2ForwarderAddress: '',
     }
 
     render(
@@ -138,6 +140,7 @@ describe('ChainConfigurationForm', () => {
       ocr2ExecutePluginEnabled: false,
       ocr2MedianPluginEnabled: false,
       ocr2MercuryPluginEnabled: false,
+      ocr2ForwarderAddress: '',
     }
 
     render(

@@ -4,7 +4,7 @@ import { render, screen } from 'support/test-utils'
 
 import { TaskListPreviewCard } from './TaskListPreviewCard'
 
-const { queryByTestId, queryByText } = screen
+const {  queryByText } = screen
 
 describe('TaskListPreviewCard', () => {
   function renderComponent(toml: string) {
@@ -15,7 +15,6 @@ describe('TaskListPreviewCard', () => {
     renderComponent(`observationSource="ds1 [type=bridge name=voter_turnout];"`)
 
     expect(queryByText('Task List')).toBeInTheDocument()
-    expect(queryByTestId('default-run-icon')).toBeInTheDocument()
     expect(queryByText('ds1')).toBeInTheDocument()
   })
 

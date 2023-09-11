@@ -6,7 +6,7 @@ import CardHeader from '@material-ui/core/CardHeader'
 import Typography from '@material-ui/core/Typography'
 
 import { parseDot, Stratify } from 'utils/parseDot'
-import { TaskListDAG } from './TaskListDAG'
+import { D3Graph } from 'components/D3Chart/D3Graph'
 
 interface Props {
   observationSource?: string
@@ -25,6 +25,7 @@ export const TaskListCard: React.FC<Props> = ({
   const [state, setState] = React.useState<{
     errorMsg?: string
     graph?: Stratify[]
+    mermaidChart?: string
   }>()
 
   React.useEffect(() => {
@@ -54,16 +55,15 @@ export const TaskListCard: React.FC<Props> = ({
   }, [attributes, observationSource, setState])
 
   return (
-    <Card style={{ overflow: 'visible' }}>
-      <CardHeader title="Task List" />
+    <Card>
+      <CardHeader title="Task List" id="graph-max-width" />
       <CardContent>
         {state && state.errorMsg && (
           <Typography align="center" variant="subtitle1">
             {state.errorMsg}
           </Typography>
         )}
-
-        {state && state.graph && <TaskListDAG stratify={state.graph} />}
+        {state && state.graph && <D3Graph nodesData={state.graph} />}
       </CardContent>
     </Card>
   )

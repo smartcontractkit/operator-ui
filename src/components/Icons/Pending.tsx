@@ -6,17 +6,8 @@ const Pending: FC<SVGProps<SVGSVGElement>> = (props) => (
     <defs>
       <style>{'.prefix__cls-3{fill:#ffb400}'}</style>
     </defs>
-    <title>{'pending'}</title>
     <g id="prefix__Time-Icon">
-      <circle
-        cx={24}
-        cy={24}
-        r={22}
-        stroke="#fff"
-        strokeWidth={4}
-        fill="none"
-      />
-      <circle id="prefix__path-1" cx={24} cy={24} r={20} fill="#fff7e5" />
+      <circle id="prefix__path-1" cx={24} cy={24} r={20} fill="#f0f0f0" className="pending-icon" />
     </g>
     <g id="prefix__Time-Icon-2" data-name="Time-Icon">
       <g id="prefix__Shape">

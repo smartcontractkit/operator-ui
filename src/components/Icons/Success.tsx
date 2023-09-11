@@ -1,22 +1,8 @@
 /* eslint react/no-unknown-property: 0 */
-import React from 'react'
+import React, { FC, SVGProps } from 'react'
 
-interface Props {
-  width?: number
-  height?: number
-  className?: string
-  'data-testid'?: string
-}
-
-const Success = ({ width, height, className, ...rest }: Props) => (
-  <svg
-    data-name="Layer 1"
-    viewBox="0 0 48 48"
-    width={width}
-    height={height}
-    className={className}
-    data-testid={rest['data-testid']}
-  >
+const Success: FC<SVGProps<SVGSVGElement>> = (props) => (
+  <svg data-name="Layer 1" viewBox="0 0 48 48" {...props}>
     <defs>
       <mask
         id="prefix__a"
@@ -29,8 +15,6 @@ const Success = ({ width, height, className, ...rest }: Props) => (
         <path fillRule="evenodd" fill="#fff" d="M13.75 16h21v15h-21V16z" />
       </mask>
     </defs>
-    <title>{'Artboard 1'}</title>
-    <circle cx={24} cy={24} r={22} fill="none" stroke="#fff" strokeWidth={4} />
     <circle data-name="path-1" cx={24} cy={24} r={20} fill="#e8faf1" />
     <g>
       <g mask="url(#prefix__a)">

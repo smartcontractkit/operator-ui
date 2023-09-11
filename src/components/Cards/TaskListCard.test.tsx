@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { render, screen } from '@testing-library/react'
+import {getByRole, queryByAttribute, queryByRole, render, screen} from '@testing-library/react'
 
 import { TaskListCard } from './TaskListCard'
 import { TaskRunStatus } from 'src/utils/taskRunStatus'
@@ -8,12 +8,18 @@ import { TaskRunStatus } from 'src/utils/taskRunStatus'
 const { queryByTestId, queryByText } = screen
 
 describe('TaskListCard', () => {
-  it('renders the task graph', () => {
+  it('renders the task graph', async () => {
     render(
       <TaskListCard observationSource="ds1 [type=bridge name=voter_turnout];" />,
     )
 
-    expect(queryByTestId('default-run-icon')).toBeInTheDocument()
+    //Wait for render
+    await new Promise((r) => setTimeout(r, 500))
+
+    const ds1 = queryByAttribute('')
+
+
+    expect(ds1).toBeInTheDocument()
     expect(queryByText('ds1')).toBeInTheDocument()
   })
 

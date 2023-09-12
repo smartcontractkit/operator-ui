@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import React from 'react'
 import { D3Graph } from 'components/D3Chart/D3Graph'
 import { parseDot } from 'utils/parseDot'
@@ -99,5 +99,31 @@ describe('D3Graph test', () => {
     expect(dss.item(1)).toHaveAttribute('id', `error-run-icon-ds2`)
     expect(dss.item(2)).toHaveAttribute('id', `pending-run-icon-ds3`)
     expect(dss.item(3)).toHaveAttribute('id', `pending-run-icon-ds4`)
+  })
+
+  it('renders a single node and test tooltip', async () => {
+    const nodeData = parseDot(
+      `digraph {ds1 [type=bridge123321 name=voter_turnout];}`,
+    )
+    const { container } = render(<D3Graph nodesData={nodeData} />)
+
+    //Wait for render
+    await new Promise((r) => setTimeout(r, 500))
+
+    const ds1 = container
+      .getElementsByClassName('task-run-icon-pending')
+      .item(0)
+    expect(ds1).toHaveAttribute('id', 'pending-run-icon-ds1')
+
+    const tooltip = container.querySelector('#tooltip-d3-chart-ds1')
+    expect(tooltip).toHaveStyle('opacity:0')
+
+    // @ts-ignore
+    fireEvent.mouseOver(ds1)
+    expect(tooltip).toHaveStyle('opacity:1')
+
+    // @ts-ignore
+    fireEvent.mouseLeave(ds1)
+    expect(tooltip).toHaveStyle('opacity:0')
   })
 })

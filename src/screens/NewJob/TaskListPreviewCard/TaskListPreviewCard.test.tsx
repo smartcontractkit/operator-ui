@@ -4,7 +4,7 @@ import { render, screen } from 'support/test-utils'
 
 import { TaskListPreviewCard } from './TaskListPreviewCard'
 
-const {  queryByText } = screen
+const { queryByText } = screen
 
 describe('TaskListPreviewCard', () => {
   function renderComponent(toml: string) {

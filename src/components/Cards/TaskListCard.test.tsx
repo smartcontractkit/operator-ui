@@ -1,38 +1,44 @@
 import React from 'react'
 
-import {getByRole, queryByAttribute, queryByRole, render, screen} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
 import { TaskListCard } from './TaskListCard'
 import { TaskRunStatus } from 'src/utils/taskRunStatus'
 
-const { queryByTestId, queryByText } = screen
+const { queryByText } = screen
 
 describe('TaskListCard', () => {
   it('renders the task graph', async () => {
-    render(
+    const { container } = render(
       <TaskListCard observationSource="ds1 [type=bridge name=voter_turnout];" />,
     )
 
     //Wait for render
     await new Promise((r) => setTimeout(r, 500))
 
-    const ds1 = queryByAttribute('')
+    const ds1 = container
+      .getElementsByClassName('task-run-icon-pending')
+      .item(0)
 
-
-    expect(ds1).toBeInTheDocument()
-    expect(queryByText('ds1')).toBeInTheDocument()
+    expect(ds1).toHaveAttribute('id', 'pending-run-icon-ds1')
   })
 
-  it('renders the task graph with a completed status', () => {
-    render(
+  it('renders the task graph with a completed status', async () => {
+    const { container } = render(
       <TaskListCard
         observationSource="ds1 [type=bridge name=voter_turnout];"
         attributes={{ ds1: { status: TaskRunStatus.COMPLETE } }}
       />,
     )
 
-    expect(queryByTestId('complete-run-icon')).toBeInTheDocument()
-    expect(queryByText('ds1')).toBeInTheDocument()
+    //Wait for render
+    await new Promise((r) => setTimeout(r, 500))
+
+    const ds1 = container
+      .getElementsByClassName('task-run-icon-success')
+      .item(0)
+
+    expect(ds1).toHaveAttribute('id', 'success-run-icon-ds1')
   })
 
   it('renders a not found message', () => {

@@ -25,7 +25,6 @@ export const TaskListCard: React.FC<Props> = ({
   const [state, setState] = React.useState<{
     errorMsg?: string
     graph?: Stratify[]
-    mermaidChart?: string
   }>()
 
   React.useEffect(() => {

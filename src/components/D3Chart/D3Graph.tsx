@@ -19,7 +19,7 @@ interface Props {
 }
 
 export const D3Graph: React.FC<Props> = ({ nodesData }) => {
-  console.log('nodesData',nodesData)
+  console.log('nodesData', nodesData)
   const [d3GraphData, setD3GraphData] = React.useState<
     GraphData<NodeWithExtraParameters, GraphLink>
   >({})
@@ -73,12 +73,27 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
     const d3ViewGenerator = (node: NodeWithExtraParameters): any => {
       const sNode = getNode(node.id)
       switch (sNode?.attributes?.status) {
-        case 'SUCCESS':
-          return <Success className="task-run-icon-success" id={node.id} />
+        case 'COMPLETE':
+          return (
+            <Success
+              className="task-run-icon-success task-run-icon"
+              id={`success-run-icon-${node.id}`}
+            />
+          )
         case 'ERROR':
-          return <ErrorIcon className="task-run-icon-error" id={node.id} />
+          return (
+            <ErrorIcon
+              className="task-run-icon-error task-run-icon"
+              id={`error-run-icon-${node.id}`}
+            />
+          )
         default:
-          return <Pending className="task-run-icon-pending" id={node.id} />
+          return (
+            <Pending
+              className="task-run-icon-pending task-run-icon"
+              id={`pending-run-icon-${node.id}`}
+            />
+          )
       }
     }
 
@@ -105,7 +120,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
         },
       )
       .then((data) => {
-        console.log('data',data)
+        console.log('data', data)
         graphData.nodes = []
         data.children?.map((n) => {
           if (!n.x || !n.y) {

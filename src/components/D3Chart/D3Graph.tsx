@@ -19,23 +19,23 @@ interface Props {
 }
 
 export const D3Graph: React.FC<Props> = ({ nodesData }) => {
-  console.log('nodesData', nodesData)
   const [d3GraphData, setD3GraphData] = React.useState<
     GraphData<NodeWithExtraParameters, GraphLink>
-  >({})
+  >({} as GraphData<NodeWithExtraParameters, GraphLink>)
 
-  const getNode = (nodeID: string): Stratify | undefined => {
-    for (let i = 0; i < nodesData.length; i++) {
-      if (nodeID == nodesData[i].id) {
-        return nodesData[i]
+  React.useEffect(() => {
+    const getNode = (nodeID: string): Stratify | undefined => {
+      for (let i = 0; i < nodesData.length; i++) {
+        if (nodeID == nodesData[i].id) {
+          return nodesData[i]
+        }
       }
+      return undefined
     }
-    return undefined
-  }
 
-  // We need to calculate the graph layout using elkjs because we want a static chart
-  const makeGraphLayout = (graph: Array<Stratify> | undefined) => {
-    if (!graph) {
+    // We need to calculate the graph layout using elkjs because we want a static chart
+
+    if (!nodesData) {
       return
     }
 
@@ -46,7 +46,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
     const nodes: ElkNode[] = []
     const edges: ElkExtendedEdge[] = []
 
-    graph.map((val) => {
+    nodesData.map((val) => {
       graphData.nodes.push({
         id: val.id,
       })
@@ -120,26 +120,23 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
         },
       )
       .then((data) => {
-        console.log('data', data)
         graphData.nodes = []
         data.children?.map((n) => {
           if (!n.x || !n.y) {
             return
           }
+          // @ts-ignore type missmatch
           graphData.nodes.push({
             id: n.id,
             x: `${n.x}`,
             y: `${n.y}`,
             viewGenerator: d3ViewGenerator,
             size: 400,
-          })
+          } as NodeWithExtraParameters)
         })
         setD3GraphData(graphData)
       })
       .catch(console.error)
-  }
-  React.useEffect(() => {
-    makeGraphLayout(nodesData)
   }, [nodesData])
 
   let maxHeight = 0
@@ -252,7 +249,6 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
     tooltipDiv.style.zIndex = String(-1)
   }
 
-  console.log('D3 chart', d3GraphData)
   return (
     <div>
       <Graph

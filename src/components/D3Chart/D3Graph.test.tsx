@@ -118,12 +118,10 @@ describe('D3Graph test', () => {
     const tooltip = container.querySelector('#tooltip-d3-chart-ds1')
     expect(tooltip).toHaveStyle('opacity:0')
 
-    // @ts-ignore
-    fireEvent.mouseOver(ds1)
+    fireEvent.mouseOver(ds1 as Element)
     expect(tooltip).toHaveStyle('opacity:1')
 
-    // @ts-ignore
-    fireEvent.mouseLeave(ds1)
+    fireEvent.mouseLeave(ds1 as Element)
     expect(tooltip).toHaveStyle('opacity:0')
   })
 })

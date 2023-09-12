@@ -25,9 +25,9 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
 
   React.useEffect(() => {
     const getNode = (nodeID: string): Stratify | undefined => {
-      for (let i = 0; i < nodesData.length; i++) {
-        if (nodeID == nodesData[i].id) {
-          return nodesData[i]
+      for (const n of nodesData) {
+        if (nodeID === n.id) {
+          return n
         }
       }
       return undefined
@@ -70,7 +70,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
     })
 
     // d3ViewGenerator is the function d3-graph-react uses to render the node
-    const d3ViewGenerator = (node: NodeWithExtraParameters): any => {
+    const d3ViewGenerator = (node: NodeWithExtraParameters): JSX.Element => {
       const sNode = getNode(node.id)
       switch (sNode?.attributes?.status) {
         case 'COMPLETE':
@@ -136,7 +136,6 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
         })
         setD3GraphData(graphData)
       })
-      .catch(console.error)
   }, [nodesData])
 
   let maxHeight = 0
@@ -146,6 +145,8 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
     }
   })
 
+  const heightPadding = 50
+
   const d3GraphConfig = {
     automaticRearrangeAfterDropNode: false,
     collapsible: false,
@@ -153,7 +154,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
     focusAnimationDuration: 0.75,
     focusZoom: 1,
     width: '100%',
-    height: maxHeight + 50,
+    height: maxHeight + heightPadding,
     highlightDegree: 0,
     highlightOpacity: 1,
     linkHighlightBehavior: true,
@@ -220,19 +221,20 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
 
     let ttX: number
     let ttY: number
+    const tooltipPadding = 10
     if (mouseX + tooltipDiv.getBoundingClientRect().width > window.innerWidth) {
-      ttX = mouseX - tooltipDiv.getBoundingClientRect().width - 10
+      ttX = mouseX - tooltipDiv.getBoundingClientRect().width - tooltipPadding
     } else {
-      ttX = mouseX + 10
+      ttX = mouseX + tooltipPadding
     }
 
     if (
       mouseY + tooltipDiv.getBoundingClientRect().height >
       window.innerHeight
     ) {
-      ttY = mouseY - tooltipDiv.getBoundingClientRect().height - 10
+      ttY = mouseY - tooltipDiv.getBoundingClientRect().height - tooltipPadding
     } else {
-      ttY = mouseY + 10
+      ttY = mouseY + tooltipPadding
     }
 
     tooltipDiv.style.opacity = String(1)

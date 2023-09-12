@@ -10,7 +10,7 @@ export const D3Tooltip: React.FC<Props> = ({ data }) => {
   const attribs: Array<JSX.Element> = []
 
   if (data?.attributes) {
-    Object.keys(data.attributes).map((keyName) => {
+    Object.keys(data.attributes).forEach((keyName) => {
       attribs.push(
         <div key={keyName}>
           <Typography variant="body1" color="textSecondary" component="div">

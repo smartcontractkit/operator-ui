@@ -23,25 +23,26 @@ import {
 import Typography from '@material-ui/core/Typography'
 
 export type FormValues = {
-  chainID: string
-  chainType: string
   accountAddr: string
   adminAddr: string
+  chainID: string
+  chainType: string
   fluxMonitorEnabled: boolean
   ocr1Enabled: boolean
   ocr1IsBootstrap: boolean
+  ocr1KeyBundleID?: string | null
   ocr1Multiaddr?: string | null
   ocr1P2PPeerID?: string | null
-  ocr1KeyBundleID?: string | null
-  ocr2Enabled: boolean
-  ocr2IsBootstrap: boolean
-  ocr2Multiaddr?: string | null
-  ocr2P2PPeerID?: string | null
-  ocr2KeyBundleID?: string | null
   ocr2CommitPluginEnabled: boolean
+  ocr2Enabled: boolean
   ocr2ExecutePluginEnabled: boolean
+  ocr2ForwarderAddress?: string | null
+  ocr2IsBootstrap: boolean
+  ocr2KeyBundleID?: string | null
   ocr2MedianPluginEnabled: boolean
   ocr2MercuryPluginEnabled: boolean
+  ocr2Multiaddr?: string | null
+  ocr2P2PPeerID?: string | null
 }
 
 const ValidationSchema = Yup.object().shape({
@@ -89,6 +90,7 @@ const ValidationSchema = Yup.object().shape({
   ocr2ExecutePluginEnabled: Yup.boolean().required('Required'),
   ocr2MedianPluginEnabled: Yup.boolean().required('Required'),
   ocr2MercuryPluginEnabled: Yup.boolean().required('Required'),
+  ocr2ForwarderAddress: Yup.string().nullable(),
 })
 
 const styles = (theme: Theme) => {
@@ -501,6 +503,21 @@ export const ChainConfigurationForm = withStyles(styles)(
                                   type="checkbox"
                                   Label={{
                                     label: 'Mercury',
+                                  }}
+                                />
+                              </Grid>
+
+                              <Grid item xs={12} md={12}>
+                                <Field
+                                  component={TextField}
+                                  id="ocr2ForwarderAddress"
+                                  name="ocr2ForwarderAddress"
+                                  label="Forwarder Address (optional)"
+                                  fullWidth
+                                  helperText="The forwarder address from the Operator Forwarder Contract"
+                                  FormHelperTextProps={{
+                                    'data-testid':
+                                      'ocr2ForwarderAddress-helper-text',
                                   }}
                                 />
                               </Grid>

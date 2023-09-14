@@ -198,6 +198,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
     nodeHighlightBehavior: true,
     panAndZoom: true,
     staticGraph: true,
+    // @ts-ignore
     width: '100%',
   }
 

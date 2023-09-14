@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import {
   Graph,
+  GraphConfiguration,
   GraphData,
   GraphLink,
   NodeWithExtraParameters,
@@ -147,23 +148,36 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
 
   const heightPadding = 50
 
-  const d3GraphConfig = {
+  const d3GraphConfig: Partial<
+    GraphConfiguration<NodeWithExtraParameters, GraphLink>
+  > = {
     automaticRearrangeAfterDropNode: false,
     collapsible: false,
     directed: true,
+    disableLinkForce: true,
     focusAnimationDuration: 0.75,
     focusZoom: 1,
-    width: '100%',
     height: maxHeight + heightPadding,
     highlightDegree: 0,
     highlightOpacity: 1,
+    link: {
+      color: '#d3d3d3',
+      fontColor: 'black',
+      fontSize: 12,
+      fontWeight: 'normal',
+      highlightColor: 'blue',
+      highlightFontSize: 8,
+      highlightFontWeight: 'bold',
+      mouseCursor: 'pointer',
+      opacity: 1,
+      renderLabel: false,
+      strokeWidth: 3,
+      markerHeight: 3,
+      markerWidth: 3,
+    },
     linkHighlightBehavior: true,
     maxZoom: 3,
     minZoom: 0.3,
-    nodeHighlightBehavior: true,
-    panAndZoom: true,
-    staticGraph: true,
-    disableLinkForce: true,
     node: {
       color: '#d3d3d3',
       fontColor: 'black',
@@ -181,23 +195,10 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
       strokeWidth: 2,
       labelPosition: 'top',
     },
-    link: {
-      color: '#d3d3d3',
-      fontColor: 'black',
-      fontSize: 12,
-      fontWeight: 'normal',
-      highlightColor: 'blue',
-      highlightFontSize: 8,
-      highlightFontWeight: 'bold',
-      mouseCursor: 'pointer',
-      opacity: 1,
-      renderLabel: false,
-      strokeWidth: 3,
-      markerHeight: 3,
-      markerWidth: 3,
-      strokeDasharray: 0,
-      strokeDashoffset: 0,
-    },
+    nodeHighlightBehavior: true,
+    panAndZoom: true,
+    staticGraph: true,
+    width: '100%',
   }
 
   let mouseX = 0
@@ -221,15 +222,19 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
 
     let ttX: number
     let ttY: number
+    const minSpaceToEdge = 50
     const tooltipPadding = 10
-    if (mouseX + tooltipDiv.getBoundingClientRect().width > window.innerWidth) {
+    if (
+      mouseX + tooltipDiv.getBoundingClientRect().width + minSpaceToEdge >
+      window.innerWidth
+    ) {
       ttX = mouseX - tooltipDiv.getBoundingClientRect().width - tooltipPadding
     } else {
       ttX = mouseX + tooltipPadding
     }
 
     if (
-      mouseY + tooltipDiv.getBoundingClientRect().height >
+      mouseY + tooltipDiv.getBoundingClientRect().height + minSpaceToEdge >
       window.innerHeight
     ) {
       ttY = mouseY - tooltipDiv.getBoundingClientRect().height - tooltipPadding
@@ -252,11 +257,10 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
   }
 
   return (
-    <div>
+    <div style={{ fontFamily: 'sans-serif', fontWeight: 'normal' }}>
       <Graph
         id="task-list-graph-d3"
         data={d3GraphData}
-        // @ts-ignore
         config={d3GraphConfig}
         onMouseOverNode={onMouseOverNode}
         onMouseOutNode={onMouseOutNode}
@@ -275,8 +279,8 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
               padding: theme.spacing.unit,
               background: 'white',
               borderRadius: 5,
-              width: '200px',
               zIndex: -1,
+              inlineSize: 'min-content',
             }}
           >
             <D3Tooltip data={n} />

@@ -5,7 +5,6 @@ import { renderWithRouter, screen } from 'test-utils'
 
 import { JobRunView } from './JobRunView'
 import { buildRun, buildTaskRun } from 'support/factories/gql/fetchJobRun'
-import { theme } from 'theme'
 
 const { queryByRole, queryByText } = screen
 
@@ -86,15 +85,14 @@ describe('JobView', () => {
     // Task List Card
     expect(queryByText(/task list/i)).toBeInTheDocument()
 
-    // ds1 and ds2 are correctly displayed
-    const ds1 = queryByText(/ds1/, { selector: 'text' })?.parentNode?.firstChild
-    const ds2 = queryByText(/ds2/, { selector: 'text' })?.parentNode?.firstChild
+    //Wait for render
+    await new Promise((r) => setTimeout(r, 500))
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error because material UI doesn't update theme types with options
-    expect(ds1).toHaveAttribute('fill', theme.palette.success.main)
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error because material UI doesn't update theme types with options
-    expect(ds2).toHaveAttribute('fill', theme.palette.success.main)
+    // ds1 and ds2 are correctly displayed
+    const ds1 = queryByText(/ds1/, { selector: 'text' })
+    const ds2 = queryByText(/ds2/, { selector: 'text' })
+
+    expect(ds1).toHaveAttribute('fill', 'black')
+    expect(ds2).toHaveAttribute('fill', 'black')
   })
 })

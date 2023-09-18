@@ -4,19 +4,17 @@ import React, { FC, SVGProps } from 'react'
 const Pending: FC<SVGProps<SVGSVGElement>> = (props) => (
   <svg id="prefix__Layer_1" data-name="Layer 1" viewBox="0 0 48 48" {...props}>
     <defs>
-      <style>{'.prefix__cls-3{fill:#ffb400}'}</style>
+      <style>{'.prefix__cls-3{fill:#b0b0b0}'}</style>
     </defs>
-    <title>{'pending'}</title>
     <g id="prefix__Time-Icon">
       <circle
+        id="prefix__path-1"
         cx={24}
         cy={24}
-        r={22}
-        stroke="#fff"
-        strokeWidth={4}
-        fill="none"
+        r={20}
+        fill="#f0f0f0"
+        className="pending-icon"
       />
-      <circle id="prefix__path-1" cx={24} cy={24} r={20} fill="#fff7e5" />
     </g>
     <g id="prefix__Time-Icon-2" data-name="Time-Icon">
       <g id="prefix__Shape">

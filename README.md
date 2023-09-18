@@ -1,6 +1,6 @@
 # Operator UI
 
-This package is responsible for rendering the UI of the chainlink node, which allows interactions wtih node jobs, jobs runs, configuration and any other related tasks.
+This package is responsible for rendering the UI of the chainlink node, which allows interactions with node jobs, jobs runs, configuration and any other related tasks.
 
 ## Setup
 

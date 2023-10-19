@@ -96,6 +96,7 @@ const JOB_PAYLOAD__SPEC = gql`
       requestTimeout
       backoffInitialDelay
       backoffMaxDelay
+      vrfOwnerAddress
     }
     ... on BlockhashStoreSpec {
       coordinatorV1Address
@@ -107,6 +108,9 @@ const JOB_PAYLOAD__SPEC = gql`
       runTimeout
       evmChainID
       fromAddresses
+      coordinatorV2PlusAddress
+      trustedBlockhashStoreAddress
+      trustedBlockhashStoreBatchSize
     }
     ... on BlockHeaderFeederSpec {
       coordinatorV1Address
@@ -121,6 +125,7 @@ const JOB_PAYLOAD__SPEC = gql`
       fromAddresses
       getBlockhashesBatchSize
       storeBlockhashesBatchSize
+      coordinatorV2PlusAddress
     }
     ... on BootstrapSpec {
       contractID

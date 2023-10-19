@@ -464,6 +464,7 @@ juelsPerFeeCoinSource = "1000000000"
         backoffInitialDelay: '1m',
         backoffMaxDelay: '1h',
         gasLanePrice: '200 gwei',
+        vrfOwnerAddress: '0x457eF369D905DbD122a95A099Cf749D37CbE9341',
       },
       observationSource:
         '    fetch    [type=http method=POST url="http://localhost:8001" requestData="{\\"hi\\": \\"hello\\"}"];\n    parse    [type=jsonparse path="data,result"];\n    multiply [type=multiply times=100];\n    fetch -> parse -> multiply;\n',
@@ -490,6 +491,7 @@ chunkSize = 25
 backoffInitialDelay = "1m"
 backoffMaxDelay = "1h"
 gasLanePrice = "200 gwei"
+vrfOwnerAddress = "0x457eF369D905DbD122a95A099Cf749D37CbE9341"
 observationSource = """
     fetch    [type=http method=POST url="http://localhost:8001" requestData="{\\\\"hi\\\\": \\\\"hello\\\\"}"];
     parse    [type=jsonparse path="data,result"];
@@ -597,7 +599,10 @@ chainID = 1_337
         fromAddresses: ['0x52926EF10c19E810a52f11e942E502B15c7E2fEE'],
         coordinatorV1Address: '0x3cCad4715152693fE3BC4460591e3D3Fbd071b42',
         coordinatorV2Address: '0xD427446551a93F4686799EDEcA33Bbb741115a5b',
+        coordinatorV2PlusAddress: '0xd5af166B311768b4678A5eE431089FdA48d58bfe',
         blockhashStoreAddress: '0x5C210eF41CD1a72de73bF76eC39637bB0d3d7BEE',
+        trustedBlockhashStoreAddress: '0x1Cbdef9B2c247FD31B972242E63ff26eA02466e2',
+        trustedBlockhashStoreBatchSize: 100,
         pollPeriod: '300ms',
         waitBlocks: 30,
         lookbackBlocks: 240,
@@ -614,9 +619,12 @@ externalJobID = "00000000-0000-0000-0000-0000000000001"
 gasLimit = 1_000
 coordinatorV1Address = "0x3cCad4715152693fE3BC4460591e3D3Fbd071b42"
 coordinatorV2Address = "0xD427446551a93F4686799EDEcA33Bbb741115a5b"
+coordinatorV2PlusAddress = "0xd5af166B311768b4678A5eE431089FdA48d58bfe"
 waitBlocks = 30
 lookbackBlocks = 240
 blockhashStoreAddress = "0x5C210eF41CD1a72de73bF76eC39637bB0d3d7BEE"
+trustedBlockhashStoreAddress = "0x1Cbdef9B2c247FD31B972242E63ff26eA02466e2"
+trustedBlockhashStoreBatchSize = 100
 pollPeriod = "300ms"
 runTimeout = "10s"
 evmChainID = "42161"

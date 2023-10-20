@@ -601,7 +601,8 @@ chainID = 1_337
         coordinatorV2Address: '0xD427446551a93F4686799EDEcA33Bbb741115a5b',
         coordinatorV2PlusAddress: '0xd5af166B311768b4678A5eE431089FdA48d58bfe',
         blockhashStoreAddress: '0x5C210eF41CD1a72de73bF76eC39637bB0d3d7BEE',
-        trustedBlockhashStoreAddress: '0x1Cbdef9B2c247FD31B972242E63ff26eA02466e2',
+        trustedBlockhashStoreAddress:
+          '0x1Cbdef9B2c247FD31B972242E63ff26eA02466e2',
         trustedBlockhashStoreBatchSize: 100,
         pollPeriod: '300ms',
         waitBlocks: 30,

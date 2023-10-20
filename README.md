@@ -68,3 +68,31 @@ Given these constraints, the workflow would look like the following:
 6. Merge in the PR created in #3
 7. An automated pull requested would have been created within `smartcontractkit/chainlink` to update to the just-released version of Operator UI.
 8. Merge the aforementioned PR in.
+
+#### Referencing new Job Spec GQL Schema Fields
+
+Note that while the GQL schema in Chainlink itself may be updated, that change is not immediately reflected in
+Operator UI even after running `yarn setup`. In order to use newly added fields to a particular GQL type,
+one must update the corresponding `JOB_PAYLOAD__SPEC` object appropriately.
+
+For example, if you added a field named `blahNewField` to the `DirectRequestSpec` type in the GQL schema,
+update the GQL as follows in `JobView.tsx`:
+
+```ts
+const JOB_PAYLOAD__SPEC = gql`
+  fragment JobPayload_Spec on JobSpec {
+    ... on CronSpec {
+      schedule
+    }
+    ... on DirectRequestSpec {
+      contractAddress
+      evmChainID
+      minIncomingConfirmations
+      minIncomingConfirmationsEnv
+      minContractPaymentLinkJuels
+      requesters
+      blahNewField # NEW FIELD HERE!
+    }
+    # ...
+`
+```

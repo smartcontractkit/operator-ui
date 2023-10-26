@@ -3,6 +3,7 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 
 import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
 import CardHeader from '@material-ui/core/CardHeader'
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
@@ -15,6 +16,31 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Typography from '@material-ui/core/Typography'
+
+const DeprecationWarning = () => {
+  const newTelemConfig =
+    '[[TelemetryIngress.Endpoints]] \n' +
+    "Network = '...' # e.g. EVM. Solana, Starknet, Cosmos \n" +
+    "ChainID = '...' # e.g. 1, 5, devnet, mainnet-beta URL\n" +
+    "URL = '...'\n" +
+    "ServerPubKey = '...'"
+  return (
+    <Card>
+      <CardHeader title="Deprecation warning" />
+      <CardContent>
+        <Typography variant="subtitle2" gutterBottom>
+          Starting in 2.9.0, chainlink nodes will no longer allow{' '}
+          <code>TelemetryIngress.URL</code> and{' '}
+          <code>TelemetryIngress.ServerPubKey</code>.<br />
+          Please switch to <code>TelemetryIngress.Endpoints</code>:
+        </Typography>
+        <SyntaxHighlighter language="toml" style={prism}>
+          {newTelemConfig}
+        </SyntaxHighlighter>
+      </CardContent>
+    </Card>
+  )
+}
 
 export const CONFIG_V2_QUERY = gql`
   query FetchConfigV2 {
@@ -97,25 +123,30 @@ export const ConfigurationV2Card = () => {
 
   return (
     <>
-      <Grid item xs={12}>
-        <Card>
-          <CardHeader title="TOML Configuration" />
-          <TOMLPanel
-            title="User specified:"
-            error={error?.message}
-            loading={loading}
-            toml={data?.configv2.user}
-            showHead
-            expanded={true}
-          />
-          <TOMLPanel
-            title="Effective (with defaults):"
-            error={error?.message}
-            loading={loading}
-            toml={data?.configv2.effective}
-            showHead
-          />
-        </Card>
+      <Grid container>
+        <Grid item xs={12}>
+          <DeprecationWarning />
+        </Grid>
+        <Grid item xs={12}>
+          <Card>
+            <CardHeader title="TOML Configuration" />
+            <TOMLPanel
+              title="User specified:"
+              error={error?.message}
+              loading={loading}
+              toml={data?.configv2.user}
+              showHead
+              expanded={true}
+            />
+            <TOMLPanel
+              title="Effective (with defaults):"
+              error={error?.message}
+              loading={loading}
+              toml={data?.configv2.effective}
+              showHead
+            />
+          </Card>
+        </Grid>
       </Grid>
     </>
   )

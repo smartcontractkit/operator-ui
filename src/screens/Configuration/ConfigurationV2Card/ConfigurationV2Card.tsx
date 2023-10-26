@@ -16,6 +16,10 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Typography from '@material-ui/core/Typography'
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import RemoveCircleOutline from "@material-ui/icons/RemoveCircleOutline";
 
 const DeprecationWarning = () => {
   const newTelemConfig =
@@ -28,15 +32,30 @@ const DeprecationWarning = () => {
     <Card>
       <CardHeader title="Deprecation warning" />
       <CardContent>
-        <Typography variant="subtitle2" gutterBottom>
-          Starting in 2.9.0, chainlink nodes will no longer allow{' '}
-          <code>TelemetryIngress.URL</code> and{' '}
-          <code>TelemetryIngress.ServerPubKey</code>.<br />
-          Please switch to <code>TelemetryIngress.Endpoints</code>:
+        <Typography variant="h5" gutterBottom>
+          Starting in <code>v2.9.0</code>:
         </Typography>
-        <SyntaxHighlighter language="toml" style={prism}>
-          {newTelemConfig}
-        </SyntaxHighlighter>
+        <List dense>
+          <ListItem>
+            <ListItemIcon><RemoveCircleOutline /></ListItemIcon>
+            <Typography variant="subtitle2" gutterBottom>
+              <code>TelemetryIngress.URL</code> and{' '}
+              <code>TelemetryIngress.ServerPubKey</code> will no longer be allowed.
+              Please switch to <code>TelemetryIngress.Endpoints</code>:
+              <SyntaxHighlighter language="toml" style={prism}>
+                {newTelemConfig}
+              </SyntaxHighlighter>
+            </Typography>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon><RemoveCircleOutline /></ListItemIcon>
+            <Typography variant="subtitle2" gutterBottom>
+              <code>P2P.V1</code> will no longer be supported and must not be set in TOML
+              configuration in order to boot. Use <code>P2P.V2</code> instead. If you are
+              using both, <code>V1</code> can simply be removed.
+            </Typography>
+          </ListItem>
+        </List>
       </CardContent>
     </Card>
   )

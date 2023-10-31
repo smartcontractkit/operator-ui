@@ -3,7 +3,6 @@ import pick from 'lodash/pick'
 
 export interface JobDefinition {
   definition: string
-  envDefinition: string
 }
 
 // Extracts fields from the job that are common to all specs.
@@ -29,51 +28,12 @@ const extractObservationSourceField = ({
   }
 }
 
-// Extracts the fields matching the keys from the spec. If another field of of
-// the same name with an 'Env' suffix exists, we remove it from the returned
-// object.
+// Extracts the fields matching the keys from the spec.
 const extractSpecFields = <T extends object, K extends keyof T>(
   spec: T,
   ...keys: K[]
 ) => {
-  // For every key, check for the existence of an another field of the same name
-  // with an 'Env' suffix
-  const scopedKeys = keys.filter((key) => {
-    const envKey = `${key as string}Env` as K
-    if (Object.prototype.hasOwnProperty.call(spec, envKey)) {
-      // We are relying on this always being a boolean but we can't guarantee it
-      return !spec[envKey]
-    }
-
-    return true
-  })
-
-  return pick(spec, ...scopedKeys)
-}
-
-// Extracts the fields which have a field of the same name with an 'Env' suffix
-// and the 'Env' field returns true.
-const extractEnvValues = <T extends object, K extends keyof T>(spec: T) => {
-  // For every key with an 'Env' suffix, find a key of the same name without the
-  // suffix.
-  const regex = /(.+)Env$/
-  const envValueKeys: K[] = []
-  for (const key of Object.keys(spec)) {
-    const match = key.match(regex)
-
-    if (match) {
-      const envKey = key as K
-      // We are relying on this always being a boolean but we can't guarantee it
-      if (spec[envKey]) {
-        // Check that the key without the 'Env' suffix exists
-        if (Object.prototype.hasOwnProperty.call(spec, match[1])) {
-          envValueKeys.push(match[1] as K)
-        }
-      }
-    }
-  }
-
-  return pick(spec, ...envValueKeys)
+  return pick(spec, ...keys)
 }
 
 // Stringifies the job spec as TOML
@@ -294,7 +254,7 @@ export const generateJobDefinition = (
 
       break
     default:
-      return { definition: '', envDefinition: '' }
+      return { definition: '' }
     case 'WebhookSpec':
       values = {
         ...extractJobFields(job),
@@ -306,6 +266,5 @@ export const generateJobDefinition = (
 
   return {
     definition: toTOMLString(values),
-    envDefinition: toTOMLString(extractEnvValues(job.spec)),
   }
 }

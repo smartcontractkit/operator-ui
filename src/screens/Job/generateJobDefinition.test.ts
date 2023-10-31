@@ -47,7 +47,6 @@ observationSource = """
 
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid Direct Request definition', () => {
@@ -63,7 +62,6 @@ observationSource = """
         contractAddress: '0x0000000000000000000000000000000000000000',
         evmChainID: '42',
         minIncomingConfirmations: 3,
-        minIncomingConfirmationsEnv: false,
         minContractPaymentLinkJuels: '100000000000000',
         requesters: ['0x59bbE8CFC79c76857fE0eC27e67E4957370d72B5'],
       },
@@ -92,7 +90,6 @@ observationSource = """
 
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid Keeper definition', () => {
@@ -135,7 +132,6 @@ observationSource = """
 
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid Flux Monitor definition', () => {
@@ -195,7 +191,6 @@ observationSource = """
 
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid OCR definition', () => {
@@ -210,20 +205,15 @@ observationSource = """
       spec: {
         __typename: 'OCRSpec',
         blockchainTimeout: '20s',
-        blockchainTimeoutEnv: true,
         contractAddress: '0x1469877c88F19E273EFC7Ef3C9D944574583B8a0',
         contractConfigConfirmations: 3,
-        contractConfigConfirmationsEnv: false,
         contractConfigTrackerPollInterval: '1m0s',
-        contractConfigTrackerPollIntervalEnv: false,
         contractConfigTrackerSubscribeInterval: '2m0s',
-        contractConfigTrackerSubscribeIntervalEnv: false,
         evmChainID: '42',
         keyBundleID:
           '4ee612467c3caea7bdab57ab62937adfc4d195516c30139a737f85098b35d9af',
         isBootstrapPeer: false,
         observationTimeout: '10s',
-        observationTimeoutEnv: false,
         p2pBootstrapPeers: [
           '/ip4/139.59.41.32/tcp/12000/p2p/12D3KooWGKhStcrvCr5RBYKaSRNX4ojrxHcmpJuFmHWenT6aAQAY',
         ],
@@ -248,6 +238,7 @@ name = "ocr job"
 externalJobID = "00000000-0000-0000-0000-0000000000001"
 gasLimit = 1_000
 maxTaskDuration = "10s"
+blockchainTimeout = "20s"
 contractAddress = "0x1469877c88F19E273EFC7Ef3C9D944574583B8a0"
 contractConfigConfirmations = 3
 contractConfigTrackerPollInterval = "1m0s"
@@ -273,7 +264,6 @@ observationSource = """
 
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('blockchainTimeout = "20s"\n')
   })
 
   it('generates a valid OCR Bootstrap definition', () => {
@@ -288,20 +278,15 @@ observationSource = """
       spec: {
         __typename: 'OCRSpec',
         blockchainTimeout: '20s',
-        blockchainTimeoutEnv: true,
         contractAddress: '0x1469877c88F19E273EFC7Ef3C9D944574583B8a0',
         contractConfigConfirmations: 3,
-        contractConfigConfirmationsEnv: true,
         contractConfigTrackerPollInterval: '1m0s',
-        contractConfigTrackerPollIntervalEnv: true,
         contractConfigTrackerSubscribeInterval: '2m0s',
-        contractConfigTrackerSubscribeIntervalEnv: true,
         evmChainID: '42',
         isBootstrapPeer: true,
         keyBundleID:
           '4ee612467c3caea7bdab57ab62937adfc4d195516c30139a737f85098b35d9af',
         observationTimeout: '10s',
-        observationTimeoutEnv: true,
         p2pBootstrapPeers: [
           '/ip4/139.59.41.32/tcp/12000/p2p/12D3KooWGKhStcrvCr5RBYKaSRNX4ojrxHcmpJuFmHWenT6aAQAY',
         ],
@@ -326,10 +311,15 @@ name = "ocr job"
 externalJobID = "00000000-0000-0000-0000-0000000000001"
 gasLimit = 1_000
 maxTaskDuration = "10s"
+blockchainTimeout = "20s"
 contractAddress = "0x1469877c88F19E273EFC7Ef3C9D944574583B8a0"
+contractConfigConfirmations = 3
+contractConfigTrackerPollInterval = "1m0s"
+contractConfigTrackerSubscribeInterval = "2m0s"
 evmChainID = "42"
 isBootstrapPeer = true
 keyBundleID = "4ee612467c3caea7bdab57ab62937adfc4d195516c30139a737f85098b35d9af"
+observationTimeout = "10s"
 p2pBootstrapPeers = [
   "/ip4/139.59.41.32/tcp/12000/p2p/12D3KooWGKhStcrvCr5RBYKaSRNX4ojrxHcmpJuFmHWenT6aAQAY"
 ]
@@ -343,17 +333,8 @@ observationSource = """
     fetch -> parse -> multiply;
 """
 `
-
-    const expectedEnvDefinition = `blockchainTimeout = "20s"
-contractConfigConfirmations = 3
-contractConfigTrackerPollInterval = "1m0s"
-contractConfigTrackerSubscribeInterval = "2m0s"
-observationTimeout = "10s"
-`
-
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual(expectedEnvDefinition)
   })
 
   it('generates a valid OCR 2 definition', () => {
@@ -433,7 +414,6 @@ juelsPerFeeCoinSource = "1000000000"
 
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid VRF definition', () => {
@@ -451,7 +431,6 @@ juelsPerFeeCoinSource = "1000000000"
         evmChainID: '42',
         fromAddresses: ['0x3cCad4715152693fE3BC4460591e3D3Fbd071b42'],
         minIncomingConfirmations: 6,
-        minIncomingConfirmationsEnv: false,
         pollPeriod: '10s',
         publicKey:
           '0x92594ee04c179eb7d439ff1baacd98b81a7d7a6ed55c86ca428fa025bd9c914301',
@@ -501,7 +480,6 @@ observationSource = """
 `
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid Webhook definition', () => {
@@ -535,7 +513,6 @@ observationSource = """
 `
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid Bootstrap definition', () => {
@@ -581,7 +558,6 @@ chainID = 1_337
 `
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid blockhashstore definition', () => {
@@ -633,7 +609,6 @@ fromAddresses = [ "0x52926EF10c19E810a52f11e942E502B15c7E2fEE" ]
 `
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid Gateway definition', () => {
@@ -665,6 +640,5 @@ Port = 8_080
 `
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 })

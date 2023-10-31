@@ -21,7 +21,6 @@ export function buildJob(
       contractAddress: '0x0000000000000000000000000000000000000000',
       evmChainID: '42',
       minIncomingConfirmations: 3,
-      minIncomingConfirmationsEnv: false,
       minContractPaymentLinkJuels: '100000000000000',
       requesters: ['0x59bbE8CFC79c76857fE0eC27e67E4957370d72B5'],
     },

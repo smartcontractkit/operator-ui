@@ -63,7 +63,6 @@ observationSource = """
         contractAddress: '0x0000000000000000000000000000000000000000',
         evmChainID: '42',
         minIncomingConfirmations: 3,
-        minIncomingConfirmationsEnv: false,
         minContractPaymentLinkJuels: '100000000000000',
         requesters: ['0x59bbE8CFC79c76857fE0eC27e67E4957370d72B5'],
       },
@@ -210,20 +209,15 @@ observationSource = """
       spec: {
         __typename: 'OCRSpec',
         blockchainTimeout: '20s',
-        blockchainTimeoutEnv: true,
         contractAddress: '0x1469877c88F19E273EFC7Ef3C9D944574583B8a0',
         contractConfigConfirmations: 3,
-        contractConfigConfirmationsEnv: false,
         contractConfigTrackerPollInterval: '1m0s',
-        contractConfigTrackerPollIntervalEnv: false,
         contractConfigTrackerSubscribeInterval: '2m0s',
-        contractConfigTrackerSubscribeIntervalEnv: false,
         evmChainID: '42',
         keyBundleID:
           '4ee612467c3caea7bdab57ab62937adfc4d195516c30139a737f85098b35d9af',
         isBootstrapPeer: false,
         observationTimeout: '10s',
-        observationTimeoutEnv: false,
         p2pBootstrapPeers: [
           '/ip4/139.59.41.32/tcp/12000/p2p/12D3KooWGKhStcrvCr5RBYKaSRNX4ojrxHcmpJuFmHWenT6aAQAY',
         ],
@@ -288,20 +282,15 @@ observationSource = """
       spec: {
         __typename: 'OCRSpec',
         blockchainTimeout: '20s',
-        blockchainTimeoutEnv: true,
         contractAddress: '0x1469877c88F19E273EFC7Ef3C9D944574583B8a0',
         contractConfigConfirmations: 3,
-        contractConfigConfirmationsEnv: true,
         contractConfigTrackerPollInterval: '1m0s',
-        contractConfigTrackerPollIntervalEnv: true,
         contractConfigTrackerSubscribeInterval: '2m0s',
-        contractConfigTrackerSubscribeIntervalEnv: true,
         evmChainID: '42',
         isBootstrapPeer: true,
         keyBundleID:
           '4ee612467c3caea7bdab57ab62937adfc4d195516c30139a737f85098b35d9af',
         observationTimeout: '10s',
-        observationTimeoutEnv: true,
         p2pBootstrapPeers: [
           '/ip4/139.59.41.32/tcp/12000/p2p/12D3KooWGKhStcrvCr5RBYKaSRNX4ojrxHcmpJuFmHWenT6aAQAY',
         ],
@@ -451,7 +440,6 @@ juelsPerFeeCoinSource = "1000000000"
         evmChainID: '42',
         fromAddresses: ['0x3cCad4715152693fE3BC4460591e3D3Fbd071b42'],
         minIncomingConfirmations: 6,
-        minIncomingConfirmationsEnv: false,
         pollPeriod: '10s',
         publicKey:
           '0x92594ee04c179eb7d439ff1baacd98b81a7d7a6ed55c86ca428fa025bd9c914301',

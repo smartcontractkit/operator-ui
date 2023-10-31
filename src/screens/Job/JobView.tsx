@@ -22,7 +22,6 @@ const JOB_PAYLOAD__SPEC = gql`
       contractAddress
       evmChainID
       minIncomingConfirmations
-      minIncomingConfirmationsEnv
       minContractPaymentLinkJuels
       requesters
     }
@@ -47,19 +46,14 @@ const JOB_PAYLOAD__SPEC = gql`
     }
     ... on OCRSpec {
       blockchainTimeout
-      blockchainTimeoutEnv
       contractAddress
       contractConfigConfirmations
-      contractConfigConfirmationsEnv
       contractConfigTrackerPollInterval
-      contractConfigTrackerPollIntervalEnv
       contractConfigTrackerSubscribeInterval
-      contractConfigTrackerSubscribeIntervalEnv
       evmChainID
       isBootstrapPeer
       keyBundleID
       observationTimeout
-      observationTimeoutEnv
       p2pBootstrapPeers
       p2pv2Bootstrappers
       transmitterAddress
@@ -85,7 +79,6 @@ const JOB_PAYLOAD__SPEC = gql`
       coordinatorAddress
       fromAddresses
       minIncomingConfirmations
-      minIncomingConfirmationsEnv
       pollPeriod
       publicKey
       requestedConfsDelay

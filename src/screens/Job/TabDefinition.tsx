@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const TabDefinition = ({ job }: Props) => {
-  const { definition, envDefinition } = generateJobDefinition(job)
+  const { definition } = generateJobDefinition(job)
 
   return (
     <Card>
@@ -33,20 +33,6 @@ export const TabDefinition = ({ job }: Props) => {
             {definition}
           </SyntaxHighlighter>
         </Typography>
-
-        {envDefinition.trim() && (
-          <>
-            <Typography variant="h5" color="secondary">
-              Job attributes set by environment variables
-            </Typography>
-
-            <Typography style={{ margin: 0 }} variant="body1" component="pre">
-              <SyntaxHighlighter language="toml" style={prism}>
-                {envDefinition}
-              </SyntaxHighlighter>
-            </Typography>
-          </>
-        )}
       </CardContent>
     </Card>
   )

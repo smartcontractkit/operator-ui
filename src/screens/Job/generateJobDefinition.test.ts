@@ -47,7 +47,6 @@ observationSource = """
 
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid Direct Request definition', () => {
@@ -91,7 +90,6 @@ observationSource = """
 
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid Keeper definition', () => {
@@ -134,7 +132,6 @@ observationSource = """
 
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid Flux Monitor definition', () => {
@@ -194,7 +191,6 @@ observationSource = """
 
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid OCR definition', () => {
@@ -267,7 +263,6 @@ observationSource = """
 
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('blockchainTimeout = "20s"\n')
   })
 
   it('generates a valid OCR Bootstrap definition', () => {
@@ -332,17 +327,8 @@ observationSource = """
     fetch -> parse -> multiply;
 """
 `
-
-    const expectedEnvDefinition = `blockchainTimeout = "20s"
-contractConfigConfirmations = 3
-contractConfigTrackerPollInterval = "1m0s"
-contractConfigTrackerSubscribeInterval = "2m0s"
-observationTimeout = "10s"
-`
-
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual(expectedEnvDefinition)
   })
 
   it('generates a valid OCR 2 definition', () => {
@@ -422,7 +408,6 @@ juelsPerFeeCoinSource = "1000000000"
 
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid VRF definition', () => {
@@ -489,7 +474,6 @@ observationSource = """
 `
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid Webhook definition', () => {
@@ -523,7 +507,6 @@ observationSource = """
 `
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid Bootstrap definition', () => {
@@ -569,7 +552,6 @@ chainID = 1_337
 `
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid blockhashstore definition', () => {
@@ -621,7 +603,6 @@ fromAddresses = [ "0x52926EF10c19E810a52f11e942E502B15c7E2fEE" ]
 `
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 
   it('generates a valid Gateway definition', () => {
@@ -653,6 +634,5 @@ Port = 8_080
 `
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
-    expect(output.envDefinition).toEqual('')
   })
 })

@@ -54,7 +54,6 @@ const JOB_PAYLOAD__SPEC = gql`
       isBootstrapPeer
       keyBundleID
       observationTimeout
-      p2pBootstrapPeers
       p2pv2Bootstrappers
       transmitterAddress
     }

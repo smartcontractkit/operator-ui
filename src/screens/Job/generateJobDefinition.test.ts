@@ -214,9 +214,6 @@ observationSource = """
           '4ee612467c3caea7bdab57ab62937adfc4d195516c30139a737f85098b35d9af',
         isBootstrapPeer: false,
         observationTimeout: '10s',
-        p2pBootstrapPeers: [
-          '/ip4/139.59.41.32/tcp/12000/p2p/12D3KooWGKhStcrvCr5RBYKaSRNX4ojrxHcmpJuFmHWenT6aAQAY',
-        ],
         p2pv2Bootstrappers: [
           '12D3KooWL3XJ9EMCyZvmmGXL2LMiVBtrVa2BuESsJiXkSj7333Jw@localhost:5001',
         ],
@@ -247,9 +244,6 @@ evmChainID = "42"
 isBootstrapPeer = false
 keyBundleID = "4ee612467c3caea7bdab57ab62937adfc4d195516c30139a737f85098b35d9af"
 observationTimeout = "10s"
-p2pBootstrapPeers = [
-  "/ip4/139.59.41.32/tcp/12000/p2p/12D3KooWGKhStcrvCr5RBYKaSRNX4ojrxHcmpJuFmHWenT6aAQAY"
-]
 p2pv2Bootstrappers = [
   "12D3KooWL3XJ9EMCyZvmmGXL2LMiVBtrVa2BuESsJiXkSj7333Jw@localhost:5001"
 ]
@@ -287,9 +281,6 @@ observationSource = """
         keyBundleID:
           '4ee612467c3caea7bdab57ab62937adfc4d195516c30139a737f85098b35d9af',
         observationTimeout: '10s',
-        p2pBootstrapPeers: [
-          '/ip4/139.59.41.32/tcp/12000/p2p/12D3KooWGKhStcrvCr5RBYKaSRNX4ojrxHcmpJuFmHWenT6aAQAY',
-        ],
         p2pv2Bootstrappers: [
           '12D3KooWL3XJ9EMCyZvmmGXL2LMiVBtrVa2BuESsJiXkSj7333Jw@localhost:5001',
         ],
@@ -320,9 +311,6 @@ evmChainID = "42"
 isBootstrapPeer = true
 keyBundleID = "4ee612467c3caea7bdab57ab62937adfc4d195516c30139a737f85098b35d9af"
 observationTimeout = "10s"
-p2pBootstrapPeers = [
-  "/ip4/139.59.41.32/tcp/12000/p2p/12D3KooWGKhStcrvCr5RBYKaSRNX4ojrxHcmpJuFmHWenT6aAQAY"
-]
 p2pv2Bootstrappers = [
   "12D3KooWL3XJ9EMCyZvmmGXL2LMiVBtrVa2BuESsJiXkSj7333Jw@localhost:5001"
 ]

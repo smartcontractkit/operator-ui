@@ -124,7 +124,6 @@ export const generateJobDefinition = (
           'isBootstrapPeer',
           'keyBundleID',
           'observationTimeout',
-          'p2pBootstrapPeers',
           'p2pv2Bootstrappers',
           'transmitterAddress',
         ),

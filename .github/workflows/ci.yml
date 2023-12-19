@@ -13,17 +13,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Setup node
         uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.1
         with:
           node-version-file: .tool-versions
           cache: yarn
-      
+
       - name: Run yarn install
         run: yarn install --frozen-lockfile
-      
+
       - name: Setup project
         run: yarn setup
         env:
@@ -56,9 +56,9 @@ jobs:
           hostname: ${{ secrets.GRAFANA_CLOUD_HOST }}
           this-job-name: Unit Tests ${{ matrix.shardIndex }}
         continue-on-error: true
-        
+
       - name: Checkout the repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           fetch-depth: 0 # required by CodCov
 
@@ -67,10 +67,10 @@ jobs:
         with:
           node-version-file: .tool-versions
           cache: yarn
-      
+
       - name: Run yarn install
         run: yarn install --frozen-lockfile
-      
+
       - name: Setup project
         run: yarn setup
         env:
@@ -78,30 +78,30 @@ jobs:
 
       - name: Run tests
         run: yarn run test:ci --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
-              
+
       - name: Upload CodCov coverage report
         run: ./bin/codecov -s ./coverage
 
       - name: Rename unit-test coverage report as belonging to the shard ${{ matrix.shardIndex }}
         run: mv coverage/lcov.info coverage/${{matrix.shardIndex}}_lcov.info
-      
+
       - name: Upload unit-test coverage report
         if: always()
         uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # v3.1.0
         with:
           name: unit-tests-coverage
           path: ./coverage/${{matrix.shardIndex}}_lcov.info
-  
+
   sonarqube:
     name: SonarQube Scan
     needs: [eslint, unit-tests]
     runs-on: ubuntu-latest
     if: always()
     steps:
-      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           fetch-depth: 0 # fetches all history for all tags and branches to provide more metadata for sonar reports
-      
+
       - name: Download all reports
         uses: actions/download-artifact@9782bd6a9848b53b110e712e20e42d89988822b7 # v3.0.1
 

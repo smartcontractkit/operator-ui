@@ -3,9 +3,9 @@
 # This workflow is triggered whenever a pull_request event is triggered within
 # the _smartcontractkit/chainlink_ repository. Then, the status of this workflow
 # is returned back and propagated. See https://github.com/marketplace/actions/trigger-workflow-and-wait for more information
-# 
+#
 # PURPOSE
-# This checks if breaking changes are made to the schema within a PR in the 
+# This checks if breaking changes are made to the schema within a PR in the
 # smartcontractkit/chainlink repo, then fails if so. Schema changes should
 # never be breaking. See https://graphql.org/learn/best-practices/#versioning
 
@@ -21,18 +21,18 @@ jobs:
   detect-gql-breaking-changes:
     name: Detect GQL Breaking Changes
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - name: Collect Metrics
         id: collect-gha-metrics
         uses: smartcontractkit/push-gha-metrics-action@v1
         with:
           basic-auth: ${{ secrets.GRAFANA_CLOUD_BASIC_AUTH }}
           hostname: ${{ secrets.GRAFANA_CLOUD_HOST }}
-          this-job-name: Detect GQL Breaking Changes 
+          this-job-name: Detect GQL Breaking Changes
         continue-on-error: true
 
       - name: Checkout the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Setup node
         uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.1
@@ -42,8 +42,8 @@ jobs:
 
       - name: Run yarn install
         run: yarn install --frozen-lockfile
-      
-      - name: Test setup 
+
+      - name: Test setup
         run: yarn codegen
         env:
           GH_TOKEN: ${{ github.token }}

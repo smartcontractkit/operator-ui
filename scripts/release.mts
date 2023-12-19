@@ -14,11 +14,10 @@ const CHANGELOG_PATH = './CHANGELOG.md'
 
 async function main() {
   await setup()
-  await checkExternalScriptDependencies()
   await maybeConsumeVersions()
   const { gitTag, filename } = await pkgToTarball(ASSETS_DIR)
-  await modifyChangelog(CHANGELOG_PATH, gitTag)
-  await createGithubRelease(ASSETS_DIR, filename, gitTag, CHANGELOG_PATH)
+  const releaseChangelog = await createReleaseChangelog(CHANGELOG_PATH, gitTag)
+  await createGithubRelease(ASSETS_DIR, filename, gitTag, releaseChangelog)
 }
 
 main()
@@ -40,13 +39,13 @@ interface NpmPack {
  * @param packDir The directory where the tarball is located
  * @param filename The filename of the tarball
  * @param gitTag The git tag to create the release under
- * @param changelogPath The path to the changelog
+ * @param changelog The contents of the changelog to include in the release notes
  */
 async function createGithubRelease(
   packDir: string,
   filename: string,
   gitTag: string,
-  changelogPath: string,
+  changelog: string,
 ) {
   if (await checkIfReleaseExists(gitTag)) {
     warn(`Release under tag "${gitTag}" already exists, skipping...`)
@@ -54,10 +53,8 @@ async function createGithubRelease(
   }
 
   const asset = `${packDir}/${filename}`
-  log(
-    `Creating release with tag "${gitTag}" with asset "${asset}" and changelog of ${changelogPath}`,
-  )
-  await $`gh release create ${gitTag} ${packDir}/${filename} -F ${changelogPath}`
+  log(`Creating release with tag "${gitTag}" with asset "${asset}."`)
+  await $`echo ${changelog} | gh release create ${gitTag} ${asset} --notes-file -`
 
   log(`Cleaning up...`)
   log(`Removing ${packDir}`)
@@ -65,13 +62,16 @@ async function createGithubRelease(
 }
 
 /**
- * Modifies the CHANGELOG.md to exclude older version notes so they're not included in the release.
- * This code is dependent on how the changelog is formatted, and will no-op if the changelog doesn't
- * match the expected format.
+ * Creates a modified CHANGELOG.md which excludes older version notes if necessary. Otherwise,
+ * will return the original changelog contents if no modification was necessary.
+ * This code will no-op and return the original changelog path if:
+ * - No versions are found in the changelog
+ * - No other versions are found in the changelog
+ * - Changelog doesn't match expected format
  * @param changelogPath The path to the changelog
  * @param gitTag The git tag to include changes for
  */
-async function modifyChangelog(changelogPath: string, gitTag: string) {
+async function createReleaseChangelog(changelogPath: string, gitTag: string) {
   log(`Modifying changelog to only include changes for ${gitTag}...`)
   const changelog = await fs.readFile(changelogPath, 'utf-8')
 
@@ -92,38 +92,33 @@ async function modifyChangelog(changelogPath: string, gitTag: string) {
 
   if (matchedVersions.length === 0) {
     warn(`No versions found in changelog, skipping changelog modification.`)
-    return
-  } else if (
-    matchedVersions.length === 1 &&
-    matchedVersions[0].match === `${version}`
-  ) {
-    log(
-      `Only changelog entry is for ${version}, skipping changelog modification.`,
-    )
-    return
+    return changelog
   } else if (matchedVersions[0].match !== `${version}`) {
     log(
       `First changelog version entry is ${matchedVersions[0].match} and not ${version}, skipping changelog modification.`,
     )
-    return
+    return changelog
   } else {
     // First index is now guaranteed to be the one matching the git tag
-    // Second index is the next version entry as we sorted the array by index
-    const secondVersionMatch = matchedVersions[1]
-
-    // trim the changelog to the second version match
-    const trimmedChangelog = changelog.substring(0, secondVersionMatch.index)
-    await fs.writeFile(changelogPath, trimmedChangelog)
+    // We want to trim everything after (and including) the next version header
+    const trimIndex = matchedVersions[1]?.index ?? changelog.length
+    return changelog.substring(0, trimIndex)
   }
 }
 
 /**
  * If there are changesets (changeset files in .changeset directory), consume them and create a snapshot release.
- * Otherwise, that means the changesets PR was merged and we can create a release full release.
+ * That means, there's no changeset files at HEAD. This happens when:
+ * 1. The changesets PR was merged (bumping versions and removing all changesets)
+ *     - Create a full release
+ * 2. No changesets existed, and another commit was added which didn't include a changeset.
+ *     -  No-op because a release/tag should already exist ass they're derived from the version in each package.json
  */
 async function maybeConsumeVersions() {
-  const hasChanges = await readChangesets('.').then((sets) => sets.length > 0)
-  if (!hasChanges) {
+  const hasChangesets = await readChangesets('.').then(
+    (sets) => sets.length > 0,
+  )
+  if (!hasChangesets) {
     log(`Attempting to create release....`)
     return
   }
@@ -132,6 +127,9 @@ async function maybeConsumeVersions() {
   await $`yarn changeset version --snapshot`
 }
 
+/**
+ * Checks if a release already exists under the given git tag.
+ */
 async function checkIfReleaseExists(gitTag: string): Promise<boolean> {
   return await $`gh release view ${gitTag}`
     .then((p) => {
@@ -158,16 +156,13 @@ async function pkgToTarball(packDir: string) {
   return { gitTag, filename }
 }
 
-/**
- * Setup the script by changing the working directory to the git root and setting zx verbosity.
- */
 async function setup() {
   // Set zx verbosity based on DEBUG env var
   if (!process.env.DEBUG) {
     $.verbose = false
   }
-
   await runAtGitRoot()
+  await checkExternalScriptDependencies()
 }
 
 /**

@@ -9,11 +9,11 @@ const readChangesets =
   _readChangesets.default as typeof import('@changesets/read/dist/declarations/src/index.js')['default']
 
 // These paths are relative to the git root
-const ASSETS_DIR = './assets';
-const CHANGELOG_PATH = './CHANGELOG.md';
+const ASSETS_DIR = './assets'
+const CHANGELOG_PATH = './CHANGELOG.md'
 
 async function main() {
-  await setup();
+  await setup()
   await checkExternalScriptDependencies()
   await maybeConsumeVersions()
   const { gitTag, filename } = await pkgToTarball(ASSETS_DIR)
@@ -79,20 +79,30 @@ async function modifyChangelog(changelogPath: string, gitTag: string) {
   const version = `## ${gitTag.substring(1)}`
   const changelogHeaderVersionPattern = /^## [0-9]+.[0-9]+.[0-9]+-?[0-9a-z]*$/gm
 
-  const matchedVersions: { match: string, index: number }[]  = [...changelog.matchAll(changelogHeaderVersionPattern)].map((m) => {
-    return { match: m[0], index: m.index }
-  })
-  .filter((m): m is { match: string, index: number } => m.index !== undefined) // filter out undefined indexes
-  .sort((a, b) => a.index! - b.index!) // sort ascending by index (top to bottom)
+  const matchedVersions: { match: string; index: number }[] = [
+    ...changelog.matchAll(changelogHeaderVersionPattern),
+  ]
+    .map((m) => {
+      return { match: m[0], index: m.index }
+    })
+    .filter((m): m is { match: string; index: number } => m.index !== undefined) // filter out undefined indexes
+    .sort((a, b) => a.index! - b.index!) // sort ascending by index (top to bottom)
 
   if (matchedVersions.length === 0) {
     warn(`No versions found in changelog, skipping changelog modification.`)
     return
-  } else if (matchedVersions.length === 1 && matchedVersions[0].match === `${version}`) {
-    log(`Only changelog entry is for ${version}, skipping changelog modification.`)
+  } else if (
+    matchedVersions.length === 1 &&
+    matchedVersions[0].match === `${version}`
+  ) {
+    log(
+      `Only changelog entry is for ${version}, skipping changelog modification.`,
+    )
     return
   } else if (matchedVersions[0].match !== `${version}`) {
-    log(`First changelog version entry is ${matchedVersions[0].match} and not ${version}, skipping changelog modification.`)
+    log(
+      `First changelog version entry is ${matchedVersions[0].match} and not ${version}, skipping changelog modification.`,
+    )
     return
   }
 

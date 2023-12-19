@@ -21,22 +21,22 @@ jobs:
         with:
           basic-auth: ${{ secrets.GRAFANA_CLOUD_BASIC_AUTH }}
           hostname: ${{ secrets.GRAFANA_CLOUD_HOST }}
-          this-job-name: Upsert PR 
+          this-job-name: Upsert PR
         continue-on-error: true
 
       - name: Checkout the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.1
         with:
-          node-version: "18"
+          node-version-file: .tool-versions
           cache: yarn
 
       - name: Run yarn install
         run: yarn install --frozen-lockfile
-        
-      - name: Upsert Release Pull Request 
+
+      - name: Upsert Release Pull Request
         id: changesets
         uses: changesets/action@v1
         env:
@@ -56,12 +56,12 @@ jobs:
         continue-on-error: true
 
       - name: Checkout the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.1
         with:
-          node-version: "18"
+          node-version-file: .tool-versions
           cache: yarn
 
       - name: Run yarn install
@@ -79,7 +79,7 @@ jobs:
         run: yarn install --frozen-lockfile
         working-directory: scripts
 
-      - name: Create Release 
+      - name: Create Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn -s release

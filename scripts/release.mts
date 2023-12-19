@@ -77,6 +77,7 @@ async function modifyChangelog(changelogPath: string, gitTag: string) {
 
   // git tag version to changelog version header format (v0.0.0-0 -> ## 0.0.0-0)
   const version = `## ${gitTag.substring(1)}`
+  // Pattern for "## x.y.z" with an optional snapshot release suffix (-abc123)
   const changelogHeaderVersionPattern =
     /^## [0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}(?:-[0-9a-z]{1,15}){0,1}$/gm
 

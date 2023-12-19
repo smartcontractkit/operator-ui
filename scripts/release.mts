@@ -77,7 +77,8 @@ async function modifyChangelog(changelogPath: string, gitTag: string) {
 
   // git tag version to changelog version header format (v0.0.0-0 -> ## 0.0.0-0)
   const version = `## ${gitTag.substring(1)}`
-  const changelogHeaderVersionPattern = /^## [0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}(?:-[0-9a-z]{1,15}){0,1}$/gm
+  const changelogHeaderVersionPattern =
+    /^## [0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}(?:-[0-9a-z]{1,15}){0,1}$/gm
 
   const matchedVersions: { match: string; index: number }[] = [
     ...changelog.matchAll(changelogHeaderVersionPattern),
@@ -104,15 +105,15 @@ async function modifyChangelog(changelogPath: string, gitTag: string) {
       `First changelog version entry is ${matchedVersions[0].match} and not ${version}, skipping changelog modification.`,
     )
     return
+  } else {
+    // First index is now guaranteed to be the one matching the git tag
+    // Second index is the next version entry as we sorted the array by index
+    const secondVersionMatch = matchedVersions[1]
+
+    // trim the changelog to the second version match
+    const trimmedChangelog = changelog.substring(0, secondVersionMatch.index)
+    await fs.writeFile(changelogPath, trimmedChangelog)
   }
-
-  // First index is now guaranteed to be the one matching the git tag
-  // Second index is the next version entry as we sorted the array by index
-  const secondVersionMatch = matchedVersions[1]
-
-  // trim the changelog to the second version match
-  const trimmedChangelog = changelog.substring(0, secondVersionMatch.index)
-  await fs.writeFile(changelogPath, trimmedChangelog)
 }
 
 /**

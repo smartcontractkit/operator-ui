@@ -77,7 +77,7 @@ async function modifyChangelog(changelogPath: string, gitTag: string) {
 
   // git tag version to changelog version header format (v0.0.0-0 -> ## 0.0.0-0)
   const version = `## ${gitTag.substring(1)}`
-  const changelogHeaderVersionPattern = /^## [0-9]+.[0-9]+.[0-9]+-?[0-9a-z]*$/gm
+  const changelogHeaderVersionPattern = /^## [0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}(?:-[0-9a-z]{1,15})?$/gm
 
   const matchedVersions: { match: string; index: number }[] = [
     ...changelog.matchAll(changelogHeaderVersionPattern),

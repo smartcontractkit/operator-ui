@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "release": "ts-node -T --esm ./release.mts"
+    "release": "node --loader=ts-node/esm ./release.mts"
   },
   "dependencies": {
     "@changesets/read": "^0.5.7",

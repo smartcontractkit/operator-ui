@@ -22,12 +22,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import RemoveCircleOutline from '@material-ui/icons/RemoveCircleOutline'
 
 const DeprecationWarning = () => {
-  const newTelemConfig =
-    '[[TelemetryIngress.Endpoints]] \n' +
-    "Network = '...' # e.g. EVM. Solana, Starknet, Cosmos \n" +
-    "ChainID = '...' # e.g. 1, 5, devnet, mainnet-beta URL\n" +
-    "URL = '...'\n" +
-    "ServerPubKey = '...'"
   return (
     <Card>
       <CardHeader title="Deprecation warning" />
@@ -36,19 +30,6 @@ const DeprecationWarning = () => {
           Starting in <code>v2.9.0</code>:
         </Typography>
         <List dense>
-          <ListItem>
-            <ListItemIcon>
-              <RemoveCircleOutline />
-            </ListItemIcon>
-            <Typography variant="subtitle2" gutterBottom>
-              <code>TelemetryIngress.URL</code> and{' '}
-              <code>TelemetryIngress.ServerPubKey</code> will no longer be
-              allowed. Please switch to <code>TelemetryIngress.Endpoints</code>:
-              <SyntaxHighlighter language="toml" style={prism}>
-                {newTelemConfig}
-              </SyntaxHighlighter>
-            </Typography>
-          </ListItem>
           <ListItem>
             <ListItemIcon>
               <RemoveCircleOutline />

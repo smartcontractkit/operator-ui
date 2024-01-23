@@ -3,7 +3,6 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 
 import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
 import CardHeader from '@material-ui/core/CardHeader'
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
@@ -16,36 +15,32 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Typography from '@material-ui/core/Typography'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import RemoveCircleOutline from '@material-ui/icons/RemoveCircleOutline'
 
-const DeprecationWarning = () => {
-  return (
-    <Card>
-      <CardHeader title="Deprecation warning" />
-      <CardContent>
-        <Typography variant="h5" gutterBottom>
-          Starting in <code>v2.9.0</code>:
-        </Typography>
-        <List dense>
-          <ListItem>
-            <ListItemIcon>
-              <RemoveCircleOutline />
-            </ListItemIcon>
-            <Typography variant="subtitle2" gutterBottom>
-              <code>P2P.V1</code> will no longer be supported and must not be
-              set in TOML configuration in order to boot. Use{' '}
-              <code>P2P.V2</code> instead. If you are using both,{' '}
-              <code>V1</code> can simply be removed.
-            </Typography>
-          </ListItem>
-        </List>
-      </CardContent>
-    </Card>
-  )
-}
+// const DeprecationWarning = () => { // Left as reference for future deprecation warnings
+//   return (
+//     <Card>
+//       <CardHeader title="Deprecation warning" />
+//       <CardContent>
+//         <Typography variant="h5" gutterBottom>
+//           Starting in <code>v2.9.0</code>:
+//         </Typography>
+//         <List dense>
+//           <ListItem>
+//             <ListItemIcon>
+//               <RemoveCircleOutline />
+//             </ListItemIcon>
+//             <Typography variant="subtitle2" gutterBottom>
+//               <code>P2P.V1</code> will no longer be supported and must not be
+//               set in TOML configuration in order to boot. Use{' '}
+//               <code>P2P.V2</code> instead. If you are using both,{' '}
+//               <code>V1</code> can simply be removed.
+//             </Typography>
+//           </ListItem>
+//         </List>
+//       </CardContent>
+//     </Card>
+//   )
+// }
 
 export const CONFIG_V2_QUERY = gql`
   query FetchConfigV2 {
@@ -129,9 +124,9 @@ export const ConfigurationV2Card = () => {
   return (
     <>
       <Grid container>
-        <Grid item xs={12}>
-          <DeprecationWarning />
-        </Grid>
+        {/*<Grid item xs={12}>*/}
+        {/*  <DeprecationWarning />*/}
+        {/*</Grid>*/}
         <Grid item xs={12}>
           <Card>
             <CardHeader title="TOML Configuration" />

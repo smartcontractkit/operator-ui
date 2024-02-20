@@ -87,7 +87,7 @@ export const JobRunView = ({ run }: Props) => {
     graph.forEach((node) => {
       attrs[node.id] = {
         ...node.attributes,
-        status: TaskRunStatus.COMPLETE,
+        status: attrs[node.id].status,
       }
     })
   }

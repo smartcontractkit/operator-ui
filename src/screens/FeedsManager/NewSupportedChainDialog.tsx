@@ -65,6 +65,7 @@ export const NewSupportedChainDialog = ({ onClose, open, onSubmit }: Props) => {
     ocr2ExecutePluginEnabled: false,
     ocr2MedianPluginEnabled: false,
     ocr2MercuryPluginEnabled: false,
+    ocr2RebalancerPluginEnabled: false,
     ocr2ForwarderAddress: '',
   }
 

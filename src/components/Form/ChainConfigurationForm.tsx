@@ -43,6 +43,7 @@ export type FormValues = {
   ocr2MercuryPluginEnabled: boolean
   ocr2Multiaddr?: string | null
   ocr2P2PPeerID?: string | null
+  ocr2RebalancerPluginEnabled: boolean
 }
 
 const ValidationSchema = Yup.object().shape({
@@ -483,6 +484,16 @@ export const ChainConfigurationForm = withStyles(styles)(
                                   type="checkbox"
                                   Label={{
                                     label: 'Execute',
+                                  }}
+                                />
+                              </Grid>
+                              <Grid item xs={6}>
+                                <Field
+                                  component={CheckboxWithLabel}
+                                  name="ocr2RebalancerPluginEnabled"
+                                  type="checkbox"
+                                  Label={{
+                                    label: 'Rebalancer',
                                   }}
                                 />
                               </Grid>

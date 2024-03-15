@@ -29,6 +29,7 @@ const FEEDS_MANAGER__CHAIN_CONFIG_FIELDS = gql`
         execute
         median
         mercury
+        rebalancer
       }
     }
   }

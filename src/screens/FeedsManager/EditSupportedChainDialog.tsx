@@ -75,6 +75,7 @@ export const EditSupportedChainDialog = ({
     ocr2ExecutePluginEnabled: cfg.ocr2JobConfig.plugins.execute,
     ocr2MedianPluginEnabled: cfg.ocr2JobConfig.plugins.median,
     ocr2MercuryPluginEnabled: cfg.ocr2JobConfig.plugins.mercury,
+    ocr2RebalancerPluginEnabled: cfg.ocr2JobConfig.plugins.rebalancer,
     ocr2ForwarderAddress: cfg.ocr2JobConfig.forwarderAddress,
   }
 

@@ -16,6 +16,9 @@ on:
       ref:
         required: true
         description: The chainlink ref to test against
+      tag:
+        required: true
+        description: The operator-ui tag/commit to checkout against
 
 jobs:
   detect-gql-breaking-changes:
@@ -34,6 +37,8 @@ jobs:
 
       - name: Checkout the repo
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          ref: ${{ inputs.tag }}
 
       - name: Setup node
         uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.1

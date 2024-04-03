@@ -5,7 +5,7 @@ const webpackBase = require('./webpack.config')
 module.exports = Object.assign(webpackBase, {
   devtool: 'inline-source-map',
   devServer: {
-    port: 3000,
+    port: 3001,
     static: './artifacts',
     historyApiFallback: true,
     hot: true,

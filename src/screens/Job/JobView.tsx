@@ -133,6 +133,11 @@ const JOB_PAYLOAD__SPEC = gql`
       gatewayConfig
       createdAt
     }
+    ... on WorkflowSpec {
+      workflowID
+      workflowOwner
+      workflow
+    }
   }
 `
 

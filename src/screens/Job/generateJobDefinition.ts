@@ -252,6 +252,19 @@ export const generateJobDefinition = (
       }
 
       break
+
+    case 'WorkflowSpec':
+      values = {
+        ...extractJobFields(job),
+        ...extractSpecFields(
+          job.spec,
+          'workflowID',
+          'workflow',
+          'workflowOwner',
+        ),
+      }
+
+      break
     default:
       return { definition: '' }
     case 'WebhookSpec':

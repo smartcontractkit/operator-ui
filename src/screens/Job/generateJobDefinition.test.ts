@@ -629,4 +629,34 @@ Port = 8_080
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
   })
+
+  it('generates a valid Workflow definition', () => {
+    const job: JobPayload_Fields = {
+      id: '1',
+      type: 'workflow',
+      schemaVersion: 1,
+      name: 'workflow test',
+      externalJobID: '00000000-0000-0000-0000-0000000000001',
+      maxTaskDuration: '10s',
+      spec: {
+        __typename: 'WorkflowSpec',
+        workflowID: '<workflow id>',
+        workflow: '<workflow spec>',
+        workflowOwner: '<workflow owner>',
+      },
+      observationSource: '',
+      ...otherJobFields,
+    }
+
+    const expectedOutput = `type = "workflow"
+schemaVersion = 1
+name = "workflow test"
+externalJobID = "00000000-0000-0000-0000-0000000000001"
+workflowID = "<workflow id>"
+workflow = "<workflow spec>"
+workflowOwner = "<workflow owner>"
+`
+    const output = generateJobDefinition(job)
+    expect(output.definition).toEqual(expectedOutput)
+  })
 })

@@ -91,7 +91,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
-          name: unit-tests-coverage
+          name: unit-tests-coverage-${{ matrix.shardIndex }}
           path: ./coverage/${{matrix.shardIndex}}_lcov.info
 
   sonarqube:

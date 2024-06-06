@@ -269,9 +269,7 @@ export const generateJobDefinition = (
     case 'StandardCapabilitiesSpec':
       values = {
         ...extractJobFields(job),
-        ...extractSpecFields(
-          job.spec, 'command', 'config',
-        ),
+        ...extractSpecFields(job.spec, 'command', 'config'),
       }
 
       break

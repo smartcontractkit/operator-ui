@@ -270,9 +270,7 @@ export const generateJobDefinition = (
       values = {
         ...extractJobFields(job),
         ...extractSpecFields(
-          job.spec,
-          'command',
-          'config',
+          job.spec, 'command', 'config',
         ),
       }
 

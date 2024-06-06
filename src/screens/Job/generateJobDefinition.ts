@@ -265,6 +265,15 @@ export const generateJobDefinition = (
       }
 
       break
+
+    case 'StandardCapabilitiesSpec':
+      values = {
+        ...extractJobFields(job),
+        ...extractSpecFields(job.spec, 'command', 'config'),
+      }
+
+      break
+
     default:
       return { definition: '' }
     case 'WebhookSpec':

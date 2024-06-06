@@ -138,6 +138,11 @@ const JOB_PAYLOAD__SPEC = gql`
       workflowOwner
       workflow
     }
+    ... on StandardCapabilitiesSpec {
+      command
+      config
+      createdAt
+    }
   }
 `
 

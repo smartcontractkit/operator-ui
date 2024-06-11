@@ -318,6 +318,7 @@ export const SupportedChainsCard = withStyles(styles)(
               chainType: values.chainType,
               accountAddr: values.accountAddr,
               adminAddr: values.adminAddr,
+              accountAddrPubKey: values.accountAddrPubKey,
               fluxMonitorEnabled: values.fluxMonitorEnabled,
               ocr1Enabled: values.ocr1Enabled,
               ocr1IsBootstrap: values.ocr1IsBootstrap,
@@ -394,6 +395,7 @@ export const SupportedChainsCard = withStyles(styles)(
             input: {
               accountAddr: values.accountAddr,
               adminAddr: values.adminAddr,
+              accountAddrPubKey: values.accountAddrPubKey,
               fluxMonitorEnabled: values.fluxMonitorEnabled,
               ocr1Enabled: values.ocr1Enabled,
               ocr1IsBootstrap: values.ocr1IsBootstrap,
@@ -499,6 +501,13 @@ export const SupportedChainsCard = withStyles(styles)(
                       <DetailsCardItemTitle title="Account Address" />
                       <DetailsCardItemValue value={cfg.accountAddr} />
                     </Grid>
+                    {(cfg.chainID === 'SN_MAIN' ||
+                      cfg.chainID === 'SN_SEPOLIA') && (
+                      <Grid item xs={12} sm={6}>
+                        <DetailsCardItemTitle title="Account Address Public Key" />
+                        <DetailsCardItemValue value={cfg.accountAddrPubKey} />
+                      </Grid>
+                    )}
                     <Grid item xs={12} sm={6}>
                       <DetailsCardItemTitle title="Admin Address" />
                       <DetailsCardItemValue value={cfg.adminAddr} />

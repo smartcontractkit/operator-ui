@@ -60,6 +60,7 @@ export const EditSupportedChainDialog = ({
     chainType: 'EVM',
     accountAddr: cfg.accountAddr,
     adminAddr: cfg.adminAddr,
+    accountAddrPubKey: cfg.accountAddrPubKey,
     fluxMonitorEnabled: cfg.fluxMonitorJobConfig.enabled,
     ocr1Enabled: cfg.ocr1JobConfig.enabled,
     ocr1IsBootstrap: cfg.ocr1JobConfig.isBootstrap,

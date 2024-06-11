@@ -50,6 +50,7 @@ export const NewSupportedChainDialog = ({ onClose, open, onSubmit }: Props) => {
     chainType: 'EVM',
     accountAddr: '',
     adminAddr: '',
+    accountAddrPubKey: '',
     fluxMonitorEnabled: false,
     ocr1Enabled: false,
     ocr1IsBootstrap: false,

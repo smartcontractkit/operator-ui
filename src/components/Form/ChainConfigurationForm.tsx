@@ -24,6 +24,7 @@ import Typography from '@material-ui/core/Typography'
 
 export type FormValues = {
   accountAddr: string
+  accountAddrPubKey?: string | null
   adminAddr: string
   chainID: string
   chainType: string
@@ -46,10 +47,15 @@ export type FormValues = {
   ocr2RebalancerPluginEnabled: boolean
 }
 
+const isStarknet = (chainID: string): boolean => {
+  return chainID === 'SN_MAIN' || chainID === 'SN_SEPOLIA'
+}
+
 const ValidationSchema = Yup.object().shape({
   chainID: Yup.string().required('Required'),
   chainType: Yup.string().required('Required'),
   accountAddr: Yup.string().required('Required'),
+  accountAddrPubKey: Yup.string().nullable(),
   adminAddr: Yup.string().required('Required'),
   ocr1Multiaddr: Yup.string()
     .when(['ocr1Enabled', 'ocr1IsBootstrap'], {
@@ -103,12 +109,21 @@ const styles = (theme: Theme) => {
 }
 
 // A custom account address field which clears the input based on the chain id
-// value changing
-const AccountAddrField = (props: FieldAttributes<any>) => {
+// value changing, and also allows user to input their own value if none is available in the list.
+interface AccountAddrFieldProps extends FieldAttributes<any> {
+  chainAccounts: { address: string }[]
+}
+
+const AccountAddrField = ({
+  chainAccounts,
+  ...props
+}: AccountAddrFieldProps) => {
   const {
     values: { chainID, accountAddr },
     setFieldValue,
   } = useFormikContext<FormValues>()
+
+  const [isCustom, setIsCustom] = React.useState(false)
 
   const prevChainID = React.useRef<string>()
   React.useEffect(() => {
@@ -118,10 +133,67 @@ const AccountAddrField = (props: FieldAttributes<any>) => {
   React.useEffect(() => {
     if (chainID !== prevChainID.current) {
       setFieldValue(props.name, '')
+      setIsCustom(false) // Reset custom address state when chainID changes
     }
-  }, [chainID, setFieldValue, accountAddr, props.name])
+  }, [chainID, setFieldValue, props.name])
 
-  return <Field {...props} />
+  const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const value = event.target.value as string
+    if (value === 'custom') {
+      setIsCustom(true)
+      setFieldValue(props.name, '')
+    } else {
+      setIsCustom(false)
+      setFieldValue(props.name, value)
+    }
+  }
+
+  return (
+    <>
+      {!isStarknet(chainID) && (
+        <Field
+          {...props}
+          select
+          value={isCustom ? 'custom' : accountAddr}
+          onChange={handleSelectChange}
+        >
+          {chainAccounts.map((account) => (
+            <MenuItem key={account.address} value={account.address}>
+              {account.address}
+            </MenuItem>
+          ))}
+        </Field>
+      )}
+      {isStarknet(chainID) && (
+        <Field
+          component={TextField}
+          id="accountAddr"
+          name="accountAddr"
+          label="Enter your account address"
+          inputProps={{ 'data-testid': 'customAccountAddr-input' }}
+          helperText="The account address used for this chain"
+          required
+          fullWidth
+        />
+      )}
+      {isStarknet(chainID) && (
+        <div>
+          <Field
+            component={TextField}
+            id="accountAddrPubKey"
+            name="accountAddrPubKey"
+            label="Account Address Public Key"
+            required
+            fullWidth
+            helperText="The public key for your account address"
+            FormHelperTextProps={{
+              'data-testid': 'accountAddrPubKey-helper-text',
+            }}
+          />
+        </div>
+      )}
+    </>
+  )
 }
 
 export interface Props extends WithStyles<typeof styles> {
@@ -185,7 +257,6 @@ export const ChainConfigurationForm = withStyles(styles)(
                     required
                     fullWidth
                     disabled
-                    helperText="Only EVM is currently supported"
                   >
                     <MenuItem key="EVM" value="EVM">
                       EVM
@@ -227,16 +298,11 @@ export const ChainConfigurationForm = withStyles(styles)(
                     fullWidth
                     select
                     helperText="The account address used for this chain"
+                    chainAccounts={chainAccounts}
                     FormHelperTextProps={{
                       'data-testid': 'accountAddr-helper-text',
                     }}
-                  >
-                    {chainAccounts.map((account) => (
-                      <MenuItem key={account.address} value={account.address}>
-                        {account.address}
-                      </MenuItem>
-                    ))}
-                  </AccountAddrField>
+                  />
                 </Grid>
 
                 <Grid item xs={12} md={6}>

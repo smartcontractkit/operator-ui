@@ -7,6 +7,7 @@ const FEEDS_MANAGER__CHAIN_CONFIG_FIELDS = gql`
     chainType
     accountAddr
     adminAddr
+    accountAddrPubKey
     fluxMonitorJobConfig {
       enabled
     }

@@ -62,6 +62,8 @@ declare module 'core/store/models' {
     nextNonce: ?integer
     abandon: ?boolean
     enabled: ?boolean
+    abandonUnstarted: ?boolean
+    subject: ?string
   }
 
   export interface BuildInfo {

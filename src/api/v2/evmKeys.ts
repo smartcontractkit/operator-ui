@@ -22,6 +22,13 @@ export class EVMKeys {
     if (request.enabled !== null) {
       query.append('enabled', String(request.enabled))
     }
+    if (request.abandonUnstarted !== null) {
+      query.append('abandonUnstarted', String(request.abandonUnstarted))
+      
+      if (request.subject !== null) {
+        query.append('subject', request.subject)
+      }
+    }
 
     const endpoint = ENDPOINT + '?' + query.toString()
 

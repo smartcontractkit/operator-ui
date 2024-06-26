@@ -55,7 +55,7 @@ export const generateJobDefinition = (
     case 'CronSpec':
       values = {
         ...extractJobFields(job, 'maxTaskDuration'),
-        ...extractSpecFields(job.spec, 'schedule'),
+        ...extractSpecFields(job.spec, 'schedule', 'evmChainID'),
         ...extractObservationSourceField(job),
       }
 

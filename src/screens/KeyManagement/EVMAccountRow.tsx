@@ -84,6 +84,12 @@ const styles = (theme: Theme) =>
     runJobModalContent: {
       overflow: 'hidden',
     },
+    // Adjusts the text field to fit within the modal padding
+    textField: {
+      marginLeft: theme.spacing.unit * 6,
+      marginRight: theme.spacing.unit * 6,
+      width: 'calc(100% - 96px)', 
+    },
   })
 
 interface Props {
@@ -293,7 +299,7 @@ const UnstyledEVMAccountRow: React.FC<Props> = ({
                 {abandonUnstarted && (
                   <FormGroup>
                     <TextField
-                      className={classes.infoText}
+                      className={classes.textField}
                       name="subjectField"
                       type="text"
                       label="Subject (optional)"

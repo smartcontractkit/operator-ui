@@ -516,16 +516,11 @@ export const ChainConfigurationForm = withStyles(styles)(
                                       'ocr2KeyBundleID-helper-text',
                                   }}
                                 >
-                                  {ocr2Keys
-                                    .filter(
-                                      (key) =>
-                                        values.chainType === key.chainType,
-                                    )
-                                    .map((key) => (
-                                      <MenuItem key={key.id} value={key.id}>
-                                        {key.id}
-                                      </MenuItem>
-                                    ))}
+                                  {ocr2Keys.map((key) => (
+                                    <MenuItem key={key.id} value={key.id}>
+                                      {key.id}
+                                    </MenuItem>
+                                  ))}
                                 </Field>
                               </Grid>
 

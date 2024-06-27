@@ -50,8 +50,8 @@ const styles = (theme: Theme) =>
       lineHeight: '1rem',
     },
     dialogPaper: {
-      minHeight: '360px',
-      maxHeight: '360px',
+      minHeight: '450px',
+      maxHeight: '450px',
       minWidth: '670px',
       maxWidth: '670px',
       overflow: 'hidden',
@@ -84,6 +84,12 @@ const styles = (theme: Theme) =>
     runJobModalContent: {
       overflow: 'hidden',
     },
+    // Adjusts the text field to fit within the modal padding
+    textField: {
+      marginLeft: theme.spacing.unit * 6,
+      marginRight: theme.spacing.unit * 6,
+      width: 'calc(100% - 96px)', 
+    },
   })
 
 interface Props {
@@ -98,12 +104,16 @@ function apiCall({
   nextNonce,
   abandon,
   enabled,
+  abandonUnstarted,
+  subject
 }: {
   evmChainID: string
   address: string
   nextNonce: bigint | null
   abandon: boolean
   enabled: boolean
+  abandonUnstarted: boolean
+  subject: string
 }): Promise<ApiResponse<EVMKey>> {
   const definition: EVMKeysChainRequest = {
     evmChainID,
@@ -111,6 +121,8 @@ function apiCall({
     nextNonce,
     abandon,
     enabled,
+    abandonUnstarted,
+    subject,
   }
   return api.v2.evmKeys.chain(definition)
 }
@@ -128,10 +140,12 @@ const UnstyledEVMAccountRow: React.FC<Props> = ({
   const [enabled, setEnabled] = useState(!ethKey.isDisabled)
   const [nextNonce, setNextNonce] = useState<bigint | null>(null)
   const [abandon, setAbandon] = useState(false)
+  const [abandonUnstarted, setAbandonUnstarted] = useState(false)
+  const [subject, setSubject] = useState('')
 
   const onSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault()
-    handleUpdate(nextNonce, abandon, enabled)
+    handleUpdate(nextNonce, abandon, enabled, abandonUnstarted, subject)
   }
 
   const handleEnabledCheckboxChange = () => {
@@ -146,18 +160,30 @@ const UnstyledEVMAccountRow: React.FC<Props> = ({
     setAbandon(!abandon)
   }
 
+  const handleAbandonUnstartedCheckboxChange = () => {
+    setAbandonUnstarted(!abandonUnstarted)
+  }
+
+  const handleSubjectFieldChange = (event: any) => {
+    setSubject(event.target.value)
+  }
+
   const closeModal = () => {
     setModalOpen(false)
     // reset state
     setAbandon(false)
     setNextNonce(null)
     setEnabled(!ethKey.isDisabled)
+    setAbandonUnstarted(false)
+    setSubject('')
   }
 
   async function handleUpdate(
     nextNonce: bigint | null,
     abandon: boolean,
     enabled: boolean,
+    abandonUnstarted: boolean,
+    subject: string,
   ) {
     apiCall({
       evmChainID: ethKey.chain.id,
@@ -165,6 +191,8 @@ const UnstyledEVMAccountRow: React.FC<Props> = ({
       nextNonce,
       abandon,
       enabled,
+      abandonUnstarted,
+      subject,
     })
       .then(({ data }) => {
         refetch && refetch()
@@ -254,6 +282,32 @@ const UnstyledEVMAccountRow: React.FC<Props> = ({
                     label="Abandon all current transactions (use with caution!)"
                   />
                 </FormGroup>
+                <FormGroup>
+                  <FormControlLabel
+                    className={classes.infoText}
+                    color="secondary"
+                    control={
+                      <Checkbox
+                        name="abandonUnstartedCheckbox"
+                        checked={abandonUnstarted}
+                        onChange={handleAbandonUnstartedCheckboxChange}
+                      />
+                    }
+                    label="Abandon unstarted transactions"
+                  />
+                </FormGroup>
+                {abandonUnstarted && (
+                  <FormGroup>
+                    <TextField
+                      className={classes.textField}
+                      name="subjectField"
+                      type="text"
+                      label="Subject (optional)"
+                      value={subject}
+                      onChange={handleSubjectFieldChange}
+                    />
+                  </FormGroup>
+                )}
                 <Grid
                   container
                   spacing={0}

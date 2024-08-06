@@ -17,6 +17,7 @@ const JOB_PAYLOAD__SPEC = gql`
   fragment JobPayload_Spec on JobSpec {
     ... on CronSpec {
       schedule
+      evmChainID
     }
     ... on DirectRequestSpec {
       contractAddress

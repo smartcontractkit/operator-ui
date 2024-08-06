@@ -24,6 +24,7 @@ describe('generateJobDefinition', () => {
       spec: {
         __typename: 'CronSpec',
         schedule: '*/2 * * * *',
+        evmChainID: '42',
       },
       observationSource:
         '    fetch    [type=http method=POST url="http://localhost:8001" requestData="{\\"hi\\": \\"hello\\"}"];\n    parse    [type=jsonparse path="data,result"];\n    multiply [type=multiply times=100];\n    fetch -> parse -> multiply;\n',
@@ -37,6 +38,7 @@ externalJobID = "00000000-0000-0000-0000-0000000000001"
 gasLimit = 1_000
 maxTaskDuration = "10s"
 schedule = "*/2 * * * *"
+evmChainID = "42"
 observationSource = """
     fetch    [type=http method=POST url="http://localhost:8001" requestData="{\\\\"hi\\\\": \\\\"hello\\\\"}"];
     parse    [type=jsonparse path="data,result"];

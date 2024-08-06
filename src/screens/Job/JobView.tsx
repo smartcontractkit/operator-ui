@@ -65,8 +65,6 @@ const JOB_PAYLOAD__SPEC = gql`
       ocrKeyBundleID
       monitoringEndpoint
       p2pv2Bootstrappers
-      relay
-      relayConfig
       transmitterID
       pluginType
       pluginConfig
@@ -138,11 +136,6 @@ const JOB_PAYLOAD__SPEC = gql`
       workflowOwner
       workflow
     }
-    ... on StandardCapabilitiesSpec {
-      command
-      config
-      createdAt
-    }
   }
 `
 
@@ -182,6 +175,7 @@ export const JOB_PAYLOAD_FIELDS = gql`
     maxTaskDuration
     gasLimit
     forwardingAllowed
+    relayConfig
     spec {
       __typename
       ...JobPayload_Spec

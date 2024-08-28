@@ -98,7 +98,7 @@ export const EditFeedsManagerScreen: React.FC = () => {
         case 'UpdateFeedsManagerSuccess':
           history.push('/feeds_manager')
 
-          dispatch(notifySuccessMsg('Feeds Manager Updated'))
+          dispatch(notifySuccessMsg('Job Distributor Updated'))
 
           break
         case 'NotFoundError':

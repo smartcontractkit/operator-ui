@@ -91,7 +91,7 @@ export const NewFeedsManagerScreen: React.FC = () => {
         case 'CreateFeedsManagerSuccess':
           history.push('/feeds_manager')
 
-          dispatch(notifySuccessMsg('Feeds Manager Created'))
+          dispatch(notifySuccessMsg('Job Distributor Created'))
 
           break
         case 'SingleFeedsManagerError':

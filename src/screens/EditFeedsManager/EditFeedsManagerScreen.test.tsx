@@ -61,7 +61,7 @@ describe('EditFeedsManagerScreen', () => {
 
     await waitForElementToBeRemoved(() => queryByRole('progressbar'))
 
-    expect(await findByText('Edit Feeds Manager')).toBeInTheDocument()
+    expect(await findByText('Edit Job Distributor')).toBeInTheDocument()
     expect(await findByTestId('feeds-manager-form')).toBeInTheDocument()
   })
 
@@ -167,7 +167,7 @@ describe('EditFeedsManagerScreen', () => {
 
     userEvent.click(getByRole('button', { name: /submit/i }))
 
-    expect(await findByText('Feeds Manager Updated')).toBeInTheDocument()
+    expect(await findByText('Job Distributor Updated')).toBeInTheDocument()
     expect(await findByText('Root Redirect Success')).toBeInTheDocument()
   })
 

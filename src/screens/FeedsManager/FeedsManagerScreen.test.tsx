@@ -44,7 +44,7 @@ describe('FeedsManagerScreen', () => {
 
     renderComponent(mocks)
 
-    expect(await findByText('Feeds Manager')).toBeInTheDocument()
+    expect(await findByText('Job Distributors')).toBeInTheDocument()
     expect(await findByText('Job Proposals')).toBeInTheDocument()
   })
 

@@ -109,7 +109,7 @@ const Drawer = withStyles(drawerStyles)(
                 button
                 component={() => (
                   <BaseLink href={'/feeds_manager'}>
-                    <ListItemText primary="Feeds Manager" />
+                    <ListItemText primary="Job Distributor" />
                   </BaseLink>
                 )}
                 className={classes.menuitem}
@@ -196,7 +196,7 @@ const Nav = withStyles(navStyles)(
                   pathname.includes('/feeds_manager') && classes.activeNavLink,
                 )}
               >
-                Feeds Manager
+                Job Distributors
               </BaseLink>
             </ListItem>
           )}

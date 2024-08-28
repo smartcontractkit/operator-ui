@@ -210,7 +210,7 @@ export const JobProposalScreen: React.FC = () => {
       const payload = result.data?.approveJobProposalSpec
       switch (payload?.__typename) {
         case 'ApproveJobProposalSpecSuccess':
-          history.push('/feeds_manager')
+          history.push('/job_distributors')
 
           setTimeout(() => dispatch(notifySuccessMsg('Spec approved')), 200)
 

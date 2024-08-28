@@ -30,10 +30,10 @@ function renderComponent(mocks: MockedResponse[]) {
         </MockedProvider>
       </Route>
 
-      <Route exact path="/feeds_manager/new">
+      <Route exact path="/job_distributors/new">
         New Redirect Success
       </Route>
-      <Route exact path="/feeds_manager">
+      <Route exact path="/job_distributors">
         Root Redirect Success
       </Route>
     </>,

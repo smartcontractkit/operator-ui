@@ -16,7 +16,7 @@ function renderComponent(manager: FeedsManagerFields) {
       <Route path="/">
         <FeedsManagerCard manager={manager} />
       </Route>
-      <Route path="/feeds_manager/edit">Redirect Success</Route>
+      <Route path="/job_distributors/edit">Redirect Success</Route>
     </>,
   )
 }

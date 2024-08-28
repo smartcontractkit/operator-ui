@@ -36,7 +36,7 @@ export const FeedsManagerScreen: React.FC = () => {
   return (
     <Redirect
       to={{
-        pathname: '/feeds_manager/new',
+        pathname: '/job_distributors/new',
         state: { from: location },
       }}
     />

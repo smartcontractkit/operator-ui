@@ -77,7 +77,7 @@ export const EditFeedsManagerScreen: React.FC = () => {
     return (
       <Redirect
         to={{
-          pathname: '/feeds_manager/new',
+          pathname: '/job_distributors/new',
           state: { from: location },
         }}
       />
@@ -96,7 +96,7 @@ export const EditFeedsManagerScreen: React.FC = () => {
       const payload = result.data?.updateFeedsManager
       switch (payload?.__typename) {
         case 'UpdateFeedsManagerSuccess':
-          history.push('/feeds_manager')
+          history.push('/job_distributors')
 
           dispatch(notifySuccessMsg('Job Distributor Updated'))
 

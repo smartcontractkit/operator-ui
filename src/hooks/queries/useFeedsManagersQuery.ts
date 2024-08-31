@@ -1,23 +1,26 @@
-import { gql, useQuery } from '@apollo/client'
+import { gql, QueryHookOptions, useQuery } from '@apollo/client'
 
 export const FEEDS_MANAGERS_QUERY = gql`
+  fragment FetchFeedsManagersPayload_ResultsFields on FeedsManager {
+    __typename
+    id
+    name
+    uri
+    publicKey
+    isConnectionActive
+    createdAt
+  }
   query FetchFeedsManagers {
     feedsManagers {
       results {
-        __typename
-        id
-        name
-        uri
-        publicKey
-        isConnectionActive
-        createdAt
+        ...FetchFeedsManagersPayload_ResultsFields
       }
     }
   }
 `
 
-export const useFeedsManagersQuery = () => {
-  return useQuery<FetchFeedsManagers, FetchFeedsManagersVariables>(
-    FEEDS_MANAGERS_QUERY,
-  )
+export const useFeedsManagersQuery = (
+  options?: QueryHookOptions<FetchFeedsManagers>,
+) => {
+  return useQuery<FetchFeedsManagers>(FEEDS_MANAGERS_QUERY, options)
 }

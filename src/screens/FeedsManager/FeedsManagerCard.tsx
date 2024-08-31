@@ -1,67 +1,22 @@
 import React from 'react'
 
-import CancelIcon from '@material-ui/icons/Cancel'
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-import EditIcon from '@material-ui/icons/Edit'
-import IconButton from '@material-ui/core/IconButton'
 import Grid from '@material-ui/core/Grid'
+import IconButton from '@material-ui/core/IconButton'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import Menu from '@material-ui/core/Menu'
+import EditIcon from '@material-ui/icons/Edit'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import green from '@material-ui/core/colors/green'
-import red from '@material-ui/core/colors/red'
 
-import { CopyIconButton } from 'src/components/Copy/CopyIconButton'
 import {
   DetailsCard,
   DetailsCardItemTitle,
   DetailsCardItemValue,
 } from 'src/components/Cards/DetailsCard'
-import { shortenHex } from 'src/utils/shortenHex'
+import { CopyIconButton } from 'src/components/Copy/CopyIconButton'
 import { MenuItemLink } from 'src/components/MenuItemLink'
-
-const connectionStatusStyles = () => {
-  return createStyles({
-    root: {
-      display: 'flex',
-    },
-    connectedIcon: {
-      color: green[500],
-    },
-    disconnectedIcon: {
-      color: red[500],
-    },
-    text: {
-      marginLeft: 4,
-    },
-  })
-}
-
-interface ConnectionStatusProps
-  extends WithStyles<typeof connectionStatusStyles> {
-  isConnected: boolean
-}
-
-const ConnectionStatus = withStyles(connectionStatusStyles)(
-  ({ isConnected, classes }: ConnectionStatusProps) => {
-    return (
-      <div className={classes.root}>
-        {isConnected ? (
-          <CheckCircleIcon fontSize="small" className={classes.connectedIcon} />
-        ) : (
-          <CancelIcon fontSize="small" className={classes.disconnectedIcon} />
-        )}
-
-        <Typography variant="body1" inline className={classes.text}>
-          {isConnected ? 'Connected' : 'Disconnected'}
-        </Typography>
-      </div>
-    )
-  },
-)
+import { shortenHex } from 'src/utils/shortenHex'
+import { ConnectionStatus } from './ConnectionStatus'
 
 interface Props {
   manager: FeedsManagerFields

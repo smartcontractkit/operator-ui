@@ -1,7 +1,7 @@
 // buildFeedsManager builds a feeds manager for the FetchFeedsManagers query.
 export function buildFeedsManager(
-  overrides?: Partial<FetchFeedsManagers['feedsManagers']['results'][number]>,
-): FetchFeedsManagers['feedsManagers']['results'][number] {
+  overrides?: Partial<FetchFeedsManagersPayload_ResultsFields>,
+): FetchFeedsManagersPayload_ResultsFields {
   return {
     __typename: 'FeedsManager',
     id: '1',

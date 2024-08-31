@@ -1,21 +1,16 @@
 import React from 'react'
 
-import { useMutation, gql } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 import { FormikHelpers } from 'formik'
 import { useDispatch } from 'react-redux'
-import { Redirect, useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
-import { notifySuccessMsg, notifyErrorMsg } from 'actionCreators'
-import { GraphqlErrorHandler } from 'src/components/ErrorHandler/GraphqlErrorHandler'
+import { notifyErrorMsg, notifySuccessMsg } from 'actionCreators'
 import { FormValues } from 'components/Form/FeedsManagerForm'
-import { parseInputErrors } from 'src/utils/inputErrors'
-import { Loading } from 'src/components/Feedback/Loading'
-import { NewFeedsManagerView } from './NewFeedsManagerView'
-import {
-  FEEDS_MANAGERS_QUERY,
-  useFeedsManagersQuery,
-} from 'src/hooks/queries/useFeedsManagersQuery'
+import { FEEDS_MANAGERS_QUERY } from 'src/hooks/queries/useFeedsManagersQuery'
 import { useMutationErrorHandler } from 'src/hooks/useMutationErrorHandler'
+import { parseInputErrors } from 'src/utils/inputErrors'
+import { NewFeedsManagerView } from './NewFeedsManagerView'
 
 export const CREATE_FEEDS_MANAGER_MUTATION = gql`
   mutation CreateFeedsManager($input: CreateFeedsManagerInput!) {
@@ -31,6 +26,10 @@ export const CREATE_FEEDS_MANAGER_MUTATION = gql`
         }
       }
       ... on SingleFeedsManagerError {
+        message
+        code
+      }
+      ... on DuplicateFeedsManagerError {
         message
         code
       }
@@ -51,31 +50,14 @@ export const CREATE_FEEDS_MANAGER_MUTATION = gql`
 
 export const NewFeedsManagerScreen: React.FC = () => {
   const history = useHistory()
-  const location = useLocation()
   const dispatch = useDispatch()
   const { handleMutationError } = useMutationErrorHandler()
-  const { data, loading, error } = useFeedsManagersQuery()
   const [createFeedsManager] = useMutation<
     CreateFeedsManager,
     CreateFeedsManagerVariables
   >(CREATE_FEEDS_MANAGER_MUTATION, {
-    refetchQueries: [FEEDS_MANAGERS_QUERY],
+    refetchQueries: [{ query: FEEDS_MANAGERS_QUERY }],
   })
-
-  if (loading) {
-    return <Loading />
-  }
-
-  if (error) {
-    return <GraphqlErrorHandler error={error} />
-  }
-
-  // We currently only support a single feeds manager, but plan to support more
-  // in the future.
-  const manager =
-    data != undefined && data.feedsManagers.results[0]
-      ? data.feedsManagers.results[0]
-      : undefined
 
   const handleSubmit = async (
     values: FormValues,
@@ -94,7 +76,9 @@ export const NewFeedsManagerScreen: React.FC = () => {
           dispatch(notifySuccessMsg('Job Distributor Created'))
 
           break
+        // todo: remove SingleFeedsManagerError once multi feeds manager support is released
         case 'SingleFeedsManagerError':
+        case 'DuplicateFeedsManagerError':
         case 'NotFoundError':
           dispatch(notifyErrorMsg(payload.message))
 
@@ -109,17 +93,6 @@ export const NewFeedsManagerScreen: React.FC = () => {
     } catch (e) {
       handleMutationError(e)
     }
-  }
-
-  if (manager) {
-    return (
-      <Redirect
-        to={{
-          pathname: '/job_distributors',
-          state: { from: location },
-        }}
-      />
-    )
   }
 
   return <NewFeedsManagerView onSubmit={handleSubmit} />

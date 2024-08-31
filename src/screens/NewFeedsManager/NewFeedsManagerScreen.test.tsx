@@ -1,24 +1,20 @@
 import * as React from 'react'
 
+import { MockedProvider, MockedResponse } from '@apollo/client/testing'
+import userEvent from '@testing-library/user-event'
 import { GraphQLError } from 'graphql'
 import { Route } from 'react-router-dom'
-import {
-  renderWithRouter,
-  screen,
-  waitForElementToBeRemoved,
-} from 'support/test-utils'
-import userEvent from '@testing-library/user-event'
-import { MockedProvider, MockedResponse } from '@apollo/client/testing'
+import { renderWithRouter, screen } from 'support/test-utils'
 
-import { buildFeedsManager } from 'support/factories/gql/fetchFeedsManagers'
+import Notifications from 'pages/Notifications'
 import { FEEDS_MANAGERS_QUERY } from 'src/hooks/queries/useFeedsManagersQuery'
+import { buildFeedsManager } from 'support/factories/gql/fetchFeedsManagers'
 import {
   CREATE_FEEDS_MANAGER_MUTATION,
   NewFeedsManagerScreen,
 } from './NewFeedsManagerScreen'
-import Notifications from 'pages/Notifications'
 
-const { findByTestId, findByText, getByRole } = screen
+const { findByTestId, findByText, getByRole, getByText, getByTestId } = screen
 
 function renderComponent(mocks: MockedResponse[]) {
   renderWithRouter(
@@ -37,66 +33,14 @@ function renderComponent(mocks: MockedResponse[]) {
 
 describe('NewFeedsManagerScreen', () => {
   it('renders the page', async () => {
-    const mocks: MockedResponse[] = [
-      {
-        request: {
-          query: FEEDS_MANAGERS_QUERY,
-        },
-        result: {
-          data: {
-            feedsManagers: {
-              results: [],
-            },
-          },
-        },
-      },
-    ]
+    renderComponent([])
 
-    renderComponent(mocks)
-
-    await waitForElementToBeRemoved(() => screen.queryByRole('progressbar'))
-
-    expect(await findByText('Register Job Distributor')).toBeInTheDocument()
-    expect(await findByTestId('feeds-manager-form')).toBeInTheDocument()
-  })
-
-  it('redirects when a manager exists', async () => {
-    const mocks: MockedResponse[] = [
-      {
-        request: {
-          query: FEEDS_MANAGERS_QUERY,
-        },
-        result: {
-          data: {
-            feedsManagers: {
-              results: [buildFeedsManager()],
-            },
-          },
-        },
-      },
-    ]
-
-    renderComponent(mocks)
-
-    await waitForElementToBeRemoved(() => screen.queryByRole('progressbar'))
-
-    expect(await findByText('Redirect Success')).toBeInTheDocument()
+    expect(getByText('Register Job Distributor')).toBeInTheDocument()
+    expect(getByTestId('feeds-manager-form')).toBeInTheDocument()
   })
 
   it('submits the form', async () => {
     const mocks: MockedResponse[] = [
-      {
-        request: {
-          query: FEEDS_MANAGERS_QUERY,
-        },
-        result: {
-          data: {
-            feedsManagers: {
-              results: [],
-            },
-          },
-        },
-      },
       {
         request: {
           query: CREATE_FEEDS_MANAGER_MUTATION,
@@ -133,8 +77,6 @@ describe('NewFeedsManagerScreen', () => {
 
     renderComponent(mocks)
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('progressbar'))
-
     // Note: The name input has a default value so we don't have to set it
     userEvent.type(getByRole('textbox', { name: 'URI *' }), 'localhost:8080')
     userEvent.type(getByRole('textbox', { name: 'Public Key *' }), '1111')
@@ -147,18 +89,6 @@ describe('NewFeedsManagerScreen', () => {
 
   it('handles input errors', async () => {
     const mocks: MockedResponse[] = [
-      {
-        request: {
-          query: FEEDS_MANAGERS_QUERY,
-        },
-        result: {
-          data: {
-            feedsManagers: {
-              results: [],
-            },
-          },
-        },
-      },
       {
         request: {
           query: CREATE_FEEDS_MANAGER_MUTATION,
@@ -201,8 +131,6 @@ describe('NewFeedsManagerScreen', () => {
 
     renderComponent(mocks)
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('progressbar'))
-
     // Note: The name input has a default value so we don't have to set it
     userEvent.type(getByRole('textbox', { name: 'URI *' }), 'localhost:8080')
     userEvent.type(getByRole('textbox', { name: 'Public Key *' }), '1111')
@@ -215,37 +143,8 @@ describe('NewFeedsManagerScreen', () => {
     )
   })
 
-  it('renders query GQL errors', async () => {
-    const mocks: MockedResponse[] = [
-      {
-        request: {
-          query: FEEDS_MANAGERS_QUERY,
-        },
-        result: {
-          errors: [new GraphQLError('Error!')],
-        },
-      },
-    ]
-
-    renderComponent(mocks)
-
-    expect(await findByText('Error: Error!')).toBeInTheDocument()
-  })
-
   it('renders mutation GQL errors', async () => {
     const mocks: MockedResponse[] = [
-      {
-        request: {
-          query: FEEDS_MANAGERS_QUERY,
-        },
-        result: {
-          data: {
-            feedsManagers: {
-              results: [],
-            },
-          },
-        },
-      },
       {
         request: {
           query: CREATE_FEEDS_MANAGER_MUTATION,
@@ -264,8 +163,6 @@ describe('NewFeedsManagerScreen', () => {
     ]
 
     renderComponent(mocks)
-
-    await waitForElementToBeRemoved(() => screen.queryByRole('progressbar'))
 
     userEvent.type(getByRole('textbox', { name: 'URI *' }), 'localhost:8080')
     userEvent.type(getByRole('textbox', { name: 'Public Key *' }), '1111')

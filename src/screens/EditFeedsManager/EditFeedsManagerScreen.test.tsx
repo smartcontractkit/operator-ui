@@ -1,22 +1,22 @@
 import * as React from 'react'
 
+import { MockedProvider, MockedResponse } from '@apollo/client/testing'
+import userEvent from '@testing-library/user-event'
+import { GraphQLError } from 'graphql'
 import { Route } from 'react-router-dom'
 import {
   renderWithRouter,
   screen,
   waitForElementToBeRemoved,
 } from 'support/test-utils'
-import userEvent from '@testing-library/user-event'
-import { MockedProvider, MockedResponse } from '@apollo/client/testing'
 
+import Notifications from 'pages/Notifications'
+import { FEEDS_MANAGERS_QUERY } from 'src/hooks/queries/useFeedsManagersQuery'
 import { buildFeedsManager } from 'support/factories/gql/fetchFeedsManagers'
 import {
-  UPDATE_FEEDS_MANAGER_MUTATION,
   EditFeedsManagerScreen,
+  UPDATE_FEEDS_MANAGER_MUTATION,
 } from './EditFeedsManagerScreen'
-import { FEEDS_MANAGERS_QUERY } from 'src/hooks/queries/useFeedsManagersQuery'
-import Notifications from 'pages/Notifications'
-import { GraphQLError } from 'graphql'
 
 const { findByText, findByTestId, getByRole, queryByRole } = screen
 
@@ -24,19 +24,17 @@ function renderComponent(mocks: MockedResponse[]) {
   renderWithRouter(
     <>
       <Notifications />
-      <Route exact path="/">
+      <Route exact path="/job_distributors/:id/edit">
         <MockedProvider mocks={mocks} addTypename={false}>
           <EditFeedsManagerScreen />
         </MockedProvider>
       </Route>
 
-      <Route exact path="/job_distributors/new">
-        New Redirect Success
-      </Route>
       <Route exact path="/job_distributors">
         Root Redirect Success
       </Route>
     </>,
+    { initialEntries: ['/job_distributors/1/edit'] },
   )
 }
 
@@ -85,7 +83,7 @@ describe('EditFeedsManagerScreen', () => {
 
     await waitForElementToBeRemoved(() => queryByRole('progressbar'))
 
-    expect(await findByText('New Redirect Success')).toBeInTheDocument()
+    expect(await findByText('Root Redirect Success')).toBeInTheDocument()
   })
 
   it('submits the form', async () => {
@@ -125,24 +123,6 @@ describe('EditFeedsManagerScreen', () => {
                 uri: 'localhost:80812',
                 publicKey: '22222',
               }),
-            },
-          },
-        },
-      },
-      {
-        request: {
-          query: FEEDS_MANAGERS_QUERY,
-        },
-        result: {
-          data: {
-            feedsManagers: {
-              results: [
-                buildFeedsManager({
-                  name: 'updated',
-                  uri: 'localhost:80812',
-                  publicKey: '22222',
-                }),
-              ],
             },
           },
         },
@@ -259,18 +239,6 @@ describe('EditFeedsManagerScreen', () => {
                   path: 'input/publicKey',
                 },
               ],
-            },
-          },
-        },
-      },
-      {
-        request: {
-          query: FEEDS_MANAGERS_QUERY,
-        },
-        result: {
-          data: {
-            feedsManagers: {
-              results: [mgr],
             },
           },
         },

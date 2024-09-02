@@ -36,7 +36,7 @@ import { NewSupportedChainDialog } from './NewSupportedChainDialog'
 import { useMutationErrorHandler } from 'src/hooks/useMutationErrorHandler'
 import Button from 'src/components/Button'
 import { EditSupportedChainDialog } from './EditSupportedChainDialog'
-import { FEEDS_MANAGERS_WITH_PROPOSALS_QUERY } from 'src/hooks/queries/useFeedsManagersWithProposalsQuery'
+import { FEEDS_MANAGER_WITH_PROPOSALS_QUERY } from 'src/hooks/queries/useFeedsManagerWithProposalsQuery'
 
 export const CREATE_FEEDS_MANAGER_CHAIN_CONFIG_MUTATION = gql`
   mutation CreateFeedsManagerChainConfig(
@@ -291,21 +291,21 @@ export const SupportedChainsCard = withStyles(styles)(
       CreateFeedsManagerChainConfig,
       CreateFeedsManagerChainConfigVariables
     >(CREATE_FEEDS_MANAGER_CHAIN_CONFIG_MUTATION, {
-      refetchQueries: [FEEDS_MANAGERS_WITH_PROPOSALS_QUERY],
+      refetchQueries: [FEEDS_MANAGER_WITH_PROPOSALS_QUERY],
     })
 
     const [deleteChainConfig] = useMutation<
       DeleteFeedsManagerChainConfig,
       DeleteFeedsManagerChainConfigVariables
     >(DELETE_FEEDS_MANAGER_CHAIN_CONFIG_MUTATION, {
-      refetchQueries: [FEEDS_MANAGERS_WITH_PROPOSALS_QUERY],
+      refetchQueries: [FEEDS_MANAGER_WITH_PROPOSALS_QUERY],
     })
 
     const [updateChainConfig] = useMutation<
       UpdateFeedsManagerChainConfig,
       UpdateFeedsManagerChainConfigVariables
     >(UPDATE_FEEDS_MANAGER_CHAIN_CONFIG_MUTATION, {
-      refetchQueries: [FEEDS_MANAGERS_WITH_PROPOSALS_QUERY],
+      refetchQueries: [FEEDS_MANAGER_WITH_PROPOSALS_QUERY],
     })
 
     const handleCreateSubmit = async (values: FormValues) => {
@@ -537,18 +537,22 @@ export const SupportedChainsCard = withStyles(styles)(
           </ExpansionPanel>
         ))}
 
-        <NewSupportedChainDialog
-          open={newDialogOpen}
-          onClose={() => setNewDialogOpen(false)}
-          onSubmit={handleCreateSubmit}
-        />
+        {newDialogOpen && (
+          <NewSupportedChainDialog
+            open={newDialogOpen}
+            onClose={() => setNewDialogOpen(false)}
+            onSubmit={handleCreateSubmit}
+          />
+        )}
 
-        <EditSupportedChainDialog
-          cfg={editCfg}
-          open={isEditDialogOpen()}
-          onClose={handleEditDialogClose}
-          onSubmit={handleUpdateSubmit}
-        />
+        {isEditDialogOpen() && (
+          <EditSupportedChainDialog
+            cfg={editCfg}
+            open={isEditDialogOpen()}
+            onClose={handleEditDialogClose}
+            onSubmit={handleUpdateSubmit}
+          />
+        )}
       </Card>
     )
   },

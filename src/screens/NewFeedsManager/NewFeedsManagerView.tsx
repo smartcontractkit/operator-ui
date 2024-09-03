@@ -11,7 +11,7 @@ import {
 } from 'components/Form/FeedsManagerForm'
 
 const initialValues = {
-  name: 'Chainlink Feeds Manager',
+  name: '',
   uri: '',
   publicKey: '',
 }

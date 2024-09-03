@@ -14,7 +14,7 @@ describe('NewFeedsManagerView', () => {
 
     expect(getByText('Register Job Distributor')).toBeInTheDocument()
     expect(getByTestId('feeds-manager-form')).toHaveFormValues({
-      name: 'Chainlink Feeds Manager',
+      name: '',
       uri: '',
       publicKey: '',
     })

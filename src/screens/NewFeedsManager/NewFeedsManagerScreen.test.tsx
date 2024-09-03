@@ -77,7 +77,10 @@ describe('NewFeedsManagerScreen', () => {
 
     renderComponent(mocks)
 
-    // Note: The name input has a default value so we don't have to set it
+    userEvent.type(
+      getByRole('textbox', { name: 'Name *' }),
+      'Chainlink Feeds Manager',
+    )
     userEvent.type(getByRole('textbox', { name: 'URI *' }), 'localhost:8080')
     userEvent.type(getByRole('textbox', { name: 'Public Key *' }), '1111')
 
@@ -131,7 +134,10 @@ describe('NewFeedsManagerScreen', () => {
 
     renderComponent(mocks)
 
-    // Note: The name input has a default value so we don't have to set it
+    userEvent.type(
+      getByRole('textbox', { name: 'Name *' }),
+      'Chainlink Feeds Manager',
+    )
     userEvent.type(getByRole('textbox', { name: 'URI *' }), 'localhost:8080')
     userEvent.type(getByRole('textbox', { name: 'Public Key *' }), '1111')
 
@@ -164,6 +170,10 @@ describe('NewFeedsManagerScreen', () => {
 
     renderComponent(mocks)
 
+    userEvent.type(
+      getByRole('textbox', { name: 'Name *' }),
+      'Chainlink Feeds Manager',
+    )
     userEvent.type(getByRole('textbox', { name: 'URI *' }), 'localhost:8080')
     userEvent.type(getByRole('textbox', { name: 'Public Key *' }), '1111')
 

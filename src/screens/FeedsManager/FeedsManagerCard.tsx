@@ -45,7 +45,7 @@ export const FeedsManagerCard = ({ manager }: Props) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItemLink to="/job_distributors/edit">
+            <MenuItemLink to={`/job_distributors/${manager.id}/edit`}>
               <ListItemIcon>
                 <EditIcon />
               </ListItemIcon>

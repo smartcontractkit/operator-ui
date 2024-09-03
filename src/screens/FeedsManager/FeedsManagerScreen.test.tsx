@@ -1,27 +1,32 @@
 import * as React from 'react'
 
 import { GraphQLError } from 'graphql'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { renderWithRouter, screen } from 'support/test-utils'
 import { MockedProvider, MockedResponse } from '@apollo/client/testing'
 
 import { FeedsManagerScreen } from './FeedsManagerScreen'
 import { buildFeedsManagerResultFields } from 'support/factories/gql/fetchFeedsManagersWithProposals'
-import { FEEDS_MANAGERS_WITH_PROPOSALS_QUERY } from 'src/hooks/queries/useFeedsManagersWithProposalsQuery'
+import { FEEDS_MANAGER_WITH_PROPOSALS_QUERY } from 'src/hooks/queries/useFeedsManagerWithProposalsQuery'
 
-const { findByText } = screen
+const { findByText, findByTestId } = screen
 
 function renderComponent(mocks: MockedResponse[]) {
   renderWithRouter(
-    <>
-      <Route exact path="/">
-        <MockedProvider mocks={mocks} addTypename={false}>
+    <Switch>
+      <Route exact path="/job_distributors/:id">
+        <MockedProvider mocks={mocks}>
           <FeedsManagerScreen />
         </MockedProvider>
       </Route>
 
-      <Route path="/job_distributors/new">Redirect Success</Route>
-    </>,
+      <Route exact path="/job_distributors">
+        job_distributors
+      </Route>
+    </Switch>,
+    {
+      initialEntries: ['/job_distributors/1'],
+    },
   )
 }
 
@@ -30,13 +35,12 @@ describe('FeedsManagerScreen', () => {
     const mocks: MockedResponse[] = [
       {
         request: {
-          query: FEEDS_MANAGERS_WITH_PROPOSALS_QUERY,
+          query: FEEDS_MANAGER_WITH_PROPOSALS_QUERY,
+          variables: { id: '1' },
         },
         result: {
           data: {
-            feedsManagers: {
-              results: [buildFeedsManagerResultFields()],
-            },
+            feedsManager: buildFeedsManagerResultFields(),
           },
         },
       },
@@ -48,16 +52,19 @@ describe('FeedsManagerScreen', () => {
     expect(await findByText('Job Proposals')).toBeInTheDocument()
   })
 
-  it('redirects when a manager does not exists', async () => {
+  it('should render not found page when a manager is not found', async () => {
     const mocks: MockedResponse[] = [
       {
         request: {
-          query: FEEDS_MANAGERS_WITH_PROPOSALS_QUERY,
+          query: FEEDS_MANAGER_WITH_PROPOSALS_QUERY,
+          variables: { id: '1' },
         },
         result: {
           data: {
-            feedsManagers: {
-              results: [],
+            feedsManager: {
+              __typename: 'NotFoundError',
+              message: 'Not Found',
+              code: '404',
             },
           },
         },
@@ -66,14 +73,37 @@ describe('FeedsManagerScreen', () => {
 
     renderComponent(mocks)
 
-    expect(await findByText('Redirect Success')).toBeInTheDocument()
+    expect(await findByTestId('not-found-page')).toBeInTheDocument()
+  })
+
+  it('should redirect to /job_distributors when result type is unknown', async () => {
+    const mocks: MockedResponse[] = [
+      {
+        request: {
+          query: FEEDS_MANAGER_WITH_PROPOSALS_QUERY,
+          variables: { id: '1' },
+        },
+        result: {
+          data: {
+            feedsManager: {
+              __typename: 'Unknown',
+            },
+          },
+        },
+      },
+    ]
+
+    renderComponent(mocks)
+
+    expect(await findByText('job_distributors')).toBeInTheDocument()
   })
 
   it('renders GQL errors', async () => {
     const mocks: MockedResponse[] = [
       {
         request: {
-          query: FEEDS_MANAGERS_WITH_PROPOSALS_QUERY,
+          query: FEEDS_MANAGER_WITH_PROPOSALS_QUERY,
+          variables: { id: '1' },
         },
         result: {
           errors: [new GraphQLError('Error!')],

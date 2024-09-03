@@ -11,7 +11,7 @@ import {
 } from 'components/Form/FeedsManagerForm'
 
 type Props = {
-  data: FetchFeedsManagers['feedsManagers']['results'][number]
+  data: FetchFeedsManagersPayload_ResultsFields
 } & Pick<FormProps, 'onSubmit'>
 
 export const EditFeedsManagerView: React.FC<Props> = ({ data, onSubmit }) => {

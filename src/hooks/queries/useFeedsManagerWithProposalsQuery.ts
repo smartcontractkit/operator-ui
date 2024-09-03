@@ -65,7 +65,7 @@ export const FEEDS_MANAGER__JOB_PROPOSAL_FIELDS = gql`
   }
 `
 
-export const FEEDS_MANAGERS_PAYLOAD__RESULTS_FIELDS = gql`
+export const FEEDS_MANAGER_PAYLOAD__RESULTS_FIELDS = gql`
   ${FEEDS_MANAGER_FIELDS}
   ${FEEDS_MANAGER__JOB_PROPOSAL_FIELDS}
   fragment FeedsManagerPayload_ResultsFields on FeedsManager {
@@ -76,22 +76,27 @@ export const FEEDS_MANAGERS_PAYLOAD__RESULTS_FIELDS = gql`
   }
 `
 
-export const FEEDS_MANAGERS_WITH_PROPOSALS_QUERY = gql`
-  ${FEEDS_MANAGERS_PAYLOAD__RESULTS_FIELDS}
-  query FetchFeedManagersWithProposals {
-    feedsManagers {
-      results {
-        ...FeedsManagerPayload_ResultsFields
+export const FEEDS_MANAGER_WITH_PROPOSALS_QUERY = gql`
+  ${FEEDS_MANAGER_PAYLOAD__RESULTS_FIELDS}
+  query FetchFeedManagerWithProposals($id: ID!) {
+    feedsManager(id: $id) {
+      ...FeedsManagerPayload_ResultsFields
+      ... on NotFoundError {
+        message
+        code
       }
     }
   }
 `
 
-export const useFeedsManagersWithProposalsQuery = (
-  opts: QueryHookOptions = {},
+export const useFeedsManagerWithProposalsQuery = (
+  opts: QueryHookOptions<
+    FetchFeedManagerWithProposals,
+    FetchFeedManagerWithProposalsVariables
+  > = {},
 ) => {
-  return useQuery<FetchFeedManagersWithProposals>(
-    FEEDS_MANAGERS_WITH_PROPOSALS_QUERY,
-    opts,
-  )
+  return useQuery<
+    FetchFeedManagerWithProposals,
+    FetchFeedManagerWithProposalsVariables
+  >(FEEDS_MANAGER_WITH_PROPOSALS_QUERY, opts)
 }

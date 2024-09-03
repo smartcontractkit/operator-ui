@@ -25,7 +25,7 @@ export const EditFeedsManagerView: React.FC<Props> = ({ data, onSubmit }) => {
     <Grid container>
       <Grid item xs={12} md={11} lg={9}>
         <Card>
-          <CardHeader title="Edit Feeds Manager" />
+          <CardHeader title="Edit Job Distributor" />
           <CardContent>
             <FeedsManagerForm
               initialValues={initialValues}

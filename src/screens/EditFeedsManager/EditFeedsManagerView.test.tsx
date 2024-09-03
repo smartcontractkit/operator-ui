@@ -13,7 +13,7 @@ describe('EditFeedsManagerView', () => {
 
     render(<EditFeedsManagerView data={manager} onSubmit={handleSubmit} />)
 
-    expect(getByText('Edit Feeds Manager')).toBeInTheDocument()
+    expect(getByText('Edit Job Distributor')).toBeInTheDocument()
     expect(getByTestId('feeds-manager-form')).toHaveFormValues({
       name: 'Chainlink Feeds Manager',
       uri: manager.uri,

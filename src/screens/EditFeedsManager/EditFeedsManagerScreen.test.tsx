@@ -30,10 +30,10 @@ function renderComponent(mocks: MockedResponse[]) {
         </MockedProvider>
       </Route>
 
-      <Route exact path="/feeds_manager/new">
+      <Route exact path="/job_distributors/new">
         New Redirect Success
       </Route>
-      <Route exact path="/feeds_manager">
+      <Route exact path="/job_distributors">
         Root Redirect Success
       </Route>
     </>,
@@ -61,7 +61,7 @@ describe('EditFeedsManagerScreen', () => {
 
     await waitForElementToBeRemoved(() => queryByRole('progressbar'))
 
-    expect(await findByText('Edit Feeds Manager')).toBeInTheDocument()
+    expect(await findByText('Edit Job Distributor')).toBeInTheDocument()
     expect(await findByTestId('feeds-manager-form')).toBeInTheDocument()
   })
 
@@ -167,7 +167,7 @@ describe('EditFeedsManagerScreen', () => {
 
     userEvent.click(getByRole('button', { name: /submit/i }))
 
-    expect(await findByText('Feeds Manager Updated')).toBeInTheDocument()
+    expect(await findByText('Job Distributor Updated')).toBeInTheDocument()
     expect(await findByText('Root Redirect Success')).toBeInTheDocument()
   })
 

@@ -12,7 +12,7 @@ describe('NewFeedsManagerView', () => {
 
     render(<NewFeedsManagerView onSubmit={handleSubmit} />)
 
-    expect(getByText('Register Feeds Manager')).toBeInTheDocument()
+    expect(getByText('Register Job Distributor')).toBeInTheDocument()
     expect(getByTestId('feeds-manager-form')).toHaveFormValues({
       name: 'Chainlink Feeds Manager',
       uri: '',

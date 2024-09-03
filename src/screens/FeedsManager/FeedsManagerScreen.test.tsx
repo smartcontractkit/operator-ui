@@ -20,7 +20,7 @@ function renderComponent(mocks: MockedResponse[]) {
         </MockedProvider>
       </Route>
 
-      <Route path="/feeds_manager/new">Redirect Success</Route>
+      <Route path="/job_distributors/new">Redirect Success</Route>
     </>,
   )
 }
@@ -44,7 +44,7 @@ describe('FeedsManagerScreen', () => {
 
     renderComponent(mocks)
 
-    expect(await findByText('Feeds Manager')).toBeInTheDocument()
+    expect(await findByText('Job Distributors')).toBeInTheDocument()
     expect(await findByText('Job Proposals')).toBeInTheDocument()
   })
 

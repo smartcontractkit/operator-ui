@@ -89,9 +89,9 @@ export const NewFeedsManagerScreen: React.FC = () => {
       const payload = result.data?.createFeedsManager
       switch (payload?.__typename) {
         case 'CreateFeedsManagerSuccess':
-          history.push('/feeds_manager')
+          history.push('/job_distributors')
 
-          dispatch(notifySuccessMsg('Feeds Manager Created'))
+          dispatch(notifySuccessMsg('Job Distributor Created'))
 
           break
         case 'SingleFeedsManagerError':
@@ -115,7 +115,7 @@ export const NewFeedsManagerScreen: React.FC = () => {
     return (
       <Redirect
         to={{
-          pathname: '/feeds_manager',
+          pathname: '/job_distributors',
           state: { from: location },
         }}
       />

@@ -23,7 +23,7 @@ export const NewFeedsManagerView: React.FC<Props> = ({ onSubmit }) => {
     <Grid container>
       <Grid item xs={12} md={11} lg={9}>
         <Card>
-          <CardHeader title="Register Feeds Manager" />
+          <CardHeader title="Register Job Distributor" />
           <CardContent>
             <FeedsManagerForm
               initialValues={initialValues}

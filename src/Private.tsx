@@ -74,7 +74,7 @@ const Private = ({ classes }: { classes: { content: string } }) => {
                 <ConfigPage />
               </PrivateRoute>
 
-              <PrivateRoute path="/feeds_manager">
+              <PrivateRoute path="/job_distributors">
                 <FeedsManagerPage />
               </PrivateRoute>
 

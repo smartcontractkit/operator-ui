@@ -61,7 +61,7 @@ export const FeedsManagerForm: React.FC<Props> = ({
                 label="URI"
                 required
                 fullWidth
-                helperText="Provided by the Feeds Manager operator"
+                helperText="Provided by the Job Distributor operator"
                 FormHelperTextProps={{ 'data-testid': 'uri-helper-text' }}
               />
             </Grid>
@@ -74,7 +74,7 @@ export const FeedsManagerForm: React.FC<Props> = ({
                 label="Public Key"
                 required
                 fullWidth
-                helperText="Provided by the Feeds Manager operator"
+                helperText="Provided by the Job Distributor operator"
                 FormHelperTextProps={{ 'data-testid': 'publicKey-helper-text' }}
               />
             </Grid>

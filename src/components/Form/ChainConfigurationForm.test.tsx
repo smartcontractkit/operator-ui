@@ -180,5 +180,9 @@ describe('ChainConfigurationForm', () => {
     expect(await findByTestId('ocr2Multiaddr-helper-text')).toHaveTextContent(
       'Required',
     )
+
+    expect(
+      await findByTestId('ocr2P2PPeerID-helper-text'),
+    ).not.toHaveTextContent('Required')
   })
 })

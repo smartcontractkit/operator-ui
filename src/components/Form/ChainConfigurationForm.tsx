@@ -459,6 +459,28 @@ export const ChainConfigurationForm = withStyles(styles)(
                             />
                           </Grid>
 
+                          <Grid item xs={12} md={6}>
+                            <Field
+                              component={TextField}
+                              id="ocr2P2PPeerID"
+                              name="ocr2P2PPeerID"
+                              label="Peer ID"
+                              select
+                              required={!values.ocr2IsBootstrap}
+                              fullWidth
+                              helperText="The Peer ID used for this chain"
+                              FormHelperTextProps={{
+                                'data-testid': 'ocr2P2PPeerID-helper-text',
+                              }}
+                            >
+                              {p2pKeys.map((key) => (
+                                <MenuItem key={key.peerID} value={key.peerID}>
+                                  {key.peerID}
+                                </MenuItem>
+                              ))}
+                            </Field>
+                          </Grid>
+
                           {values.ocr2IsBootstrap ? (
                             <Grid item xs={12}>
                               <Field
@@ -476,31 +498,6 @@ export const ChainConfigurationForm = withStyles(styles)(
                             </Grid>
                           ) : (
                             <>
-                              <Grid item xs={12} md={6}>
-                                <Field
-                                  component={TextField}
-                                  id="ocr2P2PPeerID"
-                                  name="ocr2P2PPeerID"
-                                  label="Peer ID"
-                                  select
-                                  required
-                                  fullWidth
-                                  helperText="The Peer ID used for this chain"
-                                  FormHelperTextProps={{
-                                    'data-testid': 'ocr2P2PPeerID-helper-text',
-                                  }}
-                                >
-                                  {p2pKeys.map((key) => (
-                                    <MenuItem
-                                      key={key.peerID}
-                                      value={key.peerID}
-                                    >
-                                      {key.peerID}
-                                    </MenuItem>
-                                  ))}
-                                </Field>
-                              </Grid>
-
                               <Grid item xs={12} md={6}>
                                 <Field
                                   component={TextField}

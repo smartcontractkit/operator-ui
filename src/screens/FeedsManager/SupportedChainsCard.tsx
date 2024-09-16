@@ -146,10 +146,19 @@ const renderBootstrap = (
     | FeedsManager_ChainConfigFields['ocr2JobConfig']
     | FeedsManager_ChainConfigFields['ocr1JobConfig'],
 ) => (
-  <Grid item xs={12} sm={1} md={5}>
-    <DetailsCardItemTitle title="Multiaddr" />
-    <DetailsCardItemValue value={cfg.multiaddr} />
-  </Grid>
+  <>
+    <Grid item xs={12} md={5}>
+      <DetailsCardItemTitle title="Multiaddr" />
+      <DetailsCardItemValue value={cfg.multiaddr} />
+    </Grid>
+
+    {cfg.__typename === 'OCR2JobConfig' && (
+      <Grid item xs={12} md={5}>
+        <DetailsCardItemTitle title="P2P Peer ID" />
+        <DetailsCardItemValue value={cfg.p2pPeerID} />
+      </Grid>
+    )}
+  </>
 )
 
 const renderOracle = (
@@ -158,11 +167,11 @@ const renderOracle = (
     | FeedsManager_ChainConfigFields['ocr1JobConfig'],
 ) => (
   <>
-    <Grid item xs={12} sm={1} md={5}>
+    <Grid item xs={12} md={5}>
       <DetailsCardItemTitle title="P2P Peer ID" />
       <DetailsCardItemValue value={cfg.p2pPeerID} />
     </Grid>
-    <Grid item xs={12} sm={1} md={5}>
+    <Grid item xs={12} md={5}>
       <DetailsCardItemTitle title="OCR Key ID" />
       <DetailsCardItemValue value={cfg.keyBundleID} />
     </Grid>
@@ -196,7 +205,7 @@ const FluxMonitorJobTypeRow = withStyles(styles)(
     }
 
     return (
-      <Grid item xs={12} sm={1} md={12}>
+      <Grid item xs={12} md={12}>
         <div className={classes.jobTypeContainer}>
           <DetailsCardItemTitle title="Job Type" />
           <DetailsCardItemValue value="Flux Monitor" />
@@ -218,7 +227,7 @@ const OCRJobTypeRow = withStyles(styles)(
 
     return (
       <>
-        <Grid item xs={12} sm={1} md={2}>
+        <Grid item xs={12} md={2}>
           <div className={classes.jobTypeContainer}>
             <DetailsCardItemTitle title="Job Type" />
             <DetailsCardItemValue
@@ -245,7 +254,7 @@ const OCR2JobTypeRow = withStyles(styles)(
 
     return (
       <>
-        <Grid item xs={12} sm={1} md={2}>
+        <Grid item xs={12} md={2}>
           <div className={classes.jobTypeContainer}>
             <DetailsCardItemTitle title="Job Type" />
             <DetailsCardItemValue

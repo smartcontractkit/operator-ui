@@ -13,9 +13,6 @@ export class EVMKeys {
 
     query.append('address', request.address)
     query.append('evmChainID', request.evmChainID)
-    if (request.nextNonce !== null) {
-      query.append('nextNonce', request.nextNonce)
-    }
     if (request.abandon !== null) {
       query.append('abandon', String(request.abandon))
     }

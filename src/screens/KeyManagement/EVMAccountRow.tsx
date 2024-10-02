@@ -95,20 +95,17 @@ interface Props {
 function apiCall({
   evmChainID,
   address,
-  nextNonce,
   abandon,
   enabled,
 }: {
   evmChainID: string
   address: string
-  nextNonce: bigint | null
   abandon: boolean
   enabled: boolean
 }): Promise<ApiResponse<EVMKey>> {
   const definition: EVMKeysChainRequest = {
     evmChainID,
     address,
-    nextNonce,
     abandon,
     enabled,
   }
@@ -126,20 +123,15 @@ const UnstyledEVMAccountRow: React.FC<Props> = ({
 
   const [modalOpen, setModalOpen] = useState(false)
   const [enabled, setEnabled] = useState(!ethKey.isDisabled)
-  const [nextNonce, setNextNonce] = useState<bigint | null>(null)
   const [abandon, setAbandon] = useState(false)
 
   const onSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault()
-    handleUpdate(nextNonce, abandon, enabled)
+    handleUpdate(abandon, enabled)
   }
 
   const handleEnabledCheckboxChange = () => {
     setEnabled(!enabled)
-  }
-
-  const handleNextNonceFieldChange = (event: any) => {
-    setNextNonce(event.target.value)
   }
 
   const handleAbandonCheckboxChange = () => {
@@ -150,19 +142,16 @@ const UnstyledEVMAccountRow: React.FC<Props> = ({
     setModalOpen(false)
     // reset state
     setAbandon(false)
-    setNextNonce(null)
     setEnabled(!ethKey.isDisabled)
   }
 
   async function handleUpdate(
-    nextNonce: bigint | null,
     abandon: boolean,
     enabled: boolean,
   ) {
     apiCall({
       evmChainID: ethKey.chain.id,
       address: ethKey.address,
-      nextNonce,
       abandon,
       enabled,
     })
@@ -224,20 +213,6 @@ const UnstyledEVMAccountRow: React.FC<Props> = ({
                       />
                     }
                     label="Enabled"
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <FormControlLabel
-                    className={classes.infoText}
-                    color="secondary"
-                    control={
-                      <TextField
-                        name="nextNonceField"
-                        type="number"
-                        onChange={handleNextNonceFieldChange}
-                      />
-                    }
-                    label="Next nonce manual override (optional)"
                   />
                 </FormGroup>
                 <FormGroup>

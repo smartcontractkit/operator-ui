@@ -59,7 +59,6 @@ declare module 'core/store/models' {
   export interface EVMKeysChainRequest {
     address: string
     evmChainID: string
-    nextNonce: ?integer
     abandon: ?boolean
     enabled: ?boolean
   }
@@ -91,7 +90,6 @@ declare module 'core/store/models' {
     evmChainID: string
     address: string
     disabled: boolean
-    nonce: integer
   }
 
   // We really need to change the API for this. It not only returns levels but

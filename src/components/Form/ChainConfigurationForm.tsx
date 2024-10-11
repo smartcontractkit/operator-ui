@@ -21,6 +21,7 @@ import {
   withStyles,
 } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
+import { ChainTypes } from './ChainTypes'
 
 export type FormValues = {
   accountAddr: string
@@ -111,13 +112,10 @@ const styles = (theme: Theme) => {
 // A custom account address field which clears the input based on the chain id
 // value changing, and also allows user to input their own value if none is available in the list.
 interface AccountAddrFieldProps extends FieldAttributes<any> {
-  chainAccounts: { address: string }[]
+  addresses: string[]
 }
 
-const AccountAddrField = ({
-  chainAccounts,
-  ...props
-}: AccountAddrFieldProps) => {
+const AccountAddrField = ({ addresses, ...props }: AccountAddrFieldProps) => {
   const {
     values: { chainID, accountAddr },
     setFieldValue,
@@ -157,9 +155,9 @@ const AccountAddrField = ({
           value={isCustom ? 'custom' : accountAddr}
           onChange={handleSelectChange}
         >
-          {chainAccounts.map((account) => (
-            <MenuItem key={account.address} value={account.address}>
-              {account.address}
+          {addresses.map((address) => (
+            <MenuItem key={address} value={address}>
+              {address}
             </MenuItem>
           ))}
         </Field>
@@ -204,8 +202,9 @@ export interface Props extends WithStyles<typeof styles> {
     values: FormValues,
     formikHelpers: FormikHelpers<FormValues>,
   ) => void | Promise<any>
-  chainIDs: string[]
-  accounts: ReadonlyArray<EthKeysPayload_ResultsFields>
+  chains: ReadonlyArray<ChainsPayload_ResultsFields>
+  accountsEVM: ReadonlyArray<EthKeysPayload_ResultsFields>
+  accountsAptos: ReadonlyArray<AptosKeysPayload_ResultsFields>
   p2pKeys: ReadonlyArray<P2PKeysPayload_ResultsFields>
   ocrKeys: ReadonlyArray<OcrKeyBundlesPayload_ResultsFields>
   ocr2Keys: ReadonlyArray<Ocr2KeyBundlesPayload_ResultsFields>
@@ -221,8 +220,9 @@ export const ChainConfigurationForm = withStyles(styles)(
     innerRef,
     initialValues,
     onSubmit,
-    chainIDs = [],
-    accounts = [],
+    chains = [],
+    accountsEVM = [],
+    accountsAptos = [],
     p2pKeys = [],
     ocrKeys = [],
     ocr2Keys = [],
@@ -236,9 +236,17 @@ export const ChainConfigurationForm = withStyles(styles)(
         onSubmit={onSubmit}
       >
         {({ values }) => {
-          const chainAccounts = accounts.filter(
-            (acc) => acc.chain.id == values.chainID && !acc.isDisabled,
-          )
+          let chainAccountAddresses: string[] = []
+          if (values.chainType === ChainTypes.EVM) {
+            chainAccountAddresses = accountsEVM
+              .filter(
+                (acc) => acc.chain.id == values.chainID && !acc.isDisabled,
+              )
+              .map((acc) => acc.address)
+          }
+          if (values.chainType === ChainTypes.APTOS) {
+            chainAccountAddresses = accountsAptos.map((acc) => acc.account)
+          }
 
           return (
             <Form
@@ -256,10 +264,14 @@ export const ChainConfigurationForm = withStyles(styles)(
                     select
                     required
                     fullWidth
-                    disabled
+                    disabled={editing}
                   >
-                    <MenuItem key="EVM" value="EVM">
+                    {/* todo: in future use chains query to retrieve list of supported chains */}
+                    <MenuItem key={ChainTypes.EVM} value={ChainTypes.EVM}>
                       EVM
+                    </MenuItem>
+                    <MenuItem key={ChainTypes.APTOS} value={ChainTypes.APTOS}>
+                      APTOS
                     </MenuItem>
                   </Field>
                 </Grid>
@@ -279,11 +291,15 @@ export const ChainConfigurationForm = withStyles(styles)(
                       'data-testid': 'chainID-helper-text',
                     }}
                   >
-                    {chainIDs.map((chainID) => (
-                      <MenuItem key={chainID} value={chainID}>
-                        {chainID}
-                      </MenuItem>
-                    ))}
+                    {chains
+                      .filter(
+                        (x) => x.network.toUpperCase() === values.chainType,
+                      )
+                      .map((x) => (
+                        <MenuItem key={x.id} value={x.id}>
+                          {x.id}
+                        </MenuItem>
+                      ))}
                   </Field>
                 </Grid>
 
@@ -298,7 +314,7 @@ export const ChainConfigurationForm = withStyles(styles)(
                     fullWidth
                     select
                     helperText="The account address used for this chain"
-                    chainAccounts={chainAccounts}
+                    addresses={chainAccountAddresses}
                     FormHelperTextProps={{
                       'data-testid': 'accountAddr-helper-text',
                     }}

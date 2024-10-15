@@ -13,9 +13,11 @@ import {
 } from 'src/components/Form/ChainConfigurationForm'
 import { useChainsQuery } from 'src/hooks/queries/useChainsQuery'
 import { useEVMAccountsQuery } from 'src/hooks/queries/useEVMAccountsQuery'
+import { useAptosAccountsQuery } from 'src/hooks/queries/useAptosAccountsQuery'
 import { useP2PKeysQuery } from 'src/hooks/queries/useP2PKeysQuery'
 import { useOCRKeysQuery } from 'src/hooks/queries/useOCRKeysQuery'
 import { useOCR2KeysQuery } from 'src/hooks/queries/useOCR2KeysQuery'
+import { ChainTypes } from 'src/components/Form/ChainTypes'
 
 type Props = {
   open: boolean
@@ -29,7 +31,11 @@ export const NewSupportedChainDialog = ({ onClose, open, onSubmit }: Props) => {
     fetchPolicy: 'network-only',
   })
 
-  const { data: accountData } = useEVMAccountsQuery({
+  const { data: accountDataEVM } = useEVMAccountsQuery({
+    fetchPolicy: 'cache-and-network',
+  })
+
+  const { data: accountDataAptos } = useAptosAccountsQuery({
     fetchPolicy: 'cache-and-network',
   })
 
@@ -47,7 +53,7 @@ export const NewSupportedChainDialog = ({ onClose, open, onSubmit }: Props) => {
 
   const initialValues = {
     chainID: '',
-    chainType: 'EVM',
+    chainType: ChainTypes.EVM,
     accountAddr: '',
     adminAddr: '',
     accountAddrPubKey: '',
@@ -70,11 +76,12 @@ export const NewSupportedChainDialog = ({ onClose, open, onSubmit }: Props) => {
     ocr2ForwarderAddress: '',
   }
 
-  const chainIDs: string[] = chainData
-    ? chainData.chains.results.map((c) => c.id)
-    : []
+  const chains = chainData ? chainData.chains.results : []
 
-  const accounts = accountData ? accountData.ethKeys.results : []
+  const accountsEVM = accountDataEVM ? accountDataEVM.ethKeys.results : []
+  const accountsAptos = accountDataAptos
+    ? accountDataAptos.aptosKeys.results
+    : []
   const p2pKeys = p2pKeysData ? p2pKeysData.p2pKeys.results : []
   const ocrKeys = ocrKeysData ? ocrKeysData.ocrKeyBundles.results : []
   const ocr2Keys = ocr2KeysData ? ocr2KeysData.ocr2KeyBundles.results : []
@@ -90,8 +97,9 @@ export const NewSupportedChainDialog = ({ onClose, open, onSubmit }: Props) => {
           innerRef={formRef}
           initialValues={initialValues}
           onSubmit={onSubmit}
-          chainIDs={chainIDs}
-          accounts={accounts}
+          chains={chains}
+          accountsEVM={accountsEVM}
+          accountsAptos={accountsAptos}
           p2pKeys={p2pKeys}
           ocrKeys={ocrKeys}
           ocr2Keys={ocr2Keys}

@@ -6,6 +6,7 @@ export function buildChain(
     __typename: 'Chain',
     id: '5',
     enabled: true,
+    network: 'EVM',
     ...overrides,
   }
 }

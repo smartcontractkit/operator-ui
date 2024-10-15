@@ -4,6 +4,7 @@ export const CHAINS_PAYLOAD__RESULTS_FIELDS = gql`
   fragment ChainsPayload_ResultsFields on Chain {
     id
     enabled
+    network
   }
 `
 

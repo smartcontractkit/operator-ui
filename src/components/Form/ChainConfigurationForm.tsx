@@ -57,7 +57,7 @@ const ValidationSchema = Yup.object().shape({
   chainType: Yup.string().required('Required'),
   accountAddr: Yup.string().required('Required'),
   accountAddrPubKey: Yup.string().nullable(),
-  adminAddr: Yup.string().required('Required'),
+  adminAddr: Yup.string(),
   ocr1Multiaddr: Yup.string()
     .when(['ocr1Enabled', 'ocr1IsBootstrap'], {
       is: (enabled: boolean, isBootstrap: boolean) => enabled && isBootstrap,
@@ -327,7 +327,6 @@ export const ChainConfigurationForm = withStyles(styles)(
                     id="adminAddr"
                     name="adminAddr"
                     label="Admin Address"
-                    required
                     fullWidth
                     helperText="The address used for LINK payments"
                     FormHelperTextProps={{

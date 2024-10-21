@@ -35,9 +35,6 @@ describe('ChainConfigurationForm', () => {
     expect(await findByTestId('accountAddr-helper-text')).toHaveTextContent(
       'Required',
     )
-    expect(await findByTestId('adminAddr-helper-text')).toHaveTextContent(
-      'Required',
-    )
   })
 
   it('validates OCR input', async () => {

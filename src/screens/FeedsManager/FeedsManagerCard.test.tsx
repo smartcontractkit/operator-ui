@@ -1,12 +1,12 @@
 import * as React from 'react'
 
+import userEvent from '@testing-library/user-event'
 import { Route } from 'react-router-dom'
 import { renderWithRouter, screen } from 'support/test-utils'
-import userEvent from '@testing-library/user-event'
 
-import { FeedsManagerCard } from './FeedsManagerCard'
-import { buildFeedsManagerFields } from 'support/factories/gql/fetchFeedsManagersWithProposals'
 import { shortenHex } from 'src/utils/shortenHex'
+import { buildFeedsManagerFields } from 'support/factories/gql/fetchFeedsManagersWithProposals'
+import { FeedsManagerCard } from './FeedsManagerCard'
 
 const { getByRole, queryByText } = screen
 
@@ -14,7 +14,11 @@ function renderComponent(manager: FeedsManagerFields) {
   renderWithRouter(
     <>
       <Route path="/">
-        <FeedsManagerCard manager={manager} />
+        <FeedsManagerCard
+          manager={manager}
+          onDisable={() => {}}
+          onEnable={() => {}}
+        />
       </Route>
       <Route path={`/job_distributors/${manager.id}/edit`}>
         Redirect Success
@@ -33,6 +37,19 @@ describe('FeedsManagerCard', () => {
     expect(queryByText(mgr.uri)).toBeInTheDocument()
     expect(queryByText(shortenHex(mgr.publicKey))).toBeInTheDocument()
     expect(queryByText('Disconnected')).toBeInTheDocument()
+    expect(queryByText('Disabled')).toBeInTheDocument()
+  })
+
+  it('renders an enabled Feeds Manager', () => {
+    const mgr = buildFeedsManagerFields({ disabledAt: null })
+
+    renderComponent(mgr)
+
+    expect(queryByText(mgr.name)).toBeInTheDocument()
+    expect(queryByText(mgr.uri)).toBeInTheDocument()
+    expect(queryByText(shortenHex(mgr.publicKey))).toBeInTheDocument()
+    expect(queryByText('Disconnected')).toBeInTheDocument()
+    expect(queryByText('Enabled')).toBeInTheDocument()
   })
 
   it('renders a connected boostrapper Feeds Manager', () => {
@@ -48,6 +65,7 @@ describe('FeedsManagerCard', () => {
     expect(queryByText(shortenHex(mgr.publicKey))).toBeInTheDocument()
     expect(queryByText('Flux Monitor')).toBeNull()
     expect(queryByText('Connected')).toBeInTheDocument()
+    expect(queryByText('Disabled')).toBeInTheDocument()
   })
 
   it('navigates to edit', () => {

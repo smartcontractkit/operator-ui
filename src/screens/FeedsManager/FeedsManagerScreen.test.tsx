@@ -1,15 +1,27 @@
 import * as React from 'react'
 
+import { MockedProvider, MockedResponse } from '@apollo/client/testing'
 import { GraphQLError } from 'graphql'
 import { Route, Switch } from 'react-router-dom'
-import { renderWithRouter, screen } from 'support/test-utils'
-import { MockedProvider, MockedResponse } from '@apollo/client/testing'
+import { renderWithRouter, screen, waitFor } from 'support/test-utils'
 
-import { FeedsManagerScreen } from './FeedsManagerScreen'
-import { buildFeedsManagerResultFields } from 'support/factories/gql/fetchFeedsManagersWithProposals'
+import userEvent from '@testing-library/user-event'
 import { FEEDS_MANAGER_WITH_PROPOSALS_QUERY } from 'src/hooks/queries/useFeedsManagerWithProposalsQuery'
+import { buildFeedsManager } from 'support/factories/gql/fetchFeedsManagers'
+import { buildFeedsManagerResultFields } from 'support/factories/gql/fetchFeedsManagersWithProposals'
+import {
+  ENABLE_FEEDS_MANAGER_MUTATION,
+  FeedsManagerScreen,
+} from './FeedsManagerScreen'
 
-const { findByText, findByTestId } = screen
+const {
+  findByText,
+  findByTestId,
+  getByRole,
+  getByText,
+  getAllByRole,
+  queryByText,
+} = screen
 
 function renderComponent(mocks: MockedResponse[]) {
   renderWithRouter(
@@ -50,6 +62,56 @@ describe('FeedsManagerScreen', () => {
 
     expect(await findByText('Job Distributors')).toBeInTheDocument()
     expect(await findByText('Job Proposals')).toBeInTheDocument()
+  })
+
+  it('should enable a feed', async () => {
+    const id = '1'
+    const mocks: MockedResponse[] = [
+      {
+        request: {
+          query: FEEDS_MANAGER_WITH_PROPOSALS_QUERY,
+          variables: { id },
+        },
+        result: {
+          data: {
+            feedsManager: buildFeedsManagerResultFields(),
+          },
+        },
+      },
+      {
+        request: {
+          query: ENABLE_FEEDS_MANAGER_MUTATION,
+          variables: { id },
+        },
+        result: {
+          data: {
+            enableFeedsManager: {
+              feedsManager: buildFeedsManager({
+                disabledAt: null,
+              }),
+              __typename: 'EnableFeedsManagerSuccess',
+            },
+          },
+        },
+      },
+    ]
+
+    renderComponent(mocks)
+
+    expect(await findByText('Job Distributors')).toBeInTheDocument()
+    expect(await findByText('Job Proposals')).toBeInTheDocument()
+    expect(await findByText('Disabled')).toBeInTheDocument()
+    expect(await queryByText('Enabled')).not.toBeInTheDocument()
+
+    const openMenuButtons = await getAllByRole('button', {
+      name: /open-menu/i,
+    })
+    userEvent.click(openMenuButtons[0])
+    userEvent.click(await getByRole('menuitem', { name: /enable/i }))
+    await waitFor(() => {
+      expect(getByText('Enabled')).toBeInTheDocument()
+    })
+    expect(await queryByText('Disabled')).not.toBeInTheDocument()
   })
 
   it('should render not found page when a manager is not found', async () => {

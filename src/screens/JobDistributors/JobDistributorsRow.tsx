@@ -8,7 +8,7 @@ import Link from 'components/Link'
 import { tableStyles } from 'components/Table'
 import { CopyIconButton } from 'src/components/Copy/CopyIconButton'
 import { shortenHex } from 'src/utils/shortenHex'
-import { ConnectionStatus } from '../FeedsManager/ConnectionStatus'
+import { StatusIndicator } from '../FeedsManager/StatusIndicator'
 
 interface Props extends WithStyles<typeof tableStyles> {
   jobDistributor: FetchFeedsManagersPayload_ResultsFields
@@ -27,7 +27,18 @@ export const JobDistributorsRow = withStyles(tableStyles)(
           </Link>
         </TableCell>
         <TableCell>
-          <ConnectionStatus isConnected={jobDistributor.isConnectionActive} />
+          <StatusIndicator
+            isActive={jobDistributor.isConnectionActive}
+            activeText="Connected"
+            inactiveText="Disconnected"
+          />
+        </TableCell>
+        <TableCell>
+          <StatusIndicator
+            isActive={!jobDistributor.disabledAt}
+            activeText="Enabled"
+            inactiveText="Disabled"
+          />
         </TableCell>
         <TableCell>
           {shortenHex(jobDistributor.publicKey, { start: 6, end: 6 })}

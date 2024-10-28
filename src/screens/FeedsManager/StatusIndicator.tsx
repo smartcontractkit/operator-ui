@@ -1,20 +1,20 @@
-import React from 'react'
 import green from '@material-ui/core/colors/green'
 import red from '@material-ui/core/colors/red'
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import CancelIcon from '@material-ui/icons/Cancel'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
+import React from 'react'
 
-const connectionStatusStyles = () => {
+const statusStyles = () => {
   return createStyles({
     root: {
       display: 'flex',
     },
-    connectedIcon: {
+    activeIcon: {
       color: green[500],
     },
-    disconnectedIcon: {
+    inactiveIcon: {
       color: red[500],
     },
     text: {
@@ -23,23 +23,24 @@ const connectionStatusStyles = () => {
   })
 }
 
-interface ConnectionStatusProps
-  extends WithStyles<typeof connectionStatusStyles> {
-  isConnected: boolean
+interface StatusIndicatorProps extends WithStyles<typeof statusStyles> {
+  isActive: boolean
+  activeText: string
+  inactiveText: string
 }
 
-export const ConnectionStatus = withStyles(connectionStatusStyles)(
-  ({ isConnected, classes }: ConnectionStatusProps) => {
+export const StatusIndicator = withStyles(statusStyles)(
+  ({ isActive, activeText, inactiveText, classes }: StatusIndicatorProps) => {
     return (
       <div className={classes.root}>
-        {isConnected ? (
-          <CheckCircleIcon fontSize="small" className={classes.connectedIcon} />
+        {isActive ? (
+          <CheckCircleIcon fontSize="small" className={classes.activeIcon} />
         ) : (
-          <CancelIcon fontSize="small" className={classes.disconnectedIcon} />
+          <CancelIcon fontSize="small" className={classes.inactiveIcon} />
         )}
 
         <Typography variant="body1" inline className={classes.text}>
-          {isConnected ? 'Connected' : 'Disconnected'}
+          {isActive ? activeText : inactiveText}
         </Typography>
       </div>
     )

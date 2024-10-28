@@ -46,7 +46,8 @@ export const JobDistributorsView: React.FC<Props> = ({ jobDistributors }) => {
               <TableHead>
                 <TableRow>
                   <TableCell>Name</TableCell>
-                  <TableCell>Status</TableCell>
+                  <TableCell>Connection Status</TableCell>
+                  <TableCell>Enabled</TableCell>
                   <TableCell>CSA Public Key</TableCell>
                   <TableCell>RPC URL</TableCell>
                 </TableRow>

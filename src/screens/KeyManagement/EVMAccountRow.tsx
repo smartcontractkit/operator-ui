@@ -144,10 +144,7 @@ const UnstyledEVMAccountRow: React.FC<Props> = ({
     setEnabled(!ethKey.isDisabled)
   }
 
-  async function handleUpdate(
-    abandon: boolean,
-    enabled: boolean,
-  ) {
+  async function handleUpdate(abandon: boolean, enabled: boolean) {
     apiCall({
       evmChainID: ethKey.chain.id,
       address: ethKey.address,

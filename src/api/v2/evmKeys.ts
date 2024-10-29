@@ -4,7 +4,7 @@ import * as models from 'core/store/models'
 export const ENDPOINT = '/v2/keys/evm/chain'
 
 export class EVMKeys {
-  constructor(private api: jsonapi.Api) { }
+  constructor(private api: jsonapi.Api) {}
 
   public chain = (
     request: models.EVMKeysChainRequest,

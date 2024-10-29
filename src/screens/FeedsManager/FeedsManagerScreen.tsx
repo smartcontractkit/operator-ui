@@ -102,6 +102,9 @@ export const FeedsManagerScreen: React.FC = () => {
         case 'NotFoundError':
           dispatch(notifyErrorMsg(payload.message))
           break
+        default:
+          // We should update this if we add more types
+          break
       }
     } catch (e) {
       handleMutationError(e)
@@ -121,6 +124,9 @@ export const FeedsManagerScreen: React.FC = () => {
           break
         case 'NotFoundError':
           dispatch(notifyErrorMsg(payload.message))
+          break
+        default:
+          // We should update this if we add more types
           break
       }
     } catch (e) {

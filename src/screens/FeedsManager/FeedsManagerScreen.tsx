@@ -69,17 +69,17 @@ export const FeedsManagerScreen: React.FC = () => {
     fetchPolicy: 'cache-and-network',
   })
 
-  const [enableFeedsManager] = useMutation<
+  const [enableFeedsManager, { loading: enableLoading }] = useMutation<
     EnableFeedsManager,
     EnableFeedsManagerVariables
   >(ENABLE_FEEDS_MANAGER_MUTATION)
 
-  const [disableFeedsManager] = useMutation<
+  const [disableFeedsManager, { loading: disableLoading }] = useMutation<
     DisableFeedsManager,
     DisableFeedsManagerVariables
   >(DISABLE_FEEDS_MANAGER_MUTATION)
 
-  if (loading) {
+  if (loading || enableLoading || disableLoading) {
     return <Loading />
   }
 

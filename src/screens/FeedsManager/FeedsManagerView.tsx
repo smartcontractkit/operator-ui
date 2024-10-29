@@ -10,8 +10,8 @@ import { SupportedChainsCard } from './SupportedChainsCard'
 
 interface Props {
   manager: FeedsManagerPayload_ResultsFields
-  onEnable: () => void | Promise<any>
-  onDisable: () => void | Promise<any>
+  onEnable: () => void
+  onDisable: () => void
 }
 
 export const FeedsManagerView: React.FC<Props> = ({

@@ -96,6 +96,7 @@ export const FeedsManagerScreen: React.FC = () => {
       const payload = result.data?.enableFeedsManager
       switch (payload?.__typename) {
         case 'EnableFeedsManagerSuccess':
+          // TODO The notification seems to be permanent,create one that disappears after a few seconds
           dispatch(notifySuccessMsg('Job Distributor Enabled'))
           break
         case 'NotFoundError':

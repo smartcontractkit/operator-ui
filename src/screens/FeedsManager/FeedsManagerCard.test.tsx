@@ -10,14 +10,18 @@ import { FeedsManagerCard } from './FeedsManagerCard'
 
 const { getByRole, queryByText } = screen
 
-function renderComponent(manager: FeedsManagerFields) {
+function renderComponent(
+  manager: FeedsManagerFields,
+  onEnable = () => {},
+  onDisable = () => {},
+) {
   renderWithRouter(
     <>
       <Route path="/">
         <FeedsManagerCard
           manager={manager}
-          onDisable={() => {}}
-          onEnable={() => {}}
+          onDisable={onDisable}
+          onEnable={onEnable}
         />
       </Route>
       <Route path={`/job_distributors/${manager.id}/edit`}>
@@ -75,5 +79,33 @@ describe('FeedsManagerCard', () => {
     userEvent.click(getByRole('menuitem', { name: /edit/i }))
 
     expect(queryByText('Redirect Success')).toBeInTheDocument()
+  })
+
+  it('calls onEnable when enable menu item is clicked', () => {
+    const onEnableMock = jest.fn()
+    const onDisableMock = jest.fn()
+
+    const mgr = buildFeedsManagerFields({ disabledAt: new Date() })
+
+    renderComponent(mgr, onEnableMock, onDisableMock)
+
+    userEvent.click(screen.getByRole('button', { name: /open-menu/i }))
+    userEvent.click(screen.getByRole('menuitem', { name: /enable/i }))
+
+    expect(onEnableMock).toHaveBeenCalledTimes(1)
+  })
+
+  it('calls onDisable when disable menu item is clicked', () => {
+    const onEnableMock = jest.fn()
+    const onDisableMock = jest.fn()
+
+    const mgr = buildFeedsManagerFields({ disabledAt: null })
+    renderComponent(mgr, onEnableMock, onDisableMock)
+
+    userEvent.click(screen.getByRole('button', { name: /open-menu/i }))
+
+    userEvent.click(screen.getByRole('menuitem', { name: /disable/i }))
+
+    expect(onDisableMock).toHaveBeenCalledTimes(1)
   })
 })

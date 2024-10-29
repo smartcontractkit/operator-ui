@@ -47,7 +47,7 @@ describe('JobDistributorsView', () => {
 
     expect(getByText('Name')).toBeInTheDocument()
     expect(getByText('Connection Status')).toBeInTheDocument()
-    expect(getByText('Enabled')).toBeInTheDocument()
+    expect(getByText('Status')).toBeInTheDocument()
     expect(getByText('CSA Public Key')).toBeInTheDocument()
     expect(getByText('RPC URL')).toBeInTheDocument()
 

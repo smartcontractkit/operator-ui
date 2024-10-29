@@ -23,8 +23,8 @@ import { StatusIndicator } from './StatusIndicator'
 
 interface Props {
   manager: FeedsManagerFields
-  onEnable: () => void | Promise<any>
-  onDisable: () => void | Promise<any>
+  onEnable: () => void
+  onDisable: () => void
 }
 
 export const FeedsManagerCard = ({ manager, onEnable, onDisable }: Props) => {

@@ -122,12 +122,12 @@ declare module 'core/store/models' {
   /**
    * Request to begin the process of registering a new MFA token
    */
-  export interface BeginWebAuthnRegistrationV2Request {}
+  export interface BeginWebAuthnRegistrationV2Request { }
 
   /**
    * Request to begin the process of registering a new MFA token
    */
-  export interface BeginWebAuthnRegistrationV2 {}
+  export interface BeginWebAuthnRegistrationV2 { }
 
   /**
    * Request to begin the process of registering a new MFA token

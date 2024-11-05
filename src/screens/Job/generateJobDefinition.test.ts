@@ -691,4 +691,31 @@ config = "<config>"
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
   })
+
+  it('generates a valid Stream definition', () => {
+    const job: JobPayload_Fields = {
+      id: '1',
+      type: 'stream',
+      schemaVersion: 1,
+      name: 'stream test',
+      externalJobID: '00000000-0000-0000-0000-0000000000001',
+      maxTaskDuration: '10s',
+      spec: {
+        __typename: 'StreamSpec',
+        streamID: "1001",
+      },
+      observationSource: '',
+      ...otherJobFields,
+    }
+
+    const expectedOutput = `type = "stream"
+schemaVersion = 1
+name = "stream test"
+externalJobID = "00000000-0000-0000-0000-0000000000001"
+maxTaskDuration = "10s"
+streamID = "1001"
+`
+    const output = generateJobDefinition(job)
+    expect(output.definition).toEqual(expectedOutput)
+  })
 })

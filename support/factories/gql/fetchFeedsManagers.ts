@@ -10,6 +10,7 @@ export function buildFeedsManager(
     publicKey: '1111',
     isConnectionActive: false,
     createdAt: new Date(),
+    disabledAt: new Date(),
     ...overrides,
   }
 }

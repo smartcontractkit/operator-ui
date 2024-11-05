@@ -44,6 +44,7 @@ export const FEEDS_MANAGER_FIELDS = gql`
     uri
     publicKey
     isConnectionActive
+    disabledAt
     chainConfigs {
       ...FeedsManager_ChainConfigFields
     }

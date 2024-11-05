@@ -21,6 +21,7 @@ export function buildFeedsManagerFields(
     uri: 'localhost:8080',
     publicKey: '1111',
     isConnectionActive: false,
+    disabledAt: new Date(),
     chainConfigs: [],
     ...overrides,
   }

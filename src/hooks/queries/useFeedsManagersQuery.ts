@@ -9,6 +9,7 @@ export const FEEDS_MANAGERS_QUERY = gql`
     publicKey
     isConnectionActive
     createdAt
+    disabledAt
   }
   query FetchFeedsManagers {
     feedsManagers {

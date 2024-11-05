@@ -2,9 +2,9 @@ import * as React from 'react'
 
 import { renderWithRouter, screen } from 'support/test-utils'
 
+import { MockedProvider } from '@apollo/client/testing'
 import { buildFeedsManagerResultFields } from 'support/factories/gql/fetchFeedsManagersWithProposals'
 import { FeedsManagerView } from './FeedsManagerView'
-import { MockedProvider } from '@apollo/client/testing'
 
 const { findByText } = screen
 
@@ -14,7 +14,11 @@ describe('FeedsManagerView', () => {
 
     renderWithRouter(
       <MockedProvider addTypename={false}>
-        <FeedsManagerView manager={mgr} />
+        <FeedsManagerView
+          manager={mgr}
+          onDisable={() => {}}
+          onEnable={() => {}}
+        />
       </MockedProvider>,
     )
 

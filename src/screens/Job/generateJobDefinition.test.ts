@@ -702,7 +702,7 @@ config = "<config>"
       maxTaskDuration: '10s',
       spec: {
         __typename: 'StreamSpec',
-        streamID: "1001",
+        streamID: '1001',
       },
       observationSource: '',
       ...otherJobFields,

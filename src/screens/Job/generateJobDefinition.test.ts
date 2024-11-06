@@ -743,17 +743,17 @@ streamID = "1001"
         fromAddresses: undefined,
         getBlockhashesBatchSize: 0,
         storeBlockhashesBatchSize: 0,
-        coordinatorV2PlusAddress: undefined
+        coordinatorV2PlusAddress: undefined,
       },
       runs: {
         __typename: undefined,
         results: [],
         metadata: {
           __typename: undefined,
-          total: 0
-        }
+          total: 0,
+        },
       },
-      errors: []
+      errors: [],
     }
 
     const expectedOutput = ``

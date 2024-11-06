@@ -691,4 +691,74 @@ config = "<config>"
     const output = generateJobDefinition(job)
     expect(output.definition).toEqual(expectedOutput)
   })
+
+  it('generates a valid Stream definition', () => {
+    const job: JobPayload_Fields = {
+      id: '1',
+      type: 'stream',
+      schemaVersion: 1,
+      name: 'stream test',
+      externalJobID: '00000000-0000-0000-0000-0000000000001',
+      maxTaskDuration: '10s',
+      spec: {
+        __typename: 'StreamSpec',
+        streamID: '1001',
+      },
+      observationSource: '',
+      ...otherJobFields,
+    }
+
+    const expectedOutput = `type = "stream"
+schemaVersion = 1
+name = "stream test"
+externalJobID = "00000000-0000-0000-0000-0000000000001"
+maxTaskDuration = "10s"
+streamID = "1001"
+`
+    const output = generateJobDefinition(job)
+    expect(output.definition).toEqual(expectedOutput)
+  })
+
+  it('generates an empty definition for unspecified type', () => {
+    const job: JobPayload_Fields = {
+      id: '',
+      name: '',
+      externalJobID: '',
+      observationSource: '',
+      createdAt: undefined,
+      schemaVersion: 0,
+      type: '',
+      maxTaskDuration: '',
+      spec: {
+        __typename: <any>'Undefined',
+        coordinatorV1Address: undefined,
+        coordinatorV2Address: undefined,
+        waitBlocks: 0,
+        lookbackBlocks: 0,
+        blockhashStoreAddress: '',
+        batchBlockhashStoreAddress: '',
+        pollPeriod: '',
+        runTimeout: '',
+        evmChainID: undefined,
+        fromAddresses: undefined,
+        getBlockhashesBatchSize: 0,
+        storeBlockhashesBatchSize: 0,
+        coordinatorV2PlusAddress: undefined,
+      },
+      runs: {
+        __typename: undefined,
+        results: [],
+        metadata: {
+          __typename: undefined,
+          total: 0,
+        },
+      },
+      errors: [],
+    }
+
+    const expectedOutput = ``
+
+    const output = generateJobDefinition(job)
+    expect(output.definition).toEqual(expectedOutput)
+  })
 })

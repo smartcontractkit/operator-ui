@@ -274,8 +274,6 @@ export const generateJobDefinition = (
 
       break
 
-    default:
-      return { definition: '' }
     case 'WebhookSpec':
       values = {
         ...extractJobFields(job),
@@ -283,6 +281,18 @@ export const generateJobDefinition = (
       }
 
       break
+
+    case 'StreamSpec':
+      values = {
+        ...extractJobFields(job, 'maxTaskDuration'),
+        ...extractSpecFields(job.spec, 'streamID'),
+        ...extractObservationSourceField(job),
+      }
+
+      break
+
+    default:
+      return { definition: '' }
   }
 
   return {

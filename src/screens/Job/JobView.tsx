@@ -144,6 +144,9 @@ const JOB_PAYLOAD__SPEC = gql`
       config
       createdAt
     }
+    ... on StreamSpec {
+      streamID
+    }
   }
 `
 

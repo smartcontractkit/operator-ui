@@ -204,7 +204,7 @@ export interface Props extends WithStyles<typeof styles> {
   ) => void | Promise<any>
   chains: ReadonlyArray<ChainsPayload_ResultsFields>
   accountsEVM: ReadonlyArray<EthKeysPayload_ResultsFields>
-  accountsAptos: ReadonlyArray<AptosKeysPayload_ResultsFields>
+  accountsNonEvm?: FetchNonEvmKeys
   p2pKeys: ReadonlyArray<P2PKeysPayload_ResultsFields>
   ocrKeys: ReadonlyArray<OcrKeyBundlesPayload_ResultsFields>
   ocr2Keys: ReadonlyArray<Ocr2KeyBundlesPayload_ResultsFields>
@@ -222,7 +222,7 @@ export const ChainConfigurationForm = withStyles(styles)(
     onSubmit,
     chains = [],
     accountsEVM = [],
-    accountsAptos = [],
+    accountsNonEvm,
     p2pKeys = [],
     ocrKeys = [],
     ocr2Keys = [],
@@ -237,17 +237,26 @@ export const ChainConfigurationForm = withStyles(styles)(
       >
         {({ values }) => {
           let chainAccountAddresses: string[] = []
-          if (values.chainType === ChainTypes.EVM) {
-            chainAccountAddresses = accountsEVM
-              .filter(
-                (acc) => acc.chain.id == values.chainID && !acc.isDisabled,
-              )
-              .map((acc) => acc.address)
+          switch (values.chainType) {
+            case ChainTypes.EVM:
+              chainAccountAddresses = accountsEVM
+                .filter(
+                  (acc) => acc.chain.id == values.chainID && !acc.isDisabled,
+                )
+                .map((acc) => acc.address)
+              break
+            case ChainTypes.APTOS:
+              chainAccountAddresses =
+                accountsNonEvm?.aptosKeys.results.map((acc) => acc.account) ??
+                []
+              break
+            case ChainTypes.SOLANA:
+              chainAccountAddresses =
+                accountsNonEvm?.solanaKeys.results.map((acc) => acc.id) ?? []
+              break
+            default:
+              chainAccountAddresses = []
           }
-          if (values.chainType === ChainTypes.APTOS) {
-            chainAccountAddresses = accountsAptos.map((acc) => acc.account)
-          }
-
           return (
             <Form
               data-testid="feeds-manager-form"
@@ -272,6 +281,9 @@ export const ChainConfigurationForm = withStyles(styles)(
                     </MenuItem>
                     <MenuItem key={ChainTypes.APTOS} value={ChainTypes.APTOS}>
                       APTOS
+                    </MenuItem>
+                    <MenuItem key={ChainTypes.SOLANA} value={ChainTypes.SOLANA}>
+                      SOLANA
                     </MenuItem>
                   </Field>
                 </Grid>

@@ -13,7 +13,7 @@ import {
 } from 'src/components/Form/ChainConfigurationForm'
 import { useChainsQuery } from 'src/hooks/queries/useChainsQuery'
 import { useEVMAccountsQuery } from 'src/hooks/queries/useEVMAccountsQuery'
-import { useAptosAccountsQuery } from 'src/hooks/queries/useAptosAccountsQuery'
+import { useNonEvmAccountsQuery } from 'src/hooks/queries/useNonEvmAccountsQuery'
 import { useP2PKeysQuery } from 'src/hooks/queries/useP2PKeysQuery'
 import { useOCRKeysQuery } from 'src/hooks/queries/useOCRKeysQuery'
 import { useOCR2KeysQuery } from 'src/hooks/queries/useOCR2KeysQuery'
@@ -35,7 +35,7 @@ export const NewSupportedChainDialog = ({ onClose, open, onSubmit }: Props) => {
     fetchPolicy: 'cache-and-network',
   })
 
-  const { data: accountDataAptos } = useAptosAccountsQuery({
+  const { data: accountDataNonEvm } = useNonEvmAccountsQuery({
     fetchPolicy: 'cache-and-network',
   })
 
@@ -79,9 +79,6 @@ export const NewSupportedChainDialog = ({ onClose, open, onSubmit }: Props) => {
   const chains = chainData ? chainData.chains.results : []
 
   const accountsEVM = accountDataEVM ? accountDataEVM.ethKeys.results : []
-  const accountsAptos = accountDataAptos
-    ? accountDataAptos.aptosKeys.results
-    : []
   const p2pKeys = p2pKeysData ? p2pKeysData.p2pKeys.results : []
   const ocrKeys = ocrKeysData ? ocrKeysData.ocrKeyBundles.results : []
   const ocr2Keys = ocr2KeysData ? ocr2KeysData.ocr2KeyBundles.results : []
@@ -99,7 +96,7 @@ export const NewSupportedChainDialog = ({ onClose, open, onSubmit }: Props) => {
           onSubmit={onSubmit}
           chains={chains}
           accountsEVM={accountsEVM}
-          accountsAptos={accountsAptos}
+          accountsNonEvm={accountDataNonEvm}
           p2pKeys={p2pKeys}
           ocrKeys={ocrKeys}
           ocr2Keys={ocr2Keys}

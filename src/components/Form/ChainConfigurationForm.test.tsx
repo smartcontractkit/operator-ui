@@ -18,7 +18,6 @@ describe('ChainConfigurationForm', () => {
         initialValues={initialValues}
         onSubmit={handleSubmit}
         accountsEVM={[]}
-        accountsAptos={[]}
         chains={[]}
         p2pKeys={[]}
         ocrKeys={[]}
@@ -46,7 +45,6 @@ describe('ChainConfigurationForm', () => {
         initialValues={initialValues}
         onSubmit={handleSubmit}
         accountsEVM={[]}
-        accountsAptos={[]}
         chains={[]}
         p2pKeys={[]}
         ocrKeys={[]}
@@ -85,7 +83,6 @@ describe('ChainConfigurationForm', () => {
         initialValues={initialValues}
         onSubmit={handleSubmit}
         accountsEVM={[]}
-        accountsAptos={[]}
         chains={[]}
         p2pKeys={[]}
         ocrKeys={[]}
@@ -125,43 +122,9 @@ describe('ChainConfigurationForm', () => {
     initialValues.chainType = ChainTypes.EVM
     initialValues.adminAddr = '0x1234567'
 
-    const { container } = render(
-      <ChainConfigurationForm
-        initialValues={initialValues}
-        onSubmit={(x, _) => handleSubmit(x)}
-        accountsEVM={[
-          {
-            address: '0x1111',
-            chain: {
-              id: '1111',
-            },
-            createdAt: '2021-10-06T00:00:00Z',
-            isDisabled: false,
-          },
-        ]}
-        accountsAptos={[
-          {
-            account: '0x123',
-            id: '2222',
-          },
-        ]}
-        chains={[
-          {
-            id: '1111',
-            enabled: true,
-            network: 'evm',
-          },
-          {
-            id: '2222',
-            enabled: true,
-            network: 'aptos',
-          },
-        ]}
-        p2pKeys={[]}
-        ocrKeys={[]}
-        ocr2Keys={[]}
-        showSubmit
-      />,
+    const { container } = renderChainConfigurationForm(
+      initialValues,
+      handleSubmit,
     )
 
     const chainType = getByRole('button', { name: 'EVM' })
@@ -217,6 +180,69 @@ describe('ChainConfigurationForm', () => {
   })
 })
 
+test('should able to create Solana chain config', async () => {
+  const handleSubmit = jest.fn()
+  const initialValues = emptyFormValues()
+  initialValues.chainType = ChainTypes.EVM
+  initialValues.adminAddr = '0x1234567'
+
+  const { container } = renderChainConfigurationForm(
+    initialValues,
+    handleSubmit,
+  )
+
+  const chainType = getByRole('button', { name: 'EVM' })
+  userEvent.click(chainType)
+  userEvent.click(getByRole('option', { name: 'SOLANA' }))
+  await screen.findByRole('button', { name: 'SOLANA' })
+
+  // no easy way to use react testing framework to do what i want,
+  // had to resort to using #id and querySelector
+  // formik does not seem to work well with react testing framework
+  const chainId = container.querySelector('#select-chainID')
+  expect(chainId).toBeInTheDocument()
+  // workaround ts lint warning - unable to use chainId!
+  chainId && userEvent.click(chainId)
+  userEvent.click(getByRole('option', { name: '3333' }))
+  await screen.findByRole('button', { name: '3333' })
+
+  const address = container.querySelector('#select-accountAddr')
+  expect(address).toBeInTheDocument()
+  address && userEvent.click(address)
+  userEvent.click(getByRole('option', { name: 'solana_xxxx' }))
+  await screen.findByRole('button', { name: 'solana_xxxx' })
+
+  await userEvent.click(getByRole('button', { name: /submit/i }))
+
+  await waitFor(() => {
+    expect(handleSubmit).toHaveBeenCalledWith({
+      accountAddr: 'solana_xxxx',
+      accountAddrPubKey: '',
+      adminAddr: '0x1234567',
+      chainID: '3333',
+      chainType: 'SOLANA',
+      fluxMonitorEnabled: false,
+      ocr1Enabled: false,
+      ocr1IsBootstrap: false,
+      ocr1KeyBundleID: '',
+      ocr1Multiaddr: '',
+      ocr1P2PPeerID: '',
+      ocr2CommitPluginEnabled: false,
+      ocr2Enabled: false,
+      ocr2ExecutePluginEnabled: false,
+      ocr2ForwarderAddress: '',
+      ocr2IsBootstrap: false,
+      ocr2KeyBundleID: '',
+      ocr2MedianPluginEnabled: false,
+      ocr2MercuryPluginEnabled: false,
+      ocr2Multiaddr: '',
+      ocr2P2PPeerID: '',
+      ocr2RebalancerPluginEnabled: false,
+    })
+    expect(handleSubmit).toHaveBeenCalledTimes(1)
+  })
+})
+
 function emptyFormValues(): FormValues {
   return {
     chainID: '',
@@ -242,4 +268,55 @@ function emptyFormValues(): FormValues {
     ocr2RebalancerPluginEnabled: false,
     ocr2ForwarderAddress: '',
   }
+}
+
+function renderChainConfigurationForm(
+  initialValues: FormValues,
+  onSubmit: (x: FormValues) => void,
+) {
+  return render(
+    <ChainConfigurationForm
+      initialValues={initialValues}
+      onSubmit={(x, _) => onSubmit(x)}
+      accountsEVM={[
+        {
+          address: '0x1111',
+          chain: {
+            id: '1111',
+          },
+          createdAt: '2021-10-06T00:00:00Z',
+          isDisabled: false,
+        },
+      ]}
+      accountsNonEvm={{
+        aptosKeys: {
+          results: [{ account: '0x123', id: '2222' }],
+        },
+        solanaKeys: {
+          results: [{ id: 'solana_xxxx' }],
+        },
+      }}
+      chains={[
+        {
+          id: '1111',
+          enabled: true,
+          network: 'evm',
+        },
+        {
+          id: '2222',
+          enabled: true,
+          network: 'aptos',
+        },
+        {
+          id: '3333',
+          enabled: true,
+          network: 'solana',
+        },
+      ]}
+      p2pKeys={[]}
+      ocrKeys={[]}
+      ocr2Keys={[]}
+      showSubmit
+    />,
+  )
 }

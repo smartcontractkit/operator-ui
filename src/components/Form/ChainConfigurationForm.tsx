@@ -257,6 +257,10 @@ export const ChainConfigurationForm = withStyles(styles)(
             default:
               chainAccountAddresses = []
           }
+
+          const filteredChainIds = chains.filter(
+            (x) => x.network.toUpperCase() === values.chainType,
+          )
           return (
             <Form
               data-testid="feeds-manager-form"
@@ -289,48 +293,77 @@ export const ChainConfigurationForm = withStyles(styles)(
                 </Grid>
 
                 <Grid item xs={12} md={6}>
-                  <Field
-                    component={TextField}
-                    id="chainID"
-                    name="chainID"
-                    label="Chain ID"
-                    required
-                    fullWidth
-                    select
-                    disabled={editing}
-                    inputProps={{ 'data-testid': 'chainID-input' }}
-                    FormHelperTextProps={{
-                      'data-testid': 'chainID-helper-text',
-                    }}
-                  >
-                    {chains
-                      .filter(
-                        (x) => x.network.toUpperCase() === values.chainType,
-                      )
-                      .map((x) => (
+                  {/* always show normal manual input field instead of selection if field is readonly (during editing) */}
+                  {filteredChainIds.length > 0 && !editing ? (
+                    <Field
+                      component={TextField}
+                      id="chainID"
+                      name="chainID"
+                      label="Chain ID"
+                      required
+                      fullWidth
+                      select
+                      disabled={editing}
+                      inputProps={{ 'data-testid': 'chainID-input' }}
+                      FormHelperTextProps={{
+                        'data-testid': 'chainID-helper-text',
+                      }}
+                    >
+                      {filteredChainIds.map((x) => (
                         <MenuItem key={x.id} value={x.id}>
                           {x.id}
                         </MenuItem>
                       ))}
-                  </Field>
+                    </Field>
+                  ) : (
+                    <Field
+                      component={TextField}
+                      id="chainID"
+                      name="chainID"
+                      label="Chain ID"
+                      required
+                      fullWidth
+                      disabled={editing}
+                      inputProps={{ 'data-testid': 'chainID-manual-input' }}
+                      FormHelperTextProps={{
+                        'data-testid': 'chainID-helper-manual-text',
+                      }}
+                    />
+                  )}
                 </Grid>
 
                 <Grid item xs={12} md={6}>
-                  <AccountAddrField
-                    component={TextField}
-                    id="accountAddr"
-                    name="accountAddr"
-                    label="Account Address"
-                    inputProps={{ 'data-testid': 'accountAddr-input' }}
-                    required
-                    fullWidth
-                    select
-                    helperText="The account address used for this chain"
-                    addresses={chainAccountAddresses}
-                    FormHelperTextProps={{
-                      'data-testid': 'accountAddr-helper-text',
-                    }}
-                  />
+                  {chainAccountAddresses.length > 0 ? (
+                    <AccountAddrField
+                      component={TextField}
+                      id="accountAddr"
+                      name="accountAddr"
+                      label="Account Address"
+                      inputProps={{ 'data-testid': 'accountAddr-input' }}
+                      required
+                      fullWidth
+                      select
+                      helperText="The account address used for this chain"
+                      addresses={chainAccountAddresses}
+                      FormHelperTextProps={{
+                        'data-testid': 'accountAddr-helper-text',
+                      }}
+                    />
+                  ) : (
+                    <Field
+                      component={TextField}
+                      id="accountAddr"
+                      name="accountAddr"
+                      label="Account Address"
+                      inputProps={{ 'data-testid': 'accountAddr-manual-input' }}
+                      required
+                      fullWidth
+                      helperText="The account address used for this chain"
+                      FormHelperTextProps={{
+                        'data-testid': 'accountAddr-helper-manual-text',
+                      }}
+                    />
+                  )}
                 </Grid>
 
                 <Grid item xs={12} md={6}>

@@ -9,7 +9,55 @@ import { ChainTypes } from './ChainTypes'
 const { getByRole, findByTestId } = screen
 
 describe('ChainConfigurationForm', () => {
-  it('validates top level input', async () => {
+  it('validates top level input (with chains available)', async () => {
+    const handleSubmit = jest.fn()
+    const initialValues = emptyFormValues()
+    initialValues.chainType = ChainTypes.EVM
+
+    const { container } = render(
+      <ChainConfigurationForm
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        accountsEVM={[
+          {
+            address: '0x1111',
+            chain: {
+              id: '1111',
+            },
+            createdAt: '2021-10-06T00:00:00Z',
+            isDisabled: false,
+          },
+        ]}
+        chains={[
+          {
+            id: '1111',
+            enabled: true,
+            network: ChainTypes.EVM,
+          },
+        ]}
+        p2pKeys={[]}
+        ocrKeys={[]}
+        ocr2Keys={[]}
+        showSubmit
+      />,
+    )
+
+    userEvent.click(getByRole('button', { name: /submit/i }))
+
+    expect(await findByTestId('chainID-helper-text')).toHaveTextContent(
+      'Required',
+    )
+
+    await selectChainIdOnUI(container, '1111')
+
+    userEvent.click(getByRole('button', { name: /submit/i }))
+
+    expect(await findByTestId('accountAddr-helper-text')).toHaveTextContent(
+      'Required',
+    )
+  })
+
+  it('validates top level input (with chains NOT available)', async () => {
     const handleSubmit = jest.fn()
     const initialValues = emptyFormValues()
 
@@ -28,12 +76,12 @@ describe('ChainConfigurationForm', () => {
 
     userEvent.click(getByRole('button', { name: /submit/i }))
 
-    expect(await findByTestId('chainID-helper-text')).toHaveTextContent(
+    expect(await findByTestId('chainID-helper-manual-text')).toHaveTextContent(
       'Required',
     )
-    expect(await findByTestId('accountAddr-helper-text')).toHaveTextContent(
-      'Required',
-    )
+    expect(
+      await findByTestId('accountAddr-helper-manual-text'),
+    ).toHaveTextContent('Required')
   })
 
   it('validates OCR input', async () => {
@@ -116,7 +164,7 @@ describe('ChainConfigurationForm', () => {
     ).not.toHaveTextContent('Required')
   })
 
-  test('should able to create APTOS chain config', async () => {
+  test('should able to create APTOS chain config (with selection)', async () => {
     const handleSubmit = jest.fn()
     const initialValues = emptyFormValues()
     initialValues.chainType = ChainTypes.EVM
@@ -132,15 +180,7 @@ describe('ChainConfigurationForm', () => {
     userEvent.click(getByRole('option', { name: 'APTOS' }))
     await screen.findByRole('button', { name: 'APTOS' })
 
-    // no easy way to use react testing framework to do what i want,
-    // had to resort to using #id and querySelector
-    // formik does not seem to work well with react testing framework
-    const chainId = container.querySelector('#select-chainID')
-    expect(chainId).toBeInTheDocument()
-    // workaround ts lint warning - unable to use chainId!
-    chainId && userEvent.click(chainId)
-    userEvent.click(getByRole('option', { name: '2222' }))
-    await screen.findByRole('button', { name: '2222' })
+    await selectChainIdOnUI(container, '2222')
 
     const address = container.querySelector('#select-accountAddr')
     expect(address).toBeInTheDocument()
@@ -178,68 +218,118 @@ describe('ChainConfigurationForm', () => {
       expect(handleSubmit).toHaveBeenCalledTimes(1)
     })
   })
-})
 
-test('should able to create Solana chain config', async () => {
-  const handleSubmit = jest.fn()
-  const initialValues = emptyFormValues()
-  initialValues.chainType = ChainTypes.EVM
-  initialValues.adminAddr = '0x1234567'
+  test('should able to create APTOS chain config (with manual input)', async () => {
+    const handleSubmit = jest.fn()
+    const initialValues = emptyFormValues()
+    initialValues.chainType = ChainTypes.EVM
 
-  const { container } = renderChainConfigurationForm(
-    initialValues,
-    handleSubmit,
-  )
-
-  const chainType = getByRole('button', { name: 'EVM' })
-  userEvent.click(chainType)
-  userEvent.click(getByRole('option', { name: 'SOLANA' }))
-  await screen.findByRole('button', { name: 'SOLANA' })
-
-  // no easy way to use react testing framework to do what i want,
-  // had to resort to using #id and querySelector
-  // formik does not seem to work well with react testing framework
-  const chainId = container.querySelector('#select-chainID')
-  expect(chainId).toBeInTheDocument()
-  // workaround ts lint warning - unable to use chainId!
-  chainId && userEvent.click(chainId)
-  userEvent.click(getByRole('option', { name: '3333' }))
-  await screen.findByRole('button', { name: '3333' })
-
-  const address = container.querySelector('#select-accountAddr')
-  expect(address).toBeInTheDocument()
-  address && userEvent.click(address)
-  userEvent.click(getByRole('option', { name: 'solana_xxxx' }))
-  await screen.findByRole('button', { name: 'solana_xxxx' })
-
-  await userEvent.click(getByRole('button', { name: /submit/i }))
-
-  await waitFor(() => {
-    expect(handleSubmit).toHaveBeenCalledWith({
-      accountAddr: 'solana_xxxx',
-      accountAddrPubKey: '',
-      adminAddr: '0x1234567',
-      chainID: '3333',
-      chainType: 'SOLANA',
-      fluxMonitorEnabled: false,
-      ocr1Enabled: false,
-      ocr1IsBootstrap: false,
-      ocr1KeyBundleID: '',
-      ocr1Multiaddr: '',
-      ocr1P2PPeerID: '',
-      ocr2CommitPluginEnabled: false,
-      ocr2Enabled: false,
-      ocr2ExecutePluginEnabled: false,
-      ocr2ForwarderAddress: '',
-      ocr2IsBootstrap: false,
-      ocr2KeyBundleID: '',
-      ocr2MedianPluginEnabled: false,
-      ocr2MercuryPluginEnabled: false,
-      ocr2Multiaddr: '',
-      ocr2P2PPeerID: '',
-      ocr2RebalancerPluginEnabled: false,
+    renderChainConfigurationForm(initialValues, handleSubmit, [], {
+      aptosKeys: {
+        results: [],
+      },
+      solanaKeys: {
+        results: [],
+      },
     })
-    expect(handleSubmit).toHaveBeenCalledTimes(1)
+
+    const chainType = getByRole('button', { name: 'EVM' })
+    userEvent.click(chainType)
+    userEvent.click(getByRole('option', { name: 'APTOS' }))
+    await screen.findByRole('button', { name: 'APTOS' })
+
+    const chainIdTextBox = getByRole('textbox', { name: /chain id \*/i })
+    userEvent.type(chainIdTextBox, '2222')
+
+    const accountAddrTextBox = getByRole('textbox', {
+      name: /account address \*/i,
+    })
+    userEvent.type(accountAddrTextBox, '0x123')
+
+    await userEvent.click(getByRole('button', { name: /submit/i }))
+
+    await waitFor(() => {
+      expect(handleSubmit).toHaveBeenCalledWith({
+        accountAddr: '0x123',
+        accountAddrPubKey: '',
+        adminAddr: '',
+        chainID: '2222',
+        chainType: 'APTOS',
+        fluxMonitorEnabled: false,
+        ocr1Enabled: false,
+        ocr1IsBootstrap: false,
+        ocr1KeyBundleID: '',
+        ocr1Multiaddr: '',
+        ocr1P2PPeerID: '',
+        ocr2CommitPluginEnabled: false,
+        ocr2Enabled: false,
+        ocr2ExecutePluginEnabled: false,
+        ocr2ForwarderAddress: '',
+        ocr2IsBootstrap: false,
+        ocr2KeyBundleID: '',
+        ocr2MedianPluginEnabled: false,
+        ocr2MercuryPluginEnabled: false,
+        ocr2Multiaddr: '',
+        ocr2P2PPeerID: '',
+        ocr2RebalancerPluginEnabled: false,
+      })
+      expect(handleSubmit).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  test('should able to create Solana chain config', async () => {
+    const handleSubmit = jest.fn()
+    const initialValues = emptyFormValues()
+    initialValues.chainType = ChainTypes.EVM
+    initialValues.adminAddr = '0x1234567'
+
+    const { container } = renderChainConfigurationForm(
+      initialValues,
+      handleSubmit,
+    )
+
+    const chainType = getByRole('button', { name: 'EVM' })
+    userEvent.click(chainType)
+    userEvent.click(getByRole('option', { name: 'SOLANA' }))
+    await screen.findByRole('button', { name: 'SOLANA' })
+
+    await selectChainIdOnUI(container, '3333')
+
+    const address = container.querySelector('#select-accountAddr')
+    expect(address).toBeInTheDocument()
+    address && userEvent.click(address)
+    userEvent.click(getByRole('option', { name: 'solana_xxxx' }))
+    await screen.findByRole('button', { name: 'solana_xxxx' })
+
+    await userEvent.click(getByRole('button', { name: /submit/i }))
+
+    await waitFor(() => {
+      expect(handleSubmit).toHaveBeenCalledWith({
+        accountAddr: 'solana_xxxx',
+        accountAddrPubKey: '',
+        adminAddr: '0x1234567',
+        chainID: '3333',
+        chainType: 'SOLANA',
+        fluxMonitorEnabled: false,
+        ocr1Enabled: false,
+        ocr1IsBootstrap: false,
+        ocr1KeyBundleID: '',
+        ocr1Multiaddr: '',
+        ocr1P2PPeerID: '',
+        ocr2CommitPluginEnabled: false,
+        ocr2Enabled: false,
+        ocr2ExecutePluginEnabled: false,
+        ocr2ForwarderAddress: '',
+        ocr2IsBootstrap: false,
+        ocr2KeyBundleID: '',
+        ocr2MedianPluginEnabled: false,
+        ocr2MercuryPluginEnabled: false,
+        ocr2Multiaddr: '',
+        ocr2P2PPeerID: '',
+        ocr2RebalancerPluginEnabled: false,
+      })
+      expect(handleSubmit).toHaveBeenCalledTimes(1)
+    })
   })
 })
 
@@ -273,6 +363,31 @@ function emptyFormValues(): FormValues {
 function renderChainConfigurationForm(
   initialValues: FormValues,
   onSubmit: (x: FormValues) => void,
+  chains: ChainsPayload_ResultsFields[] | undefined = [
+    {
+      id: '1111',
+      enabled: true,
+      network: 'evm',
+    },
+    {
+      id: '2222',
+      enabled: true,
+      network: 'aptos',
+    },
+    {
+      id: '3333',
+      enabled: true,
+      network: 'solana',
+    },
+  ],
+  accountsNonEvm: FetchNonEvmKeys | undefined = {
+    aptosKeys: {
+      results: [{ account: '0x123', id: '2222' }],
+    },
+    solanaKeys: {
+      results: [{ id: 'solana_xxxx' }],
+    },
+  },
 ) {
   return render(
     <ChainConfigurationForm
@@ -288,35 +403,21 @@ function renderChainConfigurationForm(
           isDisabled: false,
         },
       ]}
-      accountsNonEvm={{
-        aptosKeys: {
-          results: [{ account: '0x123', id: '2222' }],
-        },
-        solanaKeys: {
-          results: [{ id: 'solana_xxxx' }],
-        },
-      }}
-      chains={[
-        {
-          id: '1111',
-          enabled: true,
-          network: 'evm',
-        },
-        {
-          id: '2222',
-          enabled: true,
-          network: 'aptos',
-        },
-        {
-          id: '3333',
-          enabled: true,
-          network: 'solana',
-        },
-      ]}
+      accountsNonEvm={accountsNonEvm}
+      chains={chains}
       p2pKeys={[]}
       ocrKeys={[]}
       ocr2Keys={[]}
       showSubmit
     />,
   )
+}
+
+async function selectChainIdOnUI(container: HTMLElement, chainId: string) {
+  const chainIdSelect = container.querySelector('#select-chainID')
+  expect(chainIdSelect).toBeInTheDocument()
+  // workaround ts lint warning - require check for null
+  chainIdSelect && userEvent.click(chainIdSelect)
+  userEvent.click(getByRole('option', { name: chainId }))
+  await screen.findByRole('button', { name: chainId })
 }

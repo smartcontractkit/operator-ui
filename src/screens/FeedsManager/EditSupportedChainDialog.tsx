@@ -14,10 +14,9 @@ import {
 import { useChainsQuery } from 'src/hooks/queries/useChainsQuery'
 import { useEVMAccountsQuery } from 'src/hooks/queries/useEVMAccountsQuery'
 import { useNonEvmAccountsQuery } from 'src/hooks/queries/useNonEvmAccountsQuery'
-import { useP2PKeysQuery } from 'src/hooks/queries/useP2PKeysQuery'
-import { useOCRKeysQuery } from 'src/hooks/queries/useOCRKeysQuery'
 import { useOCR2KeysQuery } from 'src/hooks/queries/useOCR2KeysQuery'
-import { ChainTypes } from 'src/components/Form/ChainTypes'
+import { useOCRKeysQuery } from 'src/hooks/queries/useOCRKeysQuery'
+import { useP2PKeysQuery } from 'src/hooks/queries/useP2PKeysQuery'
 
 type Props = {
   cfg: FeedsManager_ChainConfigFields | null
@@ -63,7 +62,7 @@ export const EditSupportedChainDialog = ({
 
   const initialValues = {
     chainID: cfg.chainID,
-    chainType: ChainTypes.EVM,
+    chainType: cfg.chainType,
     accountAddr: cfg.accountAddr,
     adminAddr: cfg.adminAddr,
     accountAddrPubKey: cfg.accountAddrPubKey,

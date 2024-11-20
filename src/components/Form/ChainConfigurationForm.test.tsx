@@ -333,6 +333,36 @@ describe('ChainConfigurationForm', () => {
   })
 })
 
+test('should be able to select OCR2 Job Type with Key Bundle ID', async () => {
+  const handleSubmit = jest.fn()
+  const initialValues = emptyFormValues()
+  initialValues.chainType = ChainTypes.EVM
+
+  const { container } = renderChainConfigurationForm(
+    initialValues,
+    handleSubmit,
+    [],
+    {
+      aptosKeys: {
+        results: [],
+      },
+      solanaKeys: {
+        results: [],
+      },
+    },
+  )
+
+  const ocr2CheckBox = screen.getByText(/ocr2/i)
+  userEvent.click(ocr2CheckBox)
+
+  const keyBundleId2 = container.querySelector('#select-ocr2KeyBundleID')
+  expect(keyBundleId2).toBeInTheDocument()
+  // workaround ts lint warning - require check for null
+  keyBundleId2 && userEvent.click(keyBundleId2)
+  userEvent.click(getByRole('option', { name: 'ocr2_key_bundle_id (EVM)' }))
+  await screen.findByRole('button', { name: 'ocr2_key_bundle_id (EVM)' })
+})
+
 function emptyFormValues(): FormValues {
   return {
     chainID: '',
@@ -407,7 +437,15 @@ function renderChainConfigurationForm(
       chains={chains}
       p2pKeys={[]}
       ocrKeys={[]}
-      ocr2Keys={[]}
+      ocr2Keys={[
+        {
+          id: 'ocr2_key_bundle_id',
+          chainType: 'EVM',
+          offChainPublicKey: 'ocr2_public_key',
+          onChainPublicKey: 'ocr2_on_chain_public_key',
+          configPublicKey: 'ocr2_config_public_key',
+        },
+      ]}
       showSubmit
     />,
   )

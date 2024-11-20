@@ -228,6 +228,12 @@ export const ChainConfigurationForm = withStyles(styles)(
     ocr2Keys = [],
     showSubmit = false,
   }: Props) => {
+    const sortedOcr2Keys = [...ocr2Keys].sort((a, b) => {
+      if (a.chainType === b.chainType) {
+        return a.id.localeCompare(b.id)
+      }
+      return a.chainType?.localeCompare(b.chainType ?? '') ?? 0
+    })
     return (
       <Formik
         innerRef={innerRef}
@@ -573,9 +579,9 @@ export const ChainConfigurationForm = withStyles(styles)(
                                       'ocr2KeyBundleID-helper-text',
                                   }}
                                 >
-                                  {ocr2Keys.map((key) => (
+                                  {sortedOcr2Keys.map((key) => (
                                     <MenuItem key={key.id} value={key.id}>
-                                      {key.id}
+                                      {key.id} ({key.chainType})
                                     </MenuItem>
                                   ))}
                                 </Field>

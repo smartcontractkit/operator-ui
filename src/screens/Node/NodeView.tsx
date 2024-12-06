@@ -14,6 +14,7 @@ export const NODE_PAYLOAD_FIELDS = gql`
     name
     chain {
       id
+      network
     }
     httpURL
     wsURL

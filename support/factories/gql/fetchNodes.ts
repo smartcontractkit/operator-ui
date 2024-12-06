@@ -8,6 +8,7 @@ export function buildNode(
     name: 'node1',
     chain: {
       id: '42',
+      network: 'evm',
     },
     state: '',
     sendOnly: false,
@@ -23,6 +24,7 @@ export function buildNodes(): ReadonlyArray<NodesPayload_ResultsFields> {
       name: 'node1',
       chain: {
         id: '42',
+        network: 'evm',
       },
       order: 32,
     }),
@@ -31,6 +33,7 @@ export function buildNodes(): ReadonlyArray<NodesPayload_ResultsFields> {
       name: 'node2',
       chain: {
         id: '5',
+        network: 'evm',
       },
     }),
   ]

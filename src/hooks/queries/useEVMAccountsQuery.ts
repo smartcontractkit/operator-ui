@@ -5,6 +5,7 @@ export const ETH_KEYS_PAYLOAD__RESULTS_FIELDS = gql`
     address
     chain {
       id
+      network
     }
     createdAt
     ethBalance

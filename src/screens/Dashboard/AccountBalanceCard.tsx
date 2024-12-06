@@ -15,6 +15,7 @@ export const ACCOUNT_BALANCES_PAYLOAD__RESULTS_FIELDS = gql`
     address
     chain {
       id
+      network
     }
     ethBalance
     isDisabled

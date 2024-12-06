@@ -22,6 +22,7 @@ export const NODES_PAYLOAD__RESULTS_FIELDS = gql`
     id
     chain {
       id
+      network
     }
     name
     state

@@ -21,6 +21,7 @@ export const ETH_TRANSACTIONS_PAYLOAD__RESULTS_FIELDS = gql`
   fragment EthTransactionsPayload_ResultsFields on EthTransaction {
     chain {
       id
+      network
     }
     from
     hash

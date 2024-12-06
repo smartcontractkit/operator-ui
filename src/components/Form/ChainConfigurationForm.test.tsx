@@ -23,6 +23,7 @@ describe('ChainConfigurationForm', () => {
             address: '0x1111',
             chain: {
               id: '1111',
+              network: 'evm',
             },
             createdAt: '2021-10-06T00:00:00Z',
             isDisabled: false,
@@ -428,6 +429,7 @@ function renderChainConfigurationForm(
           address: '0x1111',
           chain: {
             id: '1111',
+            network: 'evm',
           },
           createdAt: '2021-10-06T00:00:00Z',
           isDisabled: false,

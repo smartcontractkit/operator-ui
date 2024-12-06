@@ -10,6 +10,7 @@ export function buildNodePayloadFields(
     wsURL: 'wss://node1.com',
     chain: {
       id: '42',
+      network: 'evm',
     },
     state: '',
     sendOnly: false,

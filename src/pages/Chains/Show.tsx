@@ -13,7 +13,7 @@ interface RouteParams {
 }
 
 export const ChainsShow = () => {
-  const { chainId } = useParams<RouteParams>()
+  const { chainId, network } = useParams<RouteParams>()
   const { path } = useRouteMatch()
   const [chain, setChain] = React.useState<ChainResource>()
   const [nodes, setNodes] = React.useState<NodeResource[]>([])
@@ -28,7 +28,7 @@ export const ChainsShow = () => {
   }, [])
 
   React.useEffect(() => {
-    Promise.all([v2.chains.getChains()])
+    Promise.all([v2.chains.getChains(network)])
       .then(([v2Chains]) =>
         v2Chains.data.find((chain: ChainResource) => chain.id === chainId),
       )

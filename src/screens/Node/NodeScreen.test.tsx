@@ -22,7 +22,7 @@ function renderComponent(mocks: MockedResponse[]) {
         </MockedProvider>
       </Route>
 
-      <Route exact path="/chains/:id">
+      <Route exact path="/chains/:network/:id">
         Redirect Success
       </Route>
     </>,

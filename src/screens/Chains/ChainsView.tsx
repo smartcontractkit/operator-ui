@@ -86,6 +86,7 @@ export const ChainsView: React.FC<Props> = ({
             <Table>
               <TableHead>
                 <TableRow>
+                  <TableCell>Network</TableCell>
                   <TableCell>Chain ID</TableCell>
                   <TableCell>Enabled</TableCell>
                 </TableRow>
@@ -93,7 +94,7 @@ export const ChainsView: React.FC<Props> = ({
               <TableBody>
                 {filteredChains.length === 0 && (
                   <TableRow>
-                    <TableCell component="th" scope="row" colSpan={3}>
+                    <TableCell component="th" scope="row" colSpan={4}>
                       No chains found
                     </TableCell>
                   </TableRow>

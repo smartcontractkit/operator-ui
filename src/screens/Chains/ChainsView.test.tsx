@@ -25,9 +25,11 @@ describe('ChainsView', () => {
 
     expect(getAllByRole('row')).toHaveLength(3)
 
+    expect(queryByText('Network')).toBeInTheDocument()
     expect(queryByText('Chain ID')).toBeInTheDocument()
     expect(queryByText('Enabled')).toBeInTheDocument()
 
+    expect(queryAllByText('EVM')).toBeInTheDocument()
     expect(queryByText('5')).toBeInTheDocument()
     expect(queryByText('42')).toBeInTheDocument()
 

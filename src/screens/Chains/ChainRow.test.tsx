@@ -19,7 +19,7 @@ function renderComponent(chain: ChainsPayload_ResultsFields) {
           </tbody>
         </table>
       </Route>
-      <Route exact path="/chains/:id">
+      <Route exact path="/chains/:network/:id">
         Link Success
       </Route>
     </>,
@@ -32,6 +32,7 @@ describe('ChainRow', () => {
 
     renderComponent(chain)
 
+    expect(queryByText('EVM')).toBeInTheDocument()
     expect(queryByText('5')).toBeInTheDocument()
     expect(queryByText('true')).toBeInTheDocument()
   })
@@ -42,7 +43,7 @@ describe('ChainRow', () => {
     renderComponent(chain)
 
     const link = getByRole('link', { name: /5/i })
-    expect(link).toHaveAttribute('href', '/chains/5')
+    expect(link).toHaveAttribute('href', '/chains/evm/5')
 
     userEvent.click(link)
 

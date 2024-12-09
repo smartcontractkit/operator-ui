@@ -245,7 +245,7 @@ const RegionalNavComponent = ({
             <List className={classes.horizontalNav}>
               <ListItem className={classes.horizontalNavItem}>
                 <Link
-                  href={`/chains/${chainId}`}
+                  href={`/chains/evm/${chainId}`}
                   className={classNames(
                     classes.horizontalNavLink,
                     navNodesActive && classes.activeNavLink,

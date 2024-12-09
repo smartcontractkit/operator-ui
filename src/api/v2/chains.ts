@@ -1,13 +1,15 @@
 import * as jsonapi from 'utils/json-api-client'
 import * as models from 'core/store/models'
 
-export const ENDPOINT = '/v2/chains/evm'
+export const ENDPOINT = '/v2/chains/:network'
 const UPDATE_ENDPOINT = `${ENDPOINT}/:id`
 export class Chains {
   constructor(private api: jsonapi.Api) {}
 
-  public getChains = (): Promise<jsonapi.ApiResponse<models.Chain[]>> => {
-    return this.index()
+  public getChains = (
+    network: string,
+  ): Promise<jsonapi.ApiResponse<models.Chain[]>> => {
+    return this.index(undefined, { network })
   }
 
   public createChain = (
@@ -27,7 +29,7 @@ export class Chains {
     return this.update(req, { id })
   }
 
-  private index = this.api.fetchResource<object, models.Chain[]>(ENDPOINT)
+  private index = this.api.fetchResource<object, models.Chain[], { network: string }>(ENDPOINT)
 
   private create = this.api.createResource<
     models.CreateChainRequest,
@@ -39,6 +41,7 @@ export class Chains {
     null,
     {
       id: string
+      network: string
     }
   >(UPDATE_ENDPOINT)
 
@@ -47,6 +50,7 @@ export class Chains {
     models.Chain,
     {
       id: string
+      network: string
     }
   >(UPDATE_ENDPOINT)
 }

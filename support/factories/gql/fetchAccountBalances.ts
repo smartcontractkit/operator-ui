@@ -8,6 +8,7 @@ export function buildETHKey(
     chain: {
       __typename: 'Chain',
       id: '42',
+      network: 'evm',
     },
     ethBalance: '0.100000000000000000',
     isDisabled: false,

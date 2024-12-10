@@ -6,6 +6,7 @@ export function buildEthTx(
     __typename: 'EthTransaction',
     chain: {
       id: '42',
+      network: 'evm',
     },
     data: '0x',
     from: '0x0000000000000000000000000000000000000001',

@@ -11,6 +11,7 @@ export function buildETHKey(
     address: '0x0000000000000000000000000000000000000001',
     chain: {
       id: '42',
+      network: 'evm',
     },
     createdAt: minuteAgo,
     ethBalance: '0.100000000000000000',

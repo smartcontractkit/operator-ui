@@ -333,44 +333,12 @@ const RECEIVE_CREATE_SUCCESS_ACTION = {
   type: ResourceActionType.RECEIVE_CREATE_SUCCESS,
 }
 
-const receiveDeleteSuccess = (id: string) =>
-  ({
-    type: ResourceActionType.RECEIVE_DELETE_SUCCESS,
-    id,
-  } as const)
-
 export const submitSignIn = (data: Parameter<Sessions['createSession']>) =>
   sendSignIn(data)
 
 export const submitSignOut = () => sendSignOut
 
 export const beginRegistration = () => sendBeginRegistration()
-
-export const deleteChain = (
-  id: string,
-  successCallback: React.ReactNode,
-  errorCallback: React.ReactNode,
-) => {
-  return (dispatch: Dispatch) => {
-    dispatch({ type: ResourceActionType.REQUEST_DELETE })
-
-    const endpoint = api.v2.chains
-
-    return endpoint
-      .destroyChain(id)
-      .then((doc) => {
-        dispatch(receiveDeleteSuccess(id))
-        dispatch(notifySuccess(successCallback, doc))
-      })
-      .catch((error: Errors) => {
-        curryErrorHandler(
-          dispatch,
-          ResourceActionType.RECEIVE_DELETE_ERROR,
-        )(error)
-        dispatch(notifyError(errorCallback, error))
-      })
-  }
-}
 
 export const createJobRunV2 = (
   id: string,

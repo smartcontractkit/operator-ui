@@ -386,6 +386,7 @@ p2pv2Bootstrappers = [
 ]
 relay = "evm"
 pluginType = "median"
+onchainSigningStrategy = { }
 feedID = "feed-id"
 transmitterID = "0x01010CaB43e77116c95745D219af1069fE050d7A"
 observationSource = """

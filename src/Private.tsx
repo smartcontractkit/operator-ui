@@ -62,7 +62,7 @@ const Private = ({ classes }: { classes: { content: string } }) => {
                 <ChainsScreen />
               </PrivateRoute>
 
-              <PrivateRoute path="/chains/:chainId">
+              <PrivateRoute path="/chains/:network/:chainId">
                 <ChainShow />
               </PrivateRoute>
 

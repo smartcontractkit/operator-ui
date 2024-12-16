@@ -111,11 +111,7 @@ interface Props extends WithStyles<typeof styles> {
   chain?: ChainResource
 }
 
-const RegionalNavComponent = ({
-  classes,
-  chainId,
-  chain,
-}: Props) => {
+const RegionalNavComponent = ({ classes, chainId, chain }: Props) => {
   const location = useLocation()
   const navOverridesActive = location.pathname.endsWith('/config-overrides')
   const editActive = location.pathname.endsWith('/edit')

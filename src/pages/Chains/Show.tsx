@@ -34,7 +34,7 @@ export const ChainsShow = () => {
         v2Chains.data.find((chain: ChainResource) => chain.id === chainId),
       )
       .then(setChain)
-  }, [chainId])
+  }, [chainId, network])
 
   return (
     <>

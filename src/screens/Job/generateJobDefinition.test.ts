@@ -356,6 +356,7 @@ observationSource = """
         pluginConfig: {
           juelsPerFeeCoinSource: '1000000000',
         },
+        onchainSigningStrategy: {},
         transmitterID: '0x01010CaB43e77116c95745D219af1069fE050d7A',
         feedID: 'feed-id',
       },

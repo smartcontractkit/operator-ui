@@ -232,6 +232,9 @@ describe('ChainConfigurationForm', () => {
       solanaKeys: {
         results: [],
       },
+      starknetKeys: {
+        results: [],
+      },
     })
 
     const chainType = getByRole('button', { name: 'EVM' })
@@ -350,6 +353,9 @@ test('should be able to select OCR2 Job Type with Key Bundle ID', async () => {
       solanaKeys: {
         results: [],
       },
+      starknetKeys: {
+        results: [],
+      },
     },
   )
 
@@ -417,6 +423,9 @@ function renderChainConfigurationForm(
     },
     solanaKeys: {
       results: [{ id: 'solana_xxxx' }],
+    },
+    starknetKeys: {
+      results: [{ id: 'starknet_xxxx' }],
     },
   },
 ) {

@@ -6,7 +6,7 @@ import { buildChains } from 'support/factories/gql/fetchChains'
 import { ChainsView, Props as ChainsViewProps } from './ChainsView'
 import userEvent from '@testing-library/user-event'
 
-const { getAllByRole, getByRole, queryByText } = screen
+const { getAllByRole, getByRole, queryByText, queryAllByText } = screen
 
 function renderComponent(viewProps: ChainsViewProps) {
   renderWithRouter(<ChainsView {...viewProps} />)
@@ -29,7 +29,7 @@ describe('ChainsView', () => {
     expect(queryByText('Chain ID')).toBeInTheDocument()
     expect(queryByText('Enabled')).toBeInTheDocument()
 
-    expect(queryAllByText('EVM')).toBeInTheDocument()
+    expect(queryAllByText('EVM')).toHaveLength(2)
     expect(queryByText('5')).toBeInTheDocument()
     expect(queryByText('42')).toBeInTheDocument()
 

@@ -38,7 +38,7 @@ export const ChainsShow = () => {
 
   return (
     <>
-      <RegionalNav chainId={chainId} chain={chain} />
+      <RegionalNav chainId={chainId} network={network} chain={chain} />
       <Switch>
         <Route path={`${path}`}>
           {chain && <ChainNodes nodes={nodes} chain={chain} />}

@@ -108,10 +108,11 @@ export type ChainResource = Resource<Chain>
 
 interface Props extends WithStyles<typeof styles> {
   chainId: string
+  network: string
   chain?: ChainResource
 }
 
-const RegionalNavComponent = ({ classes, chainId, chain }: Props) => {
+const RegionalNavComponent = ({ classes, chainId, network, chain }: Props) => {
   const location = useLocation()
   const navOverridesActive = location.pathname.endsWith('/config-overrides')
   const editActive = location.pathname.endsWith('/edit')
@@ -154,7 +155,7 @@ const RegionalNavComponent = ({ classes, chainId, chain }: Props) => {
             <List className={classes.horizontalNav}>
               <ListItem className={classes.horizontalNavItem}>
                 <Link
-                  href={`/chains/evm/${chainId}`}
+                  href={`/chains/${network}/${chainId}`}
                   className={classNames(
                     classes.horizontalNavLink,
                     navNodesActive && classes.activeNavLink,

@@ -14,8 +14,12 @@ interface Props extends WithStyles<typeof tableStyles> {
 export const ChainRow = withStyles(tableStyles)(({ chain, classes }: Props) => {
   return (
     <TableRow className={classes.row} hover>
+      <TableCell>{chain.network}</TableCell>
       <TableCell className={classes.cell} component="th" scope="row">
-        <Link className={classes.link} href={`/chains/${chain.id}`}>
+        <Link
+          className={classes.link}
+          href={`/chains/${chain.network.toLowerCase()}/${chain.id}`}
+        >
           {chain.id}
         </Link>
       </TableCell>

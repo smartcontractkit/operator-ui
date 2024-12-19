@@ -48,8 +48,8 @@ export type FormValues = {
   ocr2RebalancerPluginEnabled: boolean
 }
 
-const isStarknet = (chainID: string): boolean => {
-  return chainID === 'SN_MAIN' || chainID === 'SN_SEPOLIA'
+const isStarknet = (chainType: string): boolean => {
+  return chainType === 'STARKNET'
 }
 
 const ValidationSchema = Yup.object().shape({
@@ -117,7 +117,7 @@ interface AccountAddrFieldProps extends FieldAttributes<any> {
 
 const AccountAddrField = ({ addresses, ...props }: AccountAddrFieldProps) => {
   const {
-    values: { chainID, accountAddr },
+    values: { chainID, chainType, accountAddr },
     setFieldValue,
   } = useFormikContext<FormValues>()
 
@@ -148,7 +148,7 @@ const AccountAddrField = ({ addresses, ...props }: AccountAddrFieldProps) => {
 
   return (
     <>
-      {!isStarknet(chainID) && (
+      {!isStarknet(chainType) && (
         <Field
           {...props}
           select
@@ -162,7 +162,7 @@ const AccountAddrField = ({ addresses, ...props }: AccountAddrFieldProps) => {
           ))}
         </Field>
       )}
-      {isStarknet(chainID) && (
+      {isStarknet(chainType) && (
         <Field
           component={TextField}
           id="accountAddr"
@@ -174,7 +174,7 @@ const AccountAddrField = ({ addresses, ...props }: AccountAddrFieldProps) => {
           fullWidth
         />
       )}
-      {isStarknet(chainID) && (
+      {isStarknet(chainType) && (
         <div>
           <Field
             component={TextField}

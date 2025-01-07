@@ -232,6 +232,9 @@ describe('ChainConfigurationForm', () => {
       solanaKeys: {
         results: [],
       },
+      tronKeys: {
+        results: [],
+      },
     })
 
     const chainType = getByRole('button', { name: 'EVM' })
@@ -334,6 +337,61 @@ describe('ChainConfigurationForm', () => {
   })
 })
 
+test('should able to create Tron chain config', async () => {
+  const handleSubmit = jest.fn()
+  const initialValues = emptyFormValues()
+  initialValues.chainType = ChainTypes.EVM
+  initialValues.adminAddr = '0x1234567'
+
+  const { container } = renderChainConfigurationForm(
+    initialValues,
+    handleSubmit,
+  )
+
+  const chainType = getByRole('button', { name: 'EVM' })
+  userEvent.click(chainType)
+  userEvent.click(getByRole('option', { name: 'TRON' }))
+  await screen.findByRole('button', { name: 'TRON' })
+
+  await selectChainIdOnUI(container, '4444')
+
+  const address = container.querySelector('#select-accountAddr')
+  expect(address).toBeInTheDocument()
+  address && userEvent.click(address)
+  userEvent.click(getByRole('option', { name: 'tron_xxxx' }))
+  await screen.findByRole('button', { name: 'tron_xxxx' })
+
+  await userEvent.click(getByRole('button', { name: /submit/i }))
+
+  await waitFor(() => {
+    expect(handleSubmit).toHaveBeenCalledWith({
+      accountAddr: 'tron_xxxx',
+      accountAddrPubKey: '',
+      adminAddr: '0x1234567',
+      chainID: '4444',
+      chainType: 'TRON',
+      fluxMonitorEnabled: false,
+      ocr1Enabled: false,
+      ocr1IsBootstrap: false,
+      ocr1KeyBundleID: '',
+      ocr1Multiaddr: '',
+      ocr1P2PPeerID: '',
+      ocr2CommitPluginEnabled: false,
+      ocr2Enabled: false,
+      ocr2ExecutePluginEnabled: false,
+      ocr2ForwarderAddress: '',
+      ocr2IsBootstrap: false,
+      ocr2KeyBundleID: '',
+      ocr2MedianPluginEnabled: false,
+      ocr2MercuryPluginEnabled: false,
+      ocr2Multiaddr: '',
+      ocr2P2PPeerID: '',
+      ocr2RebalancerPluginEnabled: false,
+    })
+    expect(handleSubmit).toHaveBeenCalledTimes(1)
+  })
+})
+
 test('should be able to select OCR2 Job Type with Key Bundle ID', async () => {
   const handleSubmit = jest.fn()
   const initialValues = emptyFormValues()
@@ -348,6 +406,9 @@ test('should be able to select OCR2 Job Type with Key Bundle ID', async () => {
         results: [],
       },
       solanaKeys: {
+        results: [],
+      },
+      tronKeys: {
         results: [],
       },
     },
@@ -410,6 +471,11 @@ function renderChainConfigurationForm(
       enabled: true,
       network: 'solana',
     },
+    {
+      id: '4444',
+      enabled: true,
+      network: 'tron',
+    },
   ],
   accountsNonEvm: FetchNonEvmKeys | undefined = {
     aptosKeys: {
@@ -417,6 +483,9 @@ function renderChainConfigurationForm(
     },
     solanaKeys: {
       results: [{ id: 'solana_xxxx' }],
+    },
+    tronKeys: {
+      results: [{ id: 'tron_xxxx' }],
     },
   },
 ) {

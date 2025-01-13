@@ -22,6 +22,10 @@ const SCHEMAS = {
     title: 'Starknet',
     fields: [{ label: 'Public Key', key: 'id', copy: true }],
   },
+  tronKeys: {
+    title: 'TRON',
+    fields: [{ label: 'Public Key', key: 'id', copy: true }],
+  },
 }
 
 export const NonEVMKeys = () => {

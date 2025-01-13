@@ -4,4 +4,5 @@ export const ChainTypes = {
   SOLANA: 'SOLANA',
   STARKNET: 'STARKNET',
   COSMOS: 'COSMOS',
+  TRON: 'TRON',
 }

@@ -13,6 +13,12 @@ export const SOLANA_KEYS_PAYLOAD__RESULTS_FIELDS = gql`
   }
 `
 
+export const STARKNET_KEYS_PAYLOAD__RESULTS_FIELDS = gql`
+  fragment StarknetKeysPayload_ResultsFields on StarkNetKey {
+    id
+  }
+`
+
 export const TRON_KEYS_PAYLOAD__RESULTS_FIELDS = gql`
   fragment TronKeysPayload_ResultsFields on TronKey {
     id
@@ -22,6 +28,7 @@ export const TRON_KEYS_PAYLOAD__RESULTS_FIELDS = gql`
 export const NON_EVM_KEYS_QUERY = gql`
   ${APTOS_KEYS_PAYLOAD__RESULTS_FIELDS}
   ${SOLANA_KEYS_PAYLOAD__RESULTS_FIELDS}
+  ${STARKNET_KEYS_PAYLOAD__RESULTS_FIELDS}
   ${TRON_KEYS_PAYLOAD__RESULTS_FIELDS}
   query FetchNonEvmKeys {
     aptosKeys {
@@ -32,6 +39,11 @@ export const NON_EVM_KEYS_QUERY = gql`
     solanaKeys {
       results {
         ...SolanaKeysPayload_ResultsFields
+      }
+    }
+    starknetKeys {
+      results {
+        ...StarknetKeysPayload_ResultsFields
       }
     }
     tronKeys {

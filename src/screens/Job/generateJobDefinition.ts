@@ -147,6 +147,7 @@ export const generateJobDefinition = (
           'relayConfig',
           'pluginType',
           'pluginConfig',
+          'onchainSigningStrategy',
           'feedID',
         ),
         // We need to call 'extractSpecFields' again here so we get the spec

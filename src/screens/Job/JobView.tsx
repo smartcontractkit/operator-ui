@@ -68,6 +68,7 @@ const JOB_PAYLOAD__SPEC = gql`
       p2pv2Bootstrappers
       relay
       relayConfig
+      onchainSigningStrategy
       transmitterID
       pluginType
       pluginConfig

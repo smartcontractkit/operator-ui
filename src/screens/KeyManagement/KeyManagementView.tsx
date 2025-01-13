@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid'
 
 import Content from 'components/Content'
 import { EVMAccounts } from './EVMAccounts'
+import { NonEVMKeys } from './NonEVMKeys'
 import { CSAKeys } from './CSAKeys'
 import { OCRKeys } from './OCRKeys'
 import { OCR2Keys } from './OCR2Keys'
@@ -33,6 +34,10 @@ export const KeyManagementView: React.FC<Props> = ({
 
         <Grid item xs={12}>
           <EVMAccounts />
+        </Grid>
+
+        <Grid item xs={12}>
+          <NonEVMKeys />
         </Grid>
 
         <Grid item xs={12}>

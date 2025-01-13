@@ -411,12 +411,10 @@ test('should be able to select OCR2 Job Type with Key Bundle ID', async () => {
       solanaKeys: {
         results: [],
       },
-<<<<<<< HEAD
       starknetKeys: {
-||||||| 445b190
-=======
+        results: [],
+      },
       tronKeys: {
->>>>>>> origin/main
         results: [],
       },
     },
@@ -492,14 +490,11 @@ function renderChainConfigurationForm(
     solanaKeys: {
       results: [{ id: 'solana_xxxx' }],
     },
-<<<<<<< HEAD
     starknetKeys: {
       results: [{ id: 'starknet_xxxx' }],
-||||||| 445b190
-=======
+    },
     tronKeys: {
       results: [{ id: 'tron_xxxx' }],
->>>>>>> origin/main
     },
   },
 ) {

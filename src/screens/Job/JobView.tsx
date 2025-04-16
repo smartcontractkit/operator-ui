@@ -149,11 +149,10 @@ const JOB_PAYLOAD__SPEC = gql`
       streamID
     }
     ... on CCIPSpec {
-      p2pv2Bootstrappers
       capabilityVersion
       capabilityLabelledName
       ocrKeyBundleIDs
-      relayConfigs
+      p2pKeyID
     }
   }
 `

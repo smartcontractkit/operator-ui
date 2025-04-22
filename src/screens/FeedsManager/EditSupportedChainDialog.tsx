@@ -33,6 +33,7 @@ export const EditSupportedChainDialog = ({
   const formRef = React.useRef()
 
   const { data: chainData } = useChainsQuery({
+    variables: { limit: 999 },
     fetchPolicy: 'network-only',
   })
 

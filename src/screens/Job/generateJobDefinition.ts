@@ -292,6 +292,14 @@ export const generateJobDefinition = (
 
       break
 
+    case 'CCIPSpec':
+      values = {
+        ...extractJobFields(job),
+        ...extractSpecFields(job.spec, 'capabilityVersion', 'capabilityLabelledName', 'ocrKeyBundleIDs', 'p2pKeyID'),
+      }
+
+      break
+
     default:
       return { definition: '' }
   }

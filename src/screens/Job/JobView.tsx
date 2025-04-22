@@ -148,6 +148,12 @@ const JOB_PAYLOAD__SPEC = gql`
     ... on StreamSpec {
       streamID
     }
+    ... on CCIPSpec {
+      capabilityVersion
+      capabilityLabelledName
+      ocrKeyBundleIDs
+      p2pKeyID
+    }
   }
 `
 

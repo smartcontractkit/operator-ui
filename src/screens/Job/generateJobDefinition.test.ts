@@ -721,6 +721,44 @@ streamID = "1001"
     expect(output.definition).toEqual(expectedOutput)
   })
 
+  it('generates a valid CCIP definition', () => {
+    const job: JobPayload_Fields = {
+      id: '1',
+      type: 'ccip',
+      schemaVersion: 1,
+      name: 'ccip test',
+      externalJobID: '00000000-0000-0000-0000-0000000000001',
+      maxTaskDuration: '10s',
+      spec: {
+        __typename: 'CCIPSpec',
+        capabilityVersion: 'v1.0.0',
+        capabilityLabelledName: 'ccip',
+        ocrKeyBundleIDs: {
+          'evm': 'evm-key-bundle-id',
+          'solana': 'solana-key-bundle-id',
+        },
+        p2pKeyID: 'p2p-key-id',
+      },
+      observationSource: '',
+      ...otherJobFields,
+    }
+
+    const expectedOutput = `type = "ccip"
+schemaVersion = 1
+name = "ccip test"
+externalJobID = "00000000-0000-0000-0000-0000000000001"
+capabilityVersion = "v1.0.0"
+capabilityLabelledName = "ccip"
+p2pKeyID = "p2p-key-id"
+
+[ocrKeyBundleIDs]
+evm = "evm-key-bundle-id"
+solana = "solana-key-bundle-id"
+`
+    const output = generateJobDefinition(job)
+    expect(output.definition).toEqual(expectedOutput)
+  })
+
   it('generates an empty definition for unspecified type', () => {
     const job: JobPayload_Fields = {
       id: '',

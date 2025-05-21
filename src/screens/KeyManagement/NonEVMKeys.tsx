@@ -26,6 +26,14 @@ const SCHEMAS = {
     title: 'TRON',
     fields: [{ label: 'Public Key', key: 'id', copy: true }],
   },
+  tonKeys: {
+    title: 'TON',
+    fields: [
+      { label: 'Public Key', key: 'id', copy: true },
+      { label: 'Base64 Address', key: 'addressBase64', copy: true },
+      { label: 'Raw Address', key: 'rawAddress', copy: true },
+    ],
+  },
 }
 
 export const NonEVMKeys = () => {

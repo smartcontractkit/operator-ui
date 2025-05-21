@@ -23,6 +23,10 @@ const mockData = {
       __typename: 'TronKeys',
       results: [{ __typename: 'TronKey', id: '4' }],
     },
+    tonKeys: {
+      __typename: 'TONKeys',
+      results: [{ __typename: 'TONKey', id: '5' }],
+    },
   },
 }
 
@@ -61,6 +65,12 @@ const TestComponent: React.FC = () => {
           <p>Tron ID: {key.id}</p>
         </div>
       ))}
+
+      {data?.tonKeys.results.map((key, i) => (
+        <div key={i}>
+          <p>TON ID: {key.id}</p>
+        </div>
+      ))}
     </div>
   )
 }
@@ -81,6 +91,7 @@ describe('useNonEvmAccountsQuery', () => {
 
       expect(screen.getByText('Solana ID: 3')).toBeInTheDocument()
       expect(screen.getByText('Tron ID: 4')).toBeInTheDocument()
+      expect(screen.getByText('TON ID: 5')).toBeInTheDocument()
     })
   })
 })

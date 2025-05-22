@@ -192,11 +192,7 @@ export const SpecsView = withStyles(styles)(
             </>
           )
         case 'CANCELLED':
-          if (
-            latestSpec.id === specID &&
-            proposal.status !== 'DELETED' &&
-            proposal.status !== 'REVOKED'
-          ) {
+          if (proposal.status !== 'DELETED' && proposal.status !== 'REVOKED') {
             return (
               <Button
                 variant="contained"
@@ -217,7 +213,11 @@ export const SpecsView = withStyles(styles)(
     return (
       <div>
         {sortedSpecs.map((spec, idx) => (
-          <ExpansionPanel defaultExpanded={idx === 0} key={idx}>
+          <ExpansionPanel
+            defaultExpanded={idx === 0}
+            key={idx}
+            data-testid="expansion-panel"
+          >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Typography className={classes.versionText}>
                 Version {spec.version}

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { render, screen, waitFor } from 'support/test-utils'
+import { render, screen, waitFor, within } from 'support/test-utils'
 import userEvent from '@testing-library/user-event'
 
 import {
@@ -258,6 +258,81 @@ describe('SpecsView', () => {
       expect(getByTestId('codeblock')).toHaveTextContent(specs[0].definition)
       expect(queryByText(/edit/i)).toBeNull()
       expect(queryByText('Cancel')).not.toBeInTheDocument()
+    })
+  })
+
+  describe('Approve button', () => {
+    let specs: ReadonlyArray<JobProposal_SpecsFields>
+    let proposal: JobProposalPayloadFields
+
+    beforeEach(() => {
+      specs = [
+        buildJobProposalSpec({ id: '105', version: 5, status: 'CANCELLED' }),
+        buildJobProposalSpec({ id: '104', version: 4, status: 'PENDING' }),
+        buildJobProposalSpec({ id: '103', version: 3, status: 'CANCELLED' }),
+        buildJobProposalSpec({ id: '102', version: 2, status: 'APPROVED' }),
+        buildJobProposalSpec({ id: '101', version: 1, status: 'REVOKED' }),
+      ]
+    })
+
+    it('is visible in all cancelled specs if proposal is not deleted or revoked', async () => {
+      proposal = buildJobProposal({ status: 'PENDING' })
+      renderComponent(specs, proposal)
+
+      const panels = screen.getAllByTestId('expansion-panel')
+      expect(panels).toHaveLength(5)
+      expect(
+        within(panels[0]).queryByRole('button', {
+          name: 'Approve',
+          hidden: false,
+        }),
+      ).toBeInTheDocument()
+      expect(
+        within(panels[1]).queryByRole('button', {
+          name: 'Approve',
+          hidden: true,
+        }),
+      ).not.toBeInTheDocument()
+      expect(
+        within(panels[2]).queryByRole('button', {
+          name: 'Approve',
+          hidden: true,
+        }),
+      ).toBeInTheDocument()
+      expect(
+        within(panels[3]).queryByRole('button', {
+          name: 'Approve',
+          hidden: true,
+        }),
+      ).not.toBeInTheDocument()
+      expect(
+        within(panels[4]).queryByRole('button', {
+          name: 'Approve',
+          hidden: true,
+        }),
+      ).not.toBeInTheDocument()
+    })
+
+    it('is not visible in any specs if proposal is deleted', async () => {
+      proposal = buildJobProposal({ status: 'DELETED' })
+      renderComponent(specs, proposal)
+
+      const panels = screen.getAllByTestId('expansion-panel')
+      expect(panels).toHaveLength(5)
+      expect(
+        screen.queryByRole('button', { name: 'Approve', hidden: false }),
+      ).not.toBeInTheDocument()
+    })
+
+    it('is not visible in any specs if proposal is revoked', async () => {
+      proposal = buildJobProposal({ status: 'REVOKED' })
+      renderComponent(specs, proposal)
+
+      const panels = screen.getAllByTestId('expansion-panel')
+      expect(panels).toHaveLength(5)
+      expect(
+        screen.queryByRole('button', { name: 'Approve', hidden: false }),
+      ).not.toBeInTheDocument()
     })
   })
 })

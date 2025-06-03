@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { connect, useDispatch } from 'react-redux'
+import { Redirect, useLocation, useHistory } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import Button from 'components/Button'
 import Card from '@material-ui/core/Card'
@@ -14,6 +14,10 @@ import { renderNotification } from 'pages/Notifications'
 import HexagonLogo from 'components/Logos/Hexagon'
 import matchRouteAndMapDispatchToProps from 'utils/matchRouteAndMapDispatchToProps'
 import { getPersistUrl } from '../utils/storage'
+import axios from 'axios'
+import { AuthActionType } from 'src/reducers/actions'
+
+const baseURL = process.env.CHAINLINK_BASEURL ?? location.origin
 
 const styles = (theme) => ({
   container: {
@@ -42,6 +46,9 @@ const styles = (theme) => ({
 export const SignIn = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const dispatch = useDispatch()
+  const location = useLocation()
+  const history = useHistory()
   const handleChange = (name) => (event) => {
     if (name === 'email') setEmail(event.target.value)
     if (name === 'password') setPassword(event.target.value)
@@ -50,6 +57,51 @@ export const SignIn = (props) => {
     e.preventDefault()
     props.submitSignIn({ email, password })
   }
+
+  useEffect(() => {
+    const handleTokenExchange = async () => {
+      try {
+        const searchParams = new URLSearchParams(location.search)
+        const error = searchParams.get('error')
+        const code = searchParams.get('code')
+        const state = searchParams.get('state')
+
+        if (error) {
+          console.log(`Error from OIDC provider: ${error}`)
+          return
+        }
+
+        if (!code) {
+          console.log('no authorization code present')
+          return
+        }
+
+        const res = await axios.post(
+          `${baseURL}/oidc-exchange`,
+          {
+            code,
+            state,
+          },
+          { withCredentials: true },
+        )
+        if (res.data.success) {
+          // success
+          console.log('success')
+
+          dispatch({
+            type: AuthActionType.RECEIVE_SIGNIN_SUCCESS,
+            authenticated: true,
+          })
+        } else {
+          console.error('failed', res)
+        }
+      } catch (e) {
+        console.error('caught error', e)
+      }
+    }
+    handleTokenExchange()
+  }, [location, history, dispatch])
+
   const { classes, fetching, authenticated, errors } = props
 
   if (authenticated) {

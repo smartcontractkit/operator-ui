@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import { Grid } from '@material-ui/core'
 import { hot } from 'react-hot-loader'
-import { submitSignIn } from 'actionCreators'
+import { notifyErrorMsg, submitSignIn } from 'actionCreators'
 import { renderNotification } from 'pages/Notifications'
 import HexagonLogo from 'components/Logos/Hexagon'
 import matchRouteAndMapDispatchToProps from 'utils/matchRouteAndMapDispatchToProps'
@@ -46,6 +46,7 @@ const styles = (theme) => ({
 export const SignIn = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [OIDCEnabled, setOIDCEnabled] = useState(false)
   const dispatch = useDispatch()
   const location = useLocation()
   const history = useHistory()
@@ -59,6 +60,14 @@ export const SignIn = (props) => {
   }
 
   useEffect(() => {
+    // Check if OIDC is enabled for the node
+    const checkOIDCEnabled = async () => {
+      const res = await axios.get(`${baseURL}/oidc-enabled`)
+      if (res.data.enabled) {
+        setOIDCEnabled(true)
+      }
+    }
+    // Check if we have been redireted from OIDC provider
     const handleTokenExchange = async () => {
       try {
         const searchParams = new URLSearchParams(location.search)
@@ -72,10 +81,10 @@ export const SignIn = (props) => {
         }
 
         if (!code) {
-          console.log('no authorization code present')
           return
         }
 
+        // exchange code
         const res = await axios.post(
           `${baseURL}/oidc-exchange`,
           {
@@ -85,21 +94,22 @@ export const SignIn = (props) => {
           { withCredentials: true },
         )
         if (res.data.success) {
-          // success
-          console.log('success')
-
+          console.log('Authentication success')
           dispatch({
             type: AuthActionType.RECEIVE_SIGNIN_SUCCESS,
             authenticated: true,
           })
         } else {
-          console.error('failed', res)
+          console.error('Authentication failed', res.data.message)
+          notifyErrorMsg(res.data.message)
         }
       } catch (e) {
-        console.error('caught error', e)
+        console.error('handleTokenExchange error', e)
+        notifyErrorMsg('Authentication failed')
       }
     }
     handleTokenExchange()
+    checkOIDCEnabled()
   }, [location, history, dispatch])
 
   const { classes, fetching, authenticated, errors } = props
@@ -185,6 +195,22 @@ export const SignIn = (props) => {
                     </Grid>
                   </Grid>
                 </Grid>
+
+                {OIDCEnabled && (
+                  <Grid item xs={12}>
+                    <Grid container spacing={0} justify="center">
+                      <Grid item>
+                        <Button
+                          variant="secondary"
+                          href={`${baseURL}/oidc-login`}
+                        >
+                          Login with SSO
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                )}
+
                 {fetching && (
                   <Typography variant="body1" color="textSecondary">
                     Signing in...

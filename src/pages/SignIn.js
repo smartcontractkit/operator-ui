@@ -46,7 +46,7 @@ const styles = (theme) => ({
 export const SignIn = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [OIDCEnabled, setOIDCEnabled] = useState(false)
+  const [isOIDCEnabled, setIsOIDCEnabled] = useState(false)
   const dispatch = useDispatch()
   const location = useLocation()
   const history = useHistory()
@@ -64,7 +64,7 @@ export const SignIn = (props) => {
     const checkOIDCEnabled = async () => {
       const res = await axios.get(`${baseURL}/oidc-enabled`)
       if (res.data.enabled) {
-        setOIDCEnabled(true)
+        setIsOIDCEnabled(true)
       }
     }
     // Check if we have been redireted from OIDC provider
@@ -76,7 +76,8 @@ export const SignIn = (props) => {
         const state = searchParams.get('state')
 
         if (error) {
-          console.log(`Error from OIDC provider: ${error}`)
+          console.error(`Error from OIDC provider: ${error}`)
+          dispatch(notifyErrorMsg('Authentication failed'))
           return
         }
 
@@ -101,11 +102,11 @@ export const SignIn = (props) => {
           })
         } else {
           console.error('Authentication failed', res.data.message)
-          notifyErrorMsg(res.data.message)
+          dispatch(notifyErrorMsg(res.data.message))
         }
       } catch (e) {
         console.error('handleTokenExchange error', e)
-        notifyErrorMsg('Authentication failed')
+        dispatch(notifyErrorMsg('Authentication failed'))
       }
     }
     handleTokenExchange()
@@ -196,7 +197,7 @@ export const SignIn = (props) => {
                   </Grid>
                 </Grid>
 
-                {OIDCEnabled && (
+                {isOIDCEnabled && (
                   <Grid item xs={12}>
                     <Grid container spacing={0} justify="center">
                       <Grid item>
@@ -204,7 +205,7 @@ export const SignIn = (props) => {
                           variant="secondary"
                           href={`${baseURL}/oidc-login`}
                         >
-                          Login with SSO
+                          Login with OIDC
                         </Button>
                       </Grid>
                     </Grid>

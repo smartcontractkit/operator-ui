@@ -56,4 +56,16 @@ describe('pages/SignIn', () => {
       await findByText('Your email or password is incorrect. Please try again'),
     ).toBeInTheDocument()
   })
+
+  it('Login with OIDC does not show by default', async () => {
+    global.fetch.postOnce(
+      globPath('/sessions'),
+      { authenticated: false, errors: [{ detail: 'Invalid email' }] },
+      { response: { status: 401 } },
+    )
+
+    mountSignIn()
+
+    expect(await findByText('Login with OIDC').not)
+  })
 })

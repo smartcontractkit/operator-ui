@@ -62,9 +62,13 @@ export const SignIn = (props) => {
   useEffect(() => {
     // Check if OIDC is enabled for the node
     const checkOIDCEnabled = async () => {
-      const res = await axios.get(`${baseURL}/oidc-enabled`)
-      if (res.data.enabled) {
-        setIsOIDCEnabled(true)
+      try {
+        const res = await axios.get(`${baseURL}/oidc-enabled`)
+        if (res.data.enabled) {
+          setIsOIDCEnabled(true)
+        }
+      } catch (_) {
+        // no op
       }
     }
     // Check if we have been redireted from OIDC provider

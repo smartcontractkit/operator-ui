@@ -9,10 +9,12 @@ import { notifyErrorMsg } from 'actionCreators'
 import { AuthActionType } from 'src/reducers/actions'
 
 // Mock dependencies
-jest.mock('components/Logos/Hexagon', () => () => <div>HexagonLogo</div>)
-jest.mock('components/Button', () => ({ children, ...props }) => (
-  <button {...props}>{children}</button>
-))
+jest.mock('components/Logos/Hexagon', function Hexagon() {
+  return <div>HexagonLogo</div>
+})
+jest.mock('components/Button', function Button({ children, ...props }) {
+  return <button {...props}>{children}</button>
+})
 jest.mock('../utils/storage', () => ({
   getPersistUrl: jest.fn(() => '/dashboard'),
 }))
@@ -34,7 +36,7 @@ const store = mockStore({
   notifications: { errors: [] },
 })
 
-describe('SignIn Component', () => {
+describe('pages/Signin', () => {
   const renderComponent = (props = {}, initialEntries = ['/']) => {
     return render(
       <Provider store={store}>

@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { Provider } from 'react-redux'
@@ -9,12 +10,10 @@ import { notifyErrorMsg } from 'actionCreators'
 import { AuthActionType } from 'src/reducers/actions'
 
 // Mock dependencies
-jest.mock('components/Logos/Hexagon', function Hexagon() {
-  return <div>HexagonLogo</div>
-})
-jest.mock('components/Button', function Button({ children, ...props }) {
-  return <button {...props}>{children}</button>
-})
+jest.mock('components/Logos/Hexagon', () => () => <div>HexagonLogo</div>)
+jest.mock('components/Button', () => ({ children, ...props }) => (
+  <button {...props}>{children}</button>
+))
 jest.mock('../utils/storage', () => ({
   getPersistUrl: jest.fn(() => '/dashboard'),
 }))

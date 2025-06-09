@@ -67,8 +67,8 @@ export const SignIn = (props) => {
         if (res.data.enabled) {
           setIsOIDCEnabled(true)
         }
-      } catch (_) {
-        // no op
+      } catch (e) {
+        console.log('GET /oidc-enabled failed:', e)
       }
     }
     // Check if we have been redireted from OIDC provider

@@ -267,20 +267,21 @@ describe('SpecsView', () => {
 
     beforeEach(() => {
       specs = [
-        buildJobProposalSpec({ id: '105', version: 5, status: 'CANCELLED' }),
-        buildJobProposalSpec({ id: '104', version: 4, status: 'PENDING' }),
+        buildJobProposalSpec({ id: '106', version: 6, status: 'CANCELLED' }),
+        buildJobProposalSpec({ id: '105', version: 5, status: 'PENDING' }),
+        buildJobProposalSpec({ id: '104', version: 4, status: 'CANCELLED' }),
         buildJobProposalSpec({ id: '103', version: 3, status: 'CANCELLED' }),
         buildJobProposalSpec({ id: '102', version: 2, status: 'APPROVED' }),
         buildJobProposalSpec({ id: '101', version: 1, status: 'REVOKED' }),
       ]
     })
 
-    it('is visible in all cancelled specs if proposal is not deleted or revoked', async () => {
+    it('is visible in latest two cancelled specs if proposal is not deleted or revoked', async () => {
       proposal = buildJobProposal({ status: 'PENDING' })
       renderComponent(specs, proposal)
 
       const panels = screen.getAllByTestId('expansion-panel')
-      expect(panels).toHaveLength(5)
+      expect(panels).toHaveLength(6)
       expect(
         within(panels[0]).queryByRole('button', {
           name: 'Approve',
@@ -311,6 +312,43 @@ describe('SpecsView', () => {
           hidden: true,
         }),
       ).not.toBeInTheDocument()
+      expect(
+        within(panels[5]).queryByRole('button', {
+          name: 'Approve',
+          hidden: true,
+        }),
+      ).not.toBeInTheDocument()
+    })
+
+    it('is visible in latest pending spec if proposal is not deleted or revoked', async () => {
+      specs = [
+        buildJobProposalSpec({ id: '103', version: 3, status: 'PENDING' }),
+        buildJobProposalSpec({ id: '102', version: 2, status: 'PENDING' }),
+        buildJobProposalSpec({ id: '101', version: 1, status: 'CANCELLED' }),
+      ]
+      proposal = buildJobProposal({ status: 'PENDING' })
+      renderComponent(specs, proposal)
+
+      const panels = screen.getAllByTestId('expansion-panel')
+      expect(panels).toHaveLength(3)
+      expect(
+        within(panels[0]).queryByRole('button', {
+          name: 'Approve',
+          hidden: false,
+        }),
+      ).toBeInTheDocument()
+      expect(
+        within(panels[1]).queryByRole('button', {
+          name: 'Approve',
+          hidden: true,
+        }),
+      ).not.toBeInTheDocument()
+      expect(
+        within(panels[2]).queryByRole('button', {
+          name: 'Approve',
+          hidden: true,
+        }),
+      ).toBeInTheDocument()
     })
 
     it('is not visible in any specs if proposal is deleted', async () => {
@@ -318,7 +356,7 @@ describe('SpecsView', () => {
       renderComponent(specs, proposal)
 
       const panels = screen.getAllByTestId('expansion-panel')
-      expect(panels).toHaveLength(5)
+      expect(panels).toHaveLength(6)
       expect(
         screen.queryByRole('button', { name: 'Approve', hidden: false }),
       ).not.toBeInTheDocument()
@@ -329,10 +367,44 @@ describe('SpecsView', () => {
       renderComponent(specs, proposal)
 
       const panels = screen.getAllByTestId('expansion-panel')
-      expect(panels).toHaveLength(5)
+      expect(panels).toHaveLength(6)
       expect(
         screen.queryByRole('button', { name: 'Approve', hidden: false }),
       ).not.toBeInTheDocument()
+    })
+
+    it('is visible with single pending job', async () => {
+      proposal = buildJobProposal({ status: 'PENDING' })
+      specs = [
+        buildJobProposalSpec({ id: '101', version: 1, status: 'PENDING' }),
+      ]
+      renderComponent(specs, proposal)
+
+      const panels = screen.getAllByTestId('expansion-panel')
+      expect(panels).toHaveLength(1)
+      expect(
+        within(panels[0]).queryByRole('button', {
+          name: 'Approve',
+          hidden: false,
+        }),
+      ).toBeInTheDocument()
+    })
+
+    it('is visible with single cancelled job', async () => {
+      proposal = buildJobProposal({ status: 'PENDING' })
+      specs = [
+        buildJobProposalSpec({ id: '101', version: 1, status: 'CANCELLED' }),
+      ]
+      renderComponent(specs, proposal)
+
+      const panels = screen.getAllByTestId('expansion-panel')
+      expect(panels).toHaveLength(1)
+      expect(
+        within(panels[0]).queryByRole('button', {
+          name: 'Approve',
+          hidden: false,
+        }),
+      ).toBeInTheDocument()
     })
   })
 })

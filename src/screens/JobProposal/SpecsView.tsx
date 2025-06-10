@@ -124,6 +124,12 @@ export const SpecsView = withStyles(styles)(
       return sorted.sort((a, b) => b.version - a.version)
     }, [specs])
 
+    const approvableCancelledJobSpecs = sortedSpecs
+      .map((spec, idx) => ({ spec, idx }))
+      .filter((el) => el.spec.status === 'CANCELLED')
+      .slice(0, 2)
+      .map((el) => el.spec.id)
+
     const renderActions = (
       status: SpecStatus,
       specID: string,
@@ -192,7 +198,11 @@ export const SpecsView = withStyles(styles)(
             </>
           )
         case 'CANCELLED':
-          if (proposal.status !== 'DELETED' && proposal.status !== 'REVOKED') {
+          if (
+            approvableCancelledJobSpecs.includes(specID) &&
+            proposal.status !== 'DELETED' &&
+            proposal.status !== 'REVOKED'
+          ) {
             return (
               <Button
                 variant="contained"

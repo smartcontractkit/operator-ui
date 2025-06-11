@@ -228,7 +228,7 @@ export const SpecsView = withStyles(styles)(
                 color="primary"
                 onClick={() =>
                   openConfirmationDialog(
-                    specID == latestSpec.id ? 'approve' : 'approvePrevious',
+                    specID === latestSpec.id ? 'approve' : 'approvePrevious',
                     specID,
                   )
                 }

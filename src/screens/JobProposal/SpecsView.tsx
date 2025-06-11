@@ -144,10 +144,9 @@ export const SpecsView = withStyles(styles)(
     }, [specs])
 
     const approvableCancelledJobSpecs = sortedSpecs
-      .map((spec, idx) => ({ spec, idx }))
-      .filter((el) => el.spec.status === 'CANCELLED')
+      .filter((spec) => spec.status === 'CANCELLED')
       .slice(0, 2)
-      .map((el) => el.spec.id)
+      .map((spec) => spec.id)
 
     const renderActions = (
       status: SpecStatus,

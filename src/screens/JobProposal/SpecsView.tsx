@@ -72,7 +72,7 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 interface ConfirmationDialogArgs {
-  action: 'reject' | 'approve' | 'cancel'
+  action: 'reject' | 'approve' | 'approvePrevious' | 'cancel'
   id: string
 }
 
@@ -80,6 +80,25 @@ const confirmationDialogText = {
   approve: {
     title: 'Approve Job Proposal',
     body: 'Approving this job proposal will start running a new job. WARNING: If a job using the same contract address already exists, it will be deleted before running the new one.',
+  },
+  approvePrevious: {
+    title: 'Approve Previous Version of Job Proposal',
+    body: (
+      <div>
+        <p>
+          ⚠️ You have selected a job spec version that is not the most recent
+          one.
+        </p>
+        <p>
+          Approving this job proposal will start running a new job with the old
+          spec version.
+        </p>
+        <p>
+          WARNING: If a job using the same contract address already exists, it
+          will be deleted before running the new one.
+        </p>
+      </div>
+    ),
   },
   cancel: {
     title: 'Cancel Job Proposal',
@@ -123,6 +142,11 @@ export const SpecsView = withStyles(styles)(
 
       return sorted.sort((a, b) => b.version - a.version)
     }, [specs])
+
+    const approvableCancelledJobSpecs = sortedSpecs
+      .filter((spec) => spec.status === 'CANCELLED')
+      .slice(0, 2)
+      .map((spec) => spec.id)
 
     const renderActions = (
       status: SpecStatus,
@@ -193,7 +217,7 @@ export const SpecsView = withStyles(styles)(
           )
         case 'CANCELLED':
           if (
-            latestSpec.id === specID &&
+            approvableCancelledJobSpecs.includes(specID) &&
             proposal.status !== 'DELETED' &&
             proposal.status !== 'REVOKED'
           ) {
@@ -201,7 +225,12 @@ export const SpecsView = withStyles(styles)(
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => openConfirmationDialog('approve', specID)}
+                onClick={() =>
+                  openConfirmationDialog(
+                    specID === latestSpec.id ? 'approve' : 'approvePrevious',
+                    specID,
+                  )
+                }
               >
                 Approve
               </Button>
@@ -217,7 +246,11 @@ export const SpecsView = withStyles(styles)(
     return (
       <div>
         {sortedSpecs.map((spec, idx) => (
-          <ExpansionPanel defaultExpanded={idx === 0} key={idx}>
+          <ExpansionPanel
+            defaultExpanded={idx === 0}
+            key={idx}
+            data-testid="expansion-panel"
+          >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Typography className={classes.versionText}>
                 Version {spec.version}
@@ -285,6 +318,7 @@ export const SpecsView = withStyles(styles)(
             if (confirmationDialog) {
               switch (confirmationDialog.action) {
                 case 'approve':
+                case 'approvePrevious':
                   onApprove(confirmationDialog.id)
 
                   break

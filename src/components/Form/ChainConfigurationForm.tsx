@@ -264,6 +264,10 @@ export const ChainConfigurationForm = withStyles(styles)(
               chainAccountAddresses =
                 accountsNonEvm?.tronKeys.results.map((acc) => acc.id) ?? []
               break
+            case ChainTypes.TON:
+              chainAccountAddresses =
+                accountsNonEvm?.tonKeys.results.map((acc) => acc.id) ?? []
+              break
             default:
               chainAccountAddresses = []
           }
@@ -301,6 +305,9 @@ export const ChainConfigurationForm = withStyles(styles)(
                     </MenuItem>
                     <MenuItem key={ChainTypes.TRON} value={ChainTypes.TRON}>
                       TRON
+                    </MenuItem>
+                    <MenuItem key={ChainTypes.TON} value={ChainTypes.TON}>
+                      TON
                     </MenuItem>
                   </Field>
                 </Grid>

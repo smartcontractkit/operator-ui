@@ -67,11 +67,11 @@ export const SignIn = (props) => {
         if (res.data.enabled) {
           setIsOIDCEnabled(true)
         }
-      } catch (e) {
-        console.log('GET /oidc-enabled failed:', e)
+      } catch (_) {
+        // no-op
       }
     }
-    // Check if we have been redireted from OIDC provider
+    // Check if we have been redirected from OIDC provider
     const handleTokenExchange = async () => {
       try {
         const searchParams = new URLSearchParams(location.search)
@@ -80,7 +80,6 @@ export const SignIn = (props) => {
         const state = searchParams.get('state')
 
         if (error) {
-          console.error(`Error from OIDC provider: ${error}`)
           dispatch(notifyErrorMsg('Authentication failed'))
           return
         }
@@ -99,17 +98,14 @@ export const SignIn = (props) => {
           { withCredentials: true },
         )
         if (res.data.success) {
-          console.log('Authentication success')
           dispatch({
             type: AuthActionType.RECEIVE_SIGNIN_SUCCESS,
             authenticated: true,
           })
         } else {
-          console.error('Authentication failed', res.data.message)
           dispatch(notifyErrorMsg(res.data.message))
         }
       } catch (e) {
-        console.error('handleTokenExchange error', e)
         dispatch(notifyErrorMsg('Authentication failed'))
       }
     }

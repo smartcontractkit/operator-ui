@@ -4,7 +4,6 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 import configureStore from 'redux-mock-store'
-import axios from 'axios'
 import { SignIn } from './SignIn' // Adjust the import path as needed
 import { notifyErrorMsg } from 'actionCreators'
 import { AuthActionType } from 'src/reducers/actions'
@@ -55,8 +54,6 @@ describe('pages/Signin', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
-    axios.get.mockResolvedValue({ data: { enabled: false } })
-    axios.post.mockResolvedValue({ data: { success: true } })
     store.clearActions()
   })
 
@@ -103,28 +100,53 @@ describe('pages/Signin', () => {
   })
 
   test('checks if OIDC is enabled', async () => {
-    axios.get.mockResolvedValueOnce({ data: { enabled: true } })
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve({ enabled: true }),
+      }),
+    )
     renderComponent()
 
     await waitFor(() => {
-      expect(axios.get).toHaveBeenCalledWith(
+      expect(global.fetch).toHaveBeenCalledWith(
         expect.stringContaining('/oidc-enabled'),
       )
     })
 
-    // Check OIDC button appears when enabled
     expect(screen.getByText('Login with OIDC')).toBeInTheDocument()
   })
 
   test('handles successful OIDC token exchange', async () => {
-    axios.post.mockResolvedValueOnce({ data: { success: true } })
+    global.fetch = jest
+      .fn()
+      .mockImplementationOnce(() =>
+        Promise.resolve({
+          json: () => Promise.resolve({ success: true }),
+        }),
+      ) // For the /oidc-exchange call
+      .mockImplementationOnce(() =>
+        Promise.resolve({
+          json: () => Promise.resolve({ enabled: false }),
+        }),
+      ) // For the /oidc-enabled call
+
     renderComponent({}, ['/?code=abc123&state=xyz'])
 
     await waitFor(() => {
-      expect(axios.post).toHaveBeenCalledWith(
+      expect(global.fetch).toHaveBeenCalledTimes(2)
+      expect(global.fetch).toHaveBeenNthCalledWith(
+        1,
         expect.stringContaining('/oidc-exchange'),
-        { code: 'abc123', state: 'xyz' },
-        { withCredentials: true },
+        expect.objectContaining({
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code: 'abc123', state: 'xyz' }),
+          credentials: 'include',
+        }),
+      )
+      expect(global.fetch).toHaveBeenNthCalledWith(
+        2,
+        expect.stringContaining('/oidc-enabled'),
       )
       expect(store.getActions()).toContainEqual({
         type: AuthActionType.RECEIVE_SIGNIN_SUCCESS,
@@ -134,24 +156,53 @@ describe('pages/Signin', () => {
   })
 
   test('handles failed OIDC token exchange', async () => {
-    axios.post.mockResolvedValueOnce({
-      data: { success: false, message: 'Token exchange failed' },
-    })
+    global.fetch = jest
+      .fn()
+      .mockImplementationOnce(() =>
+        Promise.resolve({
+          json: () =>
+            Promise.resolve({
+              success: false,
+              message: 'Token exchange failed',
+            }),
+        }),
+      ) // Mock for /oidc-exchange
+      .mockImplementationOnce(() =>
+        Promise.resolve({
+          json: () => Promise.resolve({ enabled: false }),
+        }),
+      ) // Mock for /oidc-enabled
+
     renderComponent({}, ['/?code=abc123&state=xyz'])
 
     await waitFor(() => {
-      expect(axios.post).toHaveBeenCalledWith(
+      expect(global.fetch).toHaveBeenCalledTimes(2)
+      expect(global.fetch).toHaveBeenNthCalledWith(
+        1,
         expect.stringContaining('/oidc-exchange'),
-        { code: 'abc123', state: 'xyz' },
-        { withCredentials: true },
+        expect.objectContaining({
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code: 'abc123', state: 'xyz' }),
+          credentials: 'include',
+        }),
+      )
+      expect(global.fetch).toHaveBeenNthCalledWith(
+        2,
+        expect.stringContaining('/oidc-enabled'),
       )
       expect(store.getActions()).toContainEqual(
-        notifyErrorMsg('Token exchange failed'),
+        notifyErrorMsg('Authentication failed'),
       )
     })
   })
 
   test('handles OIDC provider error', async () => {
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve({ enabled: false }),
+      }),
+    )
     renderComponent({}, ['/?error=access_denied'])
 
     await waitFor(() => {

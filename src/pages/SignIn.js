@@ -14,7 +14,6 @@ import { renderNotification } from 'pages/Notifications'
 import HexagonLogo from 'components/Logos/Hexagon'
 import matchRouteAndMapDispatchToProps from 'utils/matchRouteAndMapDispatchToProps'
 import { getPersistUrl } from '../utils/storage'
-import axios from 'axios'
 import { AuthActionType } from 'src/reducers/actions'
 
 const baseURL = process.env.CHAINLINK_BASEURL ?? location.origin
@@ -63,8 +62,9 @@ export const SignIn = (props) => {
     // Check if OIDC is enabled for the node
     const checkOIDCEnabled = async () => {
       try {
-        const res = await axios.get(`${baseURL}/oidc-enabled`)
-        if (res.data.enabled) {
+        const res = await fetch(`${baseURL}/oidc-enabled`)
+        const data = await res.json()
+        if (data.enabled) {
           setIsOIDCEnabled(true)
         }
       } catch (_) {
@@ -89,15 +89,16 @@ export const SignIn = (props) => {
         }
 
         // exchange code
-        const res = await axios.post(
-          `${baseURL}/oidc-exchange`,
-          {
-            code,
-            state,
+        const res = await fetch(`${baseURL}/oidc-exchange`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
-          { withCredentials: true },
-        )
-        if (res.data.success) {
+          body: JSON.stringify({ code, state }),
+          credentials: 'include', // equivalent to withCredentials: true
+        })
+        const data = await res.json()
+        if (data.success) {
           dispatch({
             type: AuthActionType.RECEIVE_SIGNIN_SUCCESS,
             authenticated: true,

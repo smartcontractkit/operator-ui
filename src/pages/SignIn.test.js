@@ -16,7 +16,6 @@ jest.mock('components/Button', () => ({ children, ...props }) => (
 jest.mock('../utils/storage', () => ({
   getPersistUrl: jest.fn(() => '/dashboard'),
 }))
-jest.mock('axios')
 
 // Mock Material-UI styles
 const mockClasses = {

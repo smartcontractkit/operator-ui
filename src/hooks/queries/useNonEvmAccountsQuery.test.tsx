@@ -27,6 +27,10 @@ const mockData = {
       __typename: 'TONKeys',
       results: [{ __typename: 'TONKey', id: '5' }],
     },
+    suiKeys: {
+      __typename: 'SuiKeys',
+      results: [{ __typename: 'SuiKeys', id: '5' }],
+    },
   },
 }
 
@@ -71,6 +75,12 @@ const TestComponent: React.FC = () => {
           <p>TON ID: {key.id}</p>
         </div>
       ))}
+
+      {data?.suiKeys.results.map((key, i) => (
+        <div key={i}>
+          <p>SUI ID: {key.id}</p>
+        </div>
+      ))}
     </div>
   )
 }
@@ -92,6 +102,7 @@ describe('useNonEvmAccountsQuery', () => {
       expect(screen.getByText('Solana ID: 3')).toBeInTheDocument()
       expect(screen.getByText('Tron ID: 4')).toBeInTheDocument()
       expect(screen.getByText('TON ID: 5')).toBeInTheDocument()
+      expect(screen.getByText('SUI ID: 5')).toBeInTheDocument()
     })
   })
 })

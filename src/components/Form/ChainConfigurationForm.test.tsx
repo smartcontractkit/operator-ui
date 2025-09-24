@@ -453,6 +453,62 @@ test('should able to create TON chain config', async () => {
   })
 })
 
+
+test('should able to create SUI chain config', async () => {
+  const handleSubmit = jest.fn()
+  const initialValues = emptyFormValues()
+  initialValues.chainType = ChainTypes.EVM
+  initialValues.adminAddr = '0x1234567'
+
+  const { container } = renderChainConfigurationForm(
+    initialValues,
+    handleSubmit,
+  )
+
+  const chainType = getByRole('button', { name: 'EVM' })
+  userEvent.click(chainType)
+  userEvent.click(getByRole('option', { name: 'SUI' }))
+  await screen.findByRole('button', { name: 'SUI' })
+
+  await selectChainIdOnUI(container, '6666')
+
+  const address = container.querySelector('#select-accountAddr')
+  expect(address).toBeInTheDocument()
+  address && userEvent.click(address)
+  userEvent.click(getByRole('option', { name: '0x123' }))
+  await screen.findByRole('button', { name: '0x123' })
+
+  await userEvent.click(getByRole('button', { name: /submit/i }))
+
+  await waitFor(() => {
+    expect(handleSubmit).toHaveBeenCalledWith({
+      accountAddr: '0x123',
+      accountAddrPubKey: '',
+      adminAddr: '0x1234567',
+      chainID: '6666',
+      chainType: 'SUI',
+      fluxMonitorEnabled: false,
+      ocr1Enabled: false,
+      ocr1IsBootstrap: false,
+      ocr1KeyBundleID: '',
+      ocr1Multiaddr: '',
+      ocr1P2PPeerID: '',
+      ocr2CommitPluginEnabled: false,
+      ocr2Enabled: false,
+      ocr2ExecutePluginEnabled: false,
+      ocr2ForwarderAddress: '',
+      ocr2IsBootstrap: false,
+      ocr2KeyBundleID: '',
+      ocr2MedianPluginEnabled: false,
+      ocr2MercuryPluginEnabled: false,
+      ocr2Multiaddr: '',
+      ocr2P2PPeerID: '',
+      ocr2RebalancerPluginEnabled: false,
+    })
+    expect(handleSubmit).toHaveBeenCalledTimes(1)
+  })
+})
+
 test('should be able to select OCR2 Job Type with Key Bundle ID', async () => {
   const handleSubmit = jest.fn()
   const initialValues = emptyFormValues()
@@ -476,6 +532,9 @@ test('should be able to select OCR2 Job Type with Key Bundle ID', async () => {
         results: [],
       },
       tonKeys: {
+        results: [],
+      },
+      suiKeys: {
         results: [],
       },
     },
@@ -548,6 +607,11 @@ function renderChainConfigurationForm(
       enabled: true,
       network: 'ton',
     },
+    {
+      id: '6666',
+      enabled: true,
+      network: 'sui',
+    },
   ],
   accountsNonEvm: FetchNonEvmKeys | undefined = {
     aptosKeys: {
@@ -564,6 +628,9 @@ function renderChainConfigurationForm(
     },
     tonKeys: {
       results: [{ addressBase64: '123', rawAddress: '0:456', id: 'ton_xxxx' }],
+    },
+    suiKeys: {
+      results: [{account: '0x123', id: '6666' }],
     },
   },
 ) {

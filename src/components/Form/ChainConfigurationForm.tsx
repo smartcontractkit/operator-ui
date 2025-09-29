@@ -312,7 +312,7 @@ export const ChainConfigurationForm = withStyles(styles)(
               break
             case ChainTypes.TON:
               chainAccountAddresses =
-                accountsNonEvm?.tonKeys.results.map((acc) => acc.id) ?? []
+                accountsNonEvm?.tonKeys.results.map((acc) => acc.addressBase64) ?? []
               break
             default:
               chainAccountAddresses = []

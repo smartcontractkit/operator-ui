@@ -419,14 +419,14 @@ test('should able to create TON chain config', async () => {
   const address = container.querySelector('#select-accountAddr')
   expect(address).toBeInTheDocument()
   address && userEvent.click(address)
-  userEvent.click(getByRole('option', { name: 'ton_xxxx' }))
-  await screen.findByRole('button', { name: 'ton_xxxx' })
+  userEvent.click(getByRole('option', { name: '123' }))
+  await screen.findByRole('button', { name: '123' })
 
   await userEvent.click(getByRole('button', { name: /submit/i }))
 
   await waitFor(() => {
     expect(handleSubmit).toHaveBeenCalledWith({
-      accountAddr: 'ton_xxxx',
+      accountAddr: '123',
       accountAddrPubKey: '',
       adminAddr: '0x1234567',
       chainID: '5555',

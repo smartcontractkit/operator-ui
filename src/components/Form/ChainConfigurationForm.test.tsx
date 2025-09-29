@@ -241,6 +241,9 @@ describe('ChainConfigurationForm', () => {
       tonKeys: {
         results: [],
       },
+      suiKeys: {
+        results: [],
+      },
     })
 
     const chainType = getByRole('button', { name: 'EVM' })

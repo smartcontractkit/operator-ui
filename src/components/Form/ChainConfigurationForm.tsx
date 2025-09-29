@@ -219,6 +219,46 @@ const AccountAddrField = ({
           </Field>
         </>
       )
+    case 'SUI':
+      // Show two select fields for Sui - one for the account address, and another one for the public key
+      return (
+        <>
+          <Field
+            {...props}
+            select
+            value={isCustom ? 'custom' : accountAddr}
+            onChange={handleSelectChange(props.name)}
+          >
+            {addresses.map((address) => (
+              <MenuItem key={address} value={address}>
+                {address}
+              </MenuItem>
+            ))}
+          </Field>
+
+          <Field
+            component={TextField}
+            id="accountAddrPubKey"
+            name="accountAddrPubKey"
+            label="Account Address Public Key"
+            required
+            fullWidth
+            helperText="The public key for your account address"
+            FormHelperTextProps={{
+              'data-testid': 'accountAddrPubKey-helper-text',
+            }}
+            select
+            value={accountAddrPubKey}
+            onChange={handleSelectChange('accountAddrPubKey')}
+          >
+            {pubkeys.map((pubkey) => (
+              <MenuItem key={pubkey} value={pubkey}>
+                {pubkey}
+              </MenuItem>
+            ))}
+          </Field>
+        </>
+      )
     default:
       return (
         <Field
@@ -318,6 +358,8 @@ export const ChainConfigurationForm = withStyles(styles)(
               break
             case ChainTypes.SUI:
               chainAccountAddresses =
+                accountsNonEvm?.suiKeys.results.map((acc) => acc.account) ?? []
+              chainPublicKeys =
                 accountsNonEvm?.suiKeys.results.map((acc) => acc.id) ?? []
               break
             default:
@@ -361,7 +403,7 @@ export const ChainConfigurationForm = withStyles(styles)(
                     <MenuItem key={ChainTypes.TON} value={ChainTypes.TON}>
                       TON
                     </MenuItem>
-                    <MenuItem key={ChainTypes.TON} value={ChainTypes.TON}>
+                    <MenuItem key={ChainTypes.SUI} value={ChainTypes.SUI}>
                       SUI
                     </MenuItem>
                   </Field>

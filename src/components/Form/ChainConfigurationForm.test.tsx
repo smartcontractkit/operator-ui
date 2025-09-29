@@ -456,7 +456,6 @@ test('should able to create TON chain config', async () => {
   })
 })
 
-
 test('should able to create SUI chain config', async () => {
   const handleSubmit = jest.fn()
   const initialValues = emptyFormValues()
@@ -633,7 +632,7 @@ function renderChainConfigurationForm(
       results: [{ addressBase64: '123', rawAddress: '0:456', id: 'ton_xxxx' }],
     },
     suiKeys: {
-      results: [{account: '0x123', id: '6666' }],
+      results: [{ account: '0x123', id: '6666' }],
     },
   },
 ) {

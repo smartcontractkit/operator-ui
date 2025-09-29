@@ -11,12 +11,12 @@ body {
   overflow-y: auto !important;
 }
 
-#task-list-graph-d3-graph-wrapper .task-run-icon-pending:hover{
-  filter:drop-shadow(0px 0px 2px gray);
+#task-list-graph-d3-graph-wrapper .task-run-icon-pending:hover {
+  filter: drop-shadow(0px 0px 2px gray);
 }
-#task-list-graph-d3-graph-wrapper .task-run-icon-success:hover{
-  filter:drop-shadow(0px 0px 2px green);
+#task-list-graph-d3-graph-wrapper .task-run-icon-success:hover {
+  filter: drop-shadow(0px 0px 2px green);
 }
-#task-list-graph-d3-graph-wrapper .task-run-icon-error:hover{
-  filter:drop-shadow(0px 0px 2px red);
+#task-list-graph-d3-graph-wrapper .task-run-icon-error:hover {
+  filter: drop-shadow(0px 0px 2px red);
 }

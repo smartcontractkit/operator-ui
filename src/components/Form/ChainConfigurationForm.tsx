@@ -48,10 +48,6 @@ export type FormValues = {
   ocr2RebalancerPluginEnabled: boolean
 }
 
-const isStarknet = (chainType: string): boolean => {
-  return chainType === 'STARKNET'
-}
-
 const ValidationSchema = Yup.object().shape({
   chainID: Yup.string().required('Required'),
   chainType: Yup.string().required('Required'),
@@ -113,11 +109,16 @@ const styles = (theme: Theme) => {
 // value changing, and also allows user to input their own value if none is available in the list.
 interface AccountAddrFieldProps extends FieldAttributes<any> {
   addresses: string[]
+  pubkeys: string[]
 }
 
-const AccountAddrField = ({ addresses, ...props }: AccountAddrFieldProps) => {
+const AccountAddrField = ({
+  addresses,
+  pubkeys,
+  ...props
+}: AccountAddrFieldProps) => {
   const {
-    values: { chainID, chainType, accountAddr },
+    values: { chainID, chainType, accountAddr, accountAddrPubKey },
     setFieldValue,
   } = useFormikContext<FormValues>()
 
@@ -131,51 +132,70 @@ const AccountAddrField = ({ addresses, ...props }: AccountAddrFieldProps) => {
   React.useEffect(() => {
     if (chainID !== prevChainID.current) {
       setFieldValue(props.name, '')
+      setFieldValue('accountAddrPubKey', '')
       setIsCustom(false) // Reset custom address state when chainID changes
     }
   }, [chainID, setFieldValue, props.name])
 
-  const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    const value = event.target.value as string
-    if (value === 'custom') {
-      setIsCustom(true)
-      setFieldValue(props.name, '')
-    } else {
-      setIsCustom(false)
-      setFieldValue(props.name, value)
+  const handleSelectChange =
+    (name: string) => (event: React.ChangeEvent<{ value: unknown }>) => {
+      const value = event.target.value as string
+      if (value === 'custom') {
+        setIsCustom(true)
+        setFieldValue(name, '')
+      } else {
+        setIsCustom(false)
+        setFieldValue(name, value)
+      }
     }
-  }
 
-  return (
-    <>
-      {!isStarknet(chainType) && (
-        <Field
-          {...props}
-          select
-          value={isCustom ? 'custom' : accountAddr}
-          onChange={handleSelectChange}
-        >
-          {addresses.map((address) => (
-            <MenuItem key={address} value={address}>
-              {address}
-            </MenuItem>
-          ))}
-        </Field>
-      )}
-      {isStarknet(chainType) && (
-        <Field
-          component={TextField}
-          id="accountAddr"
-          name="accountAddr"
-          label="Enter your account address"
-          inputProps={{ 'data-testid': 'customAccountAddr-input' }}
-          helperText="The account address used for this chain"
-          required
-          fullWidth
-        />
-      )}
-      {isStarknet(chainType) && (
-        <div>
+  switch (chainType) {
+    case 'STARKNET':
+      return (
+        <>
+          <Field
+            component={TextField}
+            id="accountAddr"
+            name="accountAddr"
+            label="Enter your account address"
+            inputProps={{ 'data-testid': 'customAccountAddr-input' }}
+            helperText="The account address used for this chain"
+            required
+            fullWidth
+          />
+          <div>
+            <Field
+              component={TextField}
+              id="accountAddrPubKey"
+              name="accountAddrPubKey"
+              label="Account Address Public Key"
+              required
+              fullWidth
+              helperText="The public key for your account address"
+              FormHelperTextProps={{
+                'data-testid': 'accountAddrPubKey-helper-text',
+              }}
+            />
+          </div>
+        </>
+      )
+    case 'APTOS':
+      // Show two select fields for Aptos - one for the account address, and another one for the public key
+      return (
+        <>
+          <Field
+            {...props}
+            select
+            value={isCustom ? 'custom' : accountAddr}
+            onChange={handleSelectChange(props.name)}
+          >
+            {addresses.map((address) => (
+              <MenuItem key={address} value={address}>
+                {address}
+              </MenuItem>
+            ))}
+          </Field>
+
           <Field
             component={TextField}
             id="accountAddrPubKey"
@@ -187,11 +207,34 @@ const AccountAddrField = ({ addresses, ...props }: AccountAddrFieldProps) => {
             FormHelperTextProps={{
               'data-testid': 'accountAddrPubKey-helper-text',
             }}
-          />
-        </div>
-      )}
-    </>
-  )
+            select
+            value={accountAddrPubKey}
+            onChange={handleSelectChange('accountAddrPubKey')}
+          >
+            {pubkeys.map((pubkey) => (
+              <MenuItem key={pubkey} value={pubkey}>
+                {pubkey}
+              </MenuItem>
+            ))}
+          </Field>
+        </>
+      )
+    default:
+      return (
+        <Field
+          {...props}
+          select
+          value={isCustom ? 'custom' : accountAddr}
+          onChange={handleSelectChange(props.name)}
+        >
+          {addresses.map((address) => (
+            <MenuItem key={address} value={address}>
+              {address}
+            </MenuItem>
+          ))}
+        </Field>
+      )
+  }
 }
 
 export interface Props extends WithStyles<typeof styles> {
@@ -243,6 +286,7 @@ export const ChainConfigurationForm = withStyles(styles)(
       >
         {({ values }) => {
           let chainAccountAddresses: string[] = []
+          let chainPublicKeys: string[] = []
           switch (values.chainType) {
             case ChainTypes.EVM:
               chainAccountAddresses = accountsEVM
@@ -255,6 +299,8 @@ export const ChainConfigurationForm = withStyles(styles)(
               chainAccountAddresses =
                 accountsNonEvm?.aptosKeys.results.map((acc) => acc.account) ??
                 []
+              chainPublicKeys =
+                accountsNonEvm?.aptosKeys.results.map((acc) => acc.id) ?? []
               break
             case ChainTypes.SOLANA:
               chainAccountAddresses =
@@ -266,7 +312,7 @@ export const ChainConfigurationForm = withStyles(styles)(
               break
             case ChainTypes.TON:
               chainAccountAddresses =
-                accountsNonEvm?.tonKeys.results.map((acc) => acc.id) ?? []
+                accountsNonEvm?.tonKeys.results.map((acc) => acc.addressBase64) ?? []
               break
             case ChainTypes.SUI:
                 chainAccountAddresses =
@@ -372,6 +418,7 @@ export const ChainConfigurationForm = withStyles(styles)(
                       select
                       helperText="The account address used for this chain"
                       addresses={chainAccountAddresses}
+                      pubkeys={chainPublicKeys}
                       FormHelperTextProps={{
                         'data-testid': 'accountAddr-helper-text',
                       }}

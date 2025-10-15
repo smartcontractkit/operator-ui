@@ -6,4 +6,5 @@ export const ChainTypes = {
   COSMOS: 'COSMOS',
   TRON: 'TRON',
   TON: 'TON',
+  SUI: 'SUI',
 }

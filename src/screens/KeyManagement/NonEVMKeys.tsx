@@ -34,6 +34,13 @@ const SCHEMAS = {
       { label: 'Raw Address', key: 'rawAddress', copy: true },
     ],
   },
+  suiKeys: {
+    title: 'Sui',
+    fields: [
+      { label: 'Public Key', key: 'id', copy: true },
+      { label: 'Account', key: 'account', copy: true },
+    ],
+  },
 }
 
 export const NonEVMKeys = () => {

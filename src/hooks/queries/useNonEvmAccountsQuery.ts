@@ -33,12 +33,20 @@ export const TON_KEYS_PAYLOAD__RESULTS_FIELDS = gql`
   }
 `
 
+export const SUI_KEYS_PAYLOAD__RESULTS_FIELDS = gql`
+  fragment SuiKeysPayload_ResultsFields on SuiKey {
+    account
+    id
+  }
+`
+
 export const NON_EVM_KEYS_QUERY = gql`
   ${APTOS_KEYS_PAYLOAD__RESULTS_FIELDS}
   ${SOLANA_KEYS_PAYLOAD__RESULTS_FIELDS}
   ${STARKNET_KEYS_PAYLOAD__RESULTS_FIELDS}
   ${TRON_KEYS_PAYLOAD__RESULTS_FIELDS}
   ${TON_KEYS_PAYLOAD__RESULTS_FIELDS}
+  ${SUI_KEYS_PAYLOAD__RESULTS_FIELDS}
   query FetchNonEvmKeys {
     aptosKeys {
       results {
@@ -63,6 +71,11 @@ export const NON_EVM_KEYS_QUERY = gql`
     tonKeys {
       results {
         ...TONKeysPayload_ResultsFields
+      }
+    }
+    suiKeys {
+      results {
+        ...SuiKeysPayload_ResultsFields
       }
     }
   }

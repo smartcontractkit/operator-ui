@@ -523,6 +523,12 @@ export const SupportedChainsCard = withStyles(styles)(
                         <DetailsCardItemValue value={cfg.accountAddrPubKey} />
                       </Grid>
                     )}
+                    {cfg.chainType === 'SUI' && (
+                      <Grid item xs={12} sm={6}>
+                        <DetailsCardItemTitle title="Account Public Key" />
+                        <DetailsCardItemValue value={cfg.accountAddrPubKey} />
+                      </Grid>
+                    )}
                     <Grid item xs={12} sm={6}>
                       <DetailsCardItemTitle title="Admin Address" />
                       <DetailsCardItemValue value={cfg.adminAddr} />

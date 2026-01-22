@@ -148,6 +148,21 @@ const JOB_PAYLOAD__SPEC = gql`
     ... on StreamSpec {
       streamID
     }
+    ... on CCIPSpec {
+      p2pv2Bootstrappers
+      capabilityVersion
+      capabilityLabelledName
+      ocrKeyBundleIDs
+      relayConfigs
+      p2pKeyID
+      pluginConfig
+    }
+    ... on CCVCommitteeVerifierSpec {
+      committeeVerifierConfig
+    }
+    ... on CCVExecutorSpec {
+      executorConfig
+    }
   }
 `
 

@@ -721,6 +721,122 @@ streamID = "1001"
     expect(output.definition).toEqual(expectedOutput)
   })
 
+  it('generates a valid CCIP definition', () => {
+    const job: JobPayload_Fields = {
+      id: '1',
+      type: 'ccip',
+      schemaVersion: 1,
+      name: 'ccip test',
+      externalJobID: '00000000-0000-0000-0000-0000000000001',
+      maxTaskDuration: '',
+      spec: {
+        __typename: 'CCIPSpec',
+        p2pv2Bootstrappers: ['Luke Skywalker', 'Darth Vader', 'Uncle Owen'],
+        capabilityVersion: '9001',
+        capabilityLabelledName: 'El Toro Loco',
+        p2pKeyID: 'Lakitu',
+        ocrKeyBundleIDs: {
+          RedFish: { Color: 'Red' },
+          BlueFish: { Color: 'Blue' },
+        },
+        relayConfigs: {
+          evm: 'evm_key_bundle_id',
+          solana: 'solana_key_bundle_id',
+        },
+        pluginConfig: {
+          Commit: {
+            enabled: true,
+          },
+          Executor: {
+            enabled: true,
+          },
+        },
+      },
+      observationSource: '',
+      ...otherJobFields,
+    }
+
+    const expectedOutput = `type = "ccip"
+schemaVersion = 1
+name = "ccip test"
+externalJobID = "00000000-0000-0000-0000-0000000000001"
+p2pv2Bootstrappers = [ "Luke Skywalker", "Darth Vader", "Uncle Owen" ]
+capabilityVersion = "9001"
+capabilityLabelledName = "El Toro Loco"
+p2pKeyID = "Lakitu"
+
+[ocrKeyBundleIDs.RedFish]
+Color = "Red"
+
+[ocrKeyBundleIDs.BlueFish]
+Color = "Blue"
+
+[relayConfigs]
+evm = "evm_key_bundle_id"
+solana = "solana_key_bundle_id"
+
+[pluginConfig.Commit]
+enabled = true
+
+[pluginConfig.Executor]
+enabled = true
+`
+    const output = generateJobDefinition(job)
+    expect(output.definition).toEqual(expectedOutput)
+  })
+
+  it('generates a valid CCVCommitteeVerifier definition', () => {
+    const job: JobPayload_Fields = {
+      id: '1',
+      type: 'ccvcommitteeverifier',
+      schemaVersion: 1,
+      name: 'ccv committee verifier test',
+      externalJobID: '00000000-0000-0000-0000-0000000000001',
+      maxTaskDuration: '',
+      spec: {
+        __typename: 'CCVCommitteeVerifierSpec',
+        committeeVerifierConfig: '{"my": "data"}',
+      },
+      observationSource: '',
+      ...otherJobFields,
+    }
+
+    const expectedOutput = `type = "ccvcommitteeverifier"
+schemaVersion = 1
+name = "ccv committee verifier test"
+externalJobID = "00000000-0000-0000-0000-0000000000001"
+committeeVerifierConfig = '{"my": "data"}'
+`
+    const output = generateJobDefinition(job)
+    expect(output.definition).toEqual(expectedOutput)
+  })
+
+  it('generates a valid CCVExecutor definition', () => {
+    const job: JobPayload_Fields = {
+      id: '1',
+      type: 'ccvexecutor',
+      schemaVersion: 1,
+      name: 'ccv executor test',
+      externalJobID: '00000000-0000-0000-0000-0000000000001',
+      maxTaskDuration: '',
+      spec: {
+        __typename: 'CCVExecutorSpec',
+        executorConfig: '{"my": "data"}',
+      },
+      observationSource: '',
+      ...otherJobFields,
+    }
+
+    const expectedOutput = `type = "ccvexecutor"
+schemaVersion = 1
+name = "ccv executor test"
+externalJobID = "00000000-0000-0000-0000-0000000000001"
+executorConfig = '{"my": "data"}'
+`
+    const output = generateJobDefinition(job)
+    expect(output.definition).toEqual(expectedOutput)
+  })
+
   it('generates an empty definition for unspecified type', () => {
     const job: JobPayload_Fields = {
       id: '',

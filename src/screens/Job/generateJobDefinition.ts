@@ -292,6 +292,39 @@ export const generateJobDefinition = (
 
       break
 
+    case 'CCIPSpec':
+      values = {
+        ...extractJobFields(job),
+        ...extractSpecFields(
+          job.spec,
+          'p2pv2Bootstrappers',
+          'capabilityVersion',
+          'capabilityLabelledName',
+          'ocrKeyBundleIDs',
+          'relayConfigs',
+          'p2pKeyID',
+          'pluginConfig',
+        ),
+      }
+
+      break
+
+    case 'CCVCommitteeVerifierSpec':
+      values = {
+        ...extractJobFields(job),
+        ...extractSpecFields(job.spec, 'committeeVerifierConfig'),
+      }
+
+      break
+
+    case 'CCVExecutorSpec':
+      values = {
+        ...extractJobFields(job),
+        ...extractSpecFields(job.spec, 'executorConfig'),
+      }
+
+      break
+
     default:
       return { definition: '' }
   }

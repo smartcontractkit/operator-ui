@@ -731,17 +731,17 @@ streamID = "1001"
       maxTaskDuration: '',
       spec: {
         __typename: 'CCIPSpec',
-        p2pv2Bootstrappers: ["Luke Skywalker","Darth Vader","Uncle Owen"],
+        p2pv2Bootstrappers: ['Luke Skywalker', 'Darth Vader', 'Uncle Owen'],
         capabilityVersion: '9001',
         capabilityLabelledName: 'El Toro Loco',
         p2pKeyID: 'Lakitu',
         ocrKeyBundleIDs: {
-          RedFish: { Color: "Red" },
-          BlueFish: { Color: "Blue" },
+          RedFish: { Color: 'Red' },
+          BlueFish: { Color: 'Blue' },
         },
         relayConfigs: {
-          evm: "evm_key_bundle_id",
-          solana: "solana_key_bundle_id",
+          evm: 'evm_key_bundle_id',
+          solana: 'solana_key_bundle_id',
         },
         pluginConfig: {
           Commit: {
@@ -760,7 +760,7 @@ streamID = "1001"
 schemaVersion = 1
 name = "ccip test"
 externalJobID = "00000000-0000-0000-0000-0000000000001"
-p2pV2Bootstrappers = [ "Luke Skywalker", "Darth Vader", "Uncle Owen" ]
+p2pv2Bootstrappers = [ "Luke Skywalker", "Darth Vader", "Uncle Owen" ]
 capabilityVersion = "9001"
 capabilityLabelledName = "El Toro Loco"
 p2pKeyID = "Lakitu"

@@ -7,7 +7,6 @@ import {
 import { render, screen } from 'test-utils'
 import { OCR2_KEY_FAMILY } from 'hooks/queries/useOCR2KeysQuery'
 import userEvent from '@testing-library/user-event'
-const { queryByText } = screen
 
 function renderOCR2KeysCreateWithMocks(
   cardProps: OCR2KeysCreateProps,
@@ -61,16 +60,16 @@ describe('OCR2KeysCard creation', () => {
     expect(
       await screen.findByText(`Create OCR2 Key Bundle`),
     ).toBeInTheDocument()
-    expect(queryByText(`Chain type`)).toBeInTheDocument()
-    expect(queryByText(`EVM`)).toBeInTheDocument()
+    expect(screen.getByText(`Chain type`)).toBeInTheDocument()
+    expect(screen.getByText(`EVM`)).toBeInTheDocument()
 
     userEvent.click(await screen.findByText(`EVM`))
 
-    expect(queryByText(`COSMOS`)).toBeInTheDocument()
-    expect(queryByText(`SOLANA`)).toBeInTheDocument()
-    expect(queryByText(`STARKNET`)).toBeInTheDocument()
-    expect(queryByText(`NEW-CHAIN-1`)).toBeInTheDocument()
-    expect(queryByText(`NEW-CHAIN-2`)).toBeInTheDocument()
+    expect(screen.getByText(`COSMOS`)).toBeInTheDocument()
+    expect(screen.getAllByText(`SOLANA`).length).toBeGreaterThan(0)
+    expect(screen.getByText(`STARKNET`)).toBeInTheDocument()
+    expect(screen.getByText(`NEW-CHAIN-1`)).toBeInTheDocument()
+    expect(screen.getByText(`NEW-CHAIN-2`)).toBeInTheDocument()
   })
 
   it('renders the create dialog and trigger onCreate', async () => {
@@ -79,12 +78,12 @@ describe('OCR2KeysCard creation', () => {
     expect(
       await screen.findByText(`Create OCR2 Key Bundle`),
     ).toBeInTheDocument()
-    expect(queryByText(`Chain type`)).toBeInTheDocument()
+    expect(screen.getByText(`Chain type`)).toBeInTheDocument()
     expect(await screen.findByText(`EVM`)).toBeInTheDocument()
     userEvent.click(await screen.findByText(`EVM`))
-    expect(queryByText(`SOLANA`)).toBeInTheDocument()
-    userEvent.click(await screen.findByText(`SOLANA`))
-    expect(queryByText(`Cancel`)).toBeInTheDocument()
+    expect(screen.getAllByText(`SOLANA`).length).toBeGreaterThan(0)
+    userEvent.click((await screen.findAllByText(`SOLANA`))[0])
+    expect(screen.getByText(`Cancel`)).toBeInTheDocument()
     userEvent.click(await screen.findByText(`Cancel`))
 
     //should close the dialog without calling onCreate
@@ -93,11 +92,11 @@ describe('OCR2KeysCard creation', () => {
     //should open the dialog again
     ocr2KeysCreateProps.setToggleCreateKeyDialog(true)
 
-    expect(queryByText(`SOLANA`)).toBeInTheDocument()
-    userEvent.click(await screen.findByText(`SOLANA`))
-    expect(queryByText(`NEW-CHAIN-1`)).toBeInTheDocument()
+    expect((await screen.findAllByText(`SOLANA`)).length).toBeGreaterThan(0)
+    userEvent.click((await screen.findAllByText(`SOLANA`))[0])
+    expect(screen.getByText(`NEW-CHAIN-1`)).toBeInTheDocument()
     userEvent.click(await screen.findByText(`NEW-CHAIN-1`))
-    expect(queryByText(`Create`)).toBeInTheDocument()
+    expect(screen.getByText(`Create`)).toBeInTheDocument()
     userEvent.click(await screen.findByText(`Create`))
 
     //should call onCreate with the selected chain type

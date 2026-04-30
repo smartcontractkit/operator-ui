@@ -19,6 +19,5 @@ observationSource = """
     multiply [type=multiply times=100];
     fetch -> parse -> multiply;
 """
-
 "
 `;

@@ -93,7 +93,7 @@ describe('JobView', () => {
     userEvent.paste(getByRole('textbox'), '{someinput}')
     userEvent.click(getByRole('button', { name: /run job/i }))
 
-    expect(handleOnRun).toBeCalledWith('{someinput}')
+    expect(handleOnRun).toHaveBeenCalledWith('{someinput}')
   })
 
   it('handles delete', async () => {
@@ -105,7 +105,7 @@ describe('JobView', () => {
     userEvent.click(getByRole('menuitem', { name: /delete/i }))
     userEvent.click(getByRole('button', { name: /confirm/i }))
 
-    expect(handleOnDelete).toBeCalled()
+    expect(handleOnDelete).toHaveBeenCalled()
   })
 
   it('handles refetch on next page click', async () => {
@@ -122,7 +122,7 @@ describe('JobView', () => {
 
     userEvent.click(getByRole('button', { name: /next-page/i }))
 
-    expect(handleRefetch).toBeCalled()
+    expect(handleRefetch).toHaveBeenCalled()
   })
 
   it('handles refetchRecentRuns on tab change', async () => {
@@ -132,6 +132,6 @@ describe('JobView', () => {
 
     userEvent.click(getByRole('tab', { name: 'Overview' }))
 
-    expect(handleRefetchRecentRuns).toBeCalled()
+    expect(handleRefetchRecentRuns).toHaveBeenCalled()
   })
 })

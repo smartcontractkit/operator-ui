@@ -87,7 +87,7 @@ describe('OCR2KeysCard creation', () => {
     userEvent.click(await screen.findByText(`Cancel`))
 
     //should close the dialog without calling onCreate
-    expect(ocr2KeysCreateProps.onCreate).toBeCalledTimes(0)
+    expect(ocr2KeysCreateProps.onCreate).toHaveBeenCalledTimes(0)
 
     //should open the dialog again
     ocr2KeysCreateProps.setToggleCreateKeyDialog(true)
@@ -100,7 +100,7 @@ describe('OCR2KeysCard creation', () => {
     userEvent.click(await screen.findByText(`Create`))
 
     //should call onCreate with the selected chain type
-    expect(ocr2KeysCreateProps.onCreate).toBeCalledTimes(1)
-    expect(ocr2KeysCreateProps.onCreate).toBeCalledWith('NEW-CHAIN-1')
+    expect(ocr2KeysCreateProps.onCreate).toHaveBeenCalledTimes(1)
+    expect(ocr2KeysCreateProps.onCreate).toHaveBeenCalledWith('NEW-CHAIN-1')
   })
 })

@@ -8,6 +8,7 @@ module.exports = {
     '<rootDir>/support/',
     '<rootDir>/__tests__',
   ],
+  setupFiles: ['<rootDir>/jest.polyfills.js'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   globalSetup: './jest.globalSetup.js',
   testPathIgnorePatterns: [

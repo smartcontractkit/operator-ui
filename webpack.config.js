@@ -34,6 +34,7 @@ module.exports = {
     plugins: [new TsconfigPathsPlugin({ extensions })],
     fallback: {
       stream: require.resolve('stream-browserify'), // Required for @iarna/toml
+      buffer: require.resolve('buffer/'), // Required by stream-browserify → readable-stream
     },
   },
   output: {

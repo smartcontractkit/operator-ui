@@ -183,6 +183,7 @@ interface Props extends WithStyles<typeof styles> {
   cfgs: ReadonlyArray<FeedsManager_ChainConfigFields>
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const jobTypeRowStyles = (theme: Theme) => {
   return createStyles({
     jobTypeContainer: {

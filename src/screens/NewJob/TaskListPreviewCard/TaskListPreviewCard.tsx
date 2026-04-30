@@ -19,7 +19,7 @@ export const TaskListPreviewCard: React.FC<Props> = ({ toml }) => {
       } else {
         setObservationSource('')
       }
-    } catch (e) {
+    } catch (_e) {
       setObservationSource('')
     }
   }, [toml])

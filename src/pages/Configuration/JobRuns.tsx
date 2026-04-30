@@ -56,7 +56,7 @@ export const JobRuns = withStyles(styles)(({ classes }: Props) => {
       dispatch(notifySuccess(() => <>Deleted completed job runs</>, {}))
 
       setErroredConfirm(false)
-    } catch (e) {
+    } catch (_e) {
       dispatch(notifyErrorMsg('Something went wrong'))
     }
   }

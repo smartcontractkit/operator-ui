@@ -18,7 +18,7 @@ export const JSONCard: React.FC<Props> = ({ run }) => {
     let inputsObj = {}
     try {
       inputsObj = JSON.parse(inputs)
-    } catch (e) {
+    } catch (_e) {
       inputsObj = {}
     }
 

@@ -106,7 +106,7 @@ export const SignIn = (props) => {
         } else {
           dispatch(notifyErrorMsg(res.data.message))
         }
-      } catch (e) {
+      } catch (_e) {
         dispatch(notifyErrorMsg('Authentication failed'))
       }
     }

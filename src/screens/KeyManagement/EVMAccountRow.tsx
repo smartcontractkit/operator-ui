@@ -152,12 +152,12 @@ const UnstyledEVMAccountRow: React.FC<Props> = ({
       enabled,
     })
       .then(({ data }) => {
-        refetch && refetch()
+        if (refetch) refetch()
         closeModal()
         dispatch(notifySuccess(SuccessNotification, data))
       })
       .catch((error) => {
-        refetch && refetch()
+        if (refetch) refetch()
         closeModal()
         dispatch(notifyError(ErrorMessage, error))
       })

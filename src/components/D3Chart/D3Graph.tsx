@@ -126,7 +126,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
           if (!n.x || !n.y) {
             return
           }
-          // @ts-ignore type missmatch
+          // @ts-expect-error type missmatch
           graphData.nodes.push({
             id: n.id,
             x: `${n.x}`,
@@ -198,8 +198,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
     nodeHighlightBehavior: true,
     panAndZoom: true,
     staticGraph: true,
-    // @ts-ignore
-    width: '100%',
+    // @ts-expect-error -- width accepts string but types say number
   }
 
   let mouseX = 0

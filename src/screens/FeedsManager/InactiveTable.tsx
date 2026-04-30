@@ -17,46 +17,47 @@ interface Props extends WithStyles<typeof tableStyles> {
 }
 
 // InactiveTable renders a table for rejected and cancelled proposals.
-export const InactiveTable = withStyles(tableStyles)(
-  ({ classes, proposals }: Props) => {
-    return (
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Latest Version</TableCell>
-            <TableCell>Last Proposed</TableCell>
-            <TableCell></TableCell>
+export const InactiveTable = withStyles(tableStyles)(({
+  classes,
+  proposals,
+}: Props) => {
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>ID</TableCell>
+          <TableCell>Name</TableCell>
+          <TableCell>Latest Version</TableCell>
+          <TableCell>Last Proposed</TableCell>
+          <TableCell></TableCell>
+        </TableRow>
+      </TableHead>
+
+      <TableBody>
+        {proposals?.map((proposal) => (
+          <TableRow key={proposal.id} className={classes.row} hover>
+            <TableCell className={classes.cell} component="th" scope="row">
+              <Link
+                className={classes.link}
+                href={`/job_proposals/${proposal.id}`}
+              >
+                {proposal.id}
+              </Link>
+            </TableCell>
+
+            <TableCell>{proposal.name || '--'}</TableCell>
+            <TableCell>{proposal.latestSpec.version}</TableCell>
+            <TableCell>
+              <TimeAgo tooltip>{proposal.latestSpec.createdAt}</TimeAgo>
+            </TableCell>
+            <TableCell align="right">
+              {proposal.pendingUpdate && (
+                <Chip label="Update Available" color="primary" />
+              )}
+            </TableCell>
           </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {proposals?.map((proposal) => (
-            <TableRow key={proposal.id} className={classes.row} hover>
-              <TableCell className={classes.cell} component="th" scope="row">
-                <Link
-                  className={classes.link}
-                  href={`/job_proposals/${proposal.id}`}
-                >
-                  {proposal.id}
-                </Link>
-              </TableCell>
-
-              <TableCell>{proposal.name || '--'}</TableCell>
-              <TableCell>{proposal.latestSpec.version}</TableCell>
-              <TableCell>
-                <TimeAgo tooltip>{proposal.latestSpec.createdAt}</TimeAgo>
-              </TableCell>
-              <TableCell align="right">
-                {proposal.pendingUpdate && (
-                  <Chip label="Update Available" color="primary" />
-                )}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    )
-  },
-)
+        ))}
+      </TableBody>
+    </Table>
+  )
+})

@@ -16,41 +16,42 @@ interface Props extends WithStyles<typeof tableStyles> {
 }
 
 // UpdatesTable renders a table for proposals with updates.
-export const UpdatesTable = withStyles(tableStyles)(
-  ({ classes, proposals }: Props) => {
-    return (
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>External Job ID</TableCell>
-            <TableCell>Latest Version</TableCell>
-            <TableCell>Last Proposed</TableCell>
-          </TableRow>
-        </TableHead>
+export const UpdatesTable = withStyles(tableStyles)(({
+  classes,
+  proposals,
+}: Props) => {
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>ID</TableCell>
+          <TableCell>Name</TableCell>
+          <TableCell>External Job ID</TableCell>
+          <TableCell>Latest Version</TableCell>
+          <TableCell>Last Proposed</TableCell>
+        </TableRow>
+      </TableHead>
 
-        <TableBody>
-          {proposals?.map((proposal) => (
-            <TableRow key={proposal.id} className={classes.row} hover>
-              <TableCell className={classes.cell} component="th" scope="row">
-                <Link
-                  className={classes.link}
-                  href={`/job_proposals/${proposal.id}`}
-                >
-                  {proposal.id}
-                </Link>
-              </TableCell>
-              <TableCell>{proposal.name || '--'}</TableCell>
-              <TableCell>{proposal.externalJobID || '--'}</TableCell>
-              <TableCell>{proposal.latestSpec.version}</TableCell>
-              <TableCell>
-                <TimeAgo tooltip>{proposal.latestSpec.createdAt}</TimeAgo>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    )
-  },
-)
+      <TableBody>
+        {proposals?.map((proposal) => (
+          <TableRow key={proposal.id} className={classes.row} hover>
+            <TableCell className={classes.cell} component="th" scope="row">
+              <Link
+                className={classes.link}
+                href={`/job_proposals/${proposal.id}`}
+              >
+                {proposal.id}
+              </Link>
+            </TableCell>
+            <TableCell>{proposal.name || '--'}</TableCell>
+            <TableCell>{proposal.externalJobID || '--'}</TableCell>
+            <TableCell>{proposal.latestSpec.version}</TableCell>
+            <TableCell>
+              <TimeAgo tooltip>{proposal.latestSpec.createdAt}</TimeAgo>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  )
+})

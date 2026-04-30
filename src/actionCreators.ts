@@ -75,7 +75,7 @@ export const notifyError = (component: React.ReactNode, error: Error) =>
     type: NotifyActionType.NOTIFY_ERROR,
     component,
     error,
-  } as const)
+  }) as const
 
 export const notifyErrorMsg = (msg: string) => ({
   type: NotifyActionType.NOTIFY_ERROR_MSG,
@@ -109,7 +109,7 @@ const signInSuccessAction = (doc: UnboxApi<Sessions['createSession']>) => {
 }
 
 const signInFailAction = () =>
-  ({ type: AuthActionType.RECEIVE_SIGNIN_FAIL } as const)
+  ({ type: AuthActionType.RECEIVE_SIGNIN_FAIL }) as const
 
 function sendSignIn(data: Parameter<Sessions['createSession']>) {
   return (dispatch: StoreDispatch) => {
@@ -229,7 +229,7 @@ export const receiveSignoutSuccess = () =>
   ({
     type: AuthActionType.RECEIVE_SIGNOUT_SUCCESS,
     authenticated: false,
-  } as const)
+  }) as const
 
 function sendSignOut(dispatch: Dispatch) {
   return api.sessions

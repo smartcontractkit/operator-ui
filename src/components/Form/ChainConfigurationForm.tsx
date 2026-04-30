@@ -296,503 +296,494 @@ export interface Props extends WithStyles<typeof styles> {
 
 // ChainConfigurationForm is used to create/edit the supported chain
 // configurations for the Feeds Manager.
-export const ChainConfigurationForm = withStyles(styles)(
-  ({
-    classes,
-    editing = false,
-    innerRef,
-    initialValues,
-    onSubmit,
-    chains = [],
-    accountsEVM = [],
-    accountsNonEvm,
-    p2pKeys = [],
-    ocrKeys = [],
-    ocr2Keys = [],
-    showSubmit = false,
-  }: Props) => {
-    const sortedOcr2Keys = [...ocr2Keys].sort((a, b) => {
-      if (a.chainType === b.chainType) {
-        return a.id.localeCompare(b.id)
-      }
-      return a.chainType?.localeCompare(b.chainType ?? '') ?? 0
-    })
-    return (
-      <Formik
-        innerRef={innerRef}
-        initialValues={initialValues}
-        validationSchema={ValidationSchema}
-        onSubmit={onSubmit}
-      >
-        {({ values }) => {
-          let chainAccountAddresses: string[] = []
-          let chainPublicKeys: string[] = []
-          switch (values.chainType) {
-            case ChainTypes.EVM:
-              chainAccountAddresses = accountsEVM
-                .filter(
-                  (acc) => acc.chain.id == values.chainID && !acc.isDisabled,
-                )
-                .map((acc) => acc.address)
-              break
-            case ChainTypes.APTOS:
-              chainAccountAddresses =
-                accountsNonEvm?.aptosKeys.results.map((acc) => acc.account) ??
-                []
-              chainPublicKeys =
-                accountsNonEvm?.aptosKeys.results.map((acc) => acc.id) ?? []
-              break
-            case ChainTypes.SOLANA:
-              chainAccountAddresses =
-                accountsNonEvm?.solanaKeys.results.map((acc) => acc.id) ?? []
-              break
-            case ChainTypes.TRON:
-              chainAccountAddresses =
-                accountsNonEvm?.tronKeys.results.map((acc) => acc.id) ?? []
-              break
-            case ChainTypes.TON:
-              chainAccountAddresses =
-                accountsNonEvm?.tonKeys.results.map(
-                  (acc) => acc.addressBase64,
-                ) ?? []
-              break
-            case ChainTypes.SUI:
-              chainAccountAddresses =
-                accountsNonEvm?.suiKeys.results.map((acc) => acc.account) ?? []
-              chainPublicKeys =
-                accountsNonEvm?.suiKeys.results.map((acc) => acc.id) ?? []
-              break
-            default:
-              chainAccountAddresses = []
-          }
+export const ChainConfigurationForm = withStyles(styles)(({
+  classes,
+  editing = false,
+  innerRef,
+  initialValues,
+  onSubmit,
+  chains = [],
+  accountsEVM = [],
+  accountsNonEvm,
+  p2pKeys = [],
+  ocrKeys = [],
+  ocr2Keys = [],
+  showSubmit = false,
+}: Props) => {
+  const sortedOcr2Keys = [...ocr2Keys].sort((a, b) => {
+    if (a.chainType === b.chainType) {
+      return a.id.localeCompare(b.id)
+    }
+    return a.chainType?.localeCompare(b.chainType ?? '') ?? 0
+  })
+  return (
+    <Formik
+      innerRef={innerRef}
+      initialValues={initialValues}
+      validationSchema={ValidationSchema}
+      onSubmit={onSubmit}
+    >
+      {({ values }) => {
+        let chainAccountAddresses: string[] = []
+        let chainPublicKeys: string[] = []
+        switch (values.chainType) {
+          case ChainTypes.EVM:
+            chainAccountAddresses = accountsEVM
+              .filter(
+                (acc) => acc.chain.id == values.chainID && !acc.isDisabled,
+              )
+              .map((acc) => acc.address)
+            break
+          case ChainTypes.APTOS:
+            chainAccountAddresses =
+              accountsNonEvm?.aptosKeys.results.map((acc) => acc.account) ?? []
+            chainPublicKeys =
+              accountsNonEvm?.aptosKeys.results.map((acc) => acc.id) ?? []
+            break
+          case ChainTypes.SOLANA:
+            chainAccountAddresses =
+              accountsNonEvm?.solanaKeys.results.map((acc) => acc.id) ?? []
+            break
+          case ChainTypes.TRON:
+            chainAccountAddresses =
+              accountsNonEvm?.tronKeys.results.map((acc) => acc.id) ?? []
+            break
+          case ChainTypes.TON:
+            chainAccountAddresses =
+              accountsNonEvm?.tonKeys.results.map((acc) => acc.addressBase64) ??
+              []
+            break
+          case ChainTypes.SUI:
+            chainAccountAddresses =
+              accountsNonEvm?.suiKeys.results.map((acc) => acc.account) ?? []
+            chainPublicKeys =
+              accountsNonEvm?.suiKeys.results.map((acc) => acc.id) ?? []
+            break
+          default:
+            chainAccountAddresses = []
+        }
 
-          const filteredChainIds = chains.filter(
-            (x) => x.network.toUpperCase() === values.chainType,
-          )
-          return (
-            <Form
-              data-testid="feeds-manager-form"
-              id="chain-configuration-form"
-              noValidate
-            >
-              <Grid container spacing={16}>
-                <Grid item xs={12} md={6}>
+        const filteredChainIds = chains.filter(
+          (x) => x.network.toUpperCase() === values.chainType,
+        )
+        return (
+          <Form
+            data-testid="feeds-manager-form"
+            id="chain-configuration-form"
+            noValidate
+          >
+            <Grid container spacing={16}>
+              <Grid item xs={12} md={6}>
+                <Field
+                  component={TextField}
+                  id="chainType"
+                  name="chainType"
+                  label="Chain Type"
+                  select
+                  required
+                  fullWidth
+                  disabled={editing}
+                >
+                  {/* todo: in future use chains query to retrieve list of supported chains */}
+                  <MenuItem key={ChainTypes.EVM} value={ChainTypes.EVM}>
+                    EVM
+                  </MenuItem>
+                  <MenuItem key={ChainTypes.APTOS} value={ChainTypes.APTOS}>
+                    APTOS
+                  </MenuItem>
+                  <MenuItem key={ChainTypes.SOLANA} value={ChainTypes.SOLANA}>
+                    SOLANA
+                  </MenuItem>
+                  <MenuItem key={ChainTypes.TRON} value={ChainTypes.TRON}>
+                    TRON
+                  </MenuItem>
+                  <MenuItem key={ChainTypes.TON} value={ChainTypes.TON}>
+                    TON
+                  </MenuItem>
+                  <MenuItem key={ChainTypes.SUI} value={ChainTypes.SUI}>
+                    SUI
+                  </MenuItem>
+                </Field>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                {/* always show normal manual input field instead of selection if field is readonly (during editing) */}
+                {filteredChainIds.length > 0 && !editing ? (
                   <Field
                     component={TextField}
-                    id="chainType"
-                    name="chainType"
-                    label="Chain Type"
+                    id="chainID"
+                    name="chainID"
+                    label="Chain ID"
+                    required
+                    fullWidth
                     select
+                    disabled={editing}
+                    inputProps={{ 'data-testid': 'chainID-input' }}
+                    FormHelperTextProps={{
+                      'data-testid': 'chainID-helper-text',
+                    }}
+                  >
+                    {filteredChainIds.map((x) => (
+                      <MenuItem key={x.id} value={x.id}>
+                        {x.id}
+                      </MenuItem>
+                    ))}
+                  </Field>
+                ) : (
+                  <Field
+                    component={TextField}
+                    id="chainID"
+                    name="chainID"
+                    label="Chain ID"
                     required
                     fullWidth
                     disabled={editing}
-                  >
-                    {/* todo: in future use chains query to retrieve list of supported chains */}
-                    <MenuItem key={ChainTypes.EVM} value={ChainTypes.EVM}>
-                      EVM
-                    </MenuItem>
-                    <MenuItem key={ChainTypes.APTOS} value={ChainTypes.APTOS}>
-                      APTOS
-                    </MenuItem>
-                    <MenuItem key={ChainTypes.SOLANA} value={ChainTypes.SOLANA}>
-                      SOLANA
-                    </MenuItem>
-                    <MenuItem key={ChainTypes.TRON} value={ChainTypes.TRON}>
-                      TRON
-                    </MenuItem>
-                    <MenuItem key={ChainTypes.TON} value={ChainTypes.TON}>
-                      TON
-                    </MenuItem>
-                    <MenuItem key={ChainTypes.SUI} value={ChainTypes.SUI}>
-                      SUI
-                    </MenuItem>
-                  </Field>
-                </Grid>
-
-                <Grid item xs={12} md={6}>
-                  {/* always show normal manual input field instead of selection if field is readonly (during editing) */}
-                  {filteredChainIds.length > 0 && !editing ? (
-                    <Field
-                      component={TextField}
-                      id="chainID"
-                      name="chainID"
-                      label="Chain ID"
-                      required
-                      fullWidth
-                      select
-                      disabled={editing}
-                      inputProps={{ 'data-testid': 'chainID-input' }}
-                      FormHelperTextProps={{
-                        'data-testid': 'chainID-helper-text',
-                      }}
-                    >
-                      {filteredChainIds.map((x) => (
-                        <MenuItem key={x.id} value={x.id}>
-                          {x.id}
-                        </MenuItem>
-                      ))}
-                    </Field>
-                  ) : (
-                    <Field
-                      component={TextField}
-                      id="chainID"
-                      name="chainID"
-                      label="Chain ID"
-                      required
-                      fullWidth
-                      disabled={editing}
-                      inputProps={{ 'data-testid': 'chainID-manual-input' }}
-                      FormHelperTextProps={{
-                        'data-testid': 'chainID-helper-manual-text',
-                      }}
-                    />
-                  )}
-                </Grid>
-
-                <Grid item xs={12} md={6}>
-                  {chainAccountAddresses.length > 0 ? (
-                    <AccountAddrField
-                      component={TextField}
-                      id="accountAddr"
-                      name="accountAddr"
-                      label="Account Address"
-                      inputProps={{ 'data-testid': 'accountAddr-input' }}
-                      required
-                      fullWidth
-                      select
-                      helperText="The account address used for this chain"
-                      addresses={chainAccountAddresses}
-                      pubkeys={chainPublicKeys}
-                      FormHelperTextProps={{
-                        'data-testid': 'accountAddr-helper-text',
-                      }}
-                    />
-                  ) : (
-                    <Field
-                      component={TextField}
-                      id="accountAddr"
-                      name="accountAddr"
-                      label="Account Address"
-                      inputProps={{ 'data-testid': 'accountAddr-manual-input' }}
-                      required
-                      fullWidth
-                      helperText="The account address used for this chain"
-                      FormHelperTextProps={{
-                        'data-testid': 'accountAddr-helper-manual-text',
-                      }}
-                    />
-                  )}
-                </Grid>
-
-                <Grid item xs={12} md={6}>
-                  <Field
-                    component={TextField}
-                    id="adminAddr"
-                    name="adminAddr"
-                    label="Admin Address"
-                    fullWidth
-                    helperText="The address used for LINK payments"
+                    inputProps={{ 'data-testid': 'chainID-manual-input' }}
                     FormHelperTextProps={{
-                      'data-testid': 'adminAddr-helper-text',
+                      'data-testid': 'chainID-helper-manual-text',
                     }}
                   />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Typography>Supported Job Types</Typography>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Field
-                    component={CheckboxWithLabel}
-                    name="fluxMonitorEnabled"
-                    type="checkbox"
-                    Label={{
-                      label: 'Flux Monitor',
-                    }}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Field
-                    component={CheckboxWithLabel}
-                    name="ocr1Enabled"
-                    type="checkbox"
-                    Label={{
-                      label: 'OCR',
-                    }}
-                  />
-
-                  {values.ocr1Enabled && (
-                    <Paper className={classes.supportedJobOptionsPaper}>
-                      <Grid container spacing={8}>
-                        <>
-                          <Grid item xs={12}>
-                            <Field
-                              component={CheckboxWithLabel}
-                              name="ocr1IsBootstrap"
-                              type="checkbox"
-                              Label={{
-                                label:
-                                  'Is this node running as a bootstrap peer?',
-                              }}
-                            />
-                          </Grid>
-
-                          {values.ocr1IsBootstrap ? (
-                            <Grid item xs={12}>
-                              <Field
-                                component={TextField}
-                                id="ocr1Multiaddr"
-                                name="ocr1Multiaddr"
-                                label="Multiaddr"
-                                required
-                                fullWidth
-                                helperText="The OCR Multiaddr which oracles use to query for network information"
-                                FormHelperTextProps={{
-                                  'data-testid': 'ocr1Multiaddr-helper-text',
-                                }}
-                              />
-                            </Grid>
-                          ) : (
-                            <>
-                              <Grid item xs={12} md={6}>
-                                <Field
-                                  component={TextField}
-                                  id="ocr1P2PPeerID"
-                                  name="ocr1P2PPeerID"
-                                  label="Peer ID"
-                                  select
-                                  required
-                                  fullWidth
-                                  helperText="The Peer ID used for this chain"
-                                  FormHelperTextProps={{
-                                    'data-testid': 'ocr1P2PPeerID-helper-text',
-                                  }}
-                                >
-                                  {p2pKeys.map((key) => (
-                                    <MenuItem
-                                      key={key.peerID}
-                                      value={key.peerID}
-                                    >
-                                      {key.peerID}
-                                    </MenuItem>
-                                  ))}
-                                </Field>
-                              </Grid>
-
-                              <Grid item xs={12} md={6}>
-                                <Field
-                                  component={TextField}
-                                  id="ocr1KeyBundleID"
-                                  name="ocr1KeyBundleID"
-                                  label="Key Bundle ID"
-                                  select
-                                  required
-                                  fullWidth
-                                  helperText="The OCR Key Bundle ID used for this chain"
-                                  FormHelperTextProps={{
-                                    'data-testid':
-                                      'ocr1KeyBundleID-helper-text',
-                                  }}
-                                >
-                                  {ocrKeys.map((key) => (
-                                    <MenuItem key={key.id} value={key.id}>
-                                      {key.id}
-                                    </MenuItem>
-                                  ))}
-                                </Field>
-                              </Grid>
-                            </>
-                          )}
-                        </>
-                      </Grid>
-                    </Paper>
-                  )}
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Field
-                    component={CheckboxWithLabel}
-                    name="ocr2Enabled"
-                    type="checkbox"
-                    Label={{
-                      label: 'OCR2',
-                    }}
-                  />
-
-                  {values.ocr2Enabled && (
-                    <Paper className={classes.supportedJobOptionsPaper}>
-                      <Grid container spacing={8}>
-                        <>
-                          <Grid item xs={12}>
-                            <Field
-                              component={CheckboxWithLabel}
-                              name="ocr2IsBootstrap"
-                              type="checkbox"
-                              Label={{
-                                label:
-                                  'Is this node running as a bootstrap peer?',
-                              }}
-                            />
-                          </Grid>
-
-                          <Grid item xs={12} md={6}>
-                            <Field
-                              component={TextField}
-                              id="ocr2P2PPeerID"
-                              name="ocr2P2PPeerID"
-                              label="Peer ID"
-                              select
-                              required={!values.ocr2IsBootstrap}
-                              fullWidth
-                              helperText="The Peer ID used for this chain"
-                              FormHelperTextProps={{
-                                'data-testid': 'ocr2P2PPeerID-helper-text',
-                              }}
-                            >
-                              {p2pKeys.map((key) => (
-                                <MenuItem key={key.peerID} value={key.peerID}>
-                                  {key.peerID}
-                                </MenuItem>
-                              ))}
-                            </Field>
-                          </Grid>
-
-                          {values.ocr2IsBootstrap ? (
-                            <Grid item xs={12}>
-                              <Field
-                                component={TextField}
-                                id="ocr2Multiaddr"
-                                name="ocr2Multiaddr"
-                                label="Multiaddr"
-                                required
-                                fullWidth
-                                helperText="The OCR2 Multiaddr which oracles use to query for network information"
-                                FormHelperTextProps={{
-                                  'data-testid': 'ocr2Multiaddr-helper-text',
-                                }}
-                              />
-                            </Grid>
-                          ) : (
-                            <>
-                              <Grid item xs={12} md={6}>
-                                <Field
-                                  component={TextField}
-                                  id="ocr2KeyBundleID"
-                                  name="ocr2KeyBundleID"
-                                  label="Key Bundle ID"
-                                  select
-                                  required
-                                  fullWidth
-                                  helperText="The OCR2 Key Bundle ID used for this chain"
-                                  FormHelperTextProps={{
-                                    'data-testid':
-                                      'ocr2KeyBundleID-helper-text',
-                                  }}
-                                >
-                                  {sortedOcr2Keys.map((key) => (
-                                    <MenuItem key={key.id} value={key.id}>
-                                      {key.id} ({key.chainType})
-                                    </MenuItem>
-                                  ))}
-                                </Field>
-                              </Grid>
-
-                              <Grid item xs={12}>
-                                <Typography>Supported Plugins</Typography>
-                              </Grid>
-
-                              <Grid item xs={6}>
-                                <Field
-                                  component={CheckboxWithLabel}
-                                  name="ocr2CommitPluginEnabled"
-                                  type="checkbox"
-                                  Label={{
-                                    label: 'Commit',
-                                  }}
-                                />
-                              </Grid>
-                              <Grid item xs={6}>
-                                <Field
-                                  component={CheckboxWithLabel}
-                                  name="ocr2ExecutePluginEnabled"
-                                  type="checkbox"
-                                  Label={{
-                                    label: 'Execute',
-                                  }}
-                                />
-                              </Grid>
-                              <Grid item xs={6}>
-                                <Field
-                                  component={CheckboxWithLabel}
-                                  name="ocr2RebalancerPluginEnabled"
-                                  type="checkbox"
-                                  Label={{
-                                    label: 'Rebalancer',
-                                  }}
-                                />
-                              </Grid>
-                              <Grid item xs={6}>
-                                <Field
-                                  component={CheckboxWithLabel}
-                                  name="ocr2MedianPluginEnabled"
-                                  type="checkbox"
-                                  Label={{
-                                    label: 'Median',
-                                  }}
-                                />
-                              </Grid>
-                              <Grid item xs={6}>
-                                <Field
-                                  component={CheckboxWithLabel}
-                                  name="ocr2MercuryPluginEnabled"
-                                  type="checkbox"
-                                  Label={{
-                                    label: 'Mercury',
-                                  }}
-                                />
-                              </Grid>
-
-                              <Grid item xs={12} md={12}>
-                                <Field
-                                  component={TextField}
-                                  id="ocr2ForwarderAddress"
-                                  name="ocr2ForwarderAddress"
-                                  label="Forwarder Address (optional)"
-                                  fullWidth
-                                  helperText="The forwarder address from the Operator Forwarder Contract"
-                                  FormHelperTextProps={{
-                                    'data-testid':
-                                      'ocr2ForwarderAddress-helper-text',
-                                  }}
-                                />
-                              </Grid>
-                            </>
-                          )}
-                        </>
-                      </Grid>
-                    </Paper>
-                  )}
-                </Grid>
-
-                {showSubmit && (
-                  <Grid item xs={12} md={7}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                      size="large"
-                    >
-                      Submit
-                    </Button>
-                  </Grid>
                 )}
               </Grid>
-            </Form>
-          )
-        }}
-      </Formik>
-    )
-  },
-)
+
+              <Grid item xs={12} md={6}>
+                {chainAccountAddresses.length > 0 ? (
+                  <AccountAddrField
+                    component={TextField}
+                    id="accountAddr"
+                    name="accountAddr"
+                    label="Account Address"
+                    inputProps={{ 'data-testid': 'accountAddr-input' }}
+                    required
+                    fullWidth
+                    select
+                    helperText="The account address used for this chain"
+                    addresses={chainAccountAddresses}
+                    pubkeys={chainPublicKeys}
+                    FormHelperTextProps={{
+                      'data-testid': 'accountAddr-helper-text',
+                    }}
+                  />
+                ) : (
+                  <Field
+                    component={TextField}
+                    id="accountAddr"
+                    name="accountAddr"
+                    label="Account Address"
+                    inputProps={{ 'data-testid': 'accountAddr-manual-input' }}
+                    required
+                    fullWidth
+                    helperText="The account address used for this chain"
+                    FormHelperTextProps={{
+                      'data-testid': 'accountAddr-helper-manual-text',
+                    }}
+                  />
+                )}
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <Field
+                  component={TextField}
+                  id="adminAddr"
+                  name="adminAddr"
+                  label="Admin Address"
+                  fullWidth
+                  helperText="The address used for LINK payments"
+                  FormHelperTextProps={{
+                    'data-testid': 'adminAddr-helper-text',
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Typography>Supported Job Types</Typography>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Field
+                  component={CheckboxWithLabel}
+                  name="fluxMonitorEnabled"
+                  type="checkbox"
+                  Label={{
+                    label: 'Flux Monitor',
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Field
+                  component={CheckboxWithLabel}
+                  name="ocr1Enabled"
+                  type="checkbox"
+                  Label={{
+                    label: 'OCR',
+                  }}
+                />
+
+                {values.ocr1Enabled && (
+                  <Paper className={classes.supportedJobOptionsPaper}>
+                    <Grid container spacing={8}>
+                      <>
+                        <Grid item xs={12}>
+                          <Field
+                            component={CheckboxWithLabel}
+                            name="ocr1IsBootstrap"
+                            type="checkbox"
+                            Label={{
+                              label:
+                                'Is this node running as a bootstrap peer?',
+                            }}
+                          />
+                        </Grid>
+
+                        {values.ocr1IsBootstrap ? (
+                          <Grid item xs={12}>
+                            <Field
+                              component={TextField}
+                              id="ocr1Multiaddr"
+                              name="ocr1Multiaddr"
+                              label="Multiaddr"
+                              required
+                              fullWidth
+                              helperText="The OCR Multiaddr which oracles use to query for network information"
+                              FormHelperTextProps={{
+                                'data-testid': 'ocr1Multiaddr-helper-text',
+                              }}
+                            />
+                          </Grid>
+                        ) : (
+                          <>
+                            <Grid item xs={12} md={6}>
+                              <Field
+                                component={TextField}
+                                id="ocr1P2PPeerID"
+                                name="ocr1P2PPeerID"
+                                label="Peer ID"
+                                select
+                                required
+                                fullWidth
+                                helperText="The Peer ID used for this chain"
+                                FormHelperTextProps={{
+                                  'data-testid': 'ocr1P2PPeerID-helper-text',
+                                }}
+                              >
+                                {p2pKeys.map((key) => (
+                                  <MenuItem key={key.peerID} value={key.peerID}>
+                                    {key.peerID}
+                                  </MenuItem>
+                                ))}
+                              </Field>
+                            </Grid>
+
+                            <Grid item xs={12} md={6}>
+                              <Field
+                                component={TextField}
+                                id="ocr1KeyBundleID"
+                                name="ocr1KeyBundleID"
+                                label="Key Bundle ID"
+                                select
+                                required
+                                fullWidth
+                                helperText="The OCR Key Bundle ID used for this chain"
+                                FormHelperTextProps={{
+                                  'data-testid': 'ocr1KeyBundleID-helper-text',
+                                }}
+                              >
+                                {ocrKeys.map((key) => (
+                                  <MenuItem key={key.id} value={key.id}>
+                                    {key.id}
+                                  </MenuItem>
+                                ))}
+                              </Field>
+                            </Grid>
+                          </>
+                        )}
+                      </>
+                    </Grid>
+                  </Paper>
+                )}
+              </Grid>
+
+              <Grid item xs={12}>
+                <Field
+                  component={CheckboxWithLabel}
+                  name="ocr2Enabled"
+                  type="checkbox"
+                  Label={{
+                    label: 'OCR2',
+                  }}
+                />
+
+                {values.ocr2Enabled && (
+                  <Paper className={classes.supportedJobOptionsPaper}>
+                    <Grid container spacing={8}>
+                      <>
+                        <Grid item xs={12}>
+                          <Field
+                            component={CheckboxWithLabel}
+                            name="ocr2IsBootstrap"
+                            type="checkbox"
+                            Label={{
+                              label:
+                                'Is this node running as a bootstrap peer?',
+                            }}
+                          />
+                        </Grid>
+
+                        <Grid item xs={12} md={6}>
+                          <Field
+                            component={TextField}
+                            id="ocr2P2PPeerID"
+                            name="ocr2P2PPeerID"
+                            label="Peer ID"
+                            select
+                            required={!values.ocr2IsBootstrap}
+                            fullWidth
+                            helperText="The Peer ID used for this chain"
+                            FormHelperTextProps={{
+                              'data-testid': 'ocr2P2PPeerID-helper-text',
+                            }}
+                          >
+                            {p2pKeys.map((key) => (
+                              <MenuItem key={key.peerID} value={key.peerID}>
+                                {key.peerID}
+                              </MenuItem>
+                            ))}
+                          </Field>
+                        </Grid>
+
+                        {values.ocr2IsBootstrap ? (
+                          <Grid item xs={12}>
+                            <Field
+                              component={TextField}
+                              id="ocr2Multiaddr"
+                              name="ocr2Multiaddr"
+                              label="Multiaddr"
+                              required
+                              fullWidth
+                              helperText="The OCR2 Multiaddr which oracles use to query for network information"
+                              FormHelperTextProps={{
+                                'data-testid': 'ocr2Multiaddr-helper-text',
+                              }}
+                            />
+                          </Grid>
+                        ) : (
+                          <>
+                            <Grid item xs={12} md={6}>
+                              <Field
+                                component={TextField}
+                                id="ocr2KeyBundleID"
+                                name="ocr2KeyBundleID"
+                                label="Key Bundle ID"
+                                select
+                                required
+                                fullWidth
+                                helperText="The OCR2 Key Bundle ID used for this chain"
+                                FormHelperTextProps={{
+                                  'data-testid': 'ocr2KeyBundleID-helper-text',
+                                }}
+                              >
+                                {sortedOcr2Keys.map((key) => (
+                                  <MenuItem key={key.id} value={key.id}>
+                                    {key.id} ({key.chainType})
+                                  </MenuItem>
+                                ))}
+                              </Field>
+                            </Grid>
+
+                            <Grid item xs={12}>
+                              <Typography>Supported Plugins</Typography>
+                            </Grid>
+
+                            <Grid item xs={6}>
+                              <Field
+                                component={CheckboxWithLabel}
+                                name="ocr2CommitPluginEnabled"
+                                type="checkbox"
+                                Label={{
+                                  label: 'Commit',
+                                }}
+                              />
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Field
+                                component={CheckboxWithLabel}
+                                name="ocr2ExecutePluginEnabled"
+                                type="checkbox"
+                                Label={{
+                                  label: 'Execute',
+                                }}
+                              />
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Field
+                                component={CheckboxWithLabel}
+                                name="ocr2RebalancerPluginEnabled"
+                                type="checkbox"
+                                Label={{
+                                  label: 'Rebalancer',
+                                }}
+                              />
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Field
+                                component={CheckboxWithLabel}
+                                name="ocr2MedianPluginEnabled"
+                                type="checkbox"
+                                Label={{
+                                  label: 'Median',
+                                }}
+                              />
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Field
+                                component={CheckboxWithLabel}
+                                name="ocr2MercuryPluginEnabled"
+                                type="checkbox"
+                                Label={{
+                                  label: 'Mercury',
+                                }}
+                              />
+                            </Grid>
+
+                            <Grid item xs={12} md={12}>
+                              <Field
+                                component={TextField}
+                                id="ocr2ForwarderAddress"
+                                name="ocr2ForwarderAddress"
+                                label="Forwarder Address (optional)"
+                                fullWidth
+                                helperText="The forwarder address from the Operator Forwarder Contract"
+                                FormHelperTextProps={{
+                                  'data-testid':
+                                    'ocr2ForwarderAddress-helper-text',
+                                }}
+                              />
+                            </Grid>
+                          </>
+                        )}
+                      </>
+                    </Grid>
+                  </Paper>
+                )}
+              </Grid>
+
+              {showSubmit && (
+                <Grid item xs={12} md={7}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    size="large"
+                  >
+                    Submit
+                  </Button>
+                </Grid>
+              )}
+            </Grid>
+          </Form>
+        )
+      }}
+    </Formik>
+  )
+})

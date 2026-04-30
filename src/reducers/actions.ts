@@ -37,8 +37,7 @@ export enum NotifyActionType {
  * NOTIFY_SUCCESS
  */
 
-export interface NotifySuccessAction
-  extends Action<NotifyActionType.NOTIFY_SUCCESS> {
+export interface NotifySuccessAction extends Action<NotifyActionType.NOTIFY_SUCCESS> {
   component: React.FC<any>
   props: any
 }
@@ -47,8 +46,7 @@ export interface NotifySuccessAction
  * NOTIFY_SUCCESS_MSG
  */
 
-export interface NotifySuccessMsgAction
-  extends Action<NotifyActionType.NOTIFY_SUCCESS_MSG> {
+export interface NotifySuccessMsgAction extends Action<NotifyActionType.NOTIFY_SUCCESS_MSG> {
   msg: string
 }
 
@@ -56,8 +54,7 @@ export interface NotifySuccessMsgAction
  * NOTIFY_ERROR
  */
 
-export interface NotifyErrorAction
-  extends Action<NotifyActionType.NOTIFY_ERROR> {
+export interface NotifyErrorAction extends Action<NotifyActionType.NOTIFY_ERROR> {
   component: React.FC<any>
   error: {
     errors: jsonapi.ErrorItem[]
@@ -67,12 +64,11 @@ export interface NotifyErrorAction
 /**
  * @deprecated
  */
-export interface ErrorAction
-  extends Action<
-    | AuthActionType.RECEIVE_SIGNIN_ERROR
-    | ResourceActionType.RECEIVE_CREATE_ERROR
-    | ResourceActionType.RECEIVE_DELETE_ERROR
-  > {
+export interface ErrorAction extends Action<
+  | AuthActionType.RECEIVE_SIGNIN_ERROR
+  | ResourceActionType.RECEIVE_CREATE_ERROR
+  | ResourceActionType.RECEIVE_DELETE_ERROR
+> {
   error?: string
   errors: []
 }
@@ -81,8 +77,7 @@ export interface ErrorAction
  * NOTIFY_ERROR_MSG
  */
 
-export interface NotifyErrorMsgAction
-  extends Action<NotifyActionType.NOTIFY_ERROR_MSG> {
+export interface NotifyErrorMsgAction extends Action<NotifyActionType.NOTIFY_ERROR_MSG> {
   msg: string
 }
 
@@ -99,15 +94,13 @@ export enum AuthActionType {
  * REQUEST_SIGNIN
  */
 
-export interface RequestSigninAction
-  extends Action<AuthActionType.REQUEST_SIGNIN> {}
+export interface RequestSigninAction extends Action<AuthActionType.REQUEST_SIGNIN> {}
 
 /**
  * RECEIVE_SIGNIN_SUCCESS
  */
 
-export interface ReceiveSigninSuccessAction
-  extends Action<AuthActionType.RECEIVE_SIGNIN_SUCCESS> {
+export interface ReceiveSigninSuccessAction extends Action<AuthActionType.RECEIVE_SIGNIN_SUCCESS> {
   authenticated: boolean
 }
 
@@ -115,15 +108,13 @@ export interface ReceiveSigninSuccessAction
  * RECEIVE_SIGNIN_FAIL
  */
 
-export interface ReceiveSigninFailAction
-  extends Action<AuthActionType.RECEIVE_SIGNIN_FAIL> {}
+export interface ReceiveSigninFailAction extends Action<AuthActionType.RECEIVE_SIGNIN_FAIL> {}
 
 /**
  * RECEIVE_SIGNIN_ERROR
  */
 
-export interface ReceiveSigninErrorAction
-  extends Action<AuthActionType.RECEIVE_SIGNIN_ERROR> {
+export interface ReceiveSigninErrorAction extends Action<AuthActionType.RECEIVE_SIGNIN_ERROR> {
   errors: any[]
 }
 
@@ -131,8 +122,7 @@ export interface ReceiveSigninErrorAction
  * RECEIVE_SIGNOUT_SUCCESS
  */
 
-export interface ReceiveSignoutSuccessAction
-  extends Action<AuthActionType.RECEIVE_SIGNOUT_SUCCESS> {
+export interface ReceiveSignoutSuccessAction extends Action<AuthActionType.RECEIVE_SIGNOUT_SUCCESS> {
   authenticated: boolean
 }
 
@@ -140,8 +130,7 @@ export interface ReceiveSignoutSuccessAction
  * RECEIVE_SIGNOUT_ERROR
  */
 
-export interface ReceiveSignoutErrorAction
-  extends Action<AuthActionType.RECEIVE_SIGNOUT_ERROR> {
+export interface ReceiveSignoutErrorAction extends Action<AuthActionType.RECEIVE_SIGNOUT_ERROR> {
   errors: any[]
 }
 
@@ -167,36 +156,31 @@ export enum ResourceActionType {
  * REQUEST_CREATE
  */
 
-export interface RequestCreateAction
-  extends Action<ResourceActionType.REQUEST_CREATE> {}
+export interface RequestCreateAction extends Action<ResourceActionType.REQUEST_CREATE> {}
 
 /**
  * REQUEST_CREATE_SUCCESS
  */
 
-export interface ReceiveCreateSuccessAction
-  extends Action<ResourceActionType.RECEIVE_CREATE_SUCCESS> {}
+export interface ReceiveCreateSuccessAction extends Action<ResourceActionType.RECEIVE_CREATE_SUCCESS> {}
 
 /**
  * REQUEST_CREATE_ERROR
  */
 
-export interface ReceiveCreateErrorAction
-  extends Action<ResourceActionType.RECEIVE_CREATE_ERROR> {}
+export interface ReceiveCreateErrorAction extends Action<ResourceActionType.RECEIVE_CREATE_ERROR> {}
 
 /**
  * REQUEST_DELETE
  */
 
-export interface RequestDeleteAction
-  extends Action<ResourceActionType.REQUEST_DELETE> {}
+export interface RequestDeleteAction extends Action<ResourceActionType.REQUEST_DELETE> {}
 
 /**
  * RECEIVE_DELETE_SUCCESS
  */
 
-export interface ReceiveDeleteSuccessAction
-  extends Action<ResourceActionType.RECEIVE_DELETE_SUCCESS> {
+export interface ReceiveDeleteSuccessAction extends Action<ResourceActionType.RECEIVE_DELETE_SUCCESS> {
   id: string
 }
 
@@ -204,41 +188,35 @@ export interface ReceiveDeleteSuccessAction
  * RECEIVE_DELETE_ERROR
  */
 
-export interface ReceiveDeleteErrorAction
-  extends Action<ResourceActionType.RECEIVE_DELETE_ERROR> {}
+export interface ReceiveDeleteErrorAction extends Action<ResourceActionType.RECEIVE_DELETE_ERROR> {}
 
 /**
  * REQUEST_UPDATE
  */
 
-export interface RequestUpdateAction
-  extends Action<ResourceActionType.REQUEST_UPDATE> {}
+export interface RequestUpdateAction extends Action<ResourceActionType.REQUEST_UPDATE> {}
 
 /**
  * RECEIVE_UPDATE_SUCCESS
  */
 
-export interface ReceiveUpdateSuccessAction
-  extends Action<ResourceActionType.RECEIVE_UPDATE_SUCCESS> {}
+export interface ReceiveUpdateSuccessAction extends Action<ResourceActionType.RECEIVE_UPDATE_SUCCESS> {}
 
 /**
  * RECEIVE_UPDATE_ERROR
  */
 
-export interface ReceiveUpdateErrorAction
-  extends Action<ResourceActionType.RECEIVE_UPDATE_ERROR> {}
+export interface ReceiveUpdateErrorAction extends Action<ResourceActionType.RECEIVE_UPDATE_ERROR> {}
 
 export type ConfigurationAttribute = string | number | null
 
-export interface UpsertConfigurationAction
-  extends Action<ResourceActionType.UPSERT_CONFIGURATION> {
+export interface UpsertConfigurationAction extends Action<ResourceActionType.UPSERT_CONFIGURATION> {
   data: {
     configPrinters: Record<string, any>
   }
 }
 
-export interface UpsertJobRunsAction
-  extends Action<ResourceActionType.UPSERT_JOB_RUNS> {
+export interface UpsertJobRunsAction extends Action<ResourceActionType.UPSERT_JOB_RUNS> {
   data: {
     runs: Record<string, any>
     meta: {
@@ -258,28 +236,23 @@ export enum FetchBuildInfoActionType {
   FETCH_BUILD_INFO_FAILED = 'FETCH_BUILD_INFO_FAILED',
 }
 
-export interface FetchBuildInfoRequestedAction
-  extends Action<FetchBuildInfoActionType.FETCH_BUILD_INFO_REQUESTED> {}
+export interface FetchBuildInfoRequestedAction extends Action<FetchBuildInfoActionType.FETCH_BUILD_INFO_REQUESTED> {}
 
-export interface FetchBuildInfoSucceededAction
-  extends Action<FetchBuildInfoActionType.FETCH_BUILD_INFO_SUCCEEDED> {
+export interface FetchBuildInfoSucceededAction extends Action<FetchBuildInfoActionType.FETCH_BUILD_INFO_SUCCEEDED> {
   buildInfo: BuildInfo
 }
 
-export interface FetchBuildInfoFailedAction
-  extends Action<FetchBuildInfoActionType.FETCH_BUILD_INFO_FAILED> {
+export interface FetchBuildInfoFailedAction extends Action<FetchBuildInfoActionType.FETCH_BUILD_INFO_FAILED> {
   error: Error
 }
 
-export interface UpsertJobRunAction
-  extends Action<ResourceActionType.UPSERT_JOB_RUN> {
+export interface UpsertJobRunAction extends Action<ResourceActionType.UPSERT_JOB_RUN> {
   data: {
     runs: Record<string, any>
   }
 }
 
-export interface UpsertTransactionsAction
-  extends Action<ResourceActionType.UPSERT_TRANSACTIONS> {
+export interface UpsertTransactionsAction extends Action<ResourceActionType.UPSERT_TRANSACTIONS> {
   data: {
     transactions: Record<string, any>
     meta: {
@@ -293,8 +266,7 @@ export interface UpsertTransactionsAction
   }
 }
 
-export interface UpsertTransactionAction
-  extends Action<ResourceActionType.UPSERT_TRANSACTION> {
+export interface UpsertTransactionAction extends Action<ResourceActionType.UPSERT_TRANSACTION> {
   data: {
     transactions: Record<string, any>
   }

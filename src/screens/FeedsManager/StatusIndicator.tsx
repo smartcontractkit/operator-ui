@@ -29,20 +29,23 @@ interface StatusIndicatorProps extends WithStyles<typeof statusStyles> {
   inactiveText: string
 }
 
-export const StatusIndicator = withStyles(statusStyles)(
-  ({ isActive, activeText, inactiveText, classes }: StatusIndicatorProps) => {
-    return (
-      <div className={classes.root}>
-        {isActive ? (
-          <CheckCircleIcon fontSize="small" className={classes.activeIcon} />
-        ) : (
-          <CancelIcon fontSize="small" className={classes.inactiveIcon} />
-        )}
+export const StatusIndicator = withStyles(statusStyles)(({
+  isActive,
+  activeText,
+  inactiveText,
+  classes,
+}: StatusIndicatorProps) => {
+  return (
+    <div className={classes.root}>
+      {isActive ? (
+        <CheckCircleIcon fontSize="small" className={classes.activeIcon} />
+      ) : (
+        <CancelIcon fontSize="small" className={classes.inactiveIcon} />
+      )}
 
-        <Typography variant="body1" inline className={classes.text}>
-          {isActive ? activeText : inactiveText}
-        </Typography>
-      </div>
-    )
-  },
-)
+      <Typography variant="body1" inline className={classes.text}>
+        {isActive ? activeText : inactiveText}
+      </Typography>
+    </div>
+  )
+})

@@ -16,38 +16,39 @@ interface Props extends WithStyles<typeof tableStyles> {
 }
 
 // PendingTable renders a table for pending proposals.
-export const PendingTable = withStyles(tableStyles)(
-  ({ classes, proposals }: Props) => {
-    return (
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Last Proposed</TableCell>
+export const PendingTable = withStyles(tableStyles)(({
+  classes,
+  proposals,
+}: Props) => {
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>ID</TableCell>
+          <TableCell>Name</TableCell>
+          <TableCell>Last Proposed</TableCell>
+        </TableRow>
+      </TableHead>
+
+      <TableBody>
+        {proposals?.map((proposal) => (
+          <TableRow key={proposal.id} className={classes.row} hover>
+            <TableCell className={classes.cell} component="th" scope="row">
+              <Link
+                className={classes.link}
+                href={`/job_proposals/${proposal.id}`}
+              >
+                {proposal.id}
+              </Link>
+            </TableCell>
+
+            <TableCell>{proposal.name || '--'}</TableCell>
+            <TableCell>
+              <TimeAgo tooltip>{proposal.latestSpec.createdAt}</TimeAgo>
+            </TableCell>
           </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {proposals?.map((proposal) => (
-            <TableRow key={proposal.id} className={classes.row} hover>
-              <TableCell className={classes.cell} component="th" scope="row">
-                <Link
-                  className={classes.link}
-                  href={`/job_proposals/${proposal.id}`}
-                >
-                  {proposal.id}
-                </Link>
-              </TableCell>
-
-              <TableCell>{proposal.name || '--'}</TableCell>
-              <TableCell>
-                <TimeAgo tooltip>{proposal.latestSpec.createdAt}</TimeAgo>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    )
-  },
-)
+        ))}
+      </TableBody>
+    </Table>
+  )
+})

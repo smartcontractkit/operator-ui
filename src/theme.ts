@@ -31,10 +31,9 @@ declare module '@material-ui/core/styles/createTypography' {
     marginLeft?: string
   }
 
-  interface TypographyOptions
-    extends Partial<
-      Record<AdditionalThemeStyle, TypographyStyleOptions> & FontStyleOptions
-    > {}
+  interface TypographyOptions extends Partial<
+    Record<AdditionalThemeStyle, TypographyStyleOptions> & FontStyleOptions
+  > {}
 }
 
 const mainTheme: ThemeOptions = {

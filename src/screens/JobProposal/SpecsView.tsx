@@ -110,247 +110,244 @@ const confirmationDialogText = {
   },
 }
 
-export const SpecsView = withStyles(styles)(
-  ({
-    classes,
-    onApprove,
-    onCancel,
-    onReject,
-    onUpdateSpec,
-    specs,
-    proposal,
-  }: Props) => {
-    const [confirmationDialog, setConfirmationDialog] =
-      React.useState<ConfirmationDialogArgs | null>(null)
-    const [isEditing, setIsEditing] = React.useState(false)
+export const SpecsView = withStyles(styles)(({
+  classes,
+  onApprove,
+  onCancel,
+  onReject,
+  onUpdateSpec,
+  specs,
+  proposal,
+}: Props) => {
+  const [confirmationDialog, setConfirmationDialog] =
+    React.useState<ConfirmationDialogArgs | null>(null)
+  const [isEditing, setIsEditing] = React.useState(false)
 
-    const openConfirmationDialog = (
-      action: ConfirmationDialogArgs['action'],
-      id: string,
-    ) => {
-      setConfirmationDialog({ action, id })
-    }
+  const openConfirmationDialog = (
+    action: ConfirmationDialogArgs['action'],
+    id: string,
+  ) => {
+    setConfirmationDialog({ action, id })
+  }
 
-    const latestSpec = React.useMemo(() => {
-      return specs.reduce((max, spec) =>
-        max.version > spec.version ? max : spec,
-      )
-    }, [specs])
+  const latestSpec = React.useMemo(() => {
+    return specs.reduce((max, spec) =>
+      max.version > spec.version ? max : spec,
+    )
+  }, [specs])
 
-    const sortedSpecs = React.useMemo(() => {
-      const sorted = [...specs]
+  const sortedSpecs = React.useMemo(() => {
+    const sorted = [...specs]
 
-      return sorted.sort((a, b) => b.version - a.version)
-    }, [specs])
+    return sorted.sort((a, b) => b.version - a.version)
+  }, [specs])
 
-    const approvableCancelledJobSpecs = sortedSpecs
-      .filter((spec) => spec.status === 'CANCELLED')
-      .slice(0, 2)
-      .map((spec) => spec.id)
+  const approvableCancelledJobSpecs = sortedSpecs
+    .filter((spec) => spec.status === 'CANCELLED')
+    .slice(0, 2)
+    .map((spec) => spec.id)
 
-    const renderActions = (
-      status: SpecStatus,
-      specID: string,
-      proposal: JobProposalPayloadFields,
-    ) => {
-      switch (status) {
-        case 'PENDING':
-          return (
-            <>
-              <Button
-                variant="text"
-                color="secondary"
-                onClick={() => openConfirmationDialog('reject', specID)}
-              >
-                Reject
-              </Button>
+  const renderActions = (
+    status: SpecStatus,
+    specID: string,
+    proposal: JobProposalPayloadFields,
+  ) => {
+    switch (status) {
+      case 'PENDING':
+        return (
+          <>
+            <Button
+              variant="text"
+              color="secondary"
+              onClick={() => openConfirmationDialog('reject', specID)}
+            >
+              Reject
+            </Button>
 
-              {latestSpec.id === specID &&
-                proposal.status !== 'DELETED' &&
-                proposal.status !== 'REVOKED' && (
+            {latestSpec.id === specID &&
+              proposal.status !== 'DELETED' &&
+              proposal.status !== 'REVOKED' && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => openConfirmationDialog('approve', specID)}
+                >
+                  Approve
+                </Button>
+              )}
+
+            {latestSpec.id === specID &&
+              proposal.status === 'DELETED' &&
+              proposal.pendingUpdate && (
+                <>
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => openConfirmationDialog('approve', specID)}
+                    onClick={() => openConfirmationDialog('cancel', specID)}
                   >
-                    Approve
+                    Cancel
                   </Button>
-                )}
 
-              {latestSpec.id === specID &&
-                proposal.status === 'DELETED' &&
-                proposal.pendingUpdate && (
-                  <>
+                  <Typography color="error">
+                    This proposal was deleted. Cancel the spec to delete any
+                    running jobs
+                  </Typography>
+                </>
+              )}
+          </>
+        )
+      case 'APPROVED':
+        return (
+          <>
+            <Button
+              variant="contained"
+              onClick={() => openConfirmationDialog('cancel', specID)}
+            >
+              Cancel
+            </Button>
+
+            {proposal.status === 'DELETED' && proposal.pendingUpdate && (
+              <Typography color="error">
+                This proposal was deleted. Cancel the spec to delete any running
+                jobs
+              </Typography>
+            )}
+          </>
+        )
+      case 'CANCELLED':
+        if (
+          approvableCancelledJobSpecs.includes(specID) &&
+          proposal.status !== 'DELETED' &&
+          proposal.status !== 'REVOKED'
+        ) {
+          return (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() =>
+                openConfirmationDialog(
+                  specID === latestSpec.id ? 'approve' : 'approvePrevious',
+                  specID,
+                )
+              }
+            >
+              Approve
+            </Button>
+          )
+        }
+
+        return null
+      default:
+        return null
+    }
+  }
+
+  return (
+    <div>
+      {sortedSpecs.map((spec, idx) => (
+        <ExpansionPanel
+          defaultExpanded={idx === 0}
+          key={idx}
+          data-testid="expansion-panel"
+        >
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography className={classes.versionText}>
+              Version {spec.version}
+            </Typography>
+            <Chip
+              label={spec.status}
+              color={spec.status === 'APPROVED' ? 'primary' : 'default'}
+              variant={
+                spec.status === 'REJECTED' || spec.status === 'CANCELLED'
+                  ? 'outlined'
+                  : 'default'
+              }
+            />
+            <div className={classes.proposedAtContainer}>
+              <Typography>
+                Proposed <TimeAgo tooltip>{spec.createdAt}</TimeAgo>
+              </Typography>
+            </div>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails className={classes.expansionPanelDetails}>
+            <div className={classes.actions}>
+              <div className={classes.editContainer}>
+                {idx === 0 &&
+                  (spec.status === 'PENDING' || spec.status === 'CANCELLED') &&
+                  proposal.status !== 'DELETED' &&
+                  proposal.status !== 'REVOKED' && (
                     <Button
                       variant="contained"
-                      color="primary"
-                      onClick={() => openConfirmationDialog('cancel', specID)}
+                      onClick={() => setIsEditing(true)}
                     >
-                      Cancel
+                      Edit
                     </Button>
-
-                    <Typography color="error">
-                      This proposal was deleted. Cancel the spec to delete any
-                      running jobs
-                    </Typography>
-                  </>
-                )}
-            </>
-          )
-        case 'APPROVED':
-          return (
-            <>
-              <Button
-                variant="contained"
-                onClick={() => openConfirmationDialog('cancel', specID)}
-              >
-                Cancel
-              </Button>
-
-              {proposal.status === 'DELETED' && proposal.pendingUpdate && (
-                <Typography color="error">
-                  This proposal was deleted. Cancel the spec to delete any
-                  running jobs
-                </Typography>
-              )}
-            </>
-          )
-        case 'CANCELLED':
-          if (
-            approvableCancelledJobSpecs.includes(specID) &&
-            proposal.status !== 'DELETED' &&
-            proposal.status !== 'REVOKED'
-          ) {
-            return (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() =>
-                  openConfirmationDialog(
-                    specID === latestSpec.id ? 'approve' : 'approvePrevious',
-                    specID,
-                  )
-                }
-              >
-                Approve
-              </Button>
-            )
-          }
-
-          return null
-        default:
-          return null
-      }
-    }
-
-    return (
-      <div>
-        {sortedSpecs.map((spec, idx) => (
-          <ExpansionPanel
-            defaultExpanded={idx === 0}
-            key={idx}
-            data-testid="expansion-panel"
-          >
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography className={classes.versionText}>
-                Version {spec.version}
-              </Typography>
-              <Chip
-                label={spec.status}
-                color={spec.status === 'APPROVED' ? 'primary' : 'default'}
-                variant={
-                  spec.status === 'REJECTED' || spec.status === 'CANCELLED'
-                    ? 'outlined'
-                    : 'default'
-                }
-              />
-              <div className={classes.proposedAtContainer}>
-                <Typography>
-                  Proposed <TimeAgo tooltip>{spec.createdAt}</TimeAgo>
-                </Typography>
+                  )}
               </div>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails className={classes.expansionPanelDetails}>
-              <div className={classes.actions}>
-                <div className={classes.editContainer}>
-                  {idx === 0 &&
-                    (spec.status === 'PENDING' ||
-                      spec.status === 'CANCELLED') &&
-                    proposal.status !== 'DELETED' &&
-                    proposal.status !== 'REVOKED' && (
-                      <Button
-                        variant="contained"
-                        onClick={() => setIsEditing(true)}
-                      >
-                        Edit
-                      </Button>
-                    )}
-                </div>
-                <div className={classes.actionsContainer}>
-                  {renderActions(spec.status, spec.id, proposal)}
-                </div>
+              <div className={classes.actionsContainer}>
+                {renderActions(spec.status, spec.id, proposal)}
               </div>
+            </div>
 
-              <SyntaxHighlighter
-                language="toml"
-                style={prism}
-                data-testid="codeblock"
-              >
-                {spec.definition}
-              </SyntaxHighlighter>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-        ))}
+            <SyntaxHighlighter
+              language="toml"
+              style={prism}
+              data-testid="codeblock"
+            >
+              {spec.definition}
+            </SyntaxHighlighter>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      ))}
 
-        <ConfirmationDialog
-          open={confirmationDialog != null}
-          title={
-            confirmationDialog
-              ? confirmationDialogText[confirmationDialog.action].title
-              : ''
-          }
-          body={
-            confirmationDialog
-              ? confirmationDialogText[confirmationDialog.action].body
-              : ''
-          }
-          onConfirm={() => {
-            if (confirmationDialog) {
-              switch (confirmationDialog.action) {
-                case 'approve':
-                case 'approvePrevious':
-                  onApprove(confirmationDialog.id)
+      <ConfirmationDialog
+        open={confirmationDialog != null}
+        title={
+          confirmationDialog
+            ? confirmationDialogText[confirmationDialog.action].title
+            : ''
+        }
+        body={
+          confirmationDialog
+            ? confirmationDialogText[confirmationDialog.action].body
+            : ''
+        }
+        onConfirm={() => {
+          if (confirmationDialog) {
+            switch (confirmationDialog.action) {
+              case 'approve':
+              case 'approvePrevious':
+                onApprove(confirmationDialog.id)
 
-                  break
-                case 'cancel':
-                  onCancel(confirmationDialog.id)
+                break
+              case 'cancel':
+                onCancel(confirmationDialog.id)
 
-                  break
-                case 'reject':
-                  onReject(confirmationDialog.id)
+                break
+              case 'reject':
+                onReject(confirmationDialog.id)
 
-                  break
-                default:
-                // NOOP
-              }
-
-              setConfirmationDialog(null)
+                break
+              default:
+              // NOOP
             }
-          }}
-          cancelButtonText="Cancel"
-          onCancel={() => setConfirmationDialog(null)}
-        />
 
-        <EditJobSpecDialog
-          open={isEditing}
-          onClose={() => setIsEditing(false)}
-          initialValues={{
-            definition: latestSpec.definition,
-            id: latestSpec.id,
-          }}
-          onSubmit={onUpdateSpec}
-        />
-      </div>
-    )
-  },
-)
+            setConfirmationDialog(null)
+          }
+        }}
+        cancelButtonText="Cancel"
+        onCancel={() => setConfirmationDialog(null)}
+      />
+
+      <EditJobSpecDialog
+        open={isEditing}
+        onClose={() => setIsEditing(false)}
+        initialValues={{
+          definition: latestSpec.definition,
+          id: latestSpec.id,
+        }}
+        onSubmit={onUpdateSpec}
+      />
+    </div>
+  )
+})

@@ -2,7 +2,7 @@ import { formatJobSpecType } from './formatJobSpecType'
 
 describe('formatJobSpecType', () => {
   it("removes 'Spec' suffix as a default", () => {
-    expect(formatJobSpecType('KeeperSpec')).toEqual('Keeper')
+    expect(formatJobSpecType('CronSpec')).toEqual('Cron')
   })
 
   it('formats Direct Request as a special case', () => {

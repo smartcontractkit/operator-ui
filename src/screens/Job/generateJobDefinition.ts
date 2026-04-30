@@ -97,19 +97,6 @@ export const generateJobDefinition = (
       }
 
       break
-    case 'KeeperSpec':
-      values = {
-        ...extractJobFields(job),
-        ...extractSpecFields(
-          job.spec,
-          'contractAddress',
-          'evmChainID',
-          'fromAddress',
-        ),
-        ...extractObservationSourceField(job),
-      }
-
-      break
     case 'OCRSpec':
       values = {
         ...extractJobFields(job, 'maxTaskDuration'),

@@ -8,7 +8,7 @@
     "artifacts"
   ],
   "engines": {
-    "node": "^20.0.0"
+    "node": "^24.0.0"
   },
   "scripts": {
     "lint": "eslint --ext js,jsx,ts,tsx .",

@@ -40,11 +40,6 @@ const JOB_PAYLOAD__SPEC = gql`
       pollTimerPeriod
       threshold
     }
-    ... on KeeperSpec {
-      contractAddress
-      evmChainID
-      fromAddress
-    }
     ... on OCRSpec {
       blockchainTimeout
       contractAddress

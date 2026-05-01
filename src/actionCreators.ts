@@ -338,7 +338,14 @@ export const submitSignIn = (data: Parameter<Sessions['createSession']>) =>
 
 export const submitSignOut = () => sendSignOut
 
-export const beginRegistration = () => sendBeginRegistration()
+export const beginRegistration = (): ThunkAction<
+  ReturnType<typeof sendBeginRegistration>,
+  AppState,
+  void,
+  Action<string>
+> => {
+  return () => sendBeginRegistration()
+}
 
 export const createJobRunV2 = (
   id: string,

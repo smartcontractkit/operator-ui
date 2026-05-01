@@ -1,5 +1,5 @@
 import { CardTitle } from 'components/CardTitle'
-import { Card, Grid } from '@material-ui/core'
+import { Card, Grid } from '@mui/material'
 import Content from 'components/Content'
 import React from 'react'
 import { ChainResource } from './Show'

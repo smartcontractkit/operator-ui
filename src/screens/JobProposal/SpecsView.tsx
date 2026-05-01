@@ -4,19 +4,17 @@ import { gql } from '@apollo/client'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
-import Button from '@material-ui/core/Button'
-import Chip from '@material-ui/core/Chip'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import ExpansionPanel from '@material-ui/core/ExpansionPanel'
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
-import {
-  createStyles,
-  Theme,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
+import Button from '@mui/material/Button'
+import Chip from '@mui/material/Chip'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from '@mui/styles'
+import createStyles from '@mui/styles/createStyles'
+import withStyles from '@mui/styles/withStyles'
+import Typography from '@mui/material/Typography'
 
 import { ConfirmationDialog } from 'src/components/Dialogs/ConfirmationDialog'
 import {
@@ -245,12 +243,12 @@ export const SpecsView = withStyles(styles)(({
   return (
     <div>
       {sortedSpecs.map((spec, idx) => (
-        <ExpansionPanel
+        <Accordion
           defaultExpanded={idx === 0}
           key={idx}
           data-testid="expansion-panel"
         >
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography className={classes.versionText}>
               Version {spec.version}
             </Typography>
@@ -268,8 +266,8 @@ export const SpecsView = withStyles(styles)(({
                 Proposed <TimeAgo tooltip>{spec.createdAt}</TimeAgo>
               </Typography>
             </div>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails className={classes.expansionPanelDetails}>
+          </AccordionSummary>
+          <AccordionDetails className={classes.expansionPanelDetails}>
             <div className={classes.actions}>
               <div className={classes.editContainer}>
                 {idx === 0 &&
@@ -296,8 +294,8 @@ export const SpecsView = withStyles(styles)(({
             >
               {spec.definition}
             </SyntaxHighlighter>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
+          </AccordionDetails>
+        </Accordion>
       ))}
 
       <ConfirmationDialog

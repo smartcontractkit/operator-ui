@@ -120,7 +120,7 @@ describe('JobsScreen', () => {
 
     expect(queryByText('job 1')).toBeInTheDocument()
     expect(queryByText('job 2')).toBeInTheDocument()
-    expect(queryByText('1-2 of 3')).toBeInTheDocument()
+    expect(queryByText(/1.?2 of 3/)).toBeInTheDocument()
     expect(getByRole('button', { name: /prev-page/i })).toBeDisabled()
 
     // Page 2
@@ -129,7 +129,7 @@ describe('JobsScreen', () => {
     await waitForLoading()
 
     expect(queryByText('job 3')).toBeInTheDocument()
-    expect(queryByText('3-3 of 3')).toBeInTheDocument()
+    expect(queryByText(/3.?3 of 3/)).toBeInTheDocument()
     expect(getByRole('button', { name: /next-page/i })).toBeDisabled()
 
     // Page 1
@@ -139,7 +139,7 @@ describe('JobsScreen', () => {
 
     expect(queryByText('job 1')).toBeInTheDocument()
     expect(queryByText('job 2')).toBeInTheDocument()
-    expect(queryByText('1-2 of 3')).toBeInTheDocument()
+    expect(queryByText(/1.?2 of 3/)).toBeInTheDocument()
   })
 
   it('renders GQL errors', async () => {

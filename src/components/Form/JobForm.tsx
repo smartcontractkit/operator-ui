@@ -2,11 +2,11 @@ import React from 'react'
 
 import TOML from '@iarna/toml'
 import { Field, Form, Formik, FormikHelpers } from 'formik'
-import { TextField } from 'formik-material-ui'
+import { FormikTextField as TextField } from './FormikFields'
 import * as Yup from 'yup'
 
-import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid'
+import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
 
 export interface FormValues {
   toml: string

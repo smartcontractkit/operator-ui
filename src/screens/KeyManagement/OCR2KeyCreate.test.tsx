@@ -60,10 +60,14 @@ describe('OCR2KeysCard creation', () => {
     expect(
       await screen.findByText(`Create OCR2 Key Bundle`),
     ).toBeInTheDocument()
-    expect(screen.getByText(`Chain type`)).toBeInTheDocument()
-    expect(screen.getByText(`EVM`)).toBeInTheDocument()
+    expect(
+      screen.getByRole('combobox', { name: /chain type/i }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('combobox', { name: /chain type/i }),
+    ).toHaveTextContent('EVM')
 
-    userEvent.click(await screen.findByText(`EVM`))
+    userEvent.click(screen.getByRole('combobox', { name: /chain type/i }))
 
     expect(screen.getByText(`COSMOS`)).toBeInTheDocument()
     expect(screen.getAllByText(`SOLANA`).length).toBeGreaterThan(0)
@@ -78,9 +82,13 @@ describe('OCR2KeysCard creation', () => {
     expect(
       await screen.findByText(`Create OCR2 Key Bundle`),
     ).toBeInTheDocument()
-    expect(screen.getByText(`Chain type`)).toBeInTheDocument()
-    expect(await screen.findByText(`EVM`)).toBeInTheDocument()
-    userEvent.click(await screen.findByText(`EVM`))
+    expect(
+      screen.getByRole('combobox', { name: /chain type/i }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('combobox', { name: /chain type/i }),
+    ).toHaveTextContent('EVM')
+    userEvent.click(screen.getByRole('combobox', { name: /chain type/i }))
     expect(screen.getAllByText(`SOLANA`).length).toBeGreaterThan(0)
     userEvent.click((await screen.findAllByText(`SOLANA`))[0])
     expect(screen.getByText(`Cancel`)).toBeInTheDocument()

@@ -109,7 +109,9 @@ const signInSuccessAction = (doc: UnboxApi<Sessions['createSession']>) => {
 }
 
 const signInFailAction = () =>
-  ({ type: AuthActionType.RECEIVE_SIGNIN_FAIL }) as const
+  ({
+    type: AuthActionType.RECEIVE_SIGNIN_FAIL,
+  }) as const
 
 function sendSignIn(data: Parameter<Sessions['createSession']>) {
   return (dispatch: StoreDispatch) => {

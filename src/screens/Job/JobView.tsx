@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import Button from 'src/components/Button'

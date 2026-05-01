@@ -7,21 +7,19 @@ import {
   notifyErrorMsg,
 } from 'actionCreators'
 
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import IconButton from '@material-ui/core/IconButton'
-import DeleteIcon from '@material-ui/icons/Delete'
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableRow from '@material-ui/core/TableRow'
-import Typography from '@material-ui/core/Typography'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import IconButton from '@mui/material/IconButton'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from '@mui/styles'
+import createStyles from '@mui/styles/createStyles'
+import withStyles from '@mui/styles/withStyles'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
 import { ConfirmationDialog } from 'src/components/Dialogs/ConfirmationDialog'
 
 const styles = (theme: Theme) => {
@@ -67,7 +65,6 @@ export const JobRuns = withStyles(styles)(({ classes }: Props) => {
         title="Job Runs"
         subheader="Reduce the database size by deleting old job runs"
       />
-
       <Table>
         <TableBody>
           <TableRow>
@@ -81,6 +78,7 @@ export const JobRuns = withStyles(styles)(({ classes }: Props) => {
               <IconButton
                 onClick={() => setErroredConfirm(true)}
                 data-cy="delete-errored-job-runs"
+                size="large"
               >
                 <DeleteIcon className={classes.deleteIcon} color="error" />
               </IconButton>
@@ -88,7 +86,6 @@ export const JobRuns = withStyles(styles)(({ classes }: Props) => {
           </TableRow>
         </TableBody>
       </Table>
-
       <ConfirmationDialog
         open={showErroredConfirm}
         title="Delete errored jobs runs"

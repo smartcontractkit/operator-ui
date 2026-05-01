@@ -2,19 +2,19 @@ import React from 'react'
 
 import { gql, useQuery } from '@apollo/client'
 
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import TableCell from '@material-ui/core/TableCell'
-import TableRow from '@material-ui/core/TableRow'
-import Grid from '@material-ui/core/Grid'
-import ExpansionPanel from '@material-ui/core/ExpansionPanel'
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
+import Grid from '@mui/material/Grid'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
 
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import Typography from '@material-ui/core/Typography'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import Typography from '@mui/material/Typography'
 
 // const DeprecationWarning = () => { // Left as reference for future deprecation warnings
 //   return (
@@ -80,16 +80,16 @@ const TOMLPanel = ({ loading, toml, error = '', title, expanded }: Props) => {
 
   return (
     <Typography>
-      <ExpansionPanel defaultExpanded={expanded}>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+      <Accordion defaultExpanded={expanded}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           {title}
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails style={styles}>
+        </AccordionSummary>
+        <AccordionDetails style={styles}>
           <SyntaxHighlighter language="toml" style={prism}>
             {toml}
           </SyntaxHighlighter>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+        </AccordionDetails>
+      </Accordion>
     </Typography>
   )
 }

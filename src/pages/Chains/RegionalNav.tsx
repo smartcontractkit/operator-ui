@@ -3,17 +3,15 @@ import { connect } from 'react-redux'
 import { Chain, Resource } from 'core/store/models'
 import { localizedTimestamp, TimeAgo } from 'components/TimeAgo'
 import { useLocation } from 'react-router-dom'
-import Card from '@material-ui/core/Card'
-import Grid from '@material-ui/core/Grid'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import {
-  createStyles,
-  Theme,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from '@mui/styles'
+import createStyles from '@mui/styles/createStyles'
+import withStyles from '@mui/styles/withStyles'
+import Typography from '@mui/material/Typography'
 import classNames from 'classnames'
 import Link from 'components/Link'
 
@@ -43,7 +41,7 @@ const styles = (theme: Theme) =>
       paddingRight: 0,
     },
     horizontalNavLink: {
-      padding: `${theme.spacing(4)}px ${theme.spacing(4)}px`,
+      padding: `${theme.spacing(4)} ${theme.spacing(4)}`,
       textDecoration: 'none',
       display: 'inline-block',
       borderBottom: 'solid 1px',

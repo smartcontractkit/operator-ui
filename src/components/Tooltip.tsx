@@ -1,10 +1,8 @@
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
-import MuiTooltip from '@material-ui/core/Tooltip'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from '@mui/styles'
+import createStyles from '@mui/styles/createStyles'
+import withStyles from '@mui/styles/withStyles'
+import MuiTooltip from '@mui/material/Tooltip'
 import React from 'react'
 
 const styles = ({ palette, shadows, typography }: Theme) =>

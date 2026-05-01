@@ -1,9 +1,12 @@
 import React from 'react'
 
-import IconButton from '@material-ui/core/IconButton'
-import Menu from '@material-ui/core/Menu'
-import SettingsIcon from '@material-ui/icons/Settings'
-import { Theme, withStyles, WithStyles } from '@material-ui/core/styles'
+import IconButton from '@mui/material/IconButton'
+import Menu from '@mui/material/Menu'
+import SettingsIcon from '@mui/icons-material/Settings'
+import { Theme } from '@mui/material/styles'
+
+import { WithStyles } from '@mui/styles'
+import withStyles from '@mui/styles/withStyles'
 
 import { MenuItemLink } from 'components/MenuItemLink'
 
@@ -35,10 +38,9 @@ export const SettingsMenu = withStyles(styles)(({ classes }: Props) => {
 
   return (
     <React.Fragment>
-      <IconButton disableRipple onClick={handleOpen}>
+      <IconButton disableRipple onClick={handleOpen} size="large">
         <SettingsIcon className={classes.iconButton} />
       </IconButton>
-
       <Menu
         id="settings-menu"
         anchorEl={anchorEl}

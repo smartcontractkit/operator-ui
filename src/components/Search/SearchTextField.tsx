@@ -1,13 +1,11 @@
 import React from 'react'
 
-import Grid from '@material-ui/core/Grid'
-import {
-  createStyles,
-  Theme,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField'
+import Grid from '@mui/material/Grid'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from '@mui/styles'
+import createStyles from '@mui/styles/createStyles'
+import withStyles from '@mui/styles/withStyles'
+import TextField from '@mui/material/TextField'
 
 const styles = (theme: Theme) => {
   return createStyles({

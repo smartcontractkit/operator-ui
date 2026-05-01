@@ -124,7 +124,7 @@ describe('TransactionsScreen', () => {
 
     expect(queryByText('0x111111...11111111')).toBeInTheDocument()
     expect(queryByText('0x222222...22222222')).toBeInTheDocument()
-    expect(queryByText('1-2 of 3')).toBeInTheDocument()
+    expect(queryByText(/1.?2 of 3/)).toBeInTheDocument()
     expect(getByRole('button', { name: /prev-page/i })).toBeDisabled()
 
     // Page 2
@@ -133,7 +133,7 @@ describe('TransactionsScreen', () => {
     await waitForLoading()
 
     expect(queryByText('0x333333...33333333')).toBeInTheDocument()
-    expect(queryByText('3-3 of 3')).toBeInTheDocument()
+    expect(queryByText(/3.?3 of 3/)).toBeInTheDocument()
     expect(getByRole('button', { name: /next-page/i })).toBeDisabled()
 
     // Page 1
@@ -143,7 +143,7 @@ describe('TransactionsScreen', () => {
 
     expect(queryByText('0x111111...11111111')).toBeInTheDocument()
     expect(queryByText('0x222222...22222222')).toBeInTheDocument()
-    expect(queryByText('1-2 of 3')).toBeInTheDocument()
+    expect(queryByText(/1.?2 of 3/)).toBeInTheDocument()
   })
 
   it('renders GQL errors', async () => {

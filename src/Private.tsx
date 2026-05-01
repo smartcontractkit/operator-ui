@@ -1,9 +1,9 @@
 import React from 'react'
-import { Theme } from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
+import { Theme } from '@mui/material/styles'
+import Grid from '@mui/material/Grid'
 
 import { Switch } from 'react-router-dom'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import Header from 'pages/Header'
 import Notifications from 'pages/Notifications'
 import PrivateRoute from './PrivateRoute'

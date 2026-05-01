@@ -1,15 +1,15 @@
 import React from 'react'
 
-import Grid from '@material-ui/core/Grid'
-import IconButton from '@material-ui/core/IconButton'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import EditIcon from '@material-ui/icons/Edit'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
-import ToggleOffIcon from '@material-ui/icons/ToggleOff'
-import ToggleOnIcon from '@material-ui/icons/ToggleOn'
+import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import EditIcon from '@mui/icons-material/Edit'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import ToggleOffIcon from '@mui/icons-material/ToggleOff'
+import ToggleOnIcon from '@mui/icons-material/ToggleOn'
 
 import {
   DetailsCard,
@@ -51,7 +51,7 @@ export const FeedsManagerCard = ({ manager, onEnable, onDisable }: Props) => {
     <DetailsCard
       actions={
         <div>
-          <IconButton onClick={handleOpen} aria-label="open-menu">
+          <IconButton onClick={handleOpen} aria-label="open-menu" size="large">
             <MoreVertIcon />
           </IconButton>
           <Menu

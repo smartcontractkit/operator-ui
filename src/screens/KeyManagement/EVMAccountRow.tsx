@@ -1,22 +1,21 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import TableCell from '@material-ui/core/TableCell'
-import TableRow from '@material-ui/core/TableRow'
-import Typography from '@material-ui/core/Typography'
-import Dialog from '@material-ui/core/Dialog'
-import Grid from '@material-ui/core/Grid'
-import Checkbox from '@material-ui/core/Checkbox'
-import FormGroup from '@material-ui/core/FormGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
+import Dialog from '@mui/material/Dialog'
+import Grid from '@mui/material/Grid'
+import Checkbox from '@mui/material/Checkbox'
+import FormGroup from '@mui/material/FormGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import { ApolloQueryResult } from '@apollo/client'
 
-import {
-  createStyles,
-  withStyles,
-  Theme,
-  WithStyles,
-} from '@material-ui/core/styles'
+import { Theme } from '@mui/material/styles'
+
+import { WithStyles } from '@mui/styles'
+import createStyles from '@mui/styles/createStyles'
+import withStyles from '@mui/styles/withStyles'
 
 import Button from 'components/Button'
 import Close from 'components/Icons/Close'
@@ -175,7 +174,11 @@ const UnstyledEVMAccountRow: React.FC<Props> = ({
         <form onSubmit={onSubmit}>
           <Grid container spacing={0}>
             <Grid item className={classes.modalContent}>
-              <Grid container alignItems="baseline" justify="space-between">
+              <Grid
+                container
+                alignItems="baseline"
+                justifyContent="space-between"
+              >
                 <Grid item>
                   <Typography
                     variant="h5"
@@ -229,7 +232,7 @@ const UnstyledEVMAccountRow: React.FC<Props> = ({
                   container
                   spacing={0}
                   alignItems="center"
-                  justify="center"
+                  justifyContent="center"
                 >
                   <Grid item className={classes.deleteButton}>
                     <Button variant="danger" type="submit">

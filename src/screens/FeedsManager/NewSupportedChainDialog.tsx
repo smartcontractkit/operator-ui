@@ -1,11 +1,11 @@
 import React from 'react'
 
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import Typography from '@material-ui/core/Typography'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import Typography from '@mui/material/Typography'
 
 import {
   ChainConfigurationForm,
@@ -85,11 +85,10 @@ export const NewSupportedChainDialog = ({ onClose, open, onSubmit }: Props) => {
   const ocr2Keys = ocr2KeysData ? ocr2KeysData.ocr2KeyBundles.results : []
 
   return (
-    <Dialog onClose={onClose} open={open} disableBackdropClick>
-      <DialogTitle disableTypography>
+    <Dialog onClose={onClose} open={open}>
+      <DialogTitle>
         <Typography variant="body2">New Supported Chain</Typography>
       </DialogTitle>
-
       <DialogContent>
         <ChainConfigurationForm
           innerRef={formRef}
@@ -103,7 +102,6 @@ export const NewSupportedChainDialog = ({ onClose, open, onSubmit }: Props) => {
           ocr2Keys={ocr2Keys}
         />
       </DialogContent>
-
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
         <Button

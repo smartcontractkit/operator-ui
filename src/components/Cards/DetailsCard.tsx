@@ -1,21 +1,19 @@
 import React from 'react'
 
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from '@mui/styles'
+import createStyles from '@mui/styles/createStyles'
+import withStyles from '@mui/styles/withStyles'
+import Typography from '@mui/material/Typography'
 
-import Paper from '@material-ui/core/Paper'
+import Paper from '@mui/material/Paper'
 
 const styles = (theme: Theme) =>
   createStyles({
     paper: {
       display: 'flex',
-      margin: `${theme.spacing(2.5)}px 0`,
-      padding: `${theme.spacing(3)}px  ${theme.spacing(3.5)}px`,
+      margin: `${theme.spacing(2.5)} 0`,
+      padding: `${theme.spacing(3)}  ${theme.spacing(3.5)}`,
     },
     content: {
       flex: 1,

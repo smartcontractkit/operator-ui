@@ -3,9 +3,9 @@ import React from 'react'
 import { gql } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 
-import Card from '@material-ui/core/Card'
-import Grid from '@material-ui/core/Grid'
-import TablePagination from '@material-ui/core/TablePagination'
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
+import TablePagination from '@mui/material/TablePagination'
 
 import Content from 'src/components/Content'
 import { Heading1 } from 'src/components/Heading/Heading1'

@@ -7,20 +7,21 @@ import {
   FormikHelpers,
   useFormikContext,
 } from 'formik'
-import { CheckboxWithLabel, TextField } from 'formik-material-ui'
+import {
+  FormikCheckboxWithLabel as CheckboxWithLabel,
+  FormikTextField as TextField,
+} from './FormikFields'
 import * as Yup from 'yup'
 
-import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid'
-import MenuItem from '@material-ui/core/MenuItem'
-import Paper from '@material-ui/core/Paper'
-import {
-  createStyles,
-  Theme,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
+import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
+import MenuItem from '@mui/material/MenuItem'
+import Paper from '@mui/material/Paper'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from '@mui/styles'
+import createStyles from '@mui/styles/createStyles'
+import withStyles from '@mui/styles/withStyles'
+import Typography from '@mui/material/Typography'
 import { ChainTypes } from './ChainTypes'
 
 export type FormValues = {

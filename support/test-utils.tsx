@@ -3,7 +3,8 @@ import { Provider, Provider as ReduxProvider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 import { render, RenderOptions, RenderResult } from '@testing-library/react'
 import configureStore from 'redux-mock-store'
-import { MuiThemeProvider } from '@material-ui/core/styles'
+import { ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider as LegacyThemeProvider } from '@mui/styles'
 
 import createStore from 'src/createStore'
 import { theme } from 'src/theme'
@@ -11,9 +12,11 @@ import thunk from 'redux-thunk'
 
 const AllTheProviders: React.FC = ({ children }) => {
   return (
-    <MuiThemeProvider theme={theme}>
-      <ReduxProvider store={createStore()}>{children}</ReduxProvider>
-    </MuiThemeProvider>
+    <ThemeProvider theme={theme}>
+      <LegacyThemeProvider theme={theme}>
+        <ReduxProvider store={createStore()}>{children}</ReduxProvider>
+      </LegacyThemeProvider>
+    </ThemeProvider>
   )
 }
 

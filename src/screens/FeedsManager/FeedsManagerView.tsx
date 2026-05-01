@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 
 import { Heading1 } from 'src/components/Heading/Heading1'
 import { Heading2 } from 'src/components/Heading/Heading2'

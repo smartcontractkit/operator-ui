@@ -1,8 +1,11 @@
 import React from 'react'
 
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Grid from '@material-ui/core/Grid'
-import { Theme, withStyles, WithStyles } from '@material-ui/core/styles'
+import CircularProgress from '@mui/material/CircularProgress'
+import Grid from '@mui/material/Grid'
+import { Theme } from '@mui/material/styles'
+
+import { WithStyles } from '@mui/styles'
+import withStyles from '@mui/styles/withStyles'
 
 const styles = (theme: Theme) => ({
   root: {

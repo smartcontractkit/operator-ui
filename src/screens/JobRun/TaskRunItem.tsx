@@ -1,12 +1,10 @@
 import React from 'react'
 
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from '@mui/styles'
+import createStyles from '@mui/styles/createStyles'
+import withStyles from '@mui/styles/withStyles'
+import Typography from '@mui/material/Typography'
 
 import { TaskRunStatusIcon } from 'src/components/Icons/TaskRunStatusIcon'
 import { TaskRunStatus } from 'src/utils/taskRunStatus'
@@ -27,7 +25,7 @@ const styles = (theme: Theme) =>
       paddingLeft: theme.spacing(2),
     },
     heading: {
-      lineHeight: `${theme.spacing(5)}px`,
+      lineHeight: theme.spacing(5),
     },
     subheading: {
       color: theme.palette.grey[500],

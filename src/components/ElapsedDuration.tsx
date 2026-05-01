@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 
 const MS_IN_SECOND = 1000
 const SECONDS_IN_MINUTE = 60

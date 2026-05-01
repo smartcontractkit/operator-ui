@@ -209,7 +209,7 @@ describe('JobScreen', () => {
     userEvent.click(getByRole('tab', { name: /^runs/i }))
 
     // Default value of the rows per page select
-    userEvent.click(getByRole('button', { name: /10/i }))
+    userEvent.click(getByRole('combobox', { name: /rows per page/i }))
     userEvent.click(getByRole('option', { name: /25/i }))
   })
 

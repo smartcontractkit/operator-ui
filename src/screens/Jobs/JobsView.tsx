@@ -3,14 +3,14 @@ import React from 'react'
 import { gql } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 
-import Card from '@material-ui/core/Card'
-import Grid from '@material-ui/core/Grid'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TablePagination from '@material-ui/core/TablePagination'
-import TableRow from '@material-ui/core/TableRow'
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableHead from '@mui/material/TableHead'
+import TablePagination from '@mui/material/TablePagination'
+import TableRow from '@mui/material/TableRow'
 
 import BaseLink from 'components/BaseLink'
 import Button from 'components/Button'
@@ -113,7 +113,7 @@ export const JobsView: React.FC<Props> = ({ jobs, page, pageSize, total }) => {
         </Grid>
 
         <Grid item xs={3}>
-          <Grid container justify="flex-end">
+          <Grid container justifyContent="flex-end">
             <Grid item>
               <Button
                 variant="secondary"

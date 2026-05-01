@@ -2,13 +2,13 @@ import React from 'react'
 
 import { gql } from '@apollo/client'
 
-import Card from '@material-ui/core/Card'
-import Grid from '@material-ui/core/Grid'
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
 import { DetailsCardItemValue } from 'src/components/Cards/DetailsCard'
 import { ChainAccountBalanceCard } from 'screens/Dashboard/ChainAccountBalanceCard'
 import { EthKey } from 'types/generated/graphql'
-import CardHeader from '@material-ui/core/CardHeader'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import CardHeader from '@mui/material/CardHeader'
+import CircularProgress from '@mui/material/CircularProgress'
 
 export const ACCOUNT_BALANCES_PAYLOAD__RESULTS_FIELDS = gql`
   fragment AccountBalancesPayload_ResultsFields on EthKey {

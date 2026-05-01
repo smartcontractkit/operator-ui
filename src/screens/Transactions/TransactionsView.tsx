@@ -3,19 +3,19 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { gql } from '@apollo/client'
 
-import Card from '@material-ui/core/Card'
-import Grid from '@material-ui/core/Grid'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
 
 import Content from 'src/components/Content'
 import { Heading1 } from 'src/components/Heading/Heading1'
 import { Loading } from 'src/components/Feedback/Loading'
 import { TransactionRow } from './TransactionRow'
-import { TablePagination } from '@material-ui/core'
+import { TablePagination } from '@mui/material'
 
 export const ETH_TRANSACTIONS_PAYLOAD__RESULTS_FIELDS = gql`
   fragment EthTransactionsPayload_ResultsFields on EthTransaction {

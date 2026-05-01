@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { render, screen } from '@testing-library/react'
+import { render, screen } from 'support/test-utils'
 import userEvent from '@testing-library/user-event'
 
 import { SearchTextField } from './SearchTextField'

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Card from '@material-ui/core/Card'
-import Typography from '@material-ui/core/Typography'
+import Card from '@mui/material/Card'
+import Typography from '@mui/material/Typography'
 import classNames from 'classnames'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 
 const styles = (theme) => {
   const success = theme.palette.success || {}

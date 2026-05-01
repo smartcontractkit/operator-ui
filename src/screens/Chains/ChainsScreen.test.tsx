@@ -115,7 +115,7 @@ describe('ChainsScreen', () => {
 
     expect(queryByText('5')).toBeInTheDocument()
     expect(queryByText('42')).toBeInTheDocument()
-    expect(queryByText('1-2 of 3')).toBeInTheDocument()
+    expect(queryByText(/1.?2 of 3/)).toBeInTheDocument()
     expect(getByRole('button', { name: /prev-page/i })).toBeDisabled()
 
     // Page 2
@@ -126,7 +126,7 @@ describe('ChainsScreen', () => {
     await waitForLoading()
 
     expect(queryByText('4')).toBeInTheDocument()
-    expect(queryByText('3-3 of 3')).toBeInTheDocument()
+    expect(queryByText(/3.?3 of 3/)).toBeInTheDocument()
     expect(getByRole('button', { name: /next-page/i })).toBeDisabled()
 
     // Page 1
@@ -136,7 +136,7 @@ describe('ChainsScreen', () => {
 
     expect(queryByText('5')).toBeInTheDocument()
     expect(queryByText('42')).toBeInTheDocument()
-    expect(queryByText('1-2 of 3')).toBeInTheDocument()
+    expect(queryByText(/1.?2 of 3/)).toBeInTheDocument()
   })
 
   it('renders GQL errors', async () => {

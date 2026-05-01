@@ -4,9 +4,10 @@ import { NodeResource } from './ChainNodes'
 import { tableStyles } from 'components/Table'
 import Link from 'components/Link'
 
-import { withStyles, WithStyles } from '@material-ui/core/styles'
-import TableCell from '@material-ui/core/TableCell'
-import TableRow from '@material-ui/core/TableRow'
+import { WithStyles } from '@mui/styles'
+import withStyles from '@mui/styles/withStyles'
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
 
 interface Props extends WithStyles<typeof tableStyles> {
   node: NodeResource

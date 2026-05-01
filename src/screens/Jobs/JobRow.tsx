@@ -1,8 +1,9 @@
 import React from 'react'
 
-import { withStyles, WithStyles } from '@material-ui/core/styles'
-import TableCell from '@material-ui/core/TableCell'
-import TableRow from '@material-ui/core/TableRow'
+import { WithStyles } from '@mui/styles'
+import withStyles from '@mui/styles/withStyles'
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
 
 import { formatJobSpecType } from 'src/utils/formatJobSpecType'
 import { tableStyles } from 'components/Table'

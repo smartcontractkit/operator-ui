@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import { Card, TablePagination } from '@material-ui/core'
+import { Card, TablePagination } from '@mui/material'
 
 import { JobRunsTable } from 'src/components/Table/JobRunsTable'
 

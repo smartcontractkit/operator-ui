@@ -6,7 +6,7 @@ import {
   TableCell,
   TableRow,
   Typography,
-} from '@material-ui/core'
+} from '@mui/material'
 import { NodeRow } from './NodeRow'
 import { NodeResource } from './ChainNodes'
 

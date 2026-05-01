@@ -2,15 +2,13 @@ import React from 'react'
 
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
-import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined'
-import IconButton from '@material-ui/core/IconButton'
-import {
-  createStyles,
-  withStyles,
-  WithStyles,
-  Theme,
-} from '@material-ui/core/styles'
-import Tooltip from '@material-ui/core/Tooltip'
+import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined'
+import IconButton from '@mui/material/IconButton'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from '@mui/styles'
+import createStyles from '@mui/styles/createStyles'
+import withStyles from '@mui/styles/withStyles'
+import Tooltip from '@mui/material/Tooltip'
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -35,7 +33,7 @@ export const CopyIconButton = withStyles(styles)(({
   return (
     <CopyToClipboard text={data} onCopy={() => setCopied(true)}>
       <Tooltip title="Copied!" open={copied} onClose={() => setCopied(false)}>
-        <IconButton className={classes.button}>
+        <IconButton className={classes.button} size="large">
           <FileCopyOutlinedIcon className={classes.icon} />
         </IconButton>
       </Tooltip>

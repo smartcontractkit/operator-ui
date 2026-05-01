@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import MenuItem, { MenuItemProps } from '@material-ui/core/MenuItem'
+import MenuItem, { MenuItemProps } from '@mui/material/MenuItem'
 
 interface MenuItemLinkProps extends MenuItemProps {
   to: string

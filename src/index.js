@@ -1,4 +1,5 @@
-import { ThemeProvider } from '@material-ui/core/styles'
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
+import { ThemeProvider as LegacyThemeProvider } from '@mui/styles'
 import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import moment from 'moment'
@@ -17,9 +18,13 @@ export default App
 if (typeof document !== 'undefined') {
   ReactDOM.render(
     <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <LegacyThemeProvider theme={theme}>
+            <App />
+          </LegacyThemeProvider>
+        </ThemeProvider>
+      </StyledEngineProvider>
     </ApolloProvider>,
     document.getElementById('root'),
   )

@@ -1,19 +1,17 @@
 import React from 'react'
 
-import CloseIcon from '@material-ui/icons/Close'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import IconButton from '@material-ui/core/IconButton'
-import TextField from '@material-ui/core/TextField'
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
+import CloseIcon from '@mui/icons-material/Close'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import IconButton from '@mui/material/IconButton'
+import TextField from '@mui/material/TextField'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from '@mui/styles'
+import createStyles from '@mui/styles/createStyles'
+import withStyles from '@mui/styles/withStyles'
+import Typography from '@mui/material/Typography'
 
 import Button from 'src/components/Button'
 
@@ -55,17 +53,17 @@ export const RunJobDialog = withStyles(styles)(({
 
   return (
     <Dialog onClose={onClose} open={open}>
-      <DialogTitle disableTypography>
+      <DialogTitle>
         <Typography variant="h5">Pipeline Input</Typography>
         <IconButton
           aria-label="Close"
           className={classes.closeButton}
           onClick={onClose}
+          size="large"
         >
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-
       <DialogContent className={classes.dialogContent}>
         <TextField
           className={classes.textarea}
@@ -75,7 +73,6 @@ export const RunJobDialog = withStyles(styles)(({
           onChange={(e) => setPipelineInput(e.target.value)}
         />
       </DialogContent>
-
       <DialogActions>
         <Button variant="primary" onClick={handleRun}>
           Run Job

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { gql } from '@apollo/client'
 
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 
 import Content from 'src/components/Content'
 import { Heading1 } from 'src/components/Heading/Heading1'

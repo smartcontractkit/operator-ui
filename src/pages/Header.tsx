@@ -1,21 +1,19 @@
-import AppBar from '@material-ui/core/AppBar'
-import MuiDrawer from '@material-ui/core/Drawer'
-import Grid from '@material-ui/core/Grid'
-import Hidden from '@material-ui/core/Hidden'
-import IconButton from '@material-ui/core/IconButton'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import Portal from '@material-ui/core/Portal'
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import MenuIcon from '@material-ui/icons/Menu'
+import AppBar from '@mui/material/AppBar'
+import MuiDrawer from '@mui/material/Drawer'
+import Grid from '@mui/material/Grid'
+import Hidden from '@mui/material/Hidden'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import Portal from '@mui/material/Portal'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from '@mui/styles'
+import createStyles from '@mui/styles/createStyles'
+import withStyles from '@mui/styles/withStyles'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import MenuIcon from '@mui/icons-material/Menu'
 import classNames from 'classnames'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -267,14 +265,18 @@ const Header = withStyles(styles)(({
               </BaseLink>
             </Grid>
             <Grid item xs={1} sm={6} md={8}>
-              <Grid container justify="flex-end">
+              <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Hidden mdUp>
-                    <IconButton aria-label="open drawer" onClick={toggleDrawer}>
+                    <IconButton
+                      aria-label="open drawer"
+                      onClick={toggleDrawer}
+                      size="large"
+                    >
                       <MenuIcon />
                     </IconButton>
                   </Hidden>
-                  <Hidden smDown>
+                  <Hidden mdDown>
                     <Nav
                       authenticated={authenticated}
                       isFeedsManagerFeatureEnabled={

@@ -2,19 +2,17 @@ import React from 'react'
 
 import { gql } from '@apollo/client'
 
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableFooter from '@material-ui/core/TableFooter'
-import TableRow from '@material-ui/core/TableRow'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from '@mui/styles'
+import createStyles from '@mui/styles/createStyles'
+import withStyles from '@mui/styles/withStyles'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableFooter from '@mui/material/TableFooter'
+import TableRow from '@mui/material/TableRow'
 
 import BaseLink from 'src/components/BaseLink'
 import Button from 'src/components/Button'

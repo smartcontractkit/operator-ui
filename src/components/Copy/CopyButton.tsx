@@ -3,7 +3,7 @@ import React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import Button from '../Button'
-import Tooltip from '@material-ui/core/Tooltip'
+import Tooltip from '@mui/material/Tooltip'
 
 interface Props {
   data: string

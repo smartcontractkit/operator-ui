@@ -2,9 +2,9 @@ import React from 'react'
 
 import { useLocation } from 'react-router-dom'
 
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardHeader from '@material-ui/core/CardHeader'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
 import { JobForm, Props as JobFormProps } from 'src/components/Form/JobForm'
 import * as storage from 'utils/local-storage'
 

@@ -1,15 +1,13 @@
 import React from 'react'
 
-import Badge from '@material-ui/core/Badge'
-import Card from '@material-ui/core/Card'
-import {
-  createStyles,
-  Theme,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core/styles'
-import Tab from '@material-ui/core/Tab'
-import Tabs from '@material-ui/core/Tabs'
+import Badge from '@mui/material/Badge'
+import Card from '@mui/material/Card'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from '@mui/styles'
+import createStyles from '@mui/styles/createStyles'
+import withStyles from '@mui/styles/withStyles'
+import Tab from '@mui/material/Tab'
+import Tabs from '@mui/material/Tabs'
 
 import { ApprovedTable } from './ApprovedTable'
 import { InactiveTable } from './InactiveTable'
@@ -33,7 +31,7 @@ const styles = (theme: Theme) => {
       borderBottom: '1px solid #e8e8e8',
     },
     badge: {
-      padding: `0 ${theme.spacing(2)}px`,
+      padding: `0 ${theme.spacing(2)}`,
     },
   })
 }

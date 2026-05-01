@@ -1,10 +1,9 @@
-import { common, green, grey } from '@material-ui/core/colors'
-import { createMuiTheme, ThemeOptions } from '@material-ui/core/styles'
-import { darken } from '@material-ui/core/styles/colorManipulator'
+import { common, green, grey } from '@mui/material/colors'
+import { createTheme, ThemeOptions, darken } from '@mui/material/styles'
 
 const spacingUnit = 8
 
-declare module '@material-ui/core/styles/createPalette' {
+declare module '@mui/material/styles/createPalette' {
   interface ListStatus {
     background: string
     color: string
@@ -20,7 +19,7 @@ declare module '@material-ui/core/styles/createPalette' {
   }
 }
 
-declare module '@material-ui/core/styles/createTypography' {
+declare module '@mui/material/styles/createTypography' {
   type AdditionalThemeStyle =
     | 'body1Next'
     | 'body2Next'
@@ -44,14 +43,58 @@ declare module '@material-ui/core/styles/createTypography' {
 }
 
 const mainTheme: ThemeOptions = {
-  props: {
+  components: {
     MuiGrid: {
-      spacing: 3 as any as Required<
-        Required<Required<ThemeOptions>['props']>['MuiGrid']
-      >['spacing'],
+      defaultProps: {
+        spacing: 3,
+      },
     },
     MuiCardHeader: {
-      titleTypographyProps: { color: 'secondary' },
+      defaultProps: {
+        titleTypographyProps: { color: 'secondary' },
+      },
+      styleOverrides: {
+        root: {
+          borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+        },
+        action: {
+          marginTop: -2,
+          marginRight: 0,
+          '& >*': {
+            marginLeft: spacingUnit * 2,
+          },
+        },
+        subheader: {
+          marginTop: spacingUnit * 0.5,
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: spacingUnit / 2,
+          textTransform: 'none',
+        },
+        sizeLarge: {
+          padding: undefined,
+          fontSize: undefined,
+          paddingTop: spacingUnit,
+          paddingBottom: spacingUnit,
+          paddingLeft: spacingUnit * 5,
+          paddingRight: spacingUnit * 5,
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        body: {
+          fontSize: '1rem',
+        },
+        head: {
+          fontSize: '1rem',
+          fontWeight: 400,
+        },
+      },
     },
   },
   palette: {
@@ -102,46 +145,6 @@ const mainTheme: ThemeOptions = {
   },
   shape: {
     borderRadius: spacingUnit,
-  },
-  overrides: {
-    MuiButton: {
-      root: {
-        borderRadius: spacingUnit / 2,
-        textTransform: 'none',
-      },
-      sizeLarge: {
-        padding: undefined,
-        fontSize: undefined,
-        paddingTop: spacingUnit,
-        paddingBottom: spacingUnit,
-        paddingLeft: spacingUnit * 5,
-        paddingRight: spacingUnit * 5,
-      },
-    },
-    MuiTableCell: {
-      body: {
-        fontSize: '1rem',
-      },
-      head: {
-        fontSize: '1rem',
-        fontWeight: 400,
-      },
-    },
-    MuiCardHeader: {
-      root: {
-        borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-      },
-      action: {
-        marginTop: -2,
-        marginRight: 0,
-        '& >*': {
-          marginLeft: spacingUnit * 2,
-        },
-      },
-      subheader: {
-        marginTop: spacingUnit * 0.5,
-      },
-    },
   },
   typography: {
     fontFamily: [
@@ -303,4 +306,4 @@ const mainTheme: ThemeOptions = {
   ],
 }
 
-export const theme = createMuiTheme(mainTheme)
+export const theme = createTheme(mainTheme)

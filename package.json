@@ -64,7 +64,7 @@
   "devDependencies": {
     "@changesets/cli": "^2.30.0",
     "@graphql-codegen/cli": "^6.3.1",
-    "@graphql-codegen/fragment-matcher": "^5.1.0",
+    "@graphql-codegen/fragment-matcher": "^6.0.1",
     "@graphql-codegen/introspection": "^5.0.2",
     "@graphql-codegen/typescript": "^5.0.10",
     "@graphql-codegen/typescript-operations": "^5.1.0",
@@ -107,7 +107,7 @@
     "jest-environment-jsdom": "^30.3.0",
     "jest-silent-reporter": "^0.6.0",
     "mock-local-storage": "^1.1.24",
-    "octokit": "^2.1.0",
+    "octokit": "^5.0.5",
     "prettier": "3.8.3",
     "react-hot-loader": "^4.13.1",
     "redux-devtools-extension": "^2.13.9",

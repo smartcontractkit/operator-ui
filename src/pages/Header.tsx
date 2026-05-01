@@ -49,13 +49,34 @@ const drawerWidth = 240
 const drawerStyles = ({ palette, spacing }: Theme) =>
   createStyles({
     menuitem: {
-      padding: spacing(3),
-      display: 'block',
+      minHeight: spacing(6),
+      paddingLeft: spacing(3),
+      paddingRight: spacing(3),
+      color: palette.text.primary,
+      textDecoration: 'none',
+      borderBottom: `1px solid ${palette.divider}`,
+      '&:hover': {
+        backgroundColor: palette.action.hover,
+        textDecoration: 'none',
+      },
+      '& .MuiListItemText-root': {
+        marginTop: 0,
+        marginBottom: 0,
+      },
+      '& .MuiListItemText-primary': {
+        color: 'inherit',
+        fontWeight: 500,
+      },
+    },
+    activeMenuitem: {
+      color: palette.primary.main,
+      backgroundColor: palette.action.hover,
     },
     drawerPaper: {
       backgroundColor: palette.background.paper,
       paddingTop: spacing(7),
       width: drawerWidth,
+      boxSizing: 'border-box',
     },
     drawerList: {
       padding: 0,
@@ -78,6 +99,16 @@ const Drawer = withStyles(drawerStyles)(({
   submitSignOut,
   isFeedsManagerFeatureEnabled,
 }: DrawerProps) => {
+  const { pathname } = useLocation()
+
+  const isActivePath = (itemPath: string) => {
+    if (itemPath === '/job_distributors') {
+      return pathname.includes(itemPath)
+    }
+
+    return pathname.startsWith(itemPath)
+  }
+
   return (
     <MuiDrawer
       anchor="right"
@@ -93,24 +124,28 @@ const Drawer = withStyles(drawerStyles)(({
             <ListItem
               key={href}
               button
-              component={() => (
-                <BaseLink href={href}>
-                  <ListItemText primary={text} />
-                </BaseLink>
+              component={BaseLink as any}
+              href={href}
+              className={classNames(
+                classes.menuitem,
+                isActivePath(href) && classes.activeMenuitem,
               )}
-              className={classes.menuitem}
-            />
+            >
+              <ListItemText primary={text} />
+            </ListItem>
           ))}
           {isFeedsManagerFeatureEnabled && (
             <ListItem
               button
-              component={() => (
-                <BaseLink href={'/job_distributors'}>
-                  <ListItemText primary="Job Distributors" />
-                </BaseLink>
+              component={BaseLink as any}
+              href={'/job_distributors'}
+              className={classNames(
+                classes.menuitem,
+                isActivePath('/job_distributors') && classes.activeMenuitem,
               )}
-              className={classes.menuitem}
-            />
+            >
+              <ListItemText primary="Job Distributors" />
+            </ListItem>
           )}
 
           {authenticated && (
@@ -255,40 +290,42 @@ const Header = withStyles(styles)(({
         onResize={onResize}
         handleHeight
       >
-        <LoadingBar fetchCount={fetchCount} />
+        <div>
+          <LoadingBar fetchCount={fetchCount} />
 
-        <Toolbar className={classes.toolbar}>
-          <Grid container alignItems="center">
-            <Grid item xs={11} sm={6} md={4}>
-              <BaseLink href="/">
-                <MainLogo width={200} />
-              </BaseLink>
-            </Grid>
-            <Grid item xs={1} sm={6} md={8}>
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <Hidden mdUp>
-                    <IconButton
-                      aria-label="open drawer"
-                      onClick={toggleDrawer}
-                      size="large"
-                    >
-                      <MenuIcon />
-                    </IconButton>
-                  </Hidden>
-                  <Hidden mdDown>
-                    <Nav
-                      authenticated={authenticated}
-                      isFeedsManagerFeatureEnabled={
-                        isFeedsManagerFeatureEnabled
-                      }
-                    />
-                  </Hidden>
+          <Toolbar className={classes.toolbar}>
+            <Grid container alignItems="center">
+              <Grid item xs={11} sm={6} md={4}>
+                <BaseLink href="/">
+                  <MainLogo width={200} />
+                </BaseLink>
+              </Grid>
+              <Grid item xs={1} sm={6} md={8}>
+                <Grid container justifyContent="flex-end">
+                  <Grid item>
+                    <Hidden mdUp>
+                      <IconButton
+                        aria-label="open drawer"
+                        onClick={toggleDrawer}
+                        size="large"
+                      >
+                        <MenuIcon />
+                      </IconButton>
+                    </Hidden>
+                    <Hidden mdDown>
+                      <Nav
+                        authenticated={authenticated}
+                        isFeedsManagerFeatureEnabled={
+                          isFeedsManagerFeatureEnabled
+                        }
+                      />
+                    </Hidden>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </Toolbar>
+          </Toolbar>
+        </div>
       </ReactResizeDetector>
       <Portal container={drawerContainer}>
         <Drawer

@@ -24,6 +24,9 @@ const styles = (theme: Theme) => {
       paddingTop: 0,
       paddingBottom: 0,
     },
+    menuItem: {
+      minHeight: theme.spacing(6),
+    },
   }
 }
 
@@ -55,7 +58,6 @@ export const SettingsMenu = withStyles(styles)(({ classes }: Props) => {
       <Menu
         id="settings-menu"
         anchorEl={anchorEl}
-        getContentAnchorEl={null}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         transformOrigin={{ vertical: 8, horizontal: 128 }}
         open={Boolean(anchorEl)}
@@ -65,14 +67,22 @@ export const SettingsMenu = withStyles(styles)(({ classes }: Props) => {
           className: classes.menuList,
         }}
       >
-        <MenuItem onClick={handleToggleMode}>
+        <MenuItem className={classes.menuItem} onClick={handleToggleMode}>
           <ListItemText>Dark mode</ListItemText>
           <Switch checked={isDarkMode} edge="end" />
         </MenuItem>
-        <MenuItemLink onClick={handleClose} to="/keys">
+        <MenuItemLink
+          className={classes.menuItem}
+          onClick={handleClose}
+          to="/keys"
+        >
           Key Management
         </MenuItemLink>
-        <MenuItemLink onClick={handleClose} to="/config">
+        <MenuItemLink
+          className={classes.menuItem}
+          onClick={handleClose}
+          to="/config"
+        >
           Configuration
         </MenuItemLink>
       </Menu>

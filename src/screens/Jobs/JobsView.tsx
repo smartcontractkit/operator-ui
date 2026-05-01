@@ -17,8 +17,8 @@ import Button from 'components/Button'
 import Content from 'components/Content'
 import { JobRow } from './JobRow'
 import Link from 'components/Link'
+import { PageHeader } from 'src/components/PageHeader'
 import { SearchTextField } from 'src/components/Search/SearchTextField'
-import { Heading1 } from 'src/components/Heading/Heading1'
 
 export const JOBS_PAYLOAD__RESULTS_FIELDS = gql`
   fragment JobsPayload_ResultsFields on Job {
@@ -108,13 +108,10 @@ export const JobsView: React.FC<Props> = ({ jobs, page, pageSize, total }) => {
   return (
     <Content>
       <Grid container>
-        <Grid item xs={9}>
-          <Heading1>Jobs</Heading1>
-        </Grid>
-
-        <Grid item xs={3}>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
+        <Grid item xs={12}>
+          <PageHeader
+            title="Jobs"
+            actions={
               <Button
                 variant="secondary"
                 component={BaseLink}
@@ -122,8 +119,8 @@ export const JobsView: React.FC<Props> = ({ jobs, page, pageSize, total }) => {
               >
                 New Job
               </Button>
-            </Grid>
-          </Grid>
+            }
+          />
         </Grid>
 
         <Grid item xs={12}>

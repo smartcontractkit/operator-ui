@@ -16,7 +16,8 @@ import Typography from '@mui/material/Typography'
 const styles = () => {
   return createStyles({
     paperRoot: {
-      width: 700,
+      width: '100%',
+      maxWidth: 700,
     },
   })
 }
@@ -62,6 +63,7 @@ export const EditJobSpecDialog = withStyles(styles)(({
           <Dialog
             open={open}
             onClose={onClose}
+            fullWidth
             classes={{ paper: classes.paperRoot }}
           >
             <DialogTitle>
@@ -77,8 +79,8 @@ export const EditJobSpecDialog = withStyles(styles)(({
                 label="Job Spec"
                 variant="outlined"
                 multiline
-                rows={10}
-                rowsMax={25}
+                minRows={10}
+                maxRows={25}
                 required
                 autoComplete="off"
                 margin="normal"

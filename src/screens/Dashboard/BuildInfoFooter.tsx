@@ -22,7 +22,7 @@ const styles = (theme: Theme) =>
       borderRadius: 0,
     },
     bareAnchor: {
-      color: theme.palette.common.black,
+      color: theme.palette.text.primary,
       textDecoration: 'none',
     },
   })

@@ -12,8 +12,8 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
 import Content from 'src/components/Content'
-import { Heading1 } from 'src/components/Heading/Heading1'
 import { Loading } from 'src/components/Feedback/Loading'
+import { PageHeader } from 'src/components/PageHeader'
 import { TransactionRow } from './TransactionRow'
 import { TablePagination } from '@mui/material'
 
@@ -48,9 +48,9 @@ export const TransactionsView: React.FC<Props> = ({
 
   return (
     <Content>
-      <Grid container spacing={4}>
+      <Grid container>
         <Grid item xs={12}>
-          <Heading1>Transactions</Heading1>
+          <PageHeader title="Transactions" />
         </Grid>
 
         {loading && <Loading />}

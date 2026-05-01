@@ -111,7 +111,7 @@ describe('pages/Signin', () => {
       )
     })
 
-    expect(screen.getByText('Login with OIDC')).toBeInTheDocument()
+    expect(await screen.findByText('Login with OIDC')).toBeInTheDocument()
   })
 
   test('handles successful OIDC token exchange', async () => {

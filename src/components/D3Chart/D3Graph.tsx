@@ -30,7 +30,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
   const fontColor = theme.palette.text.primary
   const [d3GraphData, setD3GraphData] = React.useState<
     GraphData<NodeWithExtraParameters, GraphLink>
-  >({} as GraphData<NodeWithExtraParameters, GraphLink>)
+  >({ nodes: [], links: [] })
 
   React.useEffect(() => {
     const getNode = (nodeID: string): Stratify | undefined => {
@@ -168,7 +168,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
     highlightOpacity: 1,
     link: {
       color: '#d3d3d3',
-      fontColor: fontColor,
+      fontColor,
       fontSize: 12,
       fontWeight: 'normal',
       highlightColor: 'blue',
@@ -186,7 +186,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
     minZoom: 0.3,
     node: {
       color: '#d3d3d3',
-      fontColor: fontColor,
+      fontColor,
       fontSize: 14,
       fontWeight: 'normal',
       highlightColor: 'red',
@@ -263,15 +263,17 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
 
   return (
     <div style={{ fontFamily: 'sans-serif', fontWeight: 'normal' }}>
-      <Graph
-        id="task-list-graph-d3"
-        data={d3GraphData}
-        config={d3GraphConfig}
-        onMouseOverNode={onMouseOverNode}
-        onMouseOutNode={onMouseOutNode}
-      >
-        D3 chart
-      </Graph>
+      {d3GraphData.nodes.length > 0 && (
+        <Graph
+          id="task-list-graph-d3"
+          data={d3GraphData}
+          config={d3GraphConfig}
+          onMouseOverNode={onMouseOverNode}
+          onMouseOutNode={onMouseOutNode}
+        >
+          D3 chart
+        </Graph>
+      )}
       {nodesData.map((n) => {
         return (
           <div

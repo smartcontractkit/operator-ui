@@ -13,7 +13,7 @@ import TableRow from '@mui/material/TableRow'
 
 import { ChainRow } from './ChainRow'
 import Content from 'src/components/Content'
-import { Heading1 } from 'src/components/Heading/Heading1'
+import { PageHeader } from 'src/components/PageHeader'
 import { SearchTextField } from 'src/components/Search/SearchTextField'
 
 const searchIncludes = (searchParam: string) => {
@@ -66,9 +66,8 @@ export const ChainsView: React.FC<Props> = ({
   return (
     <Content>
       <Grid container>
-
         <Grid item xs={12}>
-          <Heading1>Chains</Heading1>
+          <PageHeader title="Chains" />
         </Grid>
 
         <Grid item xs={12}>

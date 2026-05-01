@@ -22,6 +22,9 @@ const styles = (theme: Theme) => {
       paddingTop: 0,
       paddingBottom: 0,
     },
+    menuItem: {
+      minHeight: theme.spacing(6),
+    },
   }
 }
 
@@ -66,9 +69,13 @@ export const AccountMenu = withStyles(styles)(({ classes }: Props) => {
           className: classes.menuList,
         }}
       >
-        <MenuItem onClick={handleRegisterMFA}>Register MFA Token</MenuItem>
+        <MenuItem className={classes.menuItem} onClick={handleRegisterMFA}>
+          Register MFA Token
+        </MenuItem>
 
-        <MenuItem onClick={handleLogOut}>Log out</MenuItem>
+        <MenuItem className={classes.menuItem} onClick={handleLogOut}>
+          Log out
+        </MenuItem>
       </Menu>
     </React.Fragment>
   )

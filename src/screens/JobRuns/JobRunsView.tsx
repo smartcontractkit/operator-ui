@@ -8,9 +8,9 @@ import Grid from '@mui/material/Grid'
 import TablePagination from '@mui/material/TablePagination'
 
 import Content from 'src/components/Content'
-import { Heading1 } from 'src/components/Heading/Heading1'
 import { JobRunsTable } from 'src/components/Table/JobRunsTable'
 import { Loading } from 'src/components/Feedback/Loading'
+import { PageHeader } from 'src/components/PageHeader'
 
 export const JOB_RUNS_PAYLOAD__RESULTS_FIELDS = gql`
   fragment JobRunsPayload_ResultsFields on JobRun {
@@ -56,9 +56,9 @@ export const JobRunsView: React.FC<Props> = ({
 
   return (
     <Content>
-      <Grid container spacing={4}>
+      <Grid container>
         <Grid item xs={12}>
-          <Heading1>Job Runs</Heading1>
+          <PageHeader title="Job Runs" />
         </Grid>
 
         {loading && <Loading />}

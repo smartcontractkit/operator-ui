@@ -4,17 +4,15 @@ import { gql, useQuery } from '@apollo/client'
 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
-import TableCell from '@mui/material/TableCell'
-import TableRow from '@mui/material/TableRow'
 import Grid from '@mui/material/Grid'
 import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
+import Typography from '@mui/material/Typography'
 
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import Typography from '@mui/material/Typography'
 
 // const DeprecationWarning = () => { // Left as reference for future deprecation warnings
 //   return (
@@ -52,11 +50,9 @@ export const CONFIG_V2_QUERY = gql`
 `
 
 const SpanRow: React.FC = ({ children }) => (
-  <TableRow>
-    <TableCell component="th" scope="row" colSpan={3}>
-      {children}
-    </TableCell>
-  </TableRow>
+  <div>
+    <Typography component="div">{children}</Typography>
+  </div>
 )
 
 const FetchingRow = () => <SpanRow>...</SpanRow>
@@ -79,7 +75,7 @@ const TOMLPanel = ({ loading, toml, error = '', title, expanded }: Props) => {
   const styles = { display: 'block' }
 
   return (
-    <Typography>
+    <div>
       <Accordion defaultExpanded={expanded}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           {title}
@@ -90,7 +86,7 @@ const TOMLPanel = ({ loading, toml, error = '', title, expanded }: Props) => {
           </SyntaxHighlighter>
         </AccordionDetails>
       </Accordion>
-    </Typography>
+    </div>
   )
 }
 

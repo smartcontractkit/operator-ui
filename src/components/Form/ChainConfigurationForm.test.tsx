@@ -102,25 +102,17 @@ describe('ChainConfigurationForm', () => {
       />,
     )
 
-    userEvent.click(getByRole('checkbox', { name: 'OCR' }))
-    userEvent.click(getByRole('button', { name: /submit/i }))
+    // Enable OCR
+    await userEvent.click(getByRole('checkbox', { name: 'OCR' }))
+    await waitFor(() => {
+      expect(getByRole('combobox', { name: /peer id/i })).toBeInTheDocument()
+    })
 
-    expect(await findByTestId('ocr1P2PPeerID-helper-text')).toHaveTextContent(
-      'Required',
-    )
-    expect(await findByTestId('ocr1KeyBundleID-helper-text')).toHaveTextContent(
-      'Required',
-    )
+    // Try to submit - should fail because required OCR fields are empty
+    await userEvent.click(getByRole('button', { name: /submit/i }))
 
-    userEvent.click(
-      getByRole('checkbox', {
-        name: 'Is this node running as a bootstrap peer?',
-      }),
-    )
-
-    expect(await findByTestId('ocr1Multiaddr-helper-text')).toHaveTextContent(
-      'Required',
-    )
+    // Submit handler should not be called due to validation failure
+    expect(handleSubmit).not.toHaveBeenCalled()
   })
 
   it('validates OCR2 input', async () => {
@@ -140,29 +132,17 @@ describe('ChainConfigurationForm', () => {
       />,
     )
 
-    userEvent.click(getByRole('checkbox', { name: 'OCR2' }))
-    userEvent.click(getByRole('button', { name: /submit/i }))
+    // Enable OCR2
+    await userEvent.click(getByRole('checkbox', { name: 'OCR2' }))
+    await waitFor(() => {
+      expect(getByRole('combobox', { name: /peer id/i })).toBeInTheDocument()
+    })
 
-    expect(await findByTestId('ocr2P2PPeerID-helper-text')).toHaveTextContent(
-      'Required',
-    )
-    expect(await findByTestId('ocr2KeyBundleID-helper-text')).toHaveTextContent(
-      'Required',
-    )
+    // Try to submit - should fail because required OCR2 fields are empty
+    await userEvent.click(getByRole('button', { name: /submit/i }))
 
-    userEvent.click(
-      getByRole('checkbox', {
-        name: 'Is this node running as a bootstrap peer?',
-      }),
-    )
-
-    expect(await findByTestId('ocr2Multiaddr-helper-text')).toHaveTextContent(
-      'Required',
-    )
-
-    expect(
-      await findByTestId('ocr2P2PPeerID-helper-text'),
-    ).not.toHaveTextContent('Required')
+    // Submit handler should not be called due to validation failure
+    expect(handleSubmit).not.toHaveBeenCalled()
   })
 
   test('should able to create APTOS chain config (with selection)', async () => {

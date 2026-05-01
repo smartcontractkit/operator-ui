@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  getThemeMode,
-  setThemeMode,
-  type ThemeMode,
-} from 'src/utils/storage'
+import { getThemeMode, setThemeMode, type ThemeMode } from 'src/utils/storage'
 
 interface ThemeModeContextValue {
   mode: ThemeMode
@@ -25,13 +21,12 @@ export const ThemeModeProvider: React.FC = ({ children }) => {
     })
   }, [])
 
-  const value = React.useMemo(
-    () => ({ mode, toggleMode }),
-    [mode, toggleMode],
-  )
+  const value = React.useMemo(() => ({ mode, toggleMode }), [mode, toggleMode])
 
   return (
-    <ThemeModeContext.Provider value={value}>{children}</ThemeModeContext.Provider>
+    <ThemeModeContext.Provider value={value}>
+      {children}
+    </ThemeModeContext.Provider>
   )
 }
 
@@ -44,4 +39,3 @@ export const useThemeMode = (): ThemeModeContextValue => {
 
   return context
 }
-

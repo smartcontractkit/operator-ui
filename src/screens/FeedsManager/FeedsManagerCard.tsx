@@ -72,7 +72,9 @@ export const FeedsManagerCard = ({ manager, onEnable, onDisable }: Props) => {
                 {manager.disabledAt ? (
                   <ToggleOnIcon style={{ color: theme.palette.success.main }} />
                 ) : (
-                  <ToggleOffIcon style={{ color: theme.palette.text.disabled }} />
+                  <ToggleOffIcon
+                    style={{ color: theme.palette.text.disabled }}
+                  />
                 )}
               </ListItemIcon>
               <ListItemText>

@@ -13,7 +13,7 @@ import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 
 import Content from 'src/components/Content'
-import { Heading1 } from 'src/components/Heading/Heading1'
+import { PageHeader } from 'src/components/PageHeader'
 import { NodeRow } from './NodeRow'
 import { SearchTextField } from 'src/components/Search/SearchTextField'
 
@@ -81,8 +81,8 @@ export const NodesView: React.FC<Props> = ({
   return (
     <Content>
       <Grid container>
-        <Grid item xs={9}>
-          <Heading1>Nodes</Heading1>
+        <Grid item xs={12}>
+          <PageHeader title="Nodes" />
         </Grid>
 
         <Grid item xs={12}>
@@ -107,7 +107,7 @@ export const NodesView: React.FC<Props> = ({
               <TableBody>
                 {filteredNodes.length === 0 && (
                   <TableRow>
-                    <TableCell component="th" scope="row" colSpan={4}>
+                    <TableCell component="th" scope="row" colSpan={5}>
                       No nodes found
                     </TableCell>
                   </TableRow>

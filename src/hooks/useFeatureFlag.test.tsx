@@ -34,12 +34,9 @@ describe('useFeatureFlag', () => {
       },
     ]
 
-    const { result } = renderHook(
-      () => useFeatureFlag(Feature.CSA),
-      {
-        wrapper: getHookWrapper(mocks),
-      },
-    )
+    const { result } = renderHook(() => useFeatureFlag(Feature.CSA), {
+      wrapper: getHookWrapper(mocks),
+    })
 
     await waitFor(() => {
       expect(result.current).toEqual(true)
@@ -66,12 +63,9 @@ describe('useFeatureFlag', () => {
       },
     ]
 
-    const { result } = renderHook(
-      () => useFeatureFlag(Feature.CSA),
-      {
-        wrapper: getHookWrapper(mocks),
-      },
-    )
+    const { result } = renderHook(() => useFeatureFlag(Feature.CSA), {
+      wrapper: getHookWrapper(mocks),
+    })
 
     await waitFor(() => {
       expect(result.current).toEqual(false)

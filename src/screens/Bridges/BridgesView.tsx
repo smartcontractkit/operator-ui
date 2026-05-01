@@ -15,7 +15,7 @@ import BaseLink from 'components/BaseLink'
 import { BridgeRow } from './BridgeRow'
 import Button from 'components/Button'
 import Content from 'components/Content'
-import { Heading1 } from 'src/components/Heading/Heading1'
+import { PageHeader } from 'src/components/PageHeader'
 
 export const BRIDGES_PAYLOAD__RESULTS_FIELDS = gql`
   fragment BridgesPayload_ResultsFields on Bridge {
@@ -44,13 +44,11 @@ export const BridgesView: React.FC<Props> = ({
 
   return (
     <Content>
-      <Grid container spacing={4}>
-        <Grid item xs={9}>
-          <Heading1>Bridges</Heading1>
-        </Grid>
-        <Grid item xs={3}>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
+      <Grid container>
+        <Grid item xs={12}>
+          <PageHeader
+            title="Bridges"
+            actions={
               <Button
                 variant="secondary"
                 component={BaseLink}
@@ -58,8 +56,8 @@ export const BridgesView: React.FC<Props> = ({
               >
                 New Bridge
               </Button>
-            </Grid>
-          </Grid>
+            }
+          />
         </Grid>
 
         <Grid item xs={12}>

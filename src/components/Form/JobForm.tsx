@@ -59,8 +59,8 @@ export const JobForm = ({ initialValues, onSubmit, onTOMLChange }: Props) => {
                   required
                   fullWidth
                   multiline
-                  rows={10}
-                  rowsMax={25}
+                  minRows={10}
+                  maxRows={25}
                   variant="outlined"
                   autoComplete="off"
                   FormHelperTextProps={{ 'data-testid': 'toml-helper-text' }}

@@ -18,5 +18,3 @@ describe('SettingsMenu', () => {
     expect(localStorage.getItem('chainlink.themeMode')).toBe('dark')
   })
 })
-
-

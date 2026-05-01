@@ -5,6 +5,7 @@ import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
 import Grid from '@mui/material/Grid'
 
+import Content from 'components/Content'
 import {
   FeedsManagerForm,
   Props as FormProps,
@@ -20,18 +21,20 @@ type Props = Pick<FormProps, 'onSubmit'>
 
 export const NewFeedsManagerView: React.FC<Props> = ({ onSubmit }) => {
   return (
-    <Grid container>
-      <Grid item xs={12} md={11} lg={9}>
-        <Card>
-          <CardHeader title="Register Job Distributor" />
-          <CardContent>
-            <FeedsManagerForm
-              initialValues={initialValues}
-              onSubmit={onSubmit}
-            />
-          </CardContent>
-        </Card>
+    <Content>
+      <Grid container>
+        <Grid item xs={12} md={11} lg={9}>
+          <Card>
+            <CardHeader title="Register Job Distributor" />
+            <CardContent>
+              <FeedsManagerForm
+                initialValues={initialValues}
+                onSubmit={onSubmit}
+              />
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
-    </Grid>
+    </Content>
   )
 }

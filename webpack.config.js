@@ -15,6 +15,17 @@ module.exports = {
         use: {
           // `.swcrc` can be used to configure swc
           loader: 'swc-loader',
+          options: {
+            jsc: {
+              transform: {
+                react: {
+                  runtime: 'classic',
+                  development: isDev,
+                  refresh: isDev,
+                },
+              },
+            },
+          },
         },
       },
       {

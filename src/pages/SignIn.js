@@ -8,7 +8,6 @@ import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import { Grid } from '@material-ui/core'
-import { hot } from 'react-hot-loader'
 import { notifyErrorMsg, submitSignIn } from 'actionCreators'
 import { renderNotification } from 'pages/Notifications'
 import HexagonLogo from 'components/Logos/Hexagon'
@@ -238,4 +237,4 @@ export const ConnectedSignIn = connect(
   matchRouteAndMapDispatchToProps({ submitSignIn }),
 )(SignIn)
 
-export default hot(module)(withStyles(styles)(ConnectedSignIn))
+export default withStyles(styles)(ConnectedSignIn)

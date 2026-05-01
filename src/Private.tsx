@@ -3,7 +3,6 @@ import { Theme } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 
 import { Switch } from 'react-router-dom'
-import { hot } from 'react-hot-loader'
 import { withStyles } from '@material-ui/core/styles'
 import Header from 'pages/Header'
 import Notifications from 'pages/Notifications'
@@ -111,4 +110,4 @@ const Private = ({ classes }: { classes: { content: string } }) => {
   )
 }
 
-export default hot(module)(withStyles(styles)(Private))
+export default withStyles(styles)(Private)

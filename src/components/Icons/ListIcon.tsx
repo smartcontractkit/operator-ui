@@ -1,4 +1,3 @@
-/* eslint react/no-unknown-property: 0 */
 import React, { FC, SVGProps } from 'react'
 
 const ListIcon: FC<SVGProps<SVGSVGElement>> = (props) => (

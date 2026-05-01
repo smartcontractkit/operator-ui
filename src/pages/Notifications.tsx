@@ -41,7 +41,6 @@ const Success: React.FC<NotificationProps> = ({ notifications }) => {
   return <Flash success>{notifications.map(render)}</Flash>
 }
 
-/* eslint-disable-next-line @typescript-eslint/no-empty-interface */
 interface OwnProps {}
 
 interface StateProps {

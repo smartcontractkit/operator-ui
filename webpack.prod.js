@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const CompressionPlugin = require('compression-webpack-plugin')
 const webpackBase = require('./webpack.config')
 const TerserPlugin = require('terser-webpack-plugin')

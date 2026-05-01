@@ -1,9 +1,0 @@
-**/node_modules/**
-**/generated/**
-**/dist/**
-**/artifacts/**
-**/public/**
-**/build/**
-**/fixtures/**
-**/lib/**
-**/schema/**

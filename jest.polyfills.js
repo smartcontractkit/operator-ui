@@ -27,4 +27,3 @@ if (!global.MessagePort) {
     value: MessagePort,
   })
 }
-

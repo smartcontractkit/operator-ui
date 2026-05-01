@@ -8,7 +8,7 @@ import {
 } from 'react-d3-graph'
 import { Stratify } from 'utils/parseDot'
 import { D3Tooltip } from 'components/D3Chart/D3GraphTooltip'
-import { theme } from 'theme'
+import { useTheme } from '@mui/material/styles'
 import ELK, { ElkNode } from 'elkjs'
 import { ElkExtendedEdge } from 'elkjs/lib/elk-api'
 import Pending from 'components/Icons/Pending'
@@ -26,6 +26,8 @@ type D3GraphConfig = Partial<
 }
 
 export const D3Graph: React.FC<Props> = ({ nodesData }) => {
+  const theme = useTheme()
+  const fontColor = theme.palette.text.primary
   const [d3GraphData, setD3GraphData] = React.useState<
     GraphData<NodeWithExtraParameters, GraphLink>
   >({} as GraphData<NodeWithExtraParameters, GraphLink>)
@@ -166,7 +168,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
     highlightOpacity: 1,
     link: {
       color: '#d3d3d3',
-      fontColor: 'black',
+      fontColor: fontColor,
       fontSize: 12,
       fontWeight: 'normal',
       highlightColor: 'blue',
@@ -184,7 +186,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
     minZoom: 0.3,
     node: {
       color: '#d3d3d3',
-      fontColor: 'black',
+      fontColor: fontColor,
       fontSize: 14,
       fontWeight: 'normal',
       highlightColor: 'red',
@@ -278,9 +280,10 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
             style={{
               position: 'absolute',
               opacity: '0',
-              border: '1px solid rgba(0, 0, 0, 0.1)',
+              border: `1px solid ${theme.palette.divider}`,
               padding: theme.spacing(1),
-              background: 'white',
+              background: theme.palette.background.paper,
+              color: theme.palette.text.primary,
               borderRadius: 5,
               zIndex: -1,
               inlineSize: 'min-content',

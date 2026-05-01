@@ -5,16 +5,16 @@ import createStyles from '@mui/styles/createStyles'
 import withStyles from '@mui/styles/withStyles'
 import Typography from '@mui/material/Typography'
 import { TypographyProps } from '@mui/material/Typography'
-import { grey } from '@mui/material/colors'
+import { Theme } from '@mui/material/styles'
 import classNames from 'classnames'
 
 type Variant = TypographyProps['variant'] | 'srOnly'
 type Color = TypographyProps['color']
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     link: {
-      color: grey[900],
+      color: theme.palette.text.primary,
       textDecoration: 'none',
     },
     linkContent: {

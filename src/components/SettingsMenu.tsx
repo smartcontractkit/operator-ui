@@ -2,6 +2,9 @@ import React from 'react'
 
 import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import ListItemText from '@mui/material/ListItemText'
+import Switch from '@mui/material/Switch'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { Theme } from '@mui/material/styles'
 
@@ -9,6 +12,7 @@ import { WithStyles } from '@mui/styles'
 import withStyles from '@mui/styles/withStyles'
 
 import { MenuItemLink } from 'components/MenuItemLink'
+import { useThemeMode } from 'src/context/ThemeModeContext'
 
 const styles = (theme: Theme) => {
   return {
@@ -27,6 +31,8 @@ interface Props extends WithStyles<typeof styles> {}
 
 export const SettingsMenu = withStyles(styles)(({ classes }: Props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const { mode, toggleMode } = useThemeMode()
+  const isDarkMode = mode === 'dark'
 
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -34,6 +40,11 @@ export const SettingsMenu = withStyles(styles)(({ classes }: Props) => {
 
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const handleToggleMode = () => {
+    toggleMode()
+    handleClose()
   }
 
   return (
@@ -54,6 +65,10 @@ export const SettingsMenu = withStyles(styles)(({ classes }: Props) => {
           className: classes.menuList,
         }}
       >
+        <MenuItem onClick={handleToggleMode}>
+          <ListItemText>Dark mode</ListItemText>
+          <Switch checked={isDarkMode} edge="end" />
+        </MenuItem>
         <MenuItemLink onClick={handleClose} to="/keys">
           Key Management
         </MenuItemLink>

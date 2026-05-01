@@ -15,7 +15,7 @@ const styles = (theme: Theme) =>
     tabs: {
       marginTop: theme.spacing(4),
       marginBottom: theme.spacing(2.5),
-      borderBottom: `1px solid ${theme.palette.grey['300']}`,
+      borderBottom: `1px solid ${theme.palette.divider}`,
     },
     badge: {
       padding: `0 ${theme.spacing(2)}`,

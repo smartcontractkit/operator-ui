@@ -1,4 +1,9 @@
-import { getAuthentication, setAuthentication } from '../../src/utils/storage'
+import {
+  getAuthentication,
+  getThemeMode,
+  setAuthentication,
+  setThemeMode,
+} from '../../src/utils/storage'
 
 describe('utils/storage', () => {
   beforeEach(() => {
@@ -18,6 +23,19 @@ describe('utils/storage', () => {
       expect(localStorage.getItem('chainlink.authentication')).toEqual(
         '{"allowed":true}',
       )
+    })
+  })
+
+  describe('theme mode helpers', () => {
+    it('defaults to light when no mode is persisted', () => {
+      expect(getThemeMode()).toBe('light')
+    })
+
+    it('persists dark mode under the chainlink namespace', () => {
+      setThemeMode('dark')
+
+      expect(localStorage.getItem('chainlink.themeMode')).toEqual('dark')
+      expect(getThemeMode()).toBe('dark')
     })
   })
 })

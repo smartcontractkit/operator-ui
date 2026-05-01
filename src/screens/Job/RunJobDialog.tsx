@@ -27,7 +27,7 @@ const styles = (theme: Theme) =>
       position: 'absolute',
       right: theme.spacing(1),
       top: theme.spacing(1),
-      color: theme.palette.grey[500],
+      color: theme.palette.text.secondary,
     },
   })
 

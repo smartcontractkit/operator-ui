@@ -10,6 +10,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import ToggleOffIcon from '@mui/icons-material/ToggleOff'
 import ToggleOnIcon from '@mui/icons-material/ToggleOn'
+import { useTheme } from '@mui/material/styles'
 
 import {
   DetailsCard,
@@ -28,6 +29,7 @@ interface Props {
 }
 
 export const FeedsManagerCard = ({ manager, onEnable, onDisable }: Props) => {
+  const theme = useTheme()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -68,9 +70,9 @@ export const FeedsManagerCard = ({ manager, onEnable, onDisable }: Props) => {
             <MenuItem onClick={handleToggleEnabled}>
               <ListItemIcon>
                 {manager.disabledAt ? (
-                  <ToggleOnIcon style={{ color: 'green' }} />
+                  <ToggleOnIcon style={{ color: theme.palette.success.main }} />
                 ) : (
-                  <ToggleOffIcon style={{ color: 'gray' }} />
+                  <ToggleOffIcon style={{ color: theme.palette.text.disabled }} />
                 )}
               </ListItemIcon>
               <ListItemText>

@@ -18,7 +18,7 @@ import Link from 'components/Link'
 const styles = (theme: Theme) =>
   createStyles({
     container: {
-      backgroundColor: theme.palette.common.white,
+      backgroundColor: theme.palette.background.paper,
       padding: theme.spacing(5),
       paddingBottom: 0,
     },
@@ -45,7 +45,7 @@ const styles = (theme: Theme) =>
       textDecoration: 'none',
       display: 'inline-block',
       borderBottom: 'solid 1px',
-      borderBottomColor: theme.palette.common.white,
+      borderBottomColor: theme.palette.background.paper,
       '&:hover': {
         borderBottomColor: theme.palette.primary.main,
       },

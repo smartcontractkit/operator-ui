@@ -13,7 +13,7 @@ const styles = (theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
-      borderBottom: '1px solid rgba(0, 0, 0, 0.12);',
+      borderBottom: `1px solid ${theme.palette.divider}`,
       padding: theme.spacing(2),
       '&:last-child': {
         borderBottom: 'none',
@@ -28,7 +28,7 @@ const styles = (theme: Theme) =>
       lineHeight: theme.spacing(5),
     },
     subheading: {
-      color: theme.palette.grey[500],
+      color: theme.palette.text.secondary,
     },
     text: {
       marginBottom: theme.spacing(1),

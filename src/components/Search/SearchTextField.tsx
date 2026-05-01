@@ -14,7 +14,7 @@ const styles = (theme: Theme) => {
     },
     input: {
       padding: 14,
-      backgroundColor: 'white',
+      backgroundColor: theme.palette.background.paper,
       borderRadius: 4,
     },
   })

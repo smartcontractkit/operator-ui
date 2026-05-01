@@ -53,7 +53,7 @@ const drawerStyles = ({ palette, spacing }: Theme) =>
       display: 'block',
     },
     drawerPaper: {
-      backgroundColor: palette.common.white,
+      backgroundColor: palette.background.paper,
       paddingTop: spacing(7),
       width: drawerWidth,
     },
@@ -144,7 +144,7 @@ const navStyles = ({ palette, spacing }: Theme) =>
       textDecoration: 'none',
       display: 'inline-block',
       borderBottom: 'solid 1px',
-      borderBottomColor: palette.common.white,
+      borderBottomColor: palette.background.paper,
       '&:hover': {
         borderBottomColor: palette.primary.main,
       },
@@ -215,7 +215,7 @@ const Nav = withStyles(navStyles)(({
 const styles = ({ palette, spacing, zIndex }: Theme) =>
   createStyles({
     appBar: {
-      backgroundColor: palette.common.white,
+      backgroundColor: palette.background.paper,
       zIndex: zIndex.modal - 1,
     },
     toolbar: {

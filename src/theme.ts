@@ -1,5 +1,6 @@
 import { common, green, grey } from '@mui/material/colors'
 import { createTheme, ThemeOptions, darken } from '@mui/material/styles'
+import type { ThemeMode } from 'src/utils/storage'
 
 const spacingUnit = 8
 
@@ -54,9 +55,9 @@ const mainTheme: ThemeOptions = {
         titleTypographyProps: { color: 'secondary' },
       },
       styleOverrides: {
-        root: {
-          borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-        },
+        root: ({ theme }) => ({
+          borderBottom: `1px solid ${theme.palette.divider}`,
+        }),
         action: {
           marginTop: -2,
           marginRight: 0,
@@ -98,6 +99,7 @@ const mainTheme: ThemeOptions = {
     },
   },
   palette: {
+    mode: 'light',
     action: {
       hoverOpacity: 0.3,
     },
@@ -306,4 +308,77 @@ const mainTheme: ThemeOptions = {
   ],
 }
 
-export const theme = createTheme(mainTheme)
+const darkThemeOverrides: ThemeOptions = {
+  palette: {
+    mode: 'dark',
+    primary: {
+      light: '#99A8FF',
+      main: '#7B89FF',
+      contrastText: '#0B1020',
+    },
+    secondary: {
+      main: '#CDD5EA',
+    },
+    warning: {
+      light: '#413518',
+      main: '#806324',
+      contrastText: '#FFDEA1',
+    },
+    background: {
+      default: '#131722',
+      paper: '#1D2332',
+      appBar: '#1A2134',
+    },
+    text: {
+      primary: '#E8EEFF',
+      secondary: '#B6C0DB',
+    },
+    listPendingStatus: {
+      background: '#4A3A16',
+      color: '#FFCD66',
+    },
+    listCompletedStatus: {
+      background: '#1C3B2D',
+      color: '#79E5B2',
+    },
+  },
+  typography: {
+    body1: { color: '#E8EEFF' },
+    body2: { color: '#E8EEFF' },
+    body1Next: { color: '#E8EEFF' },
+    body2Next: { color: '#E8EEFF' },
+    display1: { color: '#B6C0DB' },
+    display2: { color: '#B6C0DB' },
+    display3: { color: '#B6C0DB' },
+    h1: { color: '#E8EEFF' },
+    h2: { color: '#E8EEFF' },
+    h3: { color: '#E8EEFF' },
+    h4: { color: '#E8EEFF' },
+    h5: { color: '#E8EEFF' },
+    h6: { color: '#E8EEFF' },
+    subheading: { color: '#E8EEFF' },
+    subtitle1: { color: '#E8EEFF' },
+    subtitle2: { color: '#E8EEFF' },
+  },
+}
+
+export const createAppTheme = (mode: ThemeMode = 'light') => {
+  if (mode === 'dark') {
+    return createTheme({
+      ...mainTheme,
+      ...darkThemeOverrides,
+      palette: {
+        ...mainTheme.palette,
+        ...darkThemeOverrides.palette,
+      },
+      typography: {
+        ...mainTheme.typography,
+        ...darkThemeOverrides.typography,
+      },
+    })
+  }
+
+  return createTheme(mainTheme)
+}
+
+export const theme = createAppTheme('light')

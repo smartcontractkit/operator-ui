@@ -8,15 +8,18 @@ import { ThemeProvider as LegacyThemeProvider } from '@mui/styles'
 
 import createStore from 'src/createStore'
 import { theme } from 'src/theme'
+import { ThemeModeProvider } from 'src/context/ThemeModeContext'
 import thunk from 'redux-thunk'
 
 const AllTheProviders: React.FC = ({ children }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <LegacyThemeProvider theme={theme}>
-        <ReduxProvider store={createStore()}>{children}</ReduxProvider>
-      </LegacyThemeProvider>
-    </ThemeProvider>
+    <ThemeModeProvider>
+      <ThemeProvider theme={theme}>
+        <LegacyThemeProvider theme={theme}>
+          <ReduxProvider store={createStore()}>{children}</ReduxProvider>
+        </LegacyThemeProvider>
+      </ThemeProvider>
+    </ThemeModeProvider>
   )
 }
 

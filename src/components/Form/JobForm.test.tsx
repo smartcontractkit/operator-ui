@@ -48,7 +48,7 @@ describe('BridgeForm', () => {
     renderComponent({ toml: '' })
 
     userEvent.paste(
-      getByRole('textbox', { name: /job spec \(toml\) \*/i }),
+      getByRole('textbox', { name: /job spec \(toml\)/i }),
       'type = "webhook"',
     )
 
@@ -68,7 +68,7 @@ describe('BridgeForm', () => {
     renderComponent({ toml: '' })
 
     userEvent.paste(
-      getByRole('textbox', { name: /job spec \(toml\) \*/i }),
+      getByRole('textbox', { name: /job spec \(toml\)/i }),
       'type = "webhook"',
     )
 

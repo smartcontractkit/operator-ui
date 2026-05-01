@@ -18,8 +18,8 @@ const styles = (theme: Theme) =>
       width: 27,
       height: 27,
       minHeight: 27,
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
     },
     icon: {
       fontSize: 18,

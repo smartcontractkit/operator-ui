@@ -34,7 +34,7 @@ const styles = (theme: Theme) =>
   createStyles({
     container: {
       backgroundColor: theme.palette.common.white,
-      padding: theme.spacing.unit * 5,
+      padding: theme.spacing(5),
       paddingBottom: 0,
     },
     chainId: {
@@ -42,10 +42,10 @@ const styles = (theme: Theme) =>
       textOverflow: 'ellipsis',
     },
     badgePadding: {
-      paddingLeft: theme.spacing.unit * 2,
-      paddingRight: theme.spacing.unit * 2,
-      marginLeft: theme.spacing.unit * -2,
-      marginRight: theme.spacing.unit * -2,
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      marginLeft: theme.spacing(-2),
+      marginRight: theme.spacing(-2),
       lineHeight: '1rem',
     },
     dialogPaper: {
@@ -54,31 +54,31 @@ const styles = (theme: Theme) =>
       minWidth: '670px',
       maxWidth: '670px',
       overflow: 'hidden',
-      borderRadius: theme.spacing.unit * 3,
+      borderRadius: theme.spacing(3),
     },
     warningText: {
       fontWeight: 500,
-      marginLeft: theme.spacing.unit * 3,
-      marginTop: theme.spacing.unit * 3,
-      marginBottom: theme.spacing.unit,
+      marginLeft: theme.spacing(3),
+      marginTop: theme.spacing(3),
+      marginBottom: theme.spacing(1),
     },
     closeButton: {
-      marginRight: theme.spacing.unit * 3,
-      marginTop: theme.spacing.unit * 3,
+      marginRight: theme.spacing(3),
+      marginTop: theme.spacing(3),
     },
     infoText: {
-      fontSize: theme.spacing.unit * 2,
+      fontSize: theme.spacing(2),
       fontWeight: 450,
-      marginLeft: theme.spacing.unit * 6,
+      marginLeft: theme.spacing(6),
     },
     modalContent: {
       width: 'inherit',
     },
     deleteButton: {
-      marginTop: theme.spacing.unit * 4,
+      marginTop: theme.spacing(4),
     },
     runJobButton: {
-      marginBottom: theme.spacing.unit * 3,
+      marginBottom: theme.spacing(3),
     },
     runJobModalContent: {
       overflow: 'hidden',

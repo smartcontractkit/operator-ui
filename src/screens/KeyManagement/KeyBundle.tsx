@@ -17,7 +17,7 @@ import VpnKeyRoundedIcon from '@material-ui/icons/VpnKeyRounded'
 const styles = (theme: Theme) =>
   createStyles({
     listItemPrimary: {
-      marginBottom: theme.spacing.unit,
+      marginBottom: theme.spacing(1),
     },
     listItemSecondary: {
       color: theme.palette.grey[600],

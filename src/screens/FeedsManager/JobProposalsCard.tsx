@@ -33,7 +33,7 @@ const styles = (theme: Theme) => {
       borderBottom: '1px solid #e8e8e8',
     },
     badge: {
-      padding: `0 ${theme.spacing.unit * 2}px`,
+      padding: `0 ${theme.spacing(2)}px`,
     },
   })
 }

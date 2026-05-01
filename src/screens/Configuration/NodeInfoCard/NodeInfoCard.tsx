@@ -20,8 +20,8 @@ import { fetchBuildInfo } from 'src/actionCreators'
 const styles = (theme: Theme) => {
   return createStyles({
     cell: {
-      paddingTop: theme.spacing.unit * 1.5,
-      paddingBottom: theme.spacing.unit * 1.5,
+      paddingTop: theme.spacing(1.5),
+      paddingBottom: theme.spacing(1.5),
     },
   })
 }

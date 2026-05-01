@@ -20,7 +20,7 @@ export const ChainNodes = ({ nodes, chain }: Props) => {
   return (
     <Content>
       {chain && (
-        <Grid container spacing={40}>
+        <Grid container spacing={5}>
           <Grid item xs={12}>
             <Card>
               <CardTitle divider>Nodes</CardTitle>

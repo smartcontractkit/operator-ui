@@ -133,15 +133,15 @@ describe('EditFeedsManagerScreen', () => {
 
     await waitForElementToBeRemoved(() => queryByRole('progressbar'))
 
-    const nameInput = getByRole('textbox', { name: 'Name *' })
+    const nameInput = getByRole('textbox', { name: /^name$/i })
     userEvent.clear(nameInput)
     userEvent.type(nameInput, 'updated')
 
-    const uriInput = getByRole('textbox', { name: 'URI *' })
+    const uriInput = getByRole('textbox', { name: /^uri$/i })
     userEvent.clear(uriInput)
     userEvent.type(uriInput, 'localhost:80812')
 
-    const publicKeyInput = getByRole('textbox', { name: 'Public Key *' })
+    const publicKeyInput = getByRole('textbox', { name: /^public key$/i })
     userEvent.clear(publicKeyInput)
     userEvent.type(publicKeyInput, '22222')
 

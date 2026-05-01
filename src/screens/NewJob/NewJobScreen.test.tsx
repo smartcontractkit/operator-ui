@@ -64,7 +64,7 @@ describe('NewJobScreen', () => {
     expect(getByTestId('job-form')).toBeInTheDocument()
 
     userEvent.paste(
-      getByRole('textbox', { name: /job spec \(toml\) \*/i }),
+      getByRole('textbox', { name: /job spec \(toml\)/i }),
       'type = "webhook"',
     )
 
@@ -94,7 +94,7 @@ describe('NewJobScreen', () => {
     renderComponent(mocks)
 
     userEvent.paste(
-      getByRole('textbox', { name: /job spec \(toml\) \*/i }),
+      getByRole('textbox', { name: /job spec \(toml\)/i }),
       'type = "webhook"',
     )
 
@@ -149,7 +149,7 @@ describe('NewJobScreen', () => {
     renderComponent(mocks)
 
     userEvent.paste(
-      getByRole('textbox', { name: /job spec \(toml\) \*/i }),
+      getByRole('textbox', { name: /job spec \(toml\)/i }),
       'type = "webhook"',
     )
 

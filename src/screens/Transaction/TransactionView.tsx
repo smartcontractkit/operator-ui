@@ -35,7 +35,7 @@ interface Props {
 export const TransactionView: React.FC<Props> = ({ tx }) => {
   return (
     <Content>
-      <Grid container spacing={16}>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Heading1>Transaction Details</Heading1>
         </Grid>

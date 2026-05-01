@@ -176,18 +176,18 @@ describe('ChainConfigurationForm', () => {
       handleSubmit,
     )
 
-    const chainType = getByRole('button', { name: 'EVM' })
+    const chainType = getByRole('button', { name: /chain type.*evm/i })
     userEvent.click(chainType)
     userEvent.click(getByRole('option', { name: 'APTOS' }))
-    await screen.findByRole('button', { name: 'APTOS' })
+    await screen.findByRole('button', { name: /chain type.*aptos/i })
 
     await selectChainIdOnUI(container, '2222')
 
-    const address = container.querySelector('#select-accountAddr')
+    const address = container.querySelector('#accountAddr')
     expect(address).toBeInTheDocument()
     if (address) userEvent.click(address)
     userEvent.click(getByRole('option', { name: '0x123' }))
-    await screen.findByRole('button', { name: '0x123' })
+    await screen.findByRole('button', { name: /account address.*0x123/i })
 
     await userEvent.click(getByRole('button', { name: /submit/i }))
 
@@ -246,16 +246,16 @@ describe('ChainConfigurationForm', () => {
       },
     })
 
-    const chainType = getByRole('button', { name: 'EVM' })
+    const chainType = getByRole('button', { name: /chain type.*evm/i })
     userEvent.click(chainType)
     userEvent.click(getByRole('option', { name: 'APTOS' }))
-    await screen.findByRole('button', { name: 'APTOS' })
+    await screen.findByRole('button', { name: /chain type.*aptos/i })
 
-    const chainIdTextBox = getByRole('textbox', { name: /chain id \*/i })
+    const chainIdTextBox = getByRole('textbox', { name: /chain id/i })
     userEvent.type(chainIdTextBox, '2222')
 
     const accountAddrTextBox = getByRole('textbox', {
-      name: /account address \*/i,
+      name: /account address/i,
     })
     userEvent.type(accountAddrTextBox, '0x123')
 
@@ -301,18 +301,18 @@ describe('ChainConfigurationForm', () => {
       handleSubmit,
     )
 
-    const chainType = getByRole('button', { name: 'EVM' })
+    const chainType = getByRole('button', { name: /chain type.*evm/i })
     userEvent.click(chainType)
     userEvent.click(getByRole('option', { name: 'SUI' }))
-    await screen.findByRole('button', { name: 'SUI' })
+    await screen.findByRole('button', { name: /chain type.*sui/i })
 
     await selectChainIdOnUI(container, '6666')
 
-    const address = container.querySelector('#select-accountAddr')
+    const address = container.querySelector('#accountAddr')
     expect(address).toBeInTheDocument()
     if (address) userEvent.click(address)
     userEvent.click(getByRole('option', { name: '0x123' }))
-    await screen.findByRole('button', { name: '0x123' })
+    await screen.findByRole('button', { name: /account address.*0x123/i })
 
     await userEvent.click(getByRole('button', { name: /submit/i }))
 
@@ -371,16 +371,16 @@ describe('ChainConfigurationForm', () => {
       },
     })
 
-    const chainType = getByRole('button', { name: 'EVM' })
+    const chainType = getByRole('button', { name: /chain type.*evm/i })
     userEvent.click(chainType)
     userEvent.click(getByRole('option', { name: 'SUI' }))
-    await screen.findByRole('button', { name: 'SUI' })
+    await screen.findByRole('button', { name: /chain type.*sui/i })
 
-    const chainIdTextBox = getByRole('textbox', { name: /chain id \*/i })
+    const chainIdTextBox = getByRole('textbox', { name: /chain id/i })
     userEvent.type(chainIdTextBox, '6666')
 
     const accountAddrTextBox = getByRole('textbox', {
-      name: /account address \*/i,
+      name: /account address/i,
     })
     userEvent.type(accountAddrTextBox, '0x123')
 
@@ -426,18 +426,18 @@ describe('ChainConfigurationForm', () => {
       handleSubmit,
     )
 
-    const chainType = getByRole('button', { name: 'EVM' })
+    const chainType = getByRole('button', { name: /chain type.*evm/i })
     userEvent.click(chainType)
     userEvent.click(getByRole('option', { name: 'SOLANA' }))
-    await screen.findByRole('button', { name: 'SOLANA' })
+    await screen.findByRole('button', { name: /chain type.*solana/i })
 
     await selectChainIdOnUI(container, '3333')
 
-    const address = container.querySelector('#select-accountAddr')
+    const address = container.querySelector('#accountAddr')
     expect(address).toBeInTheDocument()
     if (address) userEvent.click(address)
     userEvent.click(getByRole('option', { name: 'solana_xxxx' }))
-    await screen.findByRole('button', { name: 'solana_xxxx' })
+    await screen.findByRole('button', { name: /account address.*solana_xxxx/i })
 
     await userEvent.click(getByRole('button', { name: /submit/i }))
 
@@ -482,18 +482,18 @@ test('should able to create Tron chain config', async () => {
     handleSubmit,
   )
 
-  const chainType = getByRole('button', { name: 'EVM' })
+  const chainType = getByRole('button', { name: /chain type.*evm/i })
   userEvent.click(chainType)
   userEvent.click(getByRole('option', { name: 'TRON' }))
-  await screen.findByRole('button', { name: 'TRON' })
+  await screen.findByRole('button', { name: /chain type.*tron/i })
 
   await selectChainIdOnUI(container, '4444')
 
-  const address = container.querySelector('#select-accountAddr')
+  const address = container.querySelector('#accountAddr')
   expect(address).toBeInTheDocument()
   if (address) userEvent.click(address)
   userEvent.click(getByRole('option', { name: 'tron_xxxx' }))
-  await screen.findByRole('button', { name: 'tron_xxxx' })
+  await screen.findByRole('button', { name: /account address.*tron_xxxx/i })
 
   await userEvent.click(getByRole('button', { name: /submit/i }))
 
@@ -537,18 +537,18 @@ test('should able to create TON chain config', async () => {
     handleSubmit,
   )
 
-  const chainType = getByRole('button', { name: 'EVM' })
+  const chainType = getByRole('button', { name: /chain type.*evm/i })
   userEvent.click(chainType)
   userEvent.click(getByRole('option', { name: 'TON' }))
-  await screen.findByRole('button', { name: 'TON' })
+  await screen.findByRole('button', { name: /chain type.*ton/i })
 
   await selectChainIdOnUI(container, '5555')
 
-  const address = container.querySelector('#select-accountAddr')
+  const address = container.querySelector('#accountAddr')
   expect(address).toBeInTheDocument()
   if (address) userEvent.click(address)
   userEvent.click(getByRole('option', { name: '123' }))
-  await screen.findByRole('button', { name: '123' })
+  await screen.findByRole('button', { name: /account address.*123/i })
 
   await userEvent.click(getByRole('button', { name: /submit/i }))
 
@@ -615,12 +615,14 @@ test('should be able to select OCR2 Job Type with Key Bundle ID', async () => {
   const ocr2CheckBox = screen.getByText(/ocr2/i)
   userEvent.click(ocr2CheckBox)
 
-  const keyBundleId2 = container.querySelector('#select-ocr2KeyBundleID')
+  const keyBundleId2 = container.querySelector('#ocr2KeyBundleID')
   expect(keyBundleId2).toBeInTheDocument()
   // workaround ts lint warning - require check for null
   if (keyBundleId2) userEvent.click(keyBundleId2)
   userEvent.click(getByRole('option', { name: 'ocr2_key_bundle_id (EVM)' }))
-  await screen.findByRole('button', { name: 'ocr2_key_bundle_id (EVM)' })
+  await screen.findByRole('button', {
+    name: /key bundle id.*ocr2_key_bundle_id \(evm\)/i,
+  })
 })
 
 function emptyFormValues(): FormValues {
@@ -740,10 +742,12 @@ function renderChainConfigurationForm(
 }
 
 async function selectChainIdOnUI(container: HTMLElement, chainId: string) {
-  const chainIdSelect = container.querySelector('#select-chainID')
+  const chainIdSelect = container.querySelector('#chainID')
   expect(chainIdSelect).toBeInTheDocument()
   // workaround ts lint warning - require check for null
   if (chainIdSelect) userEvent.click(chainIdSelect)
   userEvent.click(getByRole('option', { name: chainId }))
-  await screen.findByRole('button', { name: chainId })
+  await screen.findByRole('button', {
+    name: new RegExp(`chain id.*${chainId}`, 'i'),
+  })
 }

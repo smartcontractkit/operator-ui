@@ -11,7 +11,6 @@ const styles = ({ palette, shadows, typography }: Theme) =>
   createStyles({
     lightTooltip: {
       background: palette.primary.contrastText,
-      // @ts-expect-error color might be overwritten
       color: palette.text.primary,
       boxShadow: shadows[24],
       ...typography.h6,
@@ -31,4 +30,4 @@ const UnstyledTooltip = ({ title, children, classes }: Props) => {
   )
 }
 
-export const Tooltip = withStyles(styles)(UnstyledTooltip)
+export const Tooltip = withStyles(styles)(UnstyledTooltip) as typeof MuiTooltip

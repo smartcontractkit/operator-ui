@@ -14,12 +14,12 @@ import { TabLink } from 'src/components/Tab/TabLink'
 const styles = (theme: Theme) =>
   createStyles({
     tabs: {
-      marginTop: theme.spacing.unit * 4,
-      marginBottom: theme.spacing.unit * 2.5,
+      marginTop: theme.spacing(4),
+      marginBottom: theme.spacing(2.5),
       borderBottom: `1px solid ${theme.palette.grey['300']}`,
     },
     badge: {
-      padding: `0 ${theme.spacing.unit * 2}px`,
+      padding: `0 ${theme.spacing(2)}px`,
     },
   })
 

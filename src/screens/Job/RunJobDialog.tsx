@@ -20,15 +20,15 @@ import Button from 'src/components/Button'
 const styles = (theme: Theme) =>
   createStyles({
     dialogContent: {
-      paddingTop: theme.spacing.unit * 1,
+      paddingTop: theme.spacing(1),
     },
     textarea: {
       width: 400,
     },
     closeButton: {
       position: 'absolute',
-      right: theme.spacing.unit,
-      top: theme.spacing.unit,
+      right: theme.spacing(1),
+      top: theme.spacing(1),
       color: theme.palette.grey[500],
     },
   })

@@ -124,10 +124,10 @@ export const NodesView: React.FC<Props> = ({
               rowsPerPage={pageSize}
               rowsPerPageOptions={[pageSize]}
               page={page - 1}
-              onChangePage={(_, p) => {
+              onPageChange={(_, p) => {
                 history.push(`/nodes?page=${p + 1}&per=${pageSize}`)
               }}
-              onChangeRowsPerPage={() => {}} /* handler required by component, so make it a no-op */
+              onRowsPerPageChange={() => {}} /* handler required by component, so make it a no-op */
               backIconButtonProps={{ 'aria-label': 'prev-page' }}
               nextIconButtonProps={{ 'aria-label': 'next-page' }}
             />

@@ -238,7 +238,7 @@ export const JobView: React.FC<Props> = ({
   return (
     <>
       <Content>
-        <Grid container spacing={32}>
+        <Grid container spacing={4}>
           <Grid item xs={9}>
             <Heading1>{job.name || '--'}</Heading1>
           </Grid>

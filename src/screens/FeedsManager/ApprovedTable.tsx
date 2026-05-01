@@ -54,7 +54,7 @@ export const ApprovedTable = withStyles(tableStyles)(({
             </TableCell>
             <TableCell align="right">
               {proposal.pendingUpdate && (
-                <Chip color="primary">Update Available</Chip>
+                <Chip color="primary" label="Update Available" />
               )}
             </TableCell>
           </TableRow>

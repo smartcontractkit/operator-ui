@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField'
 const styles = (theme: Theme) => {
   return createStyles({
     textField: {
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
     },
     input: {
       padding: 14,
@@ -35,7 +35,7 @@ export const SearchTextField = withStyles(styles)(({
   value,
 }: Props) => {
   return (
-    <Grid container spacing={16}>
+    <Grid container spacing={2}>
       <Grid item xs={12} md={6}>
         <TextField
           className={classes.textField}

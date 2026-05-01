@@ -31,7 +31,7 @@ const styles = (theme: Theme) => {
     },
     deleteCell: {
       '&:last-child': {
-        paddingRight: theme.spacing.unit * 1.5,
+        paddingRight: theme.spacing(1.5),
       },
     },
     deleteIcon: {

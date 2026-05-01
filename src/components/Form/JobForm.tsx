@@ -49,7 +49,7 @@ export const JobForm = ({ initialValues, onSubmit, onTOMLChange }: Props) => {
 
         return (
           <Form data-testid="job-form" noValidate>
-            <Grid container spacing={16}>
+            <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Field
                   component={TextField}

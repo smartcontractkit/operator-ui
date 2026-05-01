@@ -16,7 +16,7 @@ const styles = (theme: Theme) =>
   createStyles({
     style: {
       textAlign: 'center',
-      padding: theme.spacing.unit * 2.5,
+      padding: theme.spacing(2.5),
       position: 'fixed',
       left: '0',
       bottom: '0',

@@ -41,8 +41,8 @@ const styles = ({ palette, spacing }: Theme) =>
     footer: {
       borderColor: palette.divider,
       borderTop: `1px solid`,
-      paddingTop: spacing.unit * 2,
-      paddingBottom: spacing.unit * 2,
+      paddingTop: spacing(2),
+      paddingBottom: spacing(2),
     },
   })
 

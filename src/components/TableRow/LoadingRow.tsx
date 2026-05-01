@@ -13,7 +13,7 @@ import TableRow from '@material-ui/core/TableRow'
 const styles = (theme: Theme) =>
   createStyles({
     cell: {
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
     },
   })
 

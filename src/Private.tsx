@@ -27,7 +27,7 @@ const styles = (theme: Theme) => {
   return {
     content: {
       marginTop: 0,
-      marginBottom: theme.spacing.unit * 5,
+      marginBottom: theme.spacing(5),
     },
   }
 }

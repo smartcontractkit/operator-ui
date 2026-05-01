@@ -81,7 +81,7 @@ describe('EditBridgeScreen', () => {
     expect(getByText('Edit Bridge')).toBeInTheDocument()
     expect(getByTestId('bridge-form')).toBeInTheDocument()
 
-    const urlInput = getByRole('textbox', { name: 'Bridge URL *' })
+    const urlInput = getByRole('textbox', { name: /^bridge url$/i })
     userEvent.clear(urlInput)
     userEvent.type(urlInput, 'https://www.test.com')
 

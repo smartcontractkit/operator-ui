@@ -38,7 +38,7 @@ const styles = (theme: Theme) => {
     actions: {
       display: 'flex',
       justifyContent: 'flex-end',
-      marginTop: theme.spacing.unit * 0.5,
+      marginTop: theme.spacing(0.5),
     },
     logLevelHelperText: {
       marginTop: -8,

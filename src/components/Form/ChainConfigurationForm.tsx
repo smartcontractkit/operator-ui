@@ -100,7 +100,7 @@ const ValidationSchema = Yup.object().shape({
 const styles = (theme: Theme) => {
   return createStyles({
     supportedJobOptionsPaper: {
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
     },
   })
 }
@@ -372,7 +372,7 @@ export const ChainConfigurationForm = withStyles(styles)(({
             id="chain-configuration-form"
             noValidate
           >
-            <Grid container spacing={16}>
+            <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <Field
                   component={TextField}
@@ -522,7 +522,7 @@ export const ChainConfigurationForm = withStyles(styles)(({
 
                 {values.ocr1Enabled && (
                   <Paper className={classes.supportedJobOptionsPaper}>
-                    <Grid container spacing={8}>
+                    <Grid container spacing={1}>
                       <>
                         <Grid item xs={12}>
                           <Field
@@ -616,7 +616,7 @@ export const ChainConfigurationForm = withStyles(styles)(({
 
                 {values.ocr2Enabled && (
                   <Paper className={classes.supportedJobOptionsPaper}>
-                    <Grid container spacing={8}>
+                    <Grid container spacing={1}>
                       <>
                         <Grid item xs={12}>
                           <Field

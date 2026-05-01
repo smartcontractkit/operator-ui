@@ -62,7 +62,7 @@ export const OCR2KeysCreate: React.FC<Props> = ({
           helperText="Create OCR2 Key bundle"
         >
           {supportedChainFamilies?.map((chain) => (
-            <MenuItem key={chain} value={chain} name={chain}>
+            <MenuItem key={chain} value={chain}>
               {chain}
             </MenuItem>
           ))}

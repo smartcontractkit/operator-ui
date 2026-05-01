@@ -16,7 +16,7 @@ const styles = (theme: Theme) =>
     root: {
       display: 'flex',
       borderBottom: '1px solid rgba(0, 0, 0, 0.12);',
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
       '&:last-child': {
         borderBottom: 'none',
       },
@@ -24,20 +24,20 @@ const styles = (theme: Theme) =>
     content: {
       flex: 1,
       overflow: 'auto',
-      paddingLeft: theme.spacing.unit * 2,
+      paddingLeft: theme.spacing(2),
     },
     heading: {
-      lineHeight: `${theme.spacing.unit * 5}px`,
+      lineHeight: `${theme.spacing(5)}px`,
     },
     subheading: {
       color: theme.palette.grey[500],
     },
     text: {
-      marginBottom: theme.spacing.unit,
-      marginTop: theme.spacing.unit,
+      marginBottom: theme.spacing(1),
+      marginTop: theme.spacing(1),
     },
     attributeKey: {
-      fontWeight: theme.typography.fontWeightLight,
+      fontWeight: 300,
     },
   })
 

@@ -36,10 +36,10 @@ const styles = ({ palette, spacing }: Theme) =>
       height: '100%',
     },
     runDetails: {
-      paddingTop: spacing.unit * 3,
-      paddingBottom: spacing.unit * 3,
-      paddingLeft: spacing.unit * 4,
-      paddingRight: spacing.unit * 4,
+      paddingTop: spacing(3),
+      paddingBottom: spacing(3),
+      paddingLeft: spacing(4),
+      paddingRight: spacing(4),
     },
   })
 

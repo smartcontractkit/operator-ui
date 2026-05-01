@@ -48,11 +48,11 @@ describe('FeedsManagerForm', () => {
     )
 
     userEvent.type(
-      getByRole('textbox', { name: 'Name *' }),
+      getByRole('textbox', { name: /^name$/i }),
       'Chainlink Feeds Manager',
     )
-    userEvent.type(getByRole('textbox', { name: 'URI *' }), 'localhost:8080')
-    userEvent.type(getByRole('textbox', { name: 'Public Key *' }), '11111')
+    userEvent.type(getByRole('textbox', { name: /^uri$/i }), 'localhost:8080')
+    userEvent.type(getByRole('textbox', { name: /^public key$/i }), '11111')
 
     userEvent.click(getByText(/submit/i))
 

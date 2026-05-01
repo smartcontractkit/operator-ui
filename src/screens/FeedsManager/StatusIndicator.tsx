@@ -43,7 +43,7 @@ export const StatusIndicator = withStyles(statusStyles)(({
         <CancelIcon fontSize="small" className={classes.inactiveIcon} />
       )}
 
-      <Typography variant="body1" inline className={classes.text}>
+      <Typography variant="body1" display="inline" className={classes.text}>
         {isActive ? activeText : inactiveText}
       </Typography>
     </div>

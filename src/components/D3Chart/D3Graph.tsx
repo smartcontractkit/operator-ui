@@ -279,7 +279,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
               position: 'absolute',
               opacity: '0',
               border: '1px solid rgba(0, 0, 0, 0.1)',
-              padding: theme.spacing.unit,
+              padding: theme.spacing(1),
               background: 'white',
               borderRadius: 5,
               zIndex: -1,

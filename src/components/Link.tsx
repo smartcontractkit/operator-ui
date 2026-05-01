@@ -2,13 +2,12 @@ import React from 'react'
 import BaseLink from './BaseLink'
 import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
+import { TypographyProps } from '@material-ui/core/Typography'
 import { grey } from '@material-ui/core/colors'
-import { ThemeStyle } from '@material-ui/core/styles/createTypography'
-import { PropTypes } from '@material-ui/core'
 import classNames from 'classnames'
 
-type Variant = ThemeStyle | 'srOnly'
-type Color = PropTypes.Color | 'textPrimary' | 'textSecondary' | 'error'
+type Variant = TypographyProps['variant'] | 'srOnly'
+type Color = TypographyProps['color']
 
 const styles = () =>
   createStyles({

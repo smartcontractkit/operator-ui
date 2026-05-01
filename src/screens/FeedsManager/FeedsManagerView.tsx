@@ -20,7 +20,7 @@ export const FeedsManagerView: React.FC<Props> = ({
   onEnable,
 }) => {
   return (
-    <Grid container spacing={16}>
+    <Grid container spacing={2}>
       <Grid item xs={12}>
         <Heading1>Job Distributors</Heading1>
       </Grid>

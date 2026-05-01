@@ -51,12 +51,12 @@ const drawerWidth = 240
 const drawerStyles = ({ palette, spacing }: Theme) =>
   createStyles({
     menuitem: {
-      padding: spacing.unit * 3,
+      padding: spacing(3),
       display: 'block',
     },
     drawerPaper: {
       backgroundColor: palette.common.white,
-      paddingTop: spacing.unit * 7,
+      paddingTop: spacing(7),
       width: drawerWidth,
     },
     drawerList: {
@@ -141,8 +141,8 @@ const navStyles = ({ palette, spacing }: Theme) =>
     },
     horizontalNavLink: {
       color: palette.secondary.main,
-      paddingTop: spacing.unit * 3,
-      paddingBottom: spacing.unit * 3,
+      paddingTop: spacing(3),
+      paddingBottom: spacing(3),
       textDecoration: 'none',
       display: 'inline-block',
       borderBottom: 'solid 1px',
@@ -221,8 +221,8 @@ const styles = ({ palette, spacing, zIndex }: Theme) =>
       zIndex: zIndex.modal - 1,
     },
     toolbar: {
-      paddingLeft: spacing.unit * 5,
-      paddingRight: spacing.unit * 5,
+      paddingLeft: spacing(5),
+      paddingRight: spacing(5),
     },
   })
 

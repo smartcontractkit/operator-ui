@@ -6,7 +6,7 @@ import { Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 
 const styles = (theme: Theme) => ({
   root: {
-    margin: theme.spacing.unit * 2,
+    margin: theme.spacing(2),
   },
   gridItem: {
     display: 'flex',

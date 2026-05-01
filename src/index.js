@@ -1,4 +1,4 @@
-import { MuiThemeProvider } from '@material-ui/core/styles'
+import { ThemeProvider } from '@material-ui/core/styles'
 import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import moment from 'moment'
@@ -17,9 +17,9 @@ export default App
 if (typeof document !== 'undefined') {
   ReactDOM.render(
     <ApolloProvider client={client}>
-      <MuiThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
         <App />
-      </MuiThemeProvider>
+      </ThemeProvider>
     </ApolloProvider>,
     document.getElementById('root'),
   )

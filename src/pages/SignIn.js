@@ -22,11 +22,11 @@ const styles = (theme) => ({
     height: '100%',
   },
   cardContent: {
-    paddingTop: theme.spacing.unit * 6,
-    paddingLeft: theme.spacing.unit * 4,
-    paddingRight: theme.spacing.unit * 4,
+    paddingTop: theme.spacing(6),
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4),
     '&:last-child': {
-      paddingBottom: theme.spacing.unit * 6,
+      paddingBottom: theme.spacing(6),
     },
   },
   headerRow: {
@@ -34,7 +34,7 @@ const styles = (theme) => ({
   },
   error: {
     backgroundColor: theme.palette.error.light,
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
   },
   errorText: {
     color: theme.palette.error.main,
@@ -131,7 +131,7 @@ export const SignIn = (props) => {
         <Card>
           <CardContent className={classes.cardContent}>
             <form noValidate onSubmit={onSubmit}>
-              <Grid container spacing={8}>
+              <Grid container spacing={1}>
                 <Grid item xs={12}>
                   <Grid container spacing={0}>
                     <Grid item xs={12} className={classes.headerRow}>

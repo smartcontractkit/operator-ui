@@ -44,7 +44,7 @@ export const BridgeForm = ({
       {({ isSubmitting }) => (
         <>
           <Form data-testid="bridge-form" noValidate>
-            <Grid container spacing={16}>
+            <Grid container spacing={2}>
               <Grid item xs={12} md={7}>
                 <Field
                   component={TextField}
@@ -72,7 +72,7 @@ export const BridgeForm = ({
               </Grid>
 
               <Grid item xs={12} md={7}>
-                <Grid container spacing={16}>
+                <Grid container spacing={2}>
                   <Grid item xs={7}>
                     <Field
                       component={TextField}

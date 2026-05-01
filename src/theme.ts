@@ -1,8 +1,8 @@
 import { common, green, grey } from '@material-ui/core/colors'
-import { createMuiTheme } from '@material-ui/core/styles'
+import { createMuiTheme, ThemeOptions } from '@material-ui/core/styles'
 import { darken } from '@material-ui/core/styles/colorManipulator'
-import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme'
-import spacing from '@material-ui/core/styles/spacing'
+
+const spacingUnit = 8
 
 declare module '@material-ui/core/styles/createPalette' {
   interface ListStatus {
@@ -11,8 +11,6 @@ declare module '@material-ui/core/styles/createPalette' {
   }
 
   interface PaletteOptions {
-    success: PaletteColorOptions
-    warning: PaletteColorOptions
     listPendingStatus: ListStatus
     listCompletedStatus: ListStatus
   }
@@ -23,7 +21,14 @@ declare module '@material-ui/core/styles/createPalette' {
 }
 
 declare module '@material-ui/core/styles/createTypography' {
-  type AdditionalThemeStyle = 'body1Next' | 'body2Next'
+  type AdditionalThemeStyle =
+    | 'body1Next'
+    | 'body2Next'
+    | 'display1'
+    | 'display2'
+    | 'display3'
+    | 'display4'
+    | 'subheading'
   interface TypographyStyleOptions {
     fontWeightLight?: number
     fontWeightMedium?: number
@@ -34,12 +39,14 @@ declare module '@material-ui/core/styles/createTypography' {
   interface TypographyOptions extends Partial<
     Record<AdditionalThemeStyle, TypographyStyleOptions> & FontStyleOptions
   > {}
+
+  interface Typography extends Record<AdditionalThemeStyle, TypographyStyle> {}
 }
 
 const mainTheme: ThemeOptions = {
   props: {
     MuiGrid: {
-      spacing: (spacing.unit * 3) as any as Required<
+      spacing: 3 as any as Required<
         Required<Required<ThemeOptions>['props']>['MuiGrid']
       >['spacing'],
     },
@@ -94,21 +101,21 @@ const mainTheme: ThemeOptions = {
     },
   },
   shape: {
-    borderRadius: spacing.unit,
+    borderRadius: spacingUnit,
   },
   overrides: {
     MuiButton: {
       root: {
-        borderRadius: spacing.unit / 2,
+        borderRadius: spacingUnit / 2,
         textTransform: 'none',
       },
       sizeLarge: {
         padding: undefined,
         fontSize: undefined,
-        paddingTop: spacing.unit,
-        paddingBottom: spacing.unit,
-        paddingLeft: spacing.unit * 5,
-        paddingRight: spacing.unit * 5,
+        paddingTop: spacingUnit,
+        paddingBottom: spacingUnit,
+        paddingLeft: spacingUnit * 5,
+        paddingRight: spacingUnit * 5,
       },
     },
     MuiTableCell: {
@@ -128,16 +135,15 @@ const mainTheme: ThemeOptions = {
         marginTop: -2,
         marginRight: 0,
         '& >*': {
-          marginLeft: spacing.unit * 2,
+          marginLeft: spacingUnit * 2,
         },
       },
       subheader: {
-        marginTop: spacing.unit * 0.5,
+        marginTop: spacingUnit * 0.5,
       },
     },
   },
   typography: {
-    useNextVariants: true,
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',

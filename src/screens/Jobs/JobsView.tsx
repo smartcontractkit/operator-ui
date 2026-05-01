@@ -165,10 +165,10 @@ export const JobsView: React.FC<Props> = ({ jobs, page, pageSize, total }) => {
               rowsPerPage={pageSize}
               rowsPerPageOptions={[pageSize]}
               page={page - 1}
-              onChangePage={(_, p) => {
+              onPageChange={(_, p) => {
                 history.push(`/jobs?page=${p + 1}&per=${pageSize}`)
               }}
-              onChangeRowsPerPage={() => {}} /* handler required by component, so make it a no-op */
+              onRowsPerPageChange={() => {}} /* handler required by component, so make it a no-op */
               backIconButtonProps={{ 'aria-label': 'prev-page' }}
               nextIconButtonProps={{ 'aria-label': 'next-page' }}
             />

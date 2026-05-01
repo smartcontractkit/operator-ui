@@ -39,7 +39,7 @@ export const JOB_PROPOSAL__SPECS_FIELDS = gql`
 const styles = (theme: Theme) => {
   return createStyles({
     versionText: {
-      marginRight: theme.spacing.unit * 2,
+      marginRight: theme.spacing(2),
     },
     proposedAtContainer: {
       flex: 1,
@@ -50,7 +50,7 @@ const styles = (theme: Theme) => {
     },
     actions: {
       display: 'flex',
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
     },
     editContainer: {
       flex: 1,

@@ -11,16 +11,16 @@ import Typography from '@material-ui/core/Typography'
 
 const DialogTitle = withStyles((theme) => ({
   root: {
-    paddingTop: theme.spacing.unit * 3,
-    paddingBottom: theme.spacing.unit * 3,
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
   },
 }))(MuiDialogTitle)
 
 const DialogActions = withStyles((theme) => ({
   root: {
-    paddingLeft: theme.spacing.unit * 2,
-    paddingRight: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',

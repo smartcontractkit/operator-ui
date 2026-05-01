@@ -43,7 +43,7 @@ export const JobProposalView: React.FC<Props> = ({
 }) => {
   return (
     <Content>
-      <Grid container spacing={32}>
+      <Grid container spacing={4}>
         <Grid item xs={9}>
           <Heading1>Job Proposal #{proposal.id}</Heading1>
         </Grid>
@@ -51,13 +51,13 @@ export const JobProposalView: React.FC<Props> = ({
 
       <JobProposalCard proposal={proposal} />
 
-      <Grid container spacing={32}>
+      <Grid container spacing={4}>
         <Grid item xs={9}>
           <Heading2>Specs</Heading2>
         </Grid>
       </Grid>
 
-      <Grid container spacing={32}>
+      <Grid container spacing={4}>
         <Grid item xs={12}>
           <SpecsView
             proposal={proposal}

@@ -48,7 +48,7 @@ export const TransactionsView: React.FC<Props> = ({
 
   return (
     <Content>
-      <Grid container spacing={32}>
+      <Grid container spacing={4}>
         <Grid item xs={12}>
           <Heading1>Transactions</Heading1>
         </Grid>
@@ -89,10 +89,10 @@ export const TransactionsView: React.FC<Props> = ({
                 rowsPerPage={pageSize}
                 rowsPerPageOptions={[10, 25, 50, 100]}
                 page={page - 1}
-                onChangePage={(_, p) => {
+                onPageChange={(_, p) => {
                   history.push(`/transactions?page=${p + 1}&per=${pageSize}`)
                 }}
-                onChangeRowsPerPage={(e) => {
+                onRowsPerPageChange={(e) => {
                   history.push(
                     `/transactions?page=${page}&per=${parseInt(
                       e.target.value,

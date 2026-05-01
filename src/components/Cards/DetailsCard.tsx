@@ -14,26 +14,26 @@ const styles = (theme: Theme) =>
   createStyles({
     paper: {
       display: 'flex',
-      margin: `${theme.spacing.unit * 2.5}px 0`,
-      padding: `${theme.spacing.unit * 3}px  ${theme.spacing.unit * 3.5}px`,
+      margin: `${theme.spacing(2.5)}px 0`,
+      padding: `${theme.spacing(3)}px  ${theme.spacing(3.5)}px`,
     },
     content: {
       flex: 1,
       width: '100%',
     },
     actions: {
-      marginTop: -theme.spacing.unit * 1.5,
-      marginLeft: -theme.spacing.unit * 4,
+      marginTop: -theme.spacing(1.5),
+      marginLeft: -theme.spacing(4),
       [theme.breakpoints.up('sm')]: {
         marginLeft: 0,
-        marginRight: -theme.spacing.unit * 1.5,
+        marginRight: -theme.spacing(1.5),
       },
     },
     itemBlock: {
       border: '1px solid rgba(224, 224, 224, 1)',
       borderRadius: theme.shape.borderRadius,
-      padding: theme.spacing.unit * 2,
-      marginTop: theme.spacing.unit,
+      padding: theme.spacing(2),
+      marginTop: theme.spacing(1),
     },
     itemBlockText: {
       overflowWrap: 'anywhere',

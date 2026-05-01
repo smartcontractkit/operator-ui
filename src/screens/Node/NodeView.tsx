@@ -32,7 +32,7 @@ export const NodeView = ({ node }: Props) => {
   return (
     <>
       <Content>
-        <Grid container spacing={16}>
+        <Grid container spacing={2}>
           <Grid item xs={12}>
             <Heading1>{node.name}</Heading1>
           </Grid>

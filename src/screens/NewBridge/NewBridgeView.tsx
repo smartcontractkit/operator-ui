@@ -20,7 +20,7 @@ type Props = Pick<FormProps, 'onSubmit'>
 export const NewBridgeView: React.FC<Props> = ({ onSubmit }) => {
   return (
     <Content>
-      <Grid container spacing={40}>
+      <Grid container spacing={5}>
         <Grid item xs={12} md={11} lg={9}>
           <Card>
             <CardHeader title="New Bridge" />

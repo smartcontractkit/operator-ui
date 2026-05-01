@@ -14,11 +14,11 @@ const styles = (theme: Theme) =>
   createStyles({
     paper: {
       backgroundColor: theme.palette.primary.light,
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
       display: 'flex',
     },
     icon: {
-      marginRight: theme.spacing.unit,
+      marginRight: theme.spacing(1),
     },
   })
 

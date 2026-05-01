@@ -56,10 +56,10 @@ export const TabRuns: React.FC<Props> = ({ fetchMore, job }) => {
           rowsPerPage={pageSize}
           rowsPerPageOptions={[10, 25, 50, 100]}
           page={page - 1}
-          onChangePage={(_, p) => {
+          onPageChange={(_, p) => {
             setPagination({ page: p + 1, pageSize })
           }}
-          onChangeRowsPerPage={(e) => {
+          onRowsPerPageChange={(e) => {
             setPagination({ page: 1, pageSize: parseInt(e.target.value, 10) })
           }}
           backIconButtonProps={{ 'aria-label': 'prev-page' }}

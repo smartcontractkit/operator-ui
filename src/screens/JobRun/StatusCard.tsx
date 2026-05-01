@@ -17,7 +17,7 @@ const styles = (theme: any) =>
     cardContent: {
       display: 'flex',
       '&:last-child': {
-        paddingBottom: theme.spacing.unit * 2,
+        paddingBottom: theme.spacing(2),
       },
     },
     completed: {
@@ -30,7 +30,7 @@ const styles = (theme: any) =>
       backgroundColor: theme.palette.warning.light,
     },
     body: {
-      marginLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing(2),
     },
     statusText: {
       display: 'inline-block',

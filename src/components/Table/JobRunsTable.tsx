@@ -29,20 +29,20 @@ const styles = (theme: any) =>
       width: '30%',
     },
     runDetails: {
-      paddingTop: theme.spacing.unit * 2,
-      paddingBottom: theme.spacing.unit * 2,
-      paddingLeft: theme.spacing.unit * 2,
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+      paddingLeft: theme.spacing(2),
     },
     stamp: {
-      paddingLeft: theme.spacing.unit,
+      paddingLeft: theme.spacing(1),
     },
     status: {
-      paddingLeft: theme.spacing.unit * 1.5,
-      paddingRight: theme.spacing.unit * 1.5,
-      paddingTop: theme.spacing.unit / 2,
-      paddingBottom: theme.spacing.unit / 2,
-      borderRadius: theme.spacing.unit * 2,
-      marginRight: theme.spacing.unit,
+      paddingLeft: theme.spacing(1.5),
+      paddingRight: theme.spacing(1.5),
+      paddingTop: theme.spacing(0.5),
+      paddingBottom: theme.spacing(0.5),
+      borderRadius: theme.spacing(2),
+      marginRight: theme.spacing(1),
       width: 'fit-content',
       display: 'inline-block',
       textTransform: 'capitalize',
@@ -60,7 +60,7 @@ const styles = (theme: any) =>
       color: theme.palette.listCompletedStatus.color,
     },
     noRuns: {
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
     },
   })
 

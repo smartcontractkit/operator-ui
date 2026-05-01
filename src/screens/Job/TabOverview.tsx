@@ -22,9 +22,9 @@ const ShowViewMoreCount = 5
 const chartCardStyles = ({ spacing }: Theme) =>
   createStyles({
     runDetails: {
-      paddingTop: spacing.unit * 2,
-      paddingBottom: spacing.unit * 2,
-      paddingLeft: spacing.unit * 2,
+      paddingTop: spacing(2),
+      paddingBottom: spacing(2),
+      paddingLeft: spacing(2),
     },
   })
 
@@ -51,7 +51,7 @@ export const TabOverview = withStyles(chartCardStyles)(({
   }, [job.runs])
 
   return (
-    <Grid container spacing={32}>
+    <Grid container spacing={4}>
       <Grid item xs={12} sm={6}>
         <Card>
           <CardHeader title="Recent job runs" />

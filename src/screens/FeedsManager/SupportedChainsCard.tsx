@@ -109,7 +109,7 @@ export const UPDATE_FEEDS_MANAGER_CHAIN_CONFIG_MUTATION = gql`
 const styles = (theme: Theme) => {
   return createStyles({
     card: {
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
     },
     panel: {
       borderBottom: `1px solid ${theme.palette.divider}`,
@@ -118,7 +118,7 @@ const styles = (theme: Theme) => {
       margin: 0,
     },
     chip: {
-      marginRight: theme.spacing.unit * 2,
+      marginRight: theme.spacing(2),
     },
     title: {
       fontSize: theme.typography.body2.fontSize,
@@ -136,7 +136,7 @@ const styles = (theme: Theme) => {
     panelDetailsActions: {
       display: 'flex',
       justifyContent: 'flex-end',
-      gap: `${theme.spacing.unit * 2}px`,
+      gap: `${theme.spacing(2)}px`,
     },
   })
 }
@@ -511,7 +511,7 @@ export const SupportedChainsCard = withStyles(styles)(({
             </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={classes.panelDetails}>
-            <Grid container spacing={40}>
+            <Grid container spacing={5}>
               <Grid item xs={12}>
                 <Grid container>
                   <Grid item xs={12} sm={6}>

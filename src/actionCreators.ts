@@ -249,9 +249,15 @@ function sendSignOut(dispatch: Dispatch) {
     })
 }
 
-// Base64 to ArrayBuffer
-function bufferDecode(value: any) {
-  return Uint8Array.from(atob(value), (c) => c.charCodeAt(0))
+// Base64URL to ArrayBuffer
+// atob() requires standard Base64; the server sends Base64URL (- and _ instead
+// of + and /) without padding, so we must normalise before decoding.
+function bufferDecode(value: string) {
+  const base64 = value
+    .replace(/-/g, '+')
+    .replace(/_/g, '/')
+    .padEnd(value.length + ((4 - (value.length % 4)) % 4), '=')
+  return Uint8Array.from(atob(base64), (c) => c.charCodeAt(0))
 }
 
 // ArrayBuffer to URLBase64

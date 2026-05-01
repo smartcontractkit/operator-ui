@@ -3,12 +3,13 @@ import React from 'react'
 import { gql } from '@apollo/client'
 
 import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
+import CircularProgress from '@mui/material/CircularProgress'
 import Grid from '@mui/material/Grid'
 import { DetailsCardItemValue } from 'src/components/Cards/DetailsCard'
 import { ChainAccountBalanceCard } from 'screens/Dashboard/ChainAccountBalanceCard'
 import { EthKey } from 'types/generated/graphql'
-import CardHeader from '@mui/material/CardHeader'
-import CircularProgress from '@mui/material/CircularProgress'
 
 export const ACCOUNT_BALANCES_PAYLOAD__RESULTS_FIELDS = gql`
   fragment AccountBalancesPayload_ResultsFields on EthKey {
@@ -52,9 +53,11 @@ export const AccountBalanceCard: React.FC<Props> = ({
       {errorMsg && (
         <>
           <CardHeader title="Account Balances" />
-          <Grid item xs={12}>
-            <DetailsCardItemValue value={errorMsg} />
-          </Grid>
+          <CardContent>
+            <Grid item xs={12}>
+              <DetailsCardItemValue value={errorMsg} />
+            </Grid>
+          </CardContent>
         </>
       )}
 
@@ -71,9 +74,11 @@ export const AccountBalanceCard: React.FC<Props> = ({
       {!results?.length && !loading && !errorMsg && (
         <>
           <CardHeader title="Account Balances" />
-          <Grid item xs={12}>
-            <DetailsCardItemValue value="No account available" />
-          </Grid>
+          <CardContent>
+            <Grid item xs={12}>
+              <DetailsCardItemValue value="No account available" />
+            </Grid>
+          </CardContent>
         </>
       )}
 

@@ -11,7 +11,6 @@ import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 
-import { BetaAlert } from './BetaAlert'
 import { ChainRow } from './ChainRow'
 import Content from 'src/components/Content'
 import { Heading1 } from 'src/components/Heading/Heading1'
@@ -67,9 +66,6 @@ export const ChainsView: React.FC<Props> = ({
   return (
     <Content>
       <Grid container>
-        <Grid item xs={12}>
-          <BetaAlert />
-        </Grid>
 
         <Grid item xs={12}>
           <Heading1>Chains</Heading1>

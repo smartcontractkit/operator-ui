@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { MockedProvider, MockedResponse } from '@apollo/client/testing'
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook, waitFor } from '@testing-library/react'
 
 import { useFeatureFlag, Feature, FEATURES_QUERY } from './useFeatureFlag'
 
@@ -34,14 +34,16 @@ describe('useFeatureFlag', () => {
       },
     ]
 
-    const { result, waitForNextUpdate } = renderHook(
+    const { result } = renderHook(
       () => useFeatureFlag(Feature.CSA),
       {
         wrapper: getHookWrapper(mocks),
       },
     )
 
-    await waitForNextUpdate()
+    await waitFor(() => {
+      expect(result.current).toEqual(true)
+    })
 
     expect(result.current).toEqual(true)
   })
@@ -64,14 +66,16 @@ describe('useFeatureFlag', () => {
       },
     ]
 
-    const { result, waitForNextUpdate } = renderHook(
+    const { result } = renderHook(
       () => useFeatureFlag(Feature.CSA),
       {
         wrapper: getHookWrapper(mocks),
       },
     )
 
-    await waitForNextUpdate()
+    await waitFor(() => {
+      expect(result.current).toEqual(false)
+    })
 
     expect(result.current).toEqual(false)
   })

@@ -4,7 +4,7 @@ import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import moment from 'moment'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import App from './App'
 import { theme } from './theme'
 import { ApolloProvider } from '@apollo/client'
@@ -16,16 +16,21 @@ moment.defaultFormat = 'YYYY-MM-DD h:mm:ss A'
 export default App
 
 if (typeof document !== 'undefined') {
-  ReactDOM.render(
-    <ApolloProvider client={client}>
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={theme}>
-          <LegacyThemeProvider theme={theme}>
-            <App />
-          </LegacyThemeProvider>
-        </ThemeProvider>
-      </StyledEngineProvider>
-    </ApolloProvider>,
-    document.getElementById('root'),
-  )
+  const rootElement = document.getElementById('root')
+
+  if (rootElement) {
+    const root = createRoot(rootElement)
+
+    root.render(
+      <ApolloProvider client={client}>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <LegacyThemeProvider theme={theme}>
+              <App />
+            </LegacyThemeProvider>
+          </ThemeProvider>
+        </StyledEngineProvider>
+      </ApolloProvider>,
+    )
+  }
 }

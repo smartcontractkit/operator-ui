@@ -89,7 +89,7 @@ const muiProps = (variant: ButtonVariant, classes: any): MuiButtonProps => {
 
 interface Props extends WithStyles<typeof styles> {
   children: React.ReactNode
-  component?: React.ReactNode
+  component?: React.ElementType
   onClick?: React.MouseEventHandler<JSX.Element>
   type?: string
   disabled?: boolean

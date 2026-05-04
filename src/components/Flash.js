@@ -58,6 +58,7 @@ Flash.defaultProps = {
 }
 
 Flash.propTypes = {
+  children: PropTypes.node,
   success: PropTypes.bool,
   error: PropTypes.bool,
   warning: PropTypes.bool,

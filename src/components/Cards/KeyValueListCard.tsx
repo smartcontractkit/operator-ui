@@ -16,7 +16,7 @@ const renderEntries = (entries: Array<Array<string>>) =>
     </TableRow>
   ))
 
-const SpanRow: React.FC = ({ children }) => (
+const SpanRow = ({ children }: React.PropsWithChildren<{}>) => (
   <TableRow>
     <TableCell component="th" scope="row" colSpan={3}>
       {children}
@@ -24,7 +24,9 @@ const SpanRow: React.FC = ({ children }) => (
   </TableRow>
 )
 
-const ErrorRow: React.FC = ({ children }) => <SpanRow>{children}</SpanRow>
+const ErrorRow = ({ children }: React.PropsWithChildren<{}>) => (
+  <SpanRow>{children}</SpanRow>
+)
 
 const FetchingRow = () => <SpanRow>...</SpanRow>
 

@@ -24,7 +24,7 @@ export class Sessions {
   }
 
   public destroySession = (): Promise<
-    jsonapi.ApiResponse<sessionsController.Session>
+    jsonapi.PaginatedApiResponse<sessionsController.Session>
   > => {
     return this.destroy()
   }

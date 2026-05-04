@@ -42,8 +42,8 @@ jobs:
   unit-tests:
     strategy:
       matrix:
-        shardIndex: [1, 2, 3, 4]
-        shardTotal: [4]
+        shardIndex: [1]
+        shardTotal: [1]
 
     name: Unit Tests ${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
     runs-on: ubuntu-latest

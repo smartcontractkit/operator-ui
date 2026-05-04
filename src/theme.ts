@@ -11,8 +11,8 @@ declare module '@mui/material/styles/createPalette' {
   }
 
   interface PaletteOptions {
-    listPendingStatus: ListStatus
-    listCompletedStatus: ListStatus
+    listPendingStatus?: ListStatus
+    listCompletedStatus?: ListStatus
   }
 
   interface TypeBackground {

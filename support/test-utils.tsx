@@ -11,7 +11,9 @@ import { theme } from 'src/theme'
 import { ThemeModeProvider } from 'src/context/ThemeModeContext'
 import thunk from 'redux-thunk'
 
-const AllTheProviders: React.FC = ({ children }) => {
+const Router = MemoryRouter as any
+
+const AllTheProviders = ({ children }: React.PropsWithChildren<{}>) => {
   return (
     <ThemeModeProvider>
       <ThemeProvider theme={theme}>
@@ -47,13 +49,13 @@ const renderWithRouter = (
 ): RenderResult => {
   return {
     ...customRender(
-      <MemoryRouter initialEntries={initialEntries}>{ui}</MemoryRouter>,
+      <Router initialEntries={initialEntries}>{ui}</Router>,
       options,
     ),
   }
 }
 
-export const BuildInfoProvider: React.FC = (props) => {
+export const BuildInfoProvider = (props: React.PropsWithChildren<{}>) => {
   const middlewares = [thunk]
   const store = configureStore(middlewares)({
     buildInfo: {

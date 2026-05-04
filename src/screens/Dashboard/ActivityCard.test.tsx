@@ -30,7 +30,7 @@ describe('ActivityCard', () => {
 
     expect(queryByText(`Job: ${runs[0].job.id}`)).toBeInTheDocument()
     expect(queryByText(`Job: ${runs[1].job.id}`)).toBeInTheDocument()
-    expect(queryByRole('button', { name: /view more/i })).toBeNull()
+    expect(queryByRole('link', { name: /view more/i })).toBeNull()
   })
 
   it('shows the view more button', () => {
@@ -49,7 +49,7 @@ describe('ActivityCard', () => {
       maxRunsSize: 1,
     })
 
-    expect(queryByRole('button', { name: /view more/i })).toBeInTheDocument()
+    expect(queryByRole('link', { name: /view more/i })).toBeInTheDocument()
   })
 
   it('renders no content', () => {

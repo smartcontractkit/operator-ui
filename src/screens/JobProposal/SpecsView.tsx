@@ -258,7 +258,7 @@ export const SpecsView = withStyles(styles)(({
               variant={
                 spec.status === 'REJECTED' || spec.status === 'CANCELLED'
                   ? 'outlined'
-                  : 'default'
+                  : 'filled'
               }
             />
             <div className={classes.proposedAtContainer}>

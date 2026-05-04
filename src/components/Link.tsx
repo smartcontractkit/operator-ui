@@ -8,7 +8,7 @@ import { TypographyProps } from '@mui/material/Typography'
 import { Theme } from '@mui/material/styles'
 import classNames from 'classnames'
 
-type Variant = TypographyProps['variant'] | 'srOnly'
+type Variant = TypographyProps['variant']
 type Color = TypographyProps['color']
 
 const styles = (theme: Theme) =>

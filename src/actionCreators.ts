@@ -57,7 +57,10 @@ const curryErrorHandler =
     }
   }
 
-export const notifySuccess = (component: React.ReactNode, props: object) => {
+export const notifySuccess = (
+  component: (props: any) => React.ReactNode,
+  props: object,
+) => {
   return {
     type: NotifyActionType.NOTIFY_SUCCESS,
     component,
@@ -70,7 +73,10 @@ export const notifySuccessMsg = (msg: string) => ({
   msg,
 })
 
-export const notifyError = (component: React.ReactNode, error: Error) =>
+export const notifyError = (
+  component: (props: any) => React.ReactNode,
+  error: Error,
+) =>
   ({
     type: NotifyActionType.NOTIFY_ERROR,
     component,
@@ -358,8 +364,8 @@ export const beginRegistration = (): ThunkAction<
 export const createJobRunV2 = (
   id: string,
   pipelineInput: string,
-  successCallback: React.ReactNode,
-  errorCallback: React.ReactNode,
+  successCallback: (props: any) => React.ReactNode,
+  errorCallback: (props: any) => React.ReactNode,
 ): ThunkAction<Promise<void>, AppState, void, Action<string>> => {
   return (dispatch: Dispatch) => {
     dispatch({ type: ResourceActionType.REQUEST_CREATE })

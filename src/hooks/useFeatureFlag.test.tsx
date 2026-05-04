@@ -6,7 +6,7 @@ import { renderHook, waitFor } from '@testing-library/react'
 import { useFeatureFlag, Feature, FEATURES_QUERY } from './useFeatureFlag'
 
 function getHookWrapper(mocks: MockedResponse[] = []) {
-  const wrapper: React.FC = ({ children }) => (
+  const wrapper = ({ children }: React.PropsWithChildren<{}>) => (
     <MockedProvider mocks={mocks} addTypename={false}>
       {children}
     </MockedProvider>

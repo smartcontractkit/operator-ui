@@ -1,20 +1,47 @@
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import React from 'react'
 import { D3Graph } from 'components/D3Chart/D3Graph'
 import { parseDot } from 'utils/parseDot'
 import { TaskRunStatus } from 'utils/taskRunStatus'
+
+// Mock elkjs so layout resolves synchronously with stub positions,
+// making tests fast and deterministic regardless of node count.
+jest.mock('elkjs', () =>
+  jest.fn().mockImplementation(() => ({
+    layout: (graph: any) =>
+      Promise.resolve({
+        ...graph,
+        children: (graph.children ?? []).map((node: any) => ({
+          ...node,
+          x: 0,
+          y: 0,
+        })),
+      }),
+  })),
+)
+
+const waitForClassCount = async (
+  container: HTMLElement,
+  className: string,
+  expectedCount: number,
+) => {
+  await waitFor(() => {
+    expect(container.getElementsByClassName(className).length).toBe(
+      expectedCount,
+    )
+  })
+
+  return container.getElementsByClassName(className)
+}
 
 describe('D3Graph test', () => {
   it('renders a single node', async () => {
     const nodeData = parseDot(`digraph {ds1 [type=bridge name=voter_turnout];}`)
     const { container } = render(<D3Graph nodesData={nodeData} />)
 
-    //Wait for render
-    await new Promise((r) => setTimeout(r, 500))
-
-    const ds1 = container
-      .getElementsByClassName('task-run-icon-pending')
-      .item(0)
+    const ds1 = (
+      await waitForClassCount(container, 'task-run-icon-pending', 1)
+    ).item(0)
     expect(ds1).toHaveAttribute('id', 'pending-run-icon-ds1')
   })
 
@@ -27,11 +54,7 @@ describe('D3Graph test', () => {
     }`)
     const { container } = render(<D3Graph nodesData={nodeData} />)
 
-    //Wait for render
-    await new Promise((r) => setTimeout(r, 500))
-
-    const dss = container.getElementsByClassName('task-run-icon-pending')
-    expect(dss.length).toBe(5)
+    const dss = await waitForClassCount(container, 'task-run-icon-pending', 5)
     expect(dss.item(0)).toHaveAttribute('id', 'pending-run-icon-ds1')
     expect(dss.item(1)).toHaveAttribute('id', 'pending-run-icon-ds2')
     expect(dss.item(2)).toHaveAttribute('id', 'pending-run-icon-ds3')
@@ -47,11 +70,11 @@ describe('D3Graph test', () => {
     const nodeData = parseDot(`digraph {${observationSoruce}}`)
     const { container } = render(<D3Graph nodesData={nodeData} />)
 
-    //Wait for render
-    await new Promise((r) => setTimeout(r, 500))
-
-    const dss = container.getElementsByClassName('task-run-icon-pending')
-    expect(dss.length).toBe(1000)
+    const dss = await waitForClassCount(
+      container,
+      'task-run-icon-pending',
+      1000,
+    )
 
     for (let i = 0; i < 1000; i++) {
       expect(dss.item(i)).toHaveAttribute('id', `pending-run-icon-ds${i}`)
@@ -66,11 +89,7 @@ describe('D3Graph test', () => {
     }`)
     const { container } = render(<D3Graph nodesData={nodeData} />)
 
-    //Wait for render
-    await new Promise((r) => setTimeout(r, 1000))
-
-    const dss = container.getElementsByClassName('task-run-icon-pending')
-    expect(dss.length).toBe(2)
+    const dss = await waitForClassCount(container, 'task-run-icon-pending', 2)
 
     expect(dss.item(0)).toHaveAttribute('id', `pending-run-icon-ds1`)
     expect(dss.item(1)).toHaveAttribute('id', `pending-run-icon-ds2`)
@@ -89,11 +108,7 @@ describe('D3Graph test', () => {
     nodeData[3].attributes = { status: TaskRunStatus.UNKNOWN }
     const { container } = render(<D3Graph nodesData={nodeData} />)
 
-    //Wait for render
-    await new Promise((r) => setTimeout(r, 500))
-
-    const dss = container.getElementsByClassName('task-run-icon')
-    expect(dss.length).toBe(4)
+    const dss = await waitForClassCount(container, 'task-run-icon', 4)
 
     expect(dss.item(0)).toHaveAttribute('id', `success-run-icon-ds1`)
     expect(dss.item(1)).toHaveAttribute('id', `error-run-icon-ds2`)
@@ -107,12 +122,9 @@ describe('D3Graph test', () => {
     )
     const { container } = render(<D3Graph nodesData={nodeData} />)
 
-    //Wait for render
-    await new Promise((r) => setTimeout(r, 500))
-
-    const ds1 = container
-      .getElementsByClassName('task-run-icon-pending')
-      .item(0)
+    const ds1 = (
+      await waitForClassCount(container, 'task-run-icon-pending', 1)
+    ).item(0)
     expect(ds1).toHaveAttribute('id', 'pending-run-icon-ds1')
 
     const tooltip = container.querySelector('#tooltip-d3-chart-ds1')

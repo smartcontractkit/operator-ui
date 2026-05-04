@@ -10,7 +10,11 @@ const ThemeModeContext = React.createContext<ThemeModeContextValue | undefined>(
   undefined,
 )
 
-export const ThemeModeProvider: React.FC = ({ children }) => {
+export const ThemeModeProvider = ({
+  children,
+}: {
+  children?: React.ReactNode
+}) => {
   const [mode, setMode] = React.useState<ThemeMode>(() => getThemeMode())
 
   const toggleMode = React.useCallback(() => {

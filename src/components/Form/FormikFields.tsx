@@ -17,12 +17,17 @@ export const FormikTextField = ({
   children,
   FormHelperTextProps,
   ...props
-}: FormikTextFieldProps & { children?: React.ReactNode; FormHelperTextProps?: any }) => {
+}: FormikTextFieldProps & {
+  children?: React.ReactNode
+  FormHelperTextProps?: any
+}) => {
   const theme = useTheme()
   const touched = getIn(form.touched, field.name)
   const error = getIn(form.errors, field.name)
   // Show error if field is touched, OR show all errors after form submission
-  const showError = Boolean((touched || (form.submitCount && form.submitCount > 0)) && error)
+  const showError = Boolean(
+    (touched || (form.submitCount && form.submitCount > 0)) && error,
+  )
 
   const maybeMaxRowsProps =
     props.rows || props.maxRows || rowsMax === undefined

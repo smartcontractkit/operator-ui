@@ -131,7 +131,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
       .then((data) => {
         graphData.nodes = []
         data.children?.map((n) => {
-          if (!n.x || !n.y) {
+          if (n.x == null || n.y == null) {
             return
           }
           // @ts-expect-error type missmatch
@@ -270,9 +270,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
           config={d3GraphConfig}
           onMouseOverNode={onMouseOverNode}
           onMouseOutNode={onMouseOutNode}
-        >
-          D3 chart
-        </Graph>
+        />
       )}
       {nodesData.map((n) => {
         return (

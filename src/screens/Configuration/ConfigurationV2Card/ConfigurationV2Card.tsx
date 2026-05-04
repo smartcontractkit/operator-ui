@@ -49,7 +49,7 @@ export const CONFIG_V2_QUERY = gql`
   }
 `
 
-const SpanRow: React.FC = ({ children }) => (
+const SpanRow = ({ children }: React.PropsWithChildren<{}>) => (
   <div>
     <Typography component="div">{children}</Typography>
   </div>
@@ -57,7 +57,9 @@ const SpanRow: React.FC = ({ children }) => (
 
 const FetchingRow = () => <SpanRow>...</SpanRow>
 
-const ErrorRow: React.FC = ({ children }) => <SpanRow>{children}</SpanRow>
+const ErrorRow = ({ children }: React.PropsWithChildren<{}>) => (
+  <SpanRow>{children}</SpanRow>
+)
 
 const TOMLPanel = ({ loading, toml, error = '', title, expanded }: Props) => {
   if (error) {

@@ -29,6 +29,8 @@ import MainLogo from '../components/Logos/Main'
 import fetchCountSelector from '../selectors/fetchCount'
 import { Feature, useFeatureFlag } from 'src/hooks/useFeatureFlag'
 
+const ResizeDetector = ReactResizeDetector as any
+
 const NAV_ITEMS = [
   ['/jobs', 'Jobs'],
   ['/runs', 'Runs'],
@@ -284,7 +286,7 @@ const Header = withStyles(styles)(({
 
   return (
     <AppBar className={classes.appBar} color="default" position="absolute">
-      <ReactResizeDetector
+      <ResizeDetector
         refreshMode="debounce"
         refreshRate={200}
         onResize={onResize}
@@ -326,7 +328,7 @@ const Header = withStyles(styles)(({
             </Grid>
           </Toolbar>
         </div>
-      </ReactResizeDetector>
+      </ResizeDetector>
       <Portal container={drawerContainer}>
         <Drawer
           isFeedsManagerFeatureEnabled={isFeedsManagerFeatureEnabled}

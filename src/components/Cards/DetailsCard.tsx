@@ -72,9 +72,10 @@ export const DetailsCardItemTitle = ({ title }: { title: string }) => (
 
 // DetailsCardItemValue provides default styles for an item value in the details
 // card.
-export const DetailsCardItemValue: React.FC<{
-  value?: string | number | null
-}> = ({ children, value }) => (
+export const DetailsCardItemValue = ({
+  children,
+  value,
+}: React.PropsWithChildren<{ value?: string | number | null }>) => (
   <Typography variant="body1" noWrap>
     {children ? children : value}
   </Typography>

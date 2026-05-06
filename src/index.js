@@ -1,4 +1,6 @@
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
+import createCache from '@emotion/cache'
+import { TssCacheProvider } from 'tss-react'
 import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import moment from 'moment'
@@ -15,6 +17,13 @@ moment.defaultFormat = 'YYYY-MM-DD h:mm:ss A'
 
 export default App
 
+// Separate Emotion cache for tss-react (withStyles) styles.
+// MUI styles are injected via StyledEngineProvider injectFirst into a
+// prepend cache at the TOP of <head>.  By giving tss-react its own
+// non-prepend cache (key 'tss'), its styles land AFTER MUI's styles in
+// the document, so custom padding / colour overrides always win.
+const tssCssCache = createCache({ key: 'tss' })
+
 const Root = () => {
   const { mode } = useThemeMode()
   const theme = React.useMemo(() => createAppTheme(mode), [mode])
@@ -23,7 +32,9 @@ const Root = () => {
     <ApolloProvider client={client}>
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
-          <App />
+          <TssCacheProvider value={tssCssCache}>
+            <App />
+          </TssCacheProvider>
         </ThemeProvider>
       </StyledEngineProvider>
     </ApolloProvider>

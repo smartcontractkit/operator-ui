@@ -90,9 +90,33 @@ const mainTheme: ThemeOptions = {
       styleOverrides: {
         body: {
           fontSize: '1rem',
+          fontWeight: 400,
         },
-        head: {
+        head: ({ theme }) => ({
           fontSize: '1rem',
+          fontWeight: 400,
+          // Only apply secondary (gray) color in light mode to match legacy style.
+          // Dark mode keeps MUI's default text.primary for contrast.
+          ...(theme.palette.mode === 'light' && {
+            color: theme.palette.text.secondary,
+          }),
+        }),
+      },
+    },
+    MuiTablePagination: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          // Only mute pagination color in light mode.
+          ...(theme.palette.mode === 'light' && {
+            color: theme.palette.text.secondary,
+          }),
+        }),
+        selectLabel: {
+          fontSize: '0.75rem',
+          fontWeight: 400,
+        },
+        displayedRows: {
+          fontSize: '0.75rem',
           fontWeight: 400,
         },
       },

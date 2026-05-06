@@ -1,13 +1,23 @@
 /**
  * Compatibility shim: re-exports `withStyles` in the curried
  * `withStyles(styles)(Component)` form that the codebase uses, backed by
- * tss-react/mui (Emotion) instead of the deprecated @mui/styles (JSS).
+ * tss-react (Emotion) instead of the deprecated @mui/styles (JSS).
  *
  * Also provides local `WithStyles` and `createStyles` replacements so all the
  * old `import { ... } from '@mui/styles'` references just change path.
+ *
+ * IMPORTANT: tss-react is configured to use the TssCacheProvider in index.js
+ * (key: 'tss', no-prepend), which sits AFTER MUI's injectFirst prepend cache
+ * in <head>. This guarantees our custom styles always win over MUI defaults
+ * when they target the same CSS property with the same specificity.
  */
 import type { ComponentType } from 'react'
-import { withStyles as tssWithStyles } from 'tss-react/mui'
+import { createMakeAndWithStyles } from 'tss-react'
+import { useTheme } from '@mui/material/styles'
+
+// Build a withStyles that is bound to the MUI theme and picks up the
+// TssCacheProvider cache defined in index.js.
+const { withStyles: tssWithStyles } = createMakeAndWithStyles({ useTheme })
 
 // createStyles is a pure identity function used only for TypeScript inference.
 // The MUI v5 version is typed as returning `never`, which breaks all the

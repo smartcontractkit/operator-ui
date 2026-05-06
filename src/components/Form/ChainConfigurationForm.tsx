@@ -324,7 +324,7 @@ export const ChainConfigurationForm = withStyles(styles)(({
       onSubmit={onSubmit}
     >
       {({ values }) => {
-        let chainAccountAddresses: string[] = []
+        let chainAccountAddresses: string[]
         let chainPublicKeys: string[] = []
         switch (values.chainType) {
           case ChainTypes.EVM:

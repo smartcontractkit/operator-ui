@@ -15,7 +15,7 @@ export const JSONCard: React.FC<Props> = ({ run }) => {
   const obj = React.useMemo(() => {
     const { inputs, outputs, taskRuns, ...rest } = run
 
-    let inputsObj = {}
+    let inputsObj: object
     try {
       inputsObj = JSON.parse(inputs)
     } catch (_e) {

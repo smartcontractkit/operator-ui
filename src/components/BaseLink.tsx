@@ -1,20 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, LinkProps } from 'react-router-dom'
 
-const RouterLink = Link as unknown as React.ComponentType<any>
-
-interface Props {
-  children: React.ReactNode
+interface Props extends Omit<LinkProps, 'to'> {
   href: string
-  id?: string
-  className?: string
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
 }
 
-const BaseLink = ({ children, href, id, className, onClick }: Props) => (
-  <RouterLink to={href} id={id} className={className} onClick={onClick}>
+const BaseLink = ({ href, children, ...rest }: Props) => (
+  <Link to={href} {...rest}>
     {children}
-  </RouterLink>
+  </Link>
 )
 
 export default BaseLink

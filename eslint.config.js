@@ -1,3 +1,4 @@
+const pluginJs = require('@eslint/js')
 const tsParser = require('@typescript-eslint/parser')
 const tsPlugin = require('@typescript-eslint/eslint-plugin')
 const reactHooksPlugin = require('eslint-plugin-react-hooks')
@@ -41,6 +42,7 @@ module.exports = [
       '**/schema/**',
     ],
   },
+  pluginJs.configs.recommended,
   tsPlugin.configs['flat/eslint-recommended'],
   ...tsPlugin.configs['flat/recommended'],
   {
@@ -58,6 +60,7 @@ module.exports = [
     },
     rules: {
       ...prettierConfig.rules,
+      'no-undef': 'off',
       radix: ['error', 'always'],
       'object-shorthand': ['error', 'always'],
       'prettier/prettier': [

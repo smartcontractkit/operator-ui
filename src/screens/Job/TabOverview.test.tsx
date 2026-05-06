@@ -70,7 +70,7 @@ describe('TabOverview', () => {
 
     renderComponent(job)
 
-    userEvent.click(getByRole('link', { name: /view more/i }))
+    userEvent.click(getByRole('button', { name: /view more/i }))
 
     expect(queryByText('Runs Tab')).toBeInTheDocument()
   })

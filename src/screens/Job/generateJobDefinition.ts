@@ -49,7 +49,7 @@ const toTOMLString = (value: { [key: string]: any }) => {
 export const generateJobDefinition = (
   job: JobPayload_Fields,
 ): JobDefinition => {
-  let values: object = {}
+  let values: object
 
   switch (job.spec.__typename) {
     case 'CronSpec':

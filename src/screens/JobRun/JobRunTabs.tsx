@@ -3,9 +3,9 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { Theme } from '@mui/material/styles'
-import { WithStyles } from '@mui/styles'
-import createStyles from '@mui/styles/createStyles'
-import withStyles from '@mui/styles/withStyles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
 import Tabs from '@mui/material/Tabs'
 import { TabLink } from 'src/components/Tab/TabLink'
 

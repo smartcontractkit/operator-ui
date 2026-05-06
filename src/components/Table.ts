@@ -1,6 +1,6 @@
 import { Theme } from '@mui/material/styles'
 
-import createStyles from '@mui/styles/createStyles'
+import { createStyles } from 'src/utils/withStyles'
 
 // Contains styles to make a table row linkable
 //

@@ -1,5 +1,5 @@
 import { green, red } from '@mui/material/colors'
-import { createStyles, WithStyles, withStyles } from '@mui/styles'
+import { createStyles, WithStyles, withStyles } from 'src/utils/withStyles'
 import Typography from '@mui/material/Typography'
 import CancelIcon from '@mui/icons-material/Cancel'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'

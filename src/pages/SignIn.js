@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { Redirect, useLocation, useHistory } from 'react-router-dom'
-import withStyles from '@mui/styles/withStyles'
+import { withStyles } from 'src/utils/withStyles'
 import Button from 'components/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'

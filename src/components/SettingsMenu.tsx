@@ -8,8 +8,8 @@ import Switch from '@mui/material/Switch'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { Theme } from '@mui/material/styles'
 
-import { WithStyles } from '@mui/styles'
-import withStyles from '@mui/styles/withStyles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
 
 import { MenuItemLink } from 'components/MenuItemLink'
 import { useThemeMode } from 'src/context/ThemeModeContext'

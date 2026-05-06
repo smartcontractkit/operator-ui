@@ -31,7 +31,6 @@
     "@iarna/toml": "3.0.0",
     "@mui/icons-material": "^5.17.1",
     "@mui/material": "^5.17.1",
-    "@mui/styles": "^5.17.1",
     "bignumber.js": "^9.3.1",
     "buffer": "^6.0.3",
     "classnames": "^2.5.1",
@@ -61,6 +60,7 @@
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
     "stream-browserify": "^3.0.0",
+    "tss-react": "^4.9.20",
     "yup": "^0.32.11"
   },
   "devDependencies": {

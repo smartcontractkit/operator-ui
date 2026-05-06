@@ -8,9 +8,9 @@ import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import Portal from '@mui/material/Portal'
 import { Theme } from '@mui/material/styles'
-import { WithStyles } from '@mui/styles'
-import createStyles from '@mui/styles/createStyles'
-import withStyles from '@mui/styles/withStyles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -353,4 +353,4 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
 
 const ConnectedHeader = connect(mapStateToProps, mapDispatchToProps)(Header)
 
-export default withStyles(styles)(ConnectedHeader)
+export default ConnectedHeader

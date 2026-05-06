@@ -7,8 +7,8 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { Theme } from '@mui/material/styles'
 
-import { WithStyles } from '@mui/styles'
-import withStyles from '@mui/styles/withStyles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
 
 import { beginRegistration, submitSignOut } from 'actionCreators'
 

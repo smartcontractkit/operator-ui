@@ -4,7 +4,6 @@ import { MemoryRouter } from 'react-router-dom'
 import { render, RenderOptions, RenderResult } from '@testing-library/react'
 import configureStore from 'redux-mock-store'
 import { ThemeProvider } from '@mui/material/styles'
-import { ThemeProvider as LegacyThemeProvider } from '@mui/styles'
 
 import createStore from 'src/createStore'
 import { theme } from 'src/theme'
@@ -17,9 +16,7 @@ const AllTheProviders = ({ children }: React.PropsWithChildren<{}>) => {
   return (
     <ThemeModeProvider>
       <ThemeProvider theme={theme}>
-        <LegacyThemeProvider theme={theme}>
-          <ReduxProvider store={createStore()}>{children}</ReduxProvider>
-        </LegacyThemeProvider>
+        <ReduxProvider store={createStore()}>{children}</ReduxProvider>
       </ThemeProvider>
     </ThemeModeProvider>
   )

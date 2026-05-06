@@ -1,5 +1,4 @@
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
-import { ThemeProvider as LegacyThemeProvider } from '@mui/styles'
 import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import moment from 'moment'
@@ -24,9 +23,7 @@ const Root = () => {
     <ApolloProvider client={client}>
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
-          <LegacyThemeProvider theme={theme}>
-            <App />
-          </LegacyThemeProvider>
+          <App />
         </ThemeProvider>
       </StyledEngineProvider>
     </ApolloProvider>

@@ -4,9 +4,9 @@ import { gql } from '@apollo/client'
 
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
-import { WithStyles } from '@mui/styles'
-import createStyles from '@mui/styles/createStyles'
-import withStyles from '@mui/styles/withStyles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 

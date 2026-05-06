@@ -1,7 +1,7 @@
 import React from 'react'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import withStyles from '@mui/styles/withStyles'
+import { withStyles } from 'src/utils/withStyles'
 
 const styles = (theme) => ({
   wrapper: {

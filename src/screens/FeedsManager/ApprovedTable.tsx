@@ -1,8 +1,8 @@
 import React from 'react'
 
 import Chip from '@mui/material/Chip'
-import { WithStyles } from '@mui/styles'
-import withStyles from '@mui/styles/withStyles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'

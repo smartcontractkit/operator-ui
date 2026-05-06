@@ -5,9 +5,9 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined'
 import IconButton from '@mui/material/IconButton'
 import { Theme } from '@mui/material/styles'
-import { WithStyles } from '@mui/styles'
-import createStyles from '@mui/styles/createStyles'
-import withStyles from '@mui/styles/withStyles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
 import Tooltip from '@mui/material/Tooltip'
 
 const styles = (theme: Theme) =>

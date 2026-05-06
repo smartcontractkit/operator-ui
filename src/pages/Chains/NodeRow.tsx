@@ -4,8 +4,8 @@ import { NodeResource } from './ChainNodes'
 import { tableStyles } from 'components/Table'
 import Link from 'components/Link'
 
-import { WithStyles } from '@mui/styles'
-import withStyles from '@mui/styles/withStyles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 

@@ -6,17 +6,18 @@ import MuiDialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import MuiDialogTitle from '@mui/material/DialogTitle'
-import withStyles from '@mui/styles/withStyles'
+import { Theme } from '@mui/material/styles'
+import { withStyles } from 'src/utils/withStyles'
 import Typography from '@mui/material/Typography'
 
-const DialogTitle = withStyles((theme) => ({
+const DialogTitle = withStyles((theme: Theme) => ({
   root: {
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(3),
   },
 }))(MuiDialogTitle)
 
-const DialogActions = withStyles((theme) => ({
+const DialogActions = withStyles((theme: Theme) => ({
   root: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),

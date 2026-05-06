@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import LinearProgress from '@mui/material/LinearProgress'
-import withStyles from '@mui/styles/withStyles'
+import { withStyles } from 'src/utils/withStyles'
 
 const styles = (theme) => ({
   root: {

@@ -3,7 +3,7 @@ import { Theme } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
 
 import { Switch } from 'react-router-dom'
-import withStyles from '@mui/styles/withStyles'
+import { withStyles } from 'src/utils/withStyles'
 import Header from 'pages/Header'
 import Notifications from 'pages/Notifications'
 import PrivateRoute from './PrivateRoute'

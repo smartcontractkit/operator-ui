@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -17,6 +15,17 @@ module.exports = {
         use: {
           // `.swcrc` can be used to configure swc
           loader: 'swc-loader',
+          options: {
+            jsc: {
+              transform: {
+                react: {
+                  runtime: 'classic',
+                  development: isDev,
+                  refresh: isDev,
+                },
+              },
+            },
+          },
         },
       },
       {
@@ -34,6 +43,7 @@ module.exports = {
     plugins: [new TsconfigPathsPlugin({ extensions })],
     fallback: {
       stream: require.resolve('stream-browserify'), // Required for @iarna/toml
+      buffer: require.resolve('buffer/'), // Required by stream-browserify → readable-stream
     },
   },
   output: {

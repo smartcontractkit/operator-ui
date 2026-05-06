@@ -184,7 +184,7 @@ describe('JobsScreen', () => {
 
     await waitForLoading()
 
-    userEvent.click(getByRole('link', { name: /new job/i }))
+    userEvent.click(getByRole('button', { name: /new job/i }))
 
     expect(await findByText('Link Success')).toBeInTheDocument()
   })

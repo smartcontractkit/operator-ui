@@ -34,39 +34,41 @@ interface Props extends WithStyles<typeof styles> {
 
 // KeyBundle provides a component which styles the key bundle information in a
 // cell.
-export const KeyBundle = withStyles(styles)(
-  ({ classes, primary, secondary }: Props) => {
-    return (
-      <List dense={true}>
-        <ListItem>
-          <ListItemIcon>
-            <Avatar className={classes.avatar}>
-              <VpnKeyRoundedIcon />
-            </Avatar>
-          </ListItemIcon>
-          <ListItemText
-            primary={
-              <Typography
-                className={classes.listItemPrimary}
-                variant="body1"
-                component="span"
-              >
-                {primary}
-              </Typography>
-            }
-            secondary={secondary.map((secondaryItem: any, index: number) => (
-              <Typography
-                key={index}
-                className={classes.listItemSecondary}
-                variant="subtitle2"
-                component="span"
-              >
-                {secondaryItem}
-              </Typography>
-            ))}
-          />
-        </ListItem>
-      </List>
-    )
-  },
-)
+export const KeyBundle = withStyles(styles)(({
+  classes,
+  primary,
+  secondary,
+}: Props) => {
+  return (
+    <List dense={true}>
+      <ListItem>
+        <ListItemIcon>
+          <Avatar className={classes.avatar}>
+            <VpnKeyRoundedIcon />
+          </Avatar>
+        </ListItemIcon>
+        <ListItemText
+          primary={
+            <Typography
+              className={classes.listItemPrimary}
+              variant="body1"
+              component="span"
+            >
+              {primary}
+            </Typography>
+          }
+          secondary={secondary.map((secondaryItem: any, index: number) => (
+            <Typography
+              key={index}
+              className={classes.listItemSecondary}
+              variant="subtitle2"
+              component="span"
+            >
+              {secondaryItem}
+            </Typography>
+          ))}
+        />
+      </ListItem>
+    </List>
+  )
+})

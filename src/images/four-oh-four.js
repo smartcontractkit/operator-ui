@@ -1,4 +1,3 @@
-/* eslint react/no-unknown-property: 0 */
 import React from 'react'
 import BaseLink from '../components/BaseLink'
 

@@ -50,87 +50,84 @@ interface LogConfigurationFormProps extends WithStyles<typeof styles> {
   initialValues: LogConfig
 }
 
-const LogConfigurationForm = withStyles(styles)(
-  ({ classes, initialValues }: LogConfigurationFormProps) => {
-    const dispatch = useDispatch()
-    const formik = useFormik({
-      initialValues,
-      onSubmit: async (values: LogConfig) => {
-        try {
-          const updateData = {
-            level: values.level,
-            sqlEnabled: values.sqlEnabled,
-          }
-          await v2.logConfig.updateLogConfig(updateData)
-
-          dispatch(notifySuccess(() => <>Logging Configuration Updated</>, {}))
-        } catch (e) {
-          dispatch(notifyError(ErrorMessage, e as Error))
+const LogConfigurationForm = withStyles(styles)(({
+  classes,
+  initialValues,
+}: LogConfigurationFormProps) => {
+  const dispatch = useDispatch()
+  const formik = useFormik({
+    initialValues,
+    onSubmit: async (values: LogConfig) => {
+      try {
+        const updateData = {
+          level: values.level,
+          sqlEnabled: values.sqlEnabled,
         }
-      },
-    })
+        await v2.logConfig.updateLogConfig(updateData)
 
-    return (
-      <form onSubmit={formik.handleSubmit} data-testid="logging-form">
-        <TextField
-          id="select-level"
-          name="level"
-          fullWidth
-          select
-          label="Log Level"
-          value={formik.values.level}
-          defaultValue={initialValues.defaultLogLevel}
-          onChange={formik.handleChange}
-          error={formik.touched.level && Boolean(formik.errors.level)}
-          helperText="Override the LOG_LEVEL environment variable (until restart)"
-        >
-          {logLevels.map((level) => (
-            <MenuItem key={level} value={level}>
-              {capitalize(level).concat(
-                level === initialValues.defaultLogLevel ? ' (default)' : '',
-              )}
-            </MenuItem>
-          ))}
-        </TextField>
+        dispatch(notifySuccess(() => <>Logging Configuration Updated</>, {}))
+      } catch (e) {
+        dispatch(notifyError(ErrorMessage, e as Error))
+      }
+    },
+  })
 
-        <FormGroup>
-          <FormControlLabel
-            name="sqlEnabled"
-            control={
-              <>
-                <Checkbox
-                  id="sqlEnabled"
-                  name="sqlEnabled"
-                  disabled={formik.values.level !== 'debug'}
-                  checked={
-                    formik.values.sqlEnabled && formik.values.level === 'debug'
-                  }
-                  onChange={formik.handleChange}
-                />
-              </>
-            }
-            label="Log SQL Statements (debug only)"
-          />
-          <FormHelperText className={classes.logLevelHelperText}>
-            Override the LOG_SQL environment variable (until restart)
-          </FormHelperText>
-        </FormGroup>
+  return (
+    <form onSubmit={formik.handleSubmit} data-testid="logging-form">
+      <TextField
+        id="select-level"
+        name="level"
+        fullWidth
+        select
+        label="Log Level"
+        value={formik.values.level}
+        defaultValue={initialValues.defaultLogLevel}
+        onChange={formik.handleChange}
+        error={formik.touched.level && Boolean(formik.errors.level)}
+        helperText="Override the LOG_LEVEL environment variable (until restart)"
+      >
+        {logLevels.map((level) => (
+          <MenuItem key={level} value={level}>
+            {capitalize(level).concat(
+              level === initialValues.defaultLogLevel ? ' (default)' : '',
+            )}
+          </MenuItem>
+        ))}
+      </TextField>
 
-        <br />
+      <FormGroup>
+        <FormControlLabel
+          name="sqlEnabled"
+          control={
+            <>
+              <Checkbox
+                id="sqlEnabled"
+                name="sqlEnabled"
+                disabled={formik.values.level !== 'debug'}
+                checked={
+                  formik.values.sqlEnabled && formik.values.level === 'debug'
+                }
+                onChange={formik.handleChange}
+              />
+            </>
+          }
+          label="Log SQL Statements (debug only)"
+        />
+        <FormHelperText className={classes.logLevelHelperText}>
+          Override the LOG_SQL environment variable (until restart)
+        </FormHelperText>
+      </FormGroup>
 
-        <div className={classes.actions}>
-          <Button
-            variant="primary"
-            type="submit"
-            disabled={formik.isSubmitting}
-          >
-            Update
-          </Button>
-        </div>
-      </form>
-    )
-  },
-)
+      <br />
+
+      <div className={classes.actions}>
+        <Button variant="primary" type="submit" disabled={formik.isSubmitting}>
+          Update
+        </Button>
+      </div>
+    </form>
+  )
+})
 
 export const LoggingCard = () => {
   const [logConfig, setLogConfig] = useState<LogConfig | null>(null)

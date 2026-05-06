@@ -48,43 +48,46 @@ interface Props extends WithStyles<typeof styles> {
   status: JobRunStatus
 }
 
-export const StatusCard = withStyles(styles)(
-  ({ classes, status, startedAt, finishedAt }: Props) => {
-    const end = React.useMemo(() => {
-      switch (status) {
-        case 'COMPLETED':
-        case 'ERRORED':
-          return finishedAt
-        case 'RUNNING':
-          return Date.now()
-        default:
-          return null
-      }
-    }, [status, finishedAt])
+export const StatusCard = withStyles(styles)(({
+  classes,
+  status,
+  startedAt,
+  finishedAt,
+}: Props) => {
+  const end = React.useMemo(() => {
+    switch (status) {
+      case 'COMPLETED':
+      case 'ERRORED':
+        return finishedAt
+      case 'RUNNING':
+        return Date.now()
+      default:
+        return null
+    }
+  }, [status, finishedAt])
 
-    const statusClass =
-      classes[status.toLowerCase() as keyof typeof classes] || classes.running
+  const statusClass =
+    classes[status.toLowerCase() as keyof typeof classes] || classes.running
 
-    return (
-      <Card>
-        <CardContent className={classNames(classes.cardContent, statusClass)}>
-          <JobRunStatusIcon width={64} status={status} />
+  return (
+    <Card>
+      <CardContent className={classNames(classes.cardContent, statusClass)}>
+        <JobRunStatusIcon width={64} status={status} />
 
-          <div className={classes.body}>
-            <Typography className={classes.statusText} variant="h5">
-              {titleize(status)}
-            </Typography>
+        <div className={classes.body}>
+          <Typography className={classes.statusText} variant="h5">
+            {titleize(status)}
+          </Typography>
 
-            {end && (
-              <ElapsedDuration
-                start={startedAt}
-                end={end}
-                className={classes.elapsedText}
-              />
-            )}
-          </div>
-        </CardContent>
-      </Card>
-    )
-  },
-)
+          {end && (
+            <ElapsedDuration
+              start={startedAt}
+              end={end}
+              className={classes.elapsedText}
+            />
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  )
+})

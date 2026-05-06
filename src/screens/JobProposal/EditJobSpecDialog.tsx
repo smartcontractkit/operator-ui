@@ -38,62 +38,66 @@ const ValidationSchema = Yup.object().shape({
   definition: Yup.string().required('Required'),
 })
 
-export const EditJobSpecDialog = withStyles(styles)(
-  ({ classes, initialValues, onClose, onSubmit, open }: Props) => {
-    return (
-      <Formik
-        initialValues={initialValues}
-        validationSchema={ValidationSchema}
-        onSubmit={async (values, formikHelper) => {
-          await onSubmit(values, formikHelper)
+export const EditJobSpecDialog = withStyles(styles)(({
+  classes,
+  initialValues,
+  onClose,
+  onSubmit,
+  open,
+}: Props) => {
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={ValidationSchema}
+      onSubmit={async (values, formikHelper) => {
+        await onSubmit(values, formikHelper)
 
-          onClose()
-        }}
-      >
-        {({ isSubmitting, submitForm }) => (
-          <Form>
-            <Dialog
-              open={open}
-              onClose={onClose}
-              classes={{ paper: classes.paperRoot }}
-            >
-              <DialogTitle disableTypography>
-                <Typography variant="h5">Edit Job Spec</Typography>
-              </DialogTitle>
-              <DialogContent>
-                <Field
-                  component={TextField}
-                  id="definition"
-                  name="definition"
-                  label="Job Spec"
-                  variant="outlined"
-                  multiline
-                  rows={10}
-                  rowsMax={25}
-                  required
-                  autoComplete="off"
-                  margin="normal"
-                  fullWidth
-                  spellCheck="false"
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={onClose} variant="text">
-                  Cancel
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  disabled={isSubmitting}
-                  onClick={submitForm}
-                >
-                  Submit
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </Form>
-        )}
-      </Formik>
-    )
-  },
-)
+        onClose()
+      }}
+    >
+      {({ isSubmitting, submitForm }) => (
+        <Form>
+          <Dialog
+            open={open}
+            onClose={onClose}
+            classes={{ paper: classes.paperRoot }}
+          >
+            <DialogTitle disableTypography>
+              <Typography variant="h5">Edit Job Spec</Typography>
+            </DialogTitle>
+            <DialogContent>
+              <Field
+                component={TextField}
+                id="definition"
+                name="definition"
+                label="Job Spec"
+                variant="outlined"
+                multiline
+                rows={10}
+                rowsMax={25}
+                required
+                autoComplete="off"
+                margin="normal"
+                fullWidth
+                spellCheck="false"
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={onClose} variant="text">
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={isSubmitting}
+                onClick={submitForm}
+              >
+                Submit
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Form>
+      )}
+    </Formik>
+  )
+})

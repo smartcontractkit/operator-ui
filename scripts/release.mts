@@ -6,7 +6,7 @@ import 'zx/globals'
 import _readChangesets from '@changesets/read'
 // See https://github.com/changesets/changesets/issues/622
 const readChangesets =
-  _readChangesets.default as typeof import('@changesets/read/dist/declarations/src/index.js')['default']
+  _readChangesets.default as (typeof import('@changesets/read/dist/declarations/src/index.js'))['default']
 
 // These paths are relative to the git root
 const ASSETS_DIR = './assets'
@@ -188,20 +188,20 @@ async function checkExternalScriptDependencies() {
   }
 }
 
-function log(...params: Parameters<typeof chalk['gray']>): void {
+function log(...params: Parameters<(typeof chalk)['gray']>): void {
   console.log(chalk.gray(...params))
 }
 
-function debug(...params: Parameters<typeof chalk['blue']>): void {
+function debug(...params: Parameters<(typeof chalk)['blue']>): void {
   if (process.env.DEBUG) {
     console.debug(chalk.blue('DEBUG:'), chalk.blue(...params))
   }
 }
 
-function warn(...params: Parameters<typeof chalk['yellow']>): void {
+function warn(...params: Parameters<(typeof chalk)['yellow']>): void {
   console.warn(chalk.yellow('WARN:'), chalk.yellow(...params))
 }
 
-function error(...params: Parameters<typeof chalk['red']>): void {
+function error(...params: Parameters<(typeof chalk)['red']>): void {
   console.error(chalk.red('ERR:'), chalk.red(...params))
 }

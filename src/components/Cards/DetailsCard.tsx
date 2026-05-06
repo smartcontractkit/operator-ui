@@ -50,17 +50,19 @@ interface Props extends WithStyles<typeof styles> {
 // for actions which should contain a icon button that opens a menu.
 //
 // We may make this more specific to the use case in the future
-export const DetailsCard = withStyles(styles)(
-  ({ actions, children, classes }: React.PropsWithChildren<Props>) => {
-    return (
-      <Paper className={classes.paper}>
-        <div className={classes.content}>{children}</div>
+export const DetailsCard = withStyles(styles)(({
+  actions,
+  children,
+  classes,
+}: React.PropsWithChildren<Props>) => {
+  return (
+    <Paper className={classes.paper}>
+      <div className={classes.content}>{children}</div>
 
-        {actions && <div className={classes.actions}>{actions}</div>}
-      </Paper>
-    )
-  },
-)
+      {actions && <div className={classes.actions}>{actions}</div>}
+    </Paper>
+  )
+})
 
 // DetailsCardItemTitle provides default styles for an item title in the details
 // card
@@ -88,18 +90,16 @@ interface DetailsCardItemBlockValueProps extends WithStyles<typeof styles> {
 
 // DetailsCardItemValue provides default styles for an item value as a block
 // item. Useful to highlight blocks of text values
-export const DetailsCardItemBlockValue = withStyles(styles)(
-  ({
-    children,
-    classes,
-    value,
-  }: React.PropsWithChildren<DetailsCardItemBlockValueProps>) => {
-    return (
-      <div className={classes.itemBlock}>
-        <Typography variant="body1" className={classes.itemBlockText}>
-          {children ? children : value}
-        </Typography>
-      </div>
-    )
-  },
-)
+export const DetailsCardItemBlockValue = withStyles(styles)(({
+  children,
+  classes,
+  value,
+}: React.PropsWithChildren<DetailsCardItemBlockValueProps>) => {
+  return (
+    <div className={classes.itemBlock}>
+      <Typography variant="body1" className={classes.itemBlockText}>
+        {children ? children : value}
+      </Typography>
+    </div>
+  )
+})

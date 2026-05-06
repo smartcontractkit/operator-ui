@@ -67,8 +67,10 @@ export function createUrl(base: string, path: string, query?: object) {
 
       // serialize v as long as its not "null" or undefined
       if (v != undefined) {
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        return u.searchParams.append(k, (v as Object).toString())
+        return u.searchParams.append(
+          k,
+          (v as unknown as { toString(): string }).toString(),
+        )
       }
     })
   }

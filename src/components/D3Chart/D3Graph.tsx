@@ -19,6 +19,12 @@ interface Props {
   nodesData: Array<Stratify>
 }
 
+type D3GraphConfig = Partial<
+  GraphConfiguration<NodeWithExtraParameters, GraphLink>
+> & {
+  disableLinkForce: boolean
+}
+
 export const D3Graph: React.FC<Props> = ({ nodesData }) => {
   const [d3GraphData, setD3GraphData] = React.useState<
     GraphData<NodeWithExtraParameters, GraphLink>
@@ -126,7 +132,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
           if (!n.x || !n.y) {
             return
           }
-          // @ts-ignore type missmatch
+          // @ts-expect-error type missmatch
           graphData.nodes.push({
             id: n.id,
             x: `${n.x}`,
@@ -148,9 +154,7 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
 
   const heightPadding = 50
 
-  const d3GraphConfig: Partial<
-    GraphConfiguration<NodeWithExtraParameters, GraphLink>
-  > = {
+  const d3GraphConfig: D3GraphConfig = {
     automaticRearrangeAfterDropNode: false,
     collapsible: false,
     directed: true,
@@ -198,8 +202,6 @@ export const D3Graph: React.FC<Props> = ({ nodesData }) => {
     nodeHighlightBehavior: true,
     panAndZoom: true,
     staticGraph: true,
-    // @ts-ignore
-    width: '100%',
   }
 
   let mouseX = 0

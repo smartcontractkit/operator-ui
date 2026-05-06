@@ -33,16 +33,17 @@ export interface PaginatedRequestParams {
  * If T is an array of attribute objects, then the api response should be an array of resource objects.
  * If T is a single attribute object, then the api response is a single resource object, otherwise null.
  */
-export interface ApiResponse<T extends AttributesObject | null>
-  extends JsonApiResponse<
-    T extends Array<infer U>
-      ? U extends AttributesObject
-        ? ResourceObject<U>[]
-        : never
-      : T extends AttributesObject
+export interface ApiResponse<
+  T extends AttributesObject | null,
+> extends JsonApiResponse<
+  T extends Array<infer U>
+    ? U extends AttributesObject
+      ? ResourceObject<U>[]
+      : never
+    : T extends AttributesObject
       ? ResourceObject<T>
       : null
-  > {}
+> {}
 
 /**
  * A paginated json-api response for a data object.
@@ -57,23 +58,23 @@ export interface ApiResponse<T extends AttributesObject | null>
 export interface PaginatedApiResponse<
   T extends AttributesObject | null,
 > extends JsonApiResponse<
-    T extends Array<infer U>
-      ? U extends AttributesObject
-        ? ResourceObject<U>[]
-        : never
-      : T extends AttributesObject
+  T extends Array<infer U>
+    ? U extends AttributesObject
+      ? ResourceObject<U>[]
+      : never
+    : T extends AttributesObject
       ? ResourceObject<T>
       : never,
-    ErrorsObject[],
-    never,
-    {
-      count: number
-    },
-    {
-      prev?: string
-      next?: string
-    }
-  > {}
+  ErrorsObject[],
+  never,
+  {
+    count: number
+  },
+  {
+    prev?: string
+    next?: string
+  }
+> {}
 
 export class Api {
   constructor(private options: { base?: string }) {}

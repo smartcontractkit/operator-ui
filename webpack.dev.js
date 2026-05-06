@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const webpack = require('webpack')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const webpackBase = require('./webpack.config')
 
 module.exports = Object.assign(webpackBase, {
@@ -10,5 +9,5 @@ module.exports = Object.assign(webpackBase, {
     historyApiFallback: true,
     hot: true,
   },
-  plugins: [...webpackBase.plugins, new webpack.HotModuleReplacementPlugin()],
+  plugins: [...webpackBase.plugins, new ReactRefreshWebpackPlugin()],
 })

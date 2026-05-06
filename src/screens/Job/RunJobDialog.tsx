@@ -40,44 +40,47 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 // TODO - Convert this to use formik
-export const RunJobDialog = withStyles(styles)(
-  ({ open, onClose, onRun, classes }: Props) => {
-    const [pipelineInput, setPipelineInput] = React.useState('')
+export const RunJobDialog = withStyles(styles)(({
+  open,
+  onClose,
+  onRun,
+  classes,
+}: Props) => {
+  const [pipelineInput, setPipelineInput] = React.useState('')
 
-    const handleRun = React.useCallback(() => {
-      onRun(pipelineInput)
-      onClose()
-    }, [onRun, onClose, pipelineInput])
+  const handleRun = React.useCallback(() => {
+    onRun(pipelineInput)
+    onClose()
+  }, [onRun, onClose, pipelineInput])
 
-    return (
-      <Dialog onClose={onClose} open={open}>
-        <DialogTitle disableTypography>
-          <Typography variant="h5">Pipeline Input</Typography>
-          <IconButton
-            aria-label="Close"
-            className={classes.closeButton}
-            onClick={onClose}
-          >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
+  return (
+    <Dialog onClose={onClose} open={open}>
+      <DialogTitle disableTypography>
+        <Typography variant="h5">Pipeline Input</Typography>
+        <IconButton
+          aria-label="Close"
+          className={classes.closeButton}
+          onClick={onClose}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
 
-        <DialogContent className={classes.dialogContent}>
-          <TextField
-            className={classes.textarea}
-            multiline
-            rows={6}
-            variant="outlined"
-            onChange={(e) => setPipelineInput(e.target.value)}
-          />
-        </DialogContent>
+      <DialogContent className={classes.dialogContent}>
+        <TextField
+          className={classes.textarea}
+          multiline
+          rows={6}
+          variant="outlined"
+          onChange={(e) => setPipelineInput(e.target.value)}
+        />
+      </DialogContent>
 
-        <DialogActions>
-          <Button variant="primary" onClick={handleRun}>
-            Run Job
-          </Button>
-        </DialogActions>
-      </Dialog>
-    )
-  },
-)
+      <DialogActions>
+        <Button variant="primary" onClick={handleRun}>
+          Run Job
+        </Button>
+      </DialogActions>
+    </Dialog>
+  )
+})

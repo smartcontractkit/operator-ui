@@ -75,217 +75,217 @@ interface Props extends WithStyles<typeof styles> {
   proposals: readonly FeedsManager_JobProposalsFields[]
 }
 
-export const JobProposalsCard = withStyles(styles)(
-  ({ classes, proposals }: Props) => {
-    const [tabValue, setTabValue] = React.useState(0)
-    const [searchTerm, setSearchTerm] = React.useState('')
+export const JobProposalsCard = withStyles(styles)(({
+  classes,
+  proposals,
+}: Props) => {
+  const [tabValue, setTabValue] = React.useState(0)
+  const [searchTerm, setSearchTerm] = React.useState('')
 
-    const tabBadgeCounts: {
-      PENDING: number
-      UPDATES: number
-      APPROVED: number
-      REJECTED: number
-      CANCELLED: number
-      DELETED: number
-      REVOKED: number
-    } = React.useMemo(() => {
-      const tabBadgeCounts = {
-        PENDING: 0,
-        UPDATES: 0,
-        APPROVED: 0,
-        REJECTED: 0,
-        CANCELLED: 0,
-        DELETED: 0,
-        REVOKED: 0,
-      }
-
-      proposals.forEach((p) => {
-        if (p.pendingUpdate) {
-          // Always display any pending update in the updates tab counter
-          tabBadgeCounts['UPDATES']++
-
-          // Support other tabs with pending updates
-          switch (p.status) {
-            case 'APPROVED':
-              tabBadgeCounts['APPROVED']++
-
-              break
-            case 'CANCELLED':
-              tabBadgeCounts['CANCELLED']++
-
-              break
-            case 'REJECTED':
-              tabBadgeCounts['REJECTED']++
-
-              break
-            case 'DELETED':
-              tabBadgeCounts['DELETED']++
-
-              break
-            case 'REVOKED':
-              tabBadgeCounts['REVOKED']++
-
-              break
-            default:
-              break
-          }
-        }
-
-        if (p.status === 'PENDING') {
-          tabBadgeCounts['PENDING']++
-        }
-      })
-
-      return tabBadgeCounts
-    }, [proposals])
-
-    const filteredProposals: FeedsManager_JobProposalsFields[] =
-      React.useMemo(() => {
-        if (!proposals) {
-          return []
-        }
-
-        const activeTab = tabToStatus[tabValue]
-
-        if (activeTab === 'UPDATES') {
-          return proposals
-            .filter((p) => p.pendingUpdate && search(searchTerm)(p))
-            .sort((a, b) => b.latestSpec.createdAt - a.latestSpec.createdAt)
-        } else {
-          return proposals
-            .filter(
-              (p) =>
-                p.status === tabToStatus[tabValue] && search(searchTerm)(p),
-            )
-            .sort((a, b) => b.latestSpec.createdAt - a.latestSpec.createdAt)
-        }
-      }, [tabValue, proposals, searchTerm])
-
-    const renderTable = (proposals: FeedsManager_JobProposalsFields[]) => {
-      switch (tabToStatus[tabValue]) {
-        case 'PENDING':
-          return <PendingTable proposals={proposals} />
-        case 'UPDATES':
-          return <UpdatesTable proposals={proposals} />
-        case 'REJECTED':
-        case 'CANCELLED':
-          return <InactiveTable proposals={proposals} />
-        case 'APPROVED':
-          return <ApprovedTable proposals={proposals} />
-        case 'DELETED':
-          return <InactiveTable proposals={proposals} />
-        case 'REVOKED':
-          return <InactiveTable proposals={proposals} />
-        default:
-          return null
-      }
+  const tabBadgeCounts: {
+    PENDING: number
+    UPDATES: number
+    APPROVED: number
+    REJECTED: number
+    CANCELLED: number
+    DELETED: number
+    REVOKED: number
+  } = React.useMemo(() => {
+    const tabBadgeCounts = {
+      PENDING: 0,
+      UPDATES: 0,
+      APPROVED: 0,
+      REJECTED: 0,
+      CANCELLED: 0,
+      DELETED: 0,
+      REVOKED: 0,
     }
 
-    return (
-      <>
-        <SearchTextField
-          value={searchTerm}
-          onChange={setSearchTerm}
-          placeholder="Search job proposals"
-        />
-        <Card>
-          <Tabs
-            value={tabValue}
-            className={classes.tabsRoot}
-            indicatorColor="primary"
-            onChange={(_, value) => {
-              setTabValue(value)
-            }}
-          >
-            <Tab
-              label={
-                <Badge
-                  color="primary"
-                  badgeContent={tabBadgeCounts.PENDING}
-                  className={classes.badge}
-                  data-testid="pending-badge"
-                >
-                  New
-                </Badge>
-              }
-            />
-            <Tab
-              label={
-                <Badge
-                  color="primary"
-                  badgeContent={tabBadgeCounts.UPDATES}
-                  className={classes.badge}
-                  data-testid="updates-badge"
-                >
-                  Updates
-                </Badge>
-              }
-            />
-            <Tab
-              label={
-                <Badge
-                  color="primary"
-                  badgeContent={tabBadgeCounts.APPROVED}
-                  className={classes.badge}
-                  data-testid="approved-badge"
-                >
-                  Approved
-                </Badge>
-              }
-            />
-            <Tab
-              label={
-                <Badge
-                  color="primary"
-                  badgeContent={tabBadgeCounts.REJECTED}
-                  className={classes.badge}
-                  data-testid="rejected-badge"
-                >
-                  Rejected
-                </Badge>
-              }
-            />
-            <Tab
-              label={
-                <Badge
-                  color="primary"
-                  badgeContent={tabBadgeCounts.CANCELLED}
-                  className={classes.badge}
-                  data-testid="cancelled-badge"
-                >
-                  Cancelled
-                </Badge>
-              }
-            />
-            <Tab
-              label={
-                <Badge
-                  color="primary"
-                  badgeContent={tabBadgeCounts.DELETED}
-                  className={classes.badge}
-                  data-testid="deleted-badge"
-                >
-                  Deleted
-                </Badge>
-              }
-            />
-            <Tab
-              label={
-                <Badge
-                  color="primary"
-                  badgeContent={tabBadgeCounts.REVOKED}
-                  className={classes.badge}
-                  data-testid="revoked-badge"
-                >
-                  Revoked
-                </Badge>
-              }
-            />
-          </Tabs>
+    proposals.forEach((p) => {
+      if (p.pendingUpdate) {
+        // Always display any pending update in the updates tab counter
+        tabBadgeCounts['UPDATES']++
 
-          {renderTable(filteredProposals)}
-        </Card>
-      </>
-    )
-  },
-)
+        // Support other tabs with pending updates
+        switch (p.status) {
+          case 'APPROVED':
+            tabBadgeCounts['APPROVED']++
+
+            break
+          case 'CANCELLED':
+            tabBadgeCounts['CANCELLED']++
+
+            break
+          case 'REJECTED':
+            tabBadgeCounts['REJECTED']++
+
+            break
+          case 'DELETED':
+            tabBadgeCounts['DELETED']++
+
+            break
+          case 'REVOKED':
+            tabBadgeCounts['REVOKED']++
+
+            break
+          default:
+            break
+        }
+      }
+
+      if (p.status === 'PENDING') {
+        tabBadgeCounts['PENDING']++
+      }
+    })
+
+    return tabBadgeCounts
+  }, [proposals])
+
+  const filteredProposals: FeedsManager_JobProposalsFields[] =
+    React.useMemo(() => {
+      if (!proposals) {
+        return []
+      }
+
+      const activeTab = tabToStatus[tabValue]
+
+      if (activeTab === 'UPDATES') {
+        return proposals
+          .filter((p) => p.pendingUpdate && search(searchTerm)(p))
+          .sort((a, b) => b.latestSpec.createdAt - a.latestSpec.createdAt)
+      } else {
+        return proposals
+          .filter(
+            (p) => p.status === tabToStatus[tabValue] && search(searchTerm)(p),
+          )
+          .sort((a, b) => b.latestSpec.createdAt - a.latestSpec.createdAt)
+      }
+    }, [tabValue, proposals, searchTerm])
+
+  const renderTable = (proposals: FeedsManager_JobProposalsFields[]) => {
+    switch (tabToStatus[tabValue]) {
+      case 'PENDING':
+        return <PendingTable proposals={proposals} />
+      case 'UPDATES':
+        return <UpdatesTable proposals={proposals} />
+      case 'REJECTED':
+      case 'CANCELLED':
+        return <InactiveTable proposals={proposals} />
+      case 'APPROVED':
+        return <ApprovedTable proposals={proposals} />
+      case 'DELETED':
+        return <InactiveTable proposals={proposals} />
+      case 'REVOKED':
+        return <InactiveTable proposals={proposals} />
+      default:
+        return null
+    }
+  }
+
+  return (
+    <>
+      <SearchTextField
+        value={searchTerm}
+        onChange={setSearchTerm}
+        placeholder="Search job proposals"
+      />
+      <Card>
+        <Tabs
+          value={tabValue}
+          className={classes.tabsRoot}
+          indicatorColor="primary"
+          onChange={(_, value) => {
+            setTabValue(value)
+          }}
+        >
+          <Tab
+            label={
+              <Badge
+                color="primary"
+                badgeContent={tabBadgeCounts.PENDING}
+                className={classes.badge}
+                data-testid="pending-badge"
+              >
+                New
+              </Badge>
+            }
+          />
+          <Tab
+            label={
+              <Badge
+                color="primary"
+                badgeContent={tabBadgeCounts.UPDATES}
+                className={classes.badge}
+                data-testid="updates-badge"
+              >
+                Updates
+              </Badge>
+            }
+          />
+          <Tab
+            label={
+              <Badge
+                color="primary"
+                badgeContent={tabBadgeCounts.APPROVED}
+                className={classes.badge}
+                data-testid="approved-badge"
+              >
+                Approved
+              </Badge>
+            }
+          />
+          <Tab
+            label={
+              <Badge
+                color="primary"
+                badgeContent={tabBadgeCounts.REJECTED}
+                className={classes.badge}
+                data-testid="rejected-badge"
+              >
+                Rejected
+              </Badge>
+            }
+          />
+          <Tab
+            label={
+              <Badge
+                color="primary"
+                badgeContent={tabBadgeCounts.CANCELLED}
+                className={classes.badge}
+                data-testid="cancelled-badge"
+              >
+                Cancelled
+              </Badge>
+            }
+          />
+          <Tab
+            label={
+              <Badge
+                color="primary"
+                badgeContent={tabBadgeCounts.DELETED}
+                className={classes.badge}
+                data-testid="deleted-badge"
+              >
+                Deleted
+              </Badge>
+            }
+          />
+          <Tab
+            label={
+              <Badge
+                color="primary"
+                badgeContent={tabBadgeCounts.REVOKED}
+                className={classes.badge}
+                data-testid="revoked-badge"
+              >
+                Revoked
+              </Badge>
+            }
+          />
+        </Tabs>
+
+        {renderTable(filteredProposals)}
+      </Card>
+    </>
+  )
+})

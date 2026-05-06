@@ -8,6 +8,7 @@ module.exports = {
     '<rootDir>/support/',
     '<rootDir>/__tests__',
   ],
+  setupFiles: ['<rootDir>/jest.polyfills.js'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   globalSetup: './jest.globalSetup.js',
   testPathIgnorePatterns: [
@@ -23,7 +24,10 @@ module.exports = {
       '<rootDir>/__mocks__/fileMock.js',
     '\\.(css|less|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
   },
-  transformIgnorePatterns: ['/node_modules/(?!(react-syntax-highlighter)/)'],
+  // d3 v7 ships ESM modules; allow SWC to transform them for Jest.
+  transformIgnorePatterns: [
+    '/node_modules/(?!(react-syntax-highlighter|d3|d3-[^/]+|internmap)/)',
+  ],
   testEnvironment: 'jsdom',
   testTimeout: 20000,
   collectCoverage: true,

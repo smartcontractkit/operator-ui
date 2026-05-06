@@ -5,6 +5,9 @@
       "syntax": "typescript",
       "tsx": true,
       "jsx": true
+    },
+    "transform": {
+      "useDefineForClassFields": false
     }
   },
   "minify": false

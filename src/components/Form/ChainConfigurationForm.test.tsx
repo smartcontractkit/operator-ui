@@ -185,7 +185,7 @@ describe('ChainConfigurationForm', () => {
 
     const address = container.querySelector('#select-accountAddr')
     expect(address).toBeInTheDocument()
-    address && userEvent.click(address)
+    if (address) userEvent.click(address)
     userEvent.click(getByRole('option', { name: '0x123' }))
     await screen.findByRole('button', { name: '0x123' })
 
@@ -310,7 +310,7 @@ describe('ChainConfigurationForm', () => {
 
     const address = container.querySelector('#select-accountAddr')
     expect(address).toBeInTheDocument()
-    address && userEvent.click(address)
+    if (address) userEvent.click(address)
     userEvent.click(getByRole('option', { name: '0x123' }))
     await screen.findByRole('button', { name: '0x123' })
 
@@ -435,7 +435,7 @@ describe('ChainConfigurationForm', () => {
 
     const address = container.querySelector('#select-accountAddr')
     expect(address).toBeInTheDocument()
-    address && userEvent.click(address)
+    if (address) userEvent.click(address)
     userEvent.click(getByRole('option', { name: 'solana_xxxx' }))
     await screen.findByRole('button', { name: 'solana_xxxx' })
 
@@ -491,7 +491,7 @@ test('should able to create Tron chain config', async () => {
 
   const address = container.querySelector('#select-accountAddr')
   expect(address).toBeInTheDocument()
-  address && userEvent.click(address)
+  if (address) userEvent.click(address)
   userEvent.click(getByRole('option', { name: 'tron_xxxx' }))
   await screen.findByRole('button', { name: 'tron_xxxx' })
 
@@ -546,7 +546,7 @@ test('should able to create TON chain config', async () => {
 
   const address = container.querySelector('#select-accountAddr')
   expect(address).toBeInTheDocument()
-  address && userEvent.click(address)
+  if (address) userEvent.click(address)
   userEvent.click(getByRole('option', { name: '123' }))
   await screen.findByRole('button', { name: '123' })
 
@@ -618,7 +618,7 @@ test('should be able to select OCR2 Job Type with Key Bundle ID', async () => {
   const keyBundleId2 = container.querySelector('#select-ocr2KeyBundleID')
   expect(keyBundleId2).toBeInTheDocument()
   // workaround ts lint warning - require check for null
-  keyBundleId2 && userEvent.click(keyBundleId2)
+  if (keyBundleId2) userEvent.click(keyBundleId2)
   userEvent.click(getByRole('option', { name: 'ocr2_key_bundle_id (EVM)' }))
   await screen.findByRole('button', { name: 'ocr2_key_bundle_id (EVM)' })
 })
@@ -743,7 +743,7 @@ async function selectChainIdOnUI(container: HTMLElement, chainId: string) {
   const chainIdSelect = container.querySelector('#select-chainID')
   expect(chainIdSelect).toBeInTheDocument()
   // workaround ts lint warning - require check for null
-  chainIdSelect && userEvent.click(chainIdSelect)
+  if (chainIdSelect) userEvent.click(chainIdSelect)
   userEvent.click(getByRole('option', { name: chainId }))
   await screen.findByRole('button', { name: chainId })
 }

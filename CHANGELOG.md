@@ -7,7 +7,6 @@
 - d5517c9: Swap out compiler for testing and building for swc
 
   Using swc leads to significant performance gains in both CI and CD, with a 60% reduction in webpack build times, and a 25% reduction in test times.
-
   - Update to latest tsc version
   - Use swc for jest tests instead of ts-jest
   - Use swc for webpack builds
@@ -20,7 +19,6 @@
 - c6c81c1: Add "Key Admin Override" modal
 
   The `/keys` page in Operator UI now exposes several admin commands, namely:
-
   - An "abandon" checkbox to abandon all current transactions
   - Enable/disable a key for a given chain
   - Manually set the nonce for a key.

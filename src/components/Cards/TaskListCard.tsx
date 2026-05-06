@@ -45,7 +45,7 @@ export const TaskListCard: React.FC<Props> = ({
         }
 
         setState({ graph })
-      } catch (e) {
+      } catch (_e) {
         setState({ errorMsg: 'Failed to parse task graph' })
       }
     } else {

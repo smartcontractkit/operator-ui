@@ -183,6 +183,7 @@ interface Props extends WithStyles<typeof styles> {
   cfgs: ReadonlyArray<FeedsManager_ChainConfigFields>
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const jobTypeRowStyles = (theme: Theme) => {
   return createStyles({
     jobTypeContainer: {
@@ -193,388 +194,391 @@ const jobTypeRowStyles = (theme: Theme) => {
   })
 }
 
-interface FluxMonitorJobTypeRowProps
-  extends WithStyles<typeof jobTypeRowStyles> {
+interface FluxMonitorJobTypeRowProps extends WithStyles<
+  typeof jobTypeRowStyles
+> {
   cfg: FeedsManager_ChainConfigFields['fluxMonitorJobConfig']
 }
 
-const FluxMonitorJobTypeRow = withStyles(styles)(
-  ({ cfg, classes }: FluxMonitorJobTypeRowProps) => {
-    if (!cfg.enabled) {
-      return null
-    }
+const FluxMonitorJobTypeRow = withStyles(styles)(({
+  cfg,
+  classes,
+}: FluxMonitorJobTypeRowProps) => {
+  if (!cfg.enabled) {
+    return null
+  }
 
-    return (
-      <Grid item xs={12} md={12}>
-        <div className={classes.jobTypeContainer}>
-          <DetailsCardItemTitle title="Job Type" />
-          <DetailsCardItemValue value="Flux Monitor" />
-        </div>
-      </Grid>
-    )
-  },
-)
+  return (
+    <Grid item xs={12} md={12}>
+      <div className={classes.jobTypeContainer}>
+        <DetailsCardItemTitle title="Job Type" />
+        <DetailsCardItemValue value="Flux Monitor" />
+      </div>
+    </Grid>
+  )
+})
 
 interface OCRJobTypeRowProps extends WithStyles<typeof jobTypeRowStyles> {
   cfg: FeedsManager_ChainConfigFields['ocr1JobConfig']
 }
 
-const OCRJobTypeRow = withStyles(styles)(
-  ({ cfg, classes }: OCRJobTypeRowProps) => {
-    if (!cfg.enabled) {
-      return null
-    }
+const OCRJobTypeRow = withStyles(styles)(({
+  cfg,
+  classes,
+}: OCRJobTypeRowProps) => {
+  if (!cfg.enabled) {
+    return null
+  }
 
-    return (
-      <>
-        <Grid item xs={12} md={2}>
-          <div className={classes.jobTypeContainer}>
-            <DetailsCardItemTitle title="Job Type" />
-            <DetailsCardItemValue
-              value={`OCR ${cfg.isBootstrap ? '(Bootstrap)' : ''}`}
-            />
-          </div>
-        </Grid>
+  return (
+    <>
+      <Grid item xs={12} md={2}>
+        <div className={classes.jobTypeContainer}>
+          <DetailsCardItemTitle title="Job Type" />
+          <DetailsCardItemValue
+            value={`OCR ${cfg.isBootstrap ? '(Bootstrap)' : ''}`}
+          />
+        </div>
+      </Grid>
 
-        {cfg.isBootstrap ? renderBootstrap(cfg) : renderOracle(cfg)}
-      </>
-    )
-  },
-)
+      {cfg.isBootstrap ? renderBootstrap(cfg) : renderOracle(cfg)}
+    </>
+  )
+})
 
 interface OCR2JobTypeRowProps extends WithStyles<typeof jobTypeRowStyles> {
   cfg: FeedsManager_ChainConfigFields['ocr2JobConfig']
 }
 
-const OCR2JobTypeRow = withStyles(styles)(
-  ({ cfg, classes }: OCR2JobTypeRowProps) => {
-    if (!cfg.enabled) {
-      return null
-    }
+const OCR2JobTypeRow = withStyles(styles)(({
+  cfg,
+  classes,
+}: OCR2JobTypeRowProps) => {
+  if (!cfg.enabled) {
+    return null
+  }
 
-    return (
-      <>
-        <Grid item xs={12} md={2}>
-          <div className={classes.jobTypeContainer}>
-            <DetailsCardItemTitle title="Job Type" />
-            <DetailsCardItemValue
-              value={`OCR2 ${cfg.isBootstrap ? '(Bootstrap)' : ''}`}
-            />
-          </div>
-        </Grid>
+  return (
+    <>
+      <Grid item xs={12} md={2}>
+        <div className={classes.jobTypeContainer}>
+          <DetailsCardItemTitle title="Job Type" />
+          <DetailsCardItemValue
+            value={`OCR2 ${cfg.isBootstrap ? '(Bootstrap)' : ''}`}
+          />
+        </div>
+      </Grid>
 
-        {cfg.isBootstrap ? renderBootstrap(cfg) : renderOracle(cfg)}
-      </>
-    )
-  },
-)
+      {cfg.isBootstrap ? renderBootstrap(cfg) : renderOracle(cfg)}
+    </>
+  )
+})
 
-export const SupportedChainsCard = withStyles(styles)(
-  ({ classes, cfgs, mgrID }: Props) => {
-    const dispatch = useDispatch()
-    const { handleMutationError } = useMutationErrorHandler()
-    const [newDialogOpen, setNewDialogOpen] = React.useState(false)
-    const [editCfg, setEditCfg] =
-      React.useState<FeedsManager_ChainConfigFields | null>(null)
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+export const SupportedChainsCard = withStyles(styles)(({
+  classes,
+  cfgs,
+  mgrID,
+}: Props) => {
+  const dispatch = useDispatch()
+  const { handleMutationError } = useMutationErrorHandler()
+  const [newDialogOpen, setNewDialogOpen] = React.useState(false)
+  const [editCfg, setEditCfg] =
+    React.useState<FeedsManager_ChainConfigFields | null>(null)
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
-    const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-      setAnchorEl(event.currentTarget)
-    }
+  const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
 
-    const handleMenuClose = () => {
-      setAnchorEl(null)
-    }
+  const handleMenuClose = () => {
+    setAnchorEl(null)
+  }
 
-    const handleEditDialogOpen = (cfg: FeedsManager_ChainConfigFields) => {
-      setEditCfg(cfg)
-    }
+  const handleEditDialogOpen = (cfg: FeedsManager_ChainConfigFields) => {
+    setEditCfg(cfg)
+  }
 
-    const handleEditDialogClose = () => {
-      setEditCfg(null)
-    }
+  const handleEditDialogClose = () => {
+    setEditCfg(null)
+  }
 
-    const isEditDialogOpen = () => editCfg !== null
+  const isEditDialogOpen = () => editCfg !== null
 
-    const [createChainConfig] = useMutation<
-      CreateFeedsManagerChainConfig,
-      CreateFeedsManagerChainConfigVariables
-    >(CREATE_FEEDS_MANAGER_CHAIN_CONFIG_MUTATION, {
-      refetchQueries: [FEEDS_MANAGER_WITH_PROPOSALS_QUERY],
-    })
+  const [createChainConfig] = useMutation<
+    CreateFeedsManagerChainConfig,
+    CreateFeedsManagerChainConfigVariables
+  >(CREATE_FEEDS_MANAGER_CHAIN_CONFIG_MUTATION, {
+    refetchQueries: [FEEDS_MANAGER_WITH_PROPOSALS_QUERY],
+  })
 
-    const [deleteChainConfig] = useMutation<
-      DeleteFeedsManagerChainConfig,
-      DeleteFeedsManagerChainConfigVariables
-    >(DELETE_FEEDS_MANAGER_CHAIN_CONFIG_MUTATION, {
-      refetchQueries: [FEEDS_MANAGER_WITH_PROPOSALS_QUERY],
-    })
+  const [deleteChainConfig] = useMutation<
+    DeleteFeedsManagerChainConfig,
+    DeleteFeedsManagerChainConfigVariables
+  >(DELETE_FEEDS_MANAGER_CHAIN_CONFIG_MUTATION, {
+    refetchQueries: [FEEDS_MANAGER_WITH_PROPOSALS_QUERY],
+  })
 
-    const [updateChainConfig] = useMutation<
-      UpdateFeedsManagerChainConfig,
-      UpdateFeedsManagerChainConfigVariables
-    >(UPDATE_FEEDS_MANAGER_CHAIN_CONFIG_MUTATION, {
-      refetchQueries: [FEEDS_MANAGER_WITH_PROPOSALS_QUERY],
-    })
+  const [updateChainConfig] = useMutation<
+    UpdateFeedsManagerChainConfig,
+    UpdateFeedsManagerChainConfigVariables
+  >(UPDATE_FEEDS_MANAGER_CHAIN_CONFIG_MUTATION, {
+    refetchQueries: [FEEDS_MANAGER_WITH_PROPOSALS_QUERY],
+  })
 
-    const handleCreateSubmit = async (values: FormValues) => {
-      try {
-        const result = await createChainConfig({
-          variables: {
-            input: {
-              feedsManagerID: mgrID,
-              chainID: values.chainID,
-              chainType: values.chainType,
-              accountAddr: values.accountAddr,
-              adminAddr: values.adminAddr,
-              accountAddrPubKey: values.accountAddrPubKey,
-              fluxMonitorEnabled: values.fluxMonitorEnabled,
-              ocr1Enabled: values.ocr1Enabled,
-              ocr1IsBootstrap: values.ocr1IsBootstrap,
-              ocr1Multiaddr:
-                values.ocr1Multiaddr !== '' ? values.ocr1Multiaddr : null,
-              ocr1P2PPeerID:
-                values.ocr1P2PPeerID !== '' ? values.ocr1P2PPeerID : null,
-              ocr1KeyBundleID:
-                values.ocr1KeyBundleID != '' ? values.ocr1KeyBundleID : null,
-              ocr2Enabled: values.ocr2Enabled,
-              ocr2IsBootstrap: values.ocr2IsBootstrap,
-              ocr2Multiaddr:
-                values.ocr2Multiaddr !== '' ? values.ocr2Multiaddr : null,
-              ocr2P2PPeerID:
-                values.ocr2P2PPeerID !== '' ? values.ocr2P2PPeerID : null,
-              ocr2KeyBundleID:
-                values.ocr2KeyBundleID != '' ? values.ocr2KeyBundleID : null,
-              ocr2Plugins: `{"commit":${values.ocr2CommitPluginEnabled},"execute":${values.ocr2ExecutePluginEnabled},"median":${values.ocr2MedianPluginEnabled},"mercury":${values.ocr2MercuryPluginEnabled},"rebalancer":${values.ocr2RebalancerPluginEnabled}}`,
-              ocr2ForwarderAddress:
-                values.ocr2ForwarderAddress !== ''
-                  ? values.ocr2ForwarderAddress
-                  : null,
-            },
+  const handleCreateSubmit = async (values: FormValues) => {
+    try {
+      const result = await createChainConfig({
+        variables: {
+          input: {
+            feedsManagerID: mgrID,
+            chainID: values.chainID,
+            chainType: values.chainType,
+            accountAddr: values.accountAddr,
+            adminAddr: values.adminAddr,
+            accountAddrPubKey: values.accountAddrPubKey,
+            fluxMonitorEnabled: values.fluxMonitorEnabled,
+            ocr1Enabled: values.ocr1Enabled,
+            ocr1IsBootstrap: values.ocr1IsBootstrap,
+            ocr1Multiaddr:
+              values.ocr1Multiaddr !== '' ? values.ocr1Multiaddr : null,
+            ocr1P2PPeerID:
+              values.ocr1P2PPeerID !== '' ? values.ocr1P2PPeerID : null,
+            ocr1KeyBundleID:
+              values.ocr1KeyBundleID != '' ? values.ocr1KeyBundleID : null,
+            ocr2Enabled: values.ocr2Enabled,
+            ocr2IsBootstrap: values.ocr2IsBootstrap,
+            ocr2Multiaddr:
+              values.ocr2Multiaddr !== '' ? values.ocr2Multiaddr : null,
+            ocr2P2PPeerID:
+              values.ocr2P2PPeerID !== '' ? values.ocr2P2PPeerID : null,
+            ocr2KeyBundleID:
+              values.ocr2KeyBundleID != '' ? values.ocr2KeyBundleID : null,
+            ocr2Plugins: `{"commit":${values.ocr2CommitPluginEnabled},"execute":${values.ocr2ExecutePluginEnabled},"median":${values.ocr2MedianPluginEnabled},"mercury":${values.ocr2MercuryPluginEnabled},"rebalancer":${values.ocr2RebalancerPluginEnabled}}`,
+            ocr2ForwarderAddress:
+              values.ocr2ForwarderAddress !== ''
+                ? values.ocr2ForwarderAddress
+                : null,
           },
-        })
+        },
+      })
 
-        const payload = result.data?.createFeedsManagerChainConfig
-        switch (payload?.__typename) {
-          case 'CreateFeedsManagerChainConfigSuccess':
-            dispatch(notifySuccessMsg('Added new supported chain'))
+      const payload = result.data?.createFeedsManagerChainConfig
+      switch (payload?.__typename) {
+        case 'CreateFeedsManagerChainConfigSuccess':
+          dispatch(notifySuccessMsg('Added new supported chain'))
 
-            break
-          case 'NotFoundError':
-            dispatch(notifyErrorMsg(payload.message))
+          break
+        case 'NotFoundError':
+          dispatch(notifyErrorMsg(payload.message))
 
-            break
-        }
-      } catch (e) {
-        handleMutationError(e)
+          break
       }
+    } catch (e) {
+      handleMutationError(e)
+    }
+  }
+
+  const handleDelete = async (id: string) => {
+    try {
+      const result = await deleteChainConfig({
+        variables: { id },
+      })
+
+      const payload = result.data?.deleteFeedsManagerChainConfig
+      switch (payload?.__typename) {
+        case 'DeleteFeedsManagerChainConfigSuccess':
+          dispatch(notifySuccessMsg('Deleted supported chain'))
+
+          break
+        case 'NotFoundError':
+          dispatch(notifyErrorMsg(payload.message))
+
+          break
+      }
+    } catch (e) {
+      handleMutationError(e)
+    }
+  }
+
+  const handleUpdateSubmit = async (values: FormValues) => {
+    if (!editCfg) {
+      return
     }
 
-    const handleDelete = async (id: string) => {
-      try {
-        const result = await deleteChainConfig({
-          variables: { id },
-        })
-
-        const payload = result.data?.deleteFeedsManagerChainConfig
-        switch (payload?.__typename) {
-          case 'DeleteFeedsManagerChainConfigSuccess':
-            dispatch(notifySuccessMsg('Deleted supported chain'))
-
-            break
-          case 'NotFoundError':
-            dispatch(notifyErrorMsg(payload.message))
-
-            break
-        }
-      } catch (e) {
-        handleMutationError(e)
-      }
-    }
-
-    const handleUpdateSubmit = async (values: FormValues) => {
-      if (!editCfg) {
-        return
-      }
-
-      try {
-        const result = await updateChainConfig({
-          variables: {
-            id: editCfg.id,
-            input: {
-              accountAddr: values.accountAddr,
-              adminAddr: values.adminAddr,
-              accountAddrPubKey: values.accountAddrPubKey,
-              fluxMonitorEnabled: values.fluxMonitorEnabled,
-              ocr1Enabled: values.ocr1Enabled,
-              ocr1IsBootstrap: values.ocr1IsBootstrap,
-              ocr1Multiaddr:
-                values.ocr1Multiaddr !== '' ? values.ocr1Multiaddr : null,
-              ocr1P2PPeerID:
-                values.ocr1P2PPeerID !== '' ? values.ocr1P2PPeerID : null,
-              ocr1KeyBundleID:
-                values.ocr1KeyBundleID != '' ? values.ocr1KeyBundleID : null,
-              ocr2Enabled: values.ocr2Enabled,
-              ocr2IsBootstrap: values.ocr2IsBootstrap,
-              ocr2Multiaddr:
-                values.ocr2Multiaddr !== '' ? values.ocr2Multiaddr : null,
-              ocr2P2PPeerID:
-                values.ocr2P2PPeerID !== '' ? values.ocr2P2PPeerID : null,
-              ocr2KeyBundleID:
-                values.ocr2KeyBundleID != '' ? values.ocr2KeyBundleID : null,
-              ocr2Plugins: `{"commit":${values.ocr2CommitPluginEnabled},"execute":${values.ocr2ExecutePluginEnabled},"median":${values.ocr2MedianPluginEnabled},"mercury":${values.ocr2MercuryPluginEnabled},"rebalancer":${values.ocr2RebalancerPluginEnabled}}`,
-              ocr2ForwarderAddress:
-                values.ocr2ForwarderAddress !== ''
-                  ? values.ocr2ForwarderAddress
-                  : null,
-            },
+    try {
+      const result = await updateChainConfig({
+        variables: {
+          id: editCfg.id,
+          input: {
+            accountAddr: values.accountAddr,
+            adminAddr: values.adminAddr,
+            accountAddrPubKey: values.accountAddrPubKey,
+            fluxMonitorEnabled: values.fluxMonitorEnabled,
+            ocr1Enabled: values.ocr1Enabled,
+            ocr1IsBootstrap: values.ocr1IsBootstrap,
+            ocr1Multiaddr:
+              values.ocr1Multiaddr !== '' ? values.ocr1Multiaddr : null,
+            ocr1P2PPeerID:
+              values.ocr1P2PPeerID !== '' ? values.ocr1P2PPeerID : null,
+            ocr1KeyBundleID:
+              values.ocr1KeyBundleID != '' ? values.ocr1KeyBundleID : null,
+            ocr2Enabled: values.ocr2Enabled,
+            ocr2IsBootstrap: values.ocr2IsBootstrap,
+            ocr2Multiaddr:
+              values.ocr2Multiaddr !== '' ? values.ocr2Multiaddr : null,
+            ocr2P2PPeerID:
+              values.ocr2P2PPeerID !== '' ? values.ocr2P2PPeerID : null,
+            ocr2KeyBundleID:
+              values.ocr2KeyBundleID != '' ? values.ocr2KeyBundleID : null,
+            ocr2Plugins: `{"commit":${values.ocr2CommitPluginEnabled},"execute":${values.ocr2ExecutePluginEnabled},"median":${values.ocr2MedianPluginEnabled},"mercury":${values.ocr2MercuryPluginEnabled},"rebalancer":${values.ocr2RebalancerPluginEnabled}}`,
+            ocr2ForwarderAddress:
+              values.ocr2ForwarderAddress !== ''
+                ? values.ocr2ForwarderAddress
+                : null,
           },
-        })
+        },
+      })
 
-        const payload = result.data?.updateFeedsManagerChainConfig
-        switch (payload?.__typename) {
-          case 'UpdateFeedsManagerChainConfigSuccess':
-            handleMenuClose()
+      const payload = result.data?.updateFeedsManagerChainConfig
+      switch (payload?.__typename) {
+        case 'UpdateFeedsManagerChainConfigSuccess':
+          handleMenuClose()
 
-            dispatch(notifySuccessMsg('Updated supported chain'))
+          dispatch(notifySuccessMsg('Updated supported chain'))
 
-            break
-          case 'NotFoundError':
-            dispatch(notifyErrorMsg(payload.message))
+          break
+        case 'NotFoundError':
+          dispatch(notifyErrorMsg(payload.message))
 
-            break
-        }
-      } catch (e) {
-        handleMutationError(e)
+          break
       }
+    } catch (e) {
+      handleMutationError(e)
     }
+  }
 
-    return (
-      <Card className={classes.card}>
-        <CardHeader
-          title="Supported Chains"
-          classes={{
-            title: classes.title,
-          }}
-          action={
-            <>
-              <IconButton onClick={handleMenuOpen} aria-label="open-menu">
-                <MoreVertIcon />
-              </IconButton>
+  return (
+    <Card className={classes.card}>
+      <CardHeader
+        title="Supported Chains"
+        classes={{
+          title: classes.title,
+        }}
+        action={
+          <>
+            <IconButton onClick={handleMenuOpen} aria-label="open-menu">
+              <MoreVertIcon />
+            </IconButton>
 
-              <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleMenuClose}
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+            >
+              <MenuItem
+                onClick={() => {
+                  setNewDialogOpen(true)
+                  handleMenuClose()
+                }}
               >
-                <MenuItem
-                  onClick={() => {
-                    setNewDialogOpen(true)
-                    handleMenuClose()
-                  }}
-                >
-                  <ListItemIcon>
-                    <AddBoxIcon />
-                  </ListItemIcon>
-                  <ListItemText>New</ListItemText>
-                </MenuItem>
-              </Menu>
-            </>
-          }
-        />
+                <ListItemIcon>
+                  <AddBoxIcon />
+                </ListItemIcon>
+                <ListItemText>New</ListItemText>
+              </MenuItem>
+            </Menu>
+          </>
+        }
+      />
 
-        {cfgs.map((cfg) => (
-          <ExpansionPanel
-            key={cfg.id}
-            defaultExpanded={false}
-            classes={{
-              root: classes.panel,
-              expanded: classes.panelExpanded,
-            }}
-          >
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Chip
-                label={cfg.chainType}
-                color="primary"
-                className={classes.chip}
-              />
-              <Typography style={{ lineHeight: '30px' }}>
-                Chain ID: {cfg.chainID}
-              </Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails className={classes.panelDetails}>
-              <Grid container spacing={40}>
-                <Grid item xs={12}>
-                  <Grid container>
-                    <Grid item xs={12} sm={6}>
-                      <DetailsCardItemTitle title="Account Address" />
-                      <DetailsCardItemValue value={cfg.accountAddr} />
-                    </Grid>
-                    {(cfg.chainID === 'SN_MAIN' ||
-                      cfg.chainID === 'SN_SEPOLIA') && (
-                      <Grid item xs={12} sm={6}>
-                        <DetailsCardItemTitle title="Account Address Public Key" />
-                        <DetailsCardItemValue value={cfg.accountAddrPubKey} />
-                      </Grid>
-                    )}
-                    {cfg.chainType === 'APTOS' && (
-                      <Grid item xs={12} sm={6}>
-                        <DetailsCardItemTitle title="Account Public Key" />
-                        <DetailsCardItemValue value={cfg.accountAddrPubKey} />
-                      </Grid>
-                    )}
-                    {cfg.chainType === 'SUI' && (
-                      <Grid item xs={12} sm={6}>
-                        <DetailsCardItemTitle title="Account Public Key" />
-                        <DetailsCardItemValue value={cfg.accountAddrPubKey} />
-                      </Grid>
-                    )}
-                    <Grid item xs={12} sm={6}>
-                      <DetailsCardItemTitle title="Admin Address" />
-                      <DetailsCardItemValue value={cfg.adminAddr} />
-                    </Grid>
-
-                    <FluxMonitorJobTypeRow cfg={cfg.fluxMonitorJobConfig} />
-                    <OCRJobTypeRow cfg={cfg.ocr1JobConfig} />
-                    <OCR2JobTypeRow cfg={cfg.ocr2JobConfig} />
+      {cfgs.map((cfg) => (
+        <ExpansionPanel
+          key={cfg.id}
+          defaultExpanded={false}
+          classes={{
+            root: classes.panel,
+            expanded: classes.panelExpanded,
+          }}
+        >
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Chip
+              label={cfg.chainType}
+              color="primary"
+              className={classes.chip}
+            />
+            <Typography style={{ lineHeight: '30px' }}>
+              Chain ID: {cfg.chainID}
+            </Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails className={classes.panelDetails}>
+            <Grid container spacing={40}>
+              <Grid item xs={12}>
+                <Grid container>
+                  <Grid item xs={12} sm={6}>
+                    <DetailsCardItemTitle title="Account Address" />
+                    <DetailsCardItemValue value={cfg.accountAddr} />
                   </Grid>
-                </Grid>
+                  {(cfg.chainID === 'SN_MAIN' ||
+                    cfg.chainID === 'SN_SEPOLIA') && (
+                    <Grid item xs={12} sm={6}>
+                      <DetailsCardItemTitle title="Account Address Public Key" />
+                      <DetailsCardItemValue value={cfg.accountAddrPubKey} />
+                    </Grid>
+                  )}
+                  {cfg.chainType === 'APTOS' && (
+                    <Grid item xs={12} sm={6}>
+                      <DetailsCardItemTitle title="Account Public Key" />
+                      <DetailsCardItemValue value={cfg.accountAddrPubKey} />
+                    </Grid>
+                  )}
+                  {cfg.chainType === 'SUI' && (
+                    <Grid item xs={12} sm={6}>
+                      <DetailsCardItemTitle title="Account Public Key" />
+                      <DetailsCardItemValue value={cfg.accountAddrPubKey} />
+                    </Grid>
+                  )}
+                  <Grid item xs={12} sm={6}>
+                    <DetailsCardItemTitle title="Admin Address" />
+                    <DetailsCardItemValue value={cfg.adminAddr} />
+                  </Grid>
 
-                <Grid item xs={12}>
-                  <div className={classes.panelDetailsActions}>
-                    <Button onClick={() => handleEditDialogOpen(cfg)}>
-                      Edit
-                    </Button>
-                    <Button
-                      onClick={() => handleDelete(cfg.id)}
-                      variant="danger"
-                    >
-                      Delete
-                    </Button>
-                  </div>
+                  <FluxMonitorJobTypeRow cfg={cfg.fluxMonitorJobConfig} />
+                  <OCRJobTypeRow cfg={cfg.ocr1JobConfig} />
+                  <OCR2JobTypeRow cfg={cfg.ocr2JobConfig} />
                 </Grid>
               </Grid>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-        ))}
 
-        {newDialogOpen && (
-          <NewSupportedChainDialog
-            open={newDialogOpen}
-            onClose={() => setNewDialogOpen(false)}
-            onSubmit={handleCreateSubmit}
-          />
-        )}
+              <Grid item xs={12}>
+                <div className={classes.panelDetailsActions}>
+                  <Button onClick={() => handleEditDialogOpen(cfg)}>
+                    Edit
+                  </Button>
+                  <Button onClick={() => handleDelete(cfg.id)} variant="danger">
+                    Delete
+                  </Button>
+                </div>
+              </Grid>
+            </Grid>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      ))}
 
-        {isEditDialogOpen() && (
-          <EditSupportedChainDialog
-            cfg={editCfg}
-            open={isEditDialogOpen()}
-            onClose={handleEditDialogClose}
-            onSubmit={handleUpdateSubmit}
-          />
-        )}
-      </Card>
-    )
-  },
-)
+      {newDialogOpen && (
+        <NewSupportedChainDialog
+          open={newDialogOpen}
+          onClose={() => setNewDialogOpen(false)}
+          onSubmit={handleCreateSubmit}
+        />
+      )}
+
+      {isEditDialogOpen() && (
+        <EditSupportedChainDialog
+          cfg={editCfg}
+          open={isEditDialogOpen()}
+          onClose={handleEditDialogClose}
+          onSubmit={handleUpdateSubmit}
+        />
+      )}
+    </Card>
+  )
+})

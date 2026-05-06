@@ -17,48 +17,49 @@ interface Props extends WithStyles<typeof tableStyles> {
 }
 
 // ApprovedTable renders a table for approved proposals.
-export const ApprovedTable = withStyles(tableStyles)(
-  ({ classes, proposals }: Props) => {
-    return (
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>External Job ID</TableCell>
-            <TableCell>Latest Version</TableCell>
-            <TableCell>Last Proposed</TableCell>
-            <TableCell></TableCell>
+export const ApprovedTable = withStyles(tableStyles)(({
+  classes,
+  proposals,
+}: Props) => {
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>ID</TableCell>
+          <TableCell>Name</TableCell>
+          <TableCell>External Job ID</TableCell>
+          <TableCell>Latest Version</TableCell>
+          <TableCell>Last Proposed</TableCell>
+          <TableCell></TableCell>
+        </TableRow>
+      </TableHead>
+
+      <TableBody>
+        {proposals?.map((proposal) => (
+          <TableRow key={proposal.id} className={classes.row} hover>
+            <TableCell className={classes.cell} component="th" scope="row">
+              <Link
+                className={classes.link}
+                href={`/job_proposals/${proposal.id}`}
+              >
+                {proposal.id}
+              </Link>
+            </TableCell>
+
+            <TableCell>{proposal.name || '--'}</TableCell>
+            <TableCell>{proposal.externalJobID || '--'}</TableCell>
+            <TableCell>{proposal.latestSpec.version}</TableCell>
+            <TableCell>
+              <TimeAgo tooltip>{proposal.latestSpec.createdAt}</TimeAgo>
+            </TableCell>
+            <TableCell align="right">
+              {proposal.pendingUpdate && (
+                <Chip color="primary">Update Available</Chip>
+              )}
+            </TableCell>
           </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {proposals?.map((proposal) => (
-            <TableRow key={proposal.id} className={classes.row} hover>
-              <TableCell className={classes.cell} component="th" scope="row">
-                <Link
-                  className={classes.link}
-                  href={`/job_proposals/${proposal.id}`}
-                >
-                  {proposal.id}
-                </Link>
-              </TableCell>
-
-              <TableCell>{proposal.name || '--'}</TableCell>
-              <TableCell>{proposal.externalJobID || '--'}</TableCell>
-              <TableCell>{proposal.latestSpec.version}</TableCell>
-              <TableCell>
-                <TimeAgo tooltip>{proposal.latestSpec.createdAt}</TimeAgo>
-              </TableCell>
-              <TableCell align="right">
-                {proposal.pendingUpdate && (
-                  <Chip color="primary">Update Available</Chip>
-                )}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    )
-  },
-)
+        ))}
+      </TableBody>
+    </Table>
+  )
+})

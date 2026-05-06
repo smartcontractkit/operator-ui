@@ -11,6 +11,7 @@ import userEvent from '@testing-library/user-event'
 import Notifications from 'pages/Notifications'
 
 const { findByText, getByRole, getByText, getByTestId } = screen
+const fetchMock = (global as any).fetchMock
 
 describe('pages/Configuration/LoggingCard', () => {
   it('renders the logging configuration card', async () => {
@@ -19,7 +20,7 @@ describe('pages/Configuration/LoggingCard', () => {
       logLevel: ['info', 'false'],
     })
 
-    global.fetch.getOnce(globPath('/v2/log'), logConfig)
+    fetchMock.getOnce(globPath('/v2/log'), logConfig)
 
     renderWithRouter(<LoggingCard />)
 
@@ -38,8 +39,8 @@ describe('pages/Configuration/LoggingCard', () => {
       defaultLogLevel: 'warn',
     })
 
-    global.fetch.getOnce(globPath('/v2/log'), logConfig)
-    global.fetch.patchOnce(globPath('/v2/log'), logConfig)
+    fetchMock.getOnce(globPath('/v2/log'), logConfig)
+    fetchMock.patchOnce(globPath('/v2/log'), logConfig)
 
     renderWithRouter(
       <>

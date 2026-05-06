@@ -1,5 +1,11 @@
 .json-pretty {
-  font-family: Roboto Mono, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family:
+    Roboto Mono,
+    Menlo,
+    Monaco,
+    Consolas,
+    'Courier New',
+    monospace;
   font-weight: normal;
   font-size: 14px;
   line-height: 16px;

@@ -53,45 +53,49 @@ export interface Props extends WithStyles<typeof styles> {
   maxRunsSize: number
 }
 
-export const ActivityCard = withStyles(styles)(
-  ({ classes, data, loading, errorMsg, maxRunsSize }: Props) => {
-    return (
-      <Card>
-        <CardHeader
-          title="Activity"
-          action={
-            <Button href={'/jobs/new'} component={BaseLink}>
-              New Job
-            </Button>
-          }
-        />
+export const ActivityCard = withStyles(styles)(({
+  classes,
+  data,
+  loading,
+  errorMsg,
+  maxRunsSize,
+}: Props) => {
+  return (
+    <Card>
+      <CardHeader
+        title="Activity"
+        action={
+          <Button href={'/jobs/new'} component={BaseLink}>
+            New Job
+          </Button>
+        }
+      />
 
-        <Table>
-          <TableBody>
-            <LoadingRow visible={loading} />
-            <NoContentRow visible={data?.jobRuns.results?.length === 0}>
-              No recent activity
-            </NoContentRow>
-            <ErrorRow msg={errorMsg} />
+      <Table>
+        <TableBody>
+          <LoadingRow visible={loading} />
+          <NoContentRow visible={data?.jobRuns.results?.length === 0}>
+            No recent activity
+          </NoContentRow>
+          <ErrorRow msg={errorMsg} />
 
-            {data?.jobRuns.results?.map((run, idx) => (
-              <ActivityRow run={run} key={idx} />
-            ))}
-          </TableBody>
+          {data?.jobRuns.results?.map((run, idx) => (
+            <ActivityRow run={run} key={idx} />
+          ))}
+        </TableBody>
 
-          {data && data.jobRuns.metadata.total > maxRunsSize && (
-            <TableFooter>
-              <TableRow>
-                <TableCell className={classes.footer}>
-                  <Button href={'/runs'} component={BaseLink}>
-                    View More
-                  </Button>
-                </TableCell>
-              </TableRow>
-            </TableFooter>
-          )}
-        </Table>
-      </Card>
-    )
-  },
-)
+        {data && data.jobRuns.metadata.total > maxRunsSize && (
+          <TableFooter>
+            <TableRow>
+              <TableCell className={classes.footer}>
+                <Button href={'/runs'} component={BaseLink}>
+                  View More
+                </Button>
+              </TableCell>
+            </TableRow>
+          </TableFooter>
+        )}
+      </Table>
+    </Card>
+  )
+})

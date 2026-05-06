@@ -37,26 +37,29 @@ export interface Props extends WithStyles<typeof styles> {
   errorMsg?: string
 }
 
-export const RecentJobsCard = withStyles(styles)(
-  ({ classes, data, errorMsg, loading }: Props) => {
-    return (
-      <Card>
-        <CardHeader title="Recent Jobs" className={classes.cardHeader} />
+export const RecentJobsCard = withStyles(styles)(({
+  classes,
+  data,
+  errorMsg,
+  loading,
+}: Props) => {
+  return (
+    <Card>
+      <CardHeader title="Recent Jobs" className={classes.cardHeader} />
 
-        <Table className={classes.table}>
-          <TableBody>
-            <LoadingRow visible={loading} />
-            <NoContentRow visible={data?.jobs.results?.length === 0}>
-              No recently created jobs
-            </NoContentRow>
-            <ErrorRow msg={errorMsg} />
+      <Table className={classes.table}>
+        <TableBody>
+          <LoadingRow visible={loading} />
+          <NoContentRow visible={data?.jobs.results?.length === 0}>
+            No recently created jobs
+          </NoContentRow>
+          <ErrorRow msg={errorMsg} />
 
-            {data?.jobs.results?.map((job, idx) => (
-              <RecentJobRow job={job} key={idx} />
-            ))}
-          </TableBody>
-        </Table>
-      </Card>
-    )
-  },
-)
+          {data?.jobs.results?.map((job, idx) => (
+            <RecentJobRow job={job} key={idx} />
+          ))}
+        </TableBody>
+      </Table>
+    </Card>
+  )
+})

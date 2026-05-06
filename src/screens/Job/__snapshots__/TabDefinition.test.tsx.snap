@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`TabOverview renders the definition 1`] = `
 "type = "directrequest"
@@ -19,6 +19,5 @@ observationSource = """
     multiply [type=multiply times=100];
     fetch -> parse -> multiply;
 """
-
 "
 `;

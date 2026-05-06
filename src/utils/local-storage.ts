@@ -19,7 +19,7 @@ export function getJson(key: string): any {
   if (stored) {
     try {
       return JSON.parse(stored)
-    } catch (e) {
+    } catch (_e) {
       // continue regardless of error
     }
   }

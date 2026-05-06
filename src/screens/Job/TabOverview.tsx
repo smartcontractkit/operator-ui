@@ -32,44 +32,45 @@ interface Props extends WithStyles<typeof chartCardStyles> {
   job: JobPayload_Fields
 }
 
-export const TabOverview = withStyles(chartCardStyles)(
-  ({ classes, job }: Props) => {
-    // Convert the runs into run props which are compatible with the
-    // JobRunsTable
-    const runs = React.useMemo(() => {
-      return job.runs.results.map(
-        ({ allErrors, id, createdAt, finishedAt, status }) => ({
-          id,
-          createdAt,
-          errors: allErrors,
-          finishedAt,
-          status,
-        }),
-      )
-    }, [job.runs])
-
-    return (
-      <Grid container spacing={32}>
-        <Grid item xs={12} sm={6}>
-          <Card>
-            <CardHeader title="Recent job runs" />
-
-            <JobRunsTable runs={runs} />
-
-            {job.runs.metadata.total > ShowViewMoreCount && (
-              <div className={classes.runDetails}>
-                <Button href={`/jobs/${job.id}/runs`} component={BaseLink}>
-                  View more
-                </Button>
-              </div>
-            )}
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} sm={6}>
-          <TaskListCard observationSource={job.observationSource} />
-        </Grid>
-      </Grid>
+export const TabOverview = withStyles(chartCardStyles)(({
+  classes,
+  job,
+}: Props) => {
+  // Convert the runs into run props which are compatible with the
+  // JobRunsTable
+  const runs = React.useMemo(() => {
+    return job.runs.results.map(
+      ({ allErrors, id, createdAt, finishedAt, status }) => ({
+        id,
+        createdAt,
+        errors: allErrors,
+        finishedAt,
+        status,
+      }),
     )
-  },
-)
+  }, [job.runs])
+
+  return (
+    <Grid container spacing={32}>
+      <Grid item xs={12} sm={6}>
+        <Card>
+          <CardHeader title="Recent job runs" />
+
+          <JobRunsTable runs={runs} />
+
+          {job.runs.metadata.total > ShowViewMoreCount && (
+            <div className={classes.runDetails}>
+              <Button href={`/jobs/${job.id}/runs`} component={BaseLink}>
+                View more
+              </Button>
+            </div>
+          )}
+        </Card>
+      </Grid>
+
+      <Grid item xs={12} sm={6}>
+        <TaskListCard observationSource={job.observationSource} />
+      </Grid>
+    </Grid>
+  )
+})

@@ -46,7 +46,7 @@ describe('EditBridgeView', () => {
 
     renderComponent(bridge)
 
-    userEvent.click(getByRole('link', { name: /cancel/i }))
+    userEvent.click(getByRole('button', { name: /cancel/i }))
 
     expect(await findByText('Link Success')).toBeInTheDocument()
   })

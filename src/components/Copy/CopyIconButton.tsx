@@ -26,18 +26,19 @@ const styles = (theme: Theme) =>
     },
   })
 
-export const CopyIconButton = withStyles(styles)(
-  ({ classes, data }: WithStyles<typeof styles> & { data: string }) => {
-    const [copied, setCopied] = React.useState(false)
+export const CopyIconButton = withStyles(styles)(({
+  classes,
+  data,
+}: WithStyles<typeof styles> & { data: string }) => {
+  const [copied, setCopied] = React.useState(false)
 
-    return (
-      <CopyToClipboard text={data} onCopy={() => setCopied(true)}>
-        <Tooltip title="Copied!" open={copied} onClose={() => setCopied(false)}>
-          <IconButton className={classes.button}>
-            <FileCopyOutlinedIcon className={classes.icon} />
-          </IconButton>
-        </Tooltip>
-      </CopyToClipboard>
-    )
-  },
-)
+  return (
+    <CopyToClipboard text={data} onCopy={() => setCopied(true)}>
+      <Tooltip title="Copied!" open={copied} onClose={() => setCopied(false)}>
+        <IconButton className={classes.button}>
+          <FileCopyOutlinedIcon className={classes.icon} />
+        </IconButton>
+      </Tooltip>
+    </CopyToClipboard>
+  )
+})

@@ -9,6 +9,7 @@ tsconfig.tsbuildinfo
 assets
 yarn-error.log
 *report.json
+.idea
 
 # OS specific
 .DS_Store

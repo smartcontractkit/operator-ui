@@ -31,27 +31,29 @@ interface Props extends WithStyles<typeof styles> {
   onDelete: () => void
 }
 
-export const P2PKeyRow = withStyles(styles)(
-  ({ classes, p2pKey, onDelete }: Props) => {
-    return (
-      <TableRow hover>
-        <TableCell>
-          <KeyBundle
-            classes={{ avatar: classes.avatar }}
-            primary={
-              <b>
-                Peer ID: {p2pKey.peerID} <CopyIconButton data={p2pKey.peerID} />
-              </b>
-            }
-            secondary={[<>Public Key: {p2pKey.publicKey}</>]}
-          />
-        </TableCell>
-        <TableCell align="right">
-          <Button onClick={onDelete} variant="danger" size="medium">
-            Delete
-          </Button>
-        </TableCell>
-      </TableRow>
-    )
-  },
-)
+export const P2PKeyRow = withStyles(styles)(({
+  classes,
+  p2pKey,
+  onDelete,
+}: Props) => {
+  return (
+    <TableRow hover>
+      <TableCell>
+        <KeyBundle
+          classes={{ avatar: classes.avatar }}
+          primary={
+            <b>
+              Peer ID: {p2pKey.peerID} <CopyIconButton data={p2pKey.peerID} />
+            </b>
+          }
+          secondary={[<>Public Key: {p2pKey.publicKey}</>]}
+        />
+      </TableCell>
+      <TableCell align="right">
+        <Button onClick={onDelete} variant="danger" size="medium">
+          Delete
+        </Button>
+      </TableCell>
+    </TableRow>
+  )
+})

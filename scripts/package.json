@@ -7,9 +7,9 @@
     "release": "node --loader=ts-node/esm ./release.mts"
   },
   "dependencies": {
-    "@changesets/read": "^0.5.7",
+    "@changesets/read": "^0.6.7",
     "ts-node": "^10.9.1",
-    "typescript": "^4.8.3",
-    "zx": "^7.0.8"
+    "typescript": "^4.9.5",
+    "zx": "^8.8.5"
   }
 }

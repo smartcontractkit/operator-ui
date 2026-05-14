@@ -39,7 +39,7 @@ jobs:
           name: eslint-report
           path: ./eslint-report.json
 
-  unit-tests:
+  unit-tests-matrix:
     strategy:
       matrix:
         shardIndex: [1, 2, 3, 4]
@@ -84,9 +84,27 @@ jobs:
           name: unit-tests-coverage-${{ matrix.shardIndex }}
           path: ./coverage/${{matrix.shardIndex}}_lcov.info
 
+  unit-tests:
+    # name required due to malformed required checks
+    name: Unit Tests 1/1
+    runs-on: ubuntu-latest
+    permissions: {}
+    needs: unit-tests-matrix
+    steps:
+      - name: Check unit test matrix results
+        env:
+          RESULT: ${{ needs.unit-tests-matrix.result }}
+        run: |
+          if [[ "$RESULT" != "success" ]]; then
+            echo "One or more shards in the unit test matrix failed. Failing the unit-tests job."
+            exit 1
+          else
+            echo "All shards in the unit test matrix succeeded."
+          fi
+
   sonarqube:
     name: SonarQube Scan
-    needs: [eslint, unit-tests]
+    needs: [eslint, unit-tests-matrix]
     runs-on: ubuntu-latest
     if: always()
     steps:

@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo
-        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+        uses: actions/checkout@v6
 
       - name: Setup node
-        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        uses: actions/setup-node@v6
         with:
           node-version-file: .tool-versions
           cache: yarn
@@ -34,12 +34,12 @@ jobs:
 
       - name: Upload ESLint report
         if: always()
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@v7
         with:
           name: eslint-report
           path: ./eslint-report.json
 
-  unit-tests:
+  unit-tests-matrix:
     strategy:
       matrix:
         shardIndex: [1, 2, 3, 4]
@@ -48,24 +48,14 @@ jobs:
     name: Unit Tests ${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
     runs-on: ubuntu-latest
     steps:
-      - name: Collect Metrics
-        id: collect-gha-metrics
-        uses: smartcontractkit/push-gha-metrics-action@dea9b546553cb4ca936607c2267a09c004e4ab3f # v3.0.0
-        with:
-          id: unit-tests-${{ matrix.shardIndex }}-of-${{ matrix.shardTotal }}
-          org-id: ${{ secrets.GRAFANA_INTERNAL_TENANT_ID }}
-          basic-auth: ${{ secrets.GRAFANA_INTERNAL_BASIC_AUTH }}
-          hostname: ${{ secrets.GRAFANA_INTERNAL_HOST }}
-          this-job-name: Unit Tests ${{ matrix.shardIndex }}
-        continue-on-error: true
 
       - name: Checkout the repo
-        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0 # required by CodCov
 
       - name: Setup node
-        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        uses: actions/setup-node@v6
         with:
           node-version-file: .tool-versions
           cache: yarn
@@ -89,23 +79,41 @@ jobs:
 
       - name: Upload unit-test coverage report
         if: always()
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@v7
         with:
           name: unit-tests-coverage-${{ matrix.shardIndex }}
           path: ./coverage/${{matrix.shardIndex}}_lcov.info
 
+  unit-tests:
+    # name required due to malformed required checks
+    name: Unit Tests 1/1
+    runs-on: ubuntu-latest
+    permissions: {}
+    needs: unit-tests-matrix
+    steps:
+      - name: Check unit test matrix results
+        env:
+          RESULT: ${{ needs.unit-tests-matrix.result }}
+        run: |
+          if [[ "$RESULT" != "success" ]]; then
+            echo "One or more shards in the unit test matrix failed. Failing the unit-tests job."
+            exit 1
+          else
+            echo "All shards in the unit test matrix succeeded."
+          fi
+
   sonarqube:
     name: SonarQube Scan
-    needs: [eslint, unit-tests]
+    needs: [eslint, unit-tests-matrix]
     runs-on: ubuntu-latest
     if: always()
     steps:
-      - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0 # fetches all history for all tags and branches to provide more metadata for sonar reports
 
       - name: Download all reports
-        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
+        uses: actions/download-artifact@v8
 
       - name: Update ESLint report symlinks
         run: sed -i 's+/home/runner/work/operator-ui/operator-ui/+/github/workspace/+g' ./eslint-report/eslint-report.json
@@ -118,7 +126,7 @@ jobs:
           echo "sonarqube_eslint_report_paths=$(find -type f -name 'eslint-report.json' -printf "%p,")" >> $GITHUB_OUTPUT
 
       - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@53c3e3207fe4b8d52e2f1ac9d6eb1d2506f626c0 # v2.0.2
+        uses: sonarsource/sonarqube-scan-action@59db25f34e16620e48ab4bb9e4a5dce155cb5432 # v8.0.0
         with:
           args: >
             -Dsonar.javascript.lcov.reportPaths=${{ steps.sonarqube_report_paths.outputs.sonarqube_coverage_report_paths }}

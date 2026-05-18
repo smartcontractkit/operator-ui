@@ -1,7 +1,9 @@
 import React from 'react'
 
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
+import Typography from '@mui/material/Typography'
 
 const styles = () => {
   return createStyles({

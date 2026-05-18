@@ -1,14 +1,13 @@
 import React from 'react'
 
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import Grid from '@material-ui/core/Grid'
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import Grid from '@mui/material/Grid'
+import { Theme } from '@mui/material/styles'
+
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
 
 import Button from 'components/Button'
 import BaseLink from 'components/BaseLink'
@@ -22,9 +21,9 @@ const ShowViewMoreCount = 5
 const chartCardStyles = ({ spacing }: Theme) =>
   createStyles({
     runDetails: {
-      paddingTop: spacing.unit * 2,
-      paddingBottom: spacing.unit * 2,
-      paddingLeft: spacing.unit * 2,
+      paddingTop: spacing(2),
+      paddingBottom: spacing(2),
+      paddingLeft: spacing(2),
     },
   })
 
@@ -51,7 +50,7 @@ export const TabOverview = withStyles(chartCardStyles)(({
   }, [job.runs])
 
   return (
-    <Grid container spacing={32}>
+    <Grid container spacing={4}>
       <Grid item xs={12} sm={6}>
         <Card>
           <CardHeader title="Recent job runs" />

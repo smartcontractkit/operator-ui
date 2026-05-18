@@ -1,22 +1,21 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import TableCell from '@material-ui/core/TableCell'
-import TableRow from '@material-ui/core/TableRow'
-import Typography from '@material-ui/core/Typography'
-import Dialog from '@material-ui/core/Dialog'
-import Grid from '@material-ui/core/Grid'
-import Checkbox from '@material-ui/core/Checkbox'
-import FormGroup from '@material-ui/core/FormGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
+import Dialog from '@mui/material/Dialog'
+import Grid from '@mui/material/Grid'
+import Checkbox from '@mui/material/Checkbox'
+import FormGroup from '@mui/material/FormGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import { ApolloQueryResult } from '@apollo/client'
 
-import {
-  createStyles,
-  withStyles,
-  Theme,
-  WithStyles,
-} from '@material-ui/core/styles'
+import { Theme } from '@mui/material/styles'
+
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
 
 import Button from 'components/Button'
 import Close from 'components/Icons/Close'
@@ -33,8 +32,8 @@ import { TimeAgo } from 'src/components/TimeAgo'
 const styles = (theme: Theme) =>
   createStyles({
     container: {
-      backgroundColor: theme.palette.common.white,
-      padding: theme.spacing.unit * 5,
+      backgroundColor: theme.palette.background.paper,
+      padding: theme.spacing(5),
       paddingBottom: 0,
     },
     chainId: {
@@ -42,10 +41,10 @@ const styles = (theme: Theme) =>
       textOverflow: 'ellipsis',
     },
     badgePadding: {
-      paddingLeft: theme.spacing.unit * 2,
-      paddingRight: theme.spacing.unit * 2,
-      marginLeft: theme.spacing.unit * -2,
-      marginRight: theme.spacing.unit * -2,
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      marginLeft: theme.spacing(-2),
+      marginRight: theme.spacing(-2),
       lineHeight: '1rem',
     },
     dialogPaper: {
@@ -54,31 +53,31 @@ const styles = (theme: Theme) =>
       minWidth: '670px',
       maxWidth: '670px',
       overflow: 'hidden',
-      borderRadius: theme.spacing.unit * 3,
+      borderRadius: theme.spacing(3),
     },
     warningText: {
       fontWeight: 500,
-      marginLeft: theme.spacing.unit * 3,
-      marginTop: theme.spacing.unit * 3,
-      marginBottom: theme.spacing.unit,
+      marginLeft: theme.spacing(3),
+      marginTop: theme.spacing(3),
+      marginBottom: theme.spacing(1),
     },
     closeButton: {
-      marginRight: theme.spacing.unit * 3,
-      marginTop: theme.spacing.unit * 3,
+      marginRight: theme.spacing(3),
+      marginTop: theme.spacing(3),
     },
     infoText: {
-      fontSize: theme.spacing.unit * 2,
+      fontSize: theme.spacing(2),
       fontWeight: 450,
-      marginLeft: theme.spacing.unit * 6,
+      marginLeft: theme.spacing(6),
     },
     modalContent: {
       width: 'inherit',
     },
     deleteButton: {
-      marginTop: theme.spacing.unit * 4,
+      marginTop: theme.spacing(4),
     },
     runJobButton: {
-      marginBottom: theme.spacing.unit * 3,
+      marginBottom: theme.spacing(3),
     },
     runJobModalContent: {
       overflow: 'hidden',
@@ -175,7 +174,11 @@ const UnstyledEVMAccountRow: React.FC<Props> = ({
         <form onSubmit={onSubmit}>
           <Grid container spacing={0}>
             <Grid item className={classes.modalContent}>
-              <Grid container alignItems="baseline" justify="space-between">
+              <Grid
+                container
+                alignItems="baseline"
+                justifyContent="space-between"
+              >
                 <Grid item>
                   <Typography
                     variant="h5"
@@ -229,7 +232,7 @@ const UnstyledEVMAccountRow: React.FC<Props> = ({
                   container
                   spacing={0}
                   alignItems="center"
-                  justify="center"
+                  justifyContent="center"
                 >
                   <Grid item className={classes.deleteButton}>
                     <Button variant="danger" type="submit">

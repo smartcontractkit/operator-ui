@@ -57,7 +57,10 @@ const curryErrorHandler =
     }
   }
 
-export const notifySuccess = (component: React.ReactNode, props: object) => {
+export const notifySuccess = (
+  component: (props: any) => React.ReactNode,
+  props: object,
+) => {
   return {
     type: NotifyActionType.NOTIFY_SUCCESS,
     component,
@@ -70,7 +73,10 @@ export const notifySuccessMsg = (msg: string) => ({
   msg,
 })
 
-export const notifyError = (component: React.ReactNode, error: Error) =>
+export const notifyError = (
+  component: (props: any) => React.ReactNode,
+  error: Error,
+) =>
   ({
     type: NotifyActionType.NOTIFY_ERROR,
     component,
@@ -109,7 +115,9 @@ const signInSuccessAction = (doc: UnboxApi<Sessions['createSession']>) => {
 }
 
 const signInFailAction = () =>
-  ({ type: AuthActionType.RECEIVE_SIGNIN_FAIL }) as const
+  ({
+    type: AuthActionType.RECEIVE_SIGNIN_FAIL,
+  }) as const
 
 function sendSignIn(data: Parameter<Sessions['createSession']>) {
   return (dispatch: StoreDispatch) => {
@@ -247,9 +255,15 @@ function sendSignOut(dispatch: Dispatch) {
     })
 }
 
-// Base64 to ArrayBuffer
-function bufferDecode(value: any) {
-  return Uint8Array.from(atob(value), (c) => c.charCodeAt(0))
+// Base64URL to ArrayBuffer
+// atob() requires standard Base64; the server sends Base64URL (- and _ instead
+// of + and /) without padding, so we must normalise before decoding.
+function bufferDecode(value: string) {
+  const base64 = value
+    .replace(/-/g, '+')
+    .replace(/_/g, '/')
+    .padEnd(value.length + ((4 - (value.length % 4)) % 4), '=')
+  return Uint8Array.from(atob(base64), (c) => c.charCodeAt(0))
 }
 
 // ArrayBuffer to URLBase64
@@ -338,13 +352,20 @@ export const submitSignIn = (data: Parameter<Sessions['createSession']>) =>
 
 export const submitSignOut = () => sendSignOut
 
-export const beginRegistration = () => sendBeginRegistration()
+export const beginRegistration = (): ThunkAction<
+  ReturnType<typeof sendBeginRegistration>,
+  AppState,
+  void,
+  Action<string>
+> => {
+  return () => sendBeginRegistration()
+}
 
 export const createJobRunV2 = (
   id: string,
   pipelineInput: string,
-  successCallback: React.ReactNode,
-  errorCallback: React.ReactNode,
+  successCallback: (props: any) => React.ReactNode,
+  errorCallback: (props: any) => React.ReactNode,
 ): ThunkAction<Promise<void>, AppState, void, Action<string>> => {
   return (dispatch: Dispatch) => {
     dispatch({ type: ResourceActionType.REQUEST_CREATE })

@@ -5,7 +5,7 @@ import {
   Redirect,
   BrowserRouter as Router,
 } from 'react-router-dom'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import CssBaseline from '@mui/material/CssBaseline'
 import Private from './Private'
 import { useOperatorUiSelector } from 'reducers'
 import SignIn from 'pages/SignIn'

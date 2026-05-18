@@ -1,10 +1,11 @@
 import React from 'react'
 
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardHeader from '@material-ui/core/CardHeader'
-import Grid from '@material-ui/core/Grid'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
+import Grid from '@mui/material/Grid'
 
+import Content from 'components/Content'
 import {
   FeedsManagerForm,
   Props as FormProps,
@@ -22,18 +23,20 @@ export const EditFeedsManagerView: React.FC<Props> = ({ data, onSubmit }) => {
   }
 
   return (
-    <Grid container>
-      <Grid item xs={12} md={11} lg={9}>
-        <Card>
-          <CardHeader title="Edit Job Distributor" />
-          <CardContent>
-            <FeedsManagerForm
-              initialValues={initialValues}
-              onSubmit={onSubmit}
-            />
-          </CardContent>
-        </Card>
+    <Content>
+      <Grid container>
+        <Grid item xs={12} md={11} lg={9}>
+          <Card>
+            <CardHeader title="Edit Job Distributor" />
+            <CardContent>
+              <FeedsManagerForm
+                initialValues={initialValues}
+                onSubmit={onSubmit}
+              />
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
-    </Grid>
+    </Content>
   )
 }

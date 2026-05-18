@@ -3,7 +3,7 @@ import React from 'react'
 import { gql } from '@apollo/client'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 
 import Content from 'components/Content'
 import { ErrorsCard } from './ErrorsCard'
@@ -94,7 +94,7 @@ export const JobRunView = ({ run }: Props) => {
 
   return (
     <Content>
-      <Grid container spacing={16}>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Heading1>Job Run #{run.id}</Heading1>
         </Grid>

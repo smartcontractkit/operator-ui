@@ -1,4 +1,6 @@
-import { createStyles, Theme } from '@material-ui/core/styles'
+import { Theme } from '@mui/material/styles'
+
+import { createStyles } from 'src/utils/withStyles'
 
 // Contains styles to make a table row linkable
 //
@@ -10,8 +12,8 @@ import { createStyles, Theme } from '@material-ui/core/styles'
 export const tableStyles = (theme: Theme) =>
   createStyles({
     cell: {
-      paddingTop: theme.spacing.unit * 2,
-      paddingBottom: theme.spacing.unit * 2,
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
     },
     row: {
       transform: 'scale(1)',

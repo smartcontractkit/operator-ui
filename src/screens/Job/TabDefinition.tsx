@@ -2,10 +2,9 @@ import React from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardHeader from '@material-ui/core/CardHeader'
-import Typography from '@material-ui/core/Typography'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
 
 import { CopyButton } from 'src/components/Copy/CopyButton'
 import { generateJobDefinition } from './generateJobDefinition'
@@ -24,7 +23,7 @@ export const TabDefinition = ({ job }: Props) => {
         action={<CopyButton title="Copy" data={definition} />}
       />
       <CardContent>
-        <Typography style={{ margin: 0 }} variant="body1" component="pre">
+        <div style={{ margin: 0 }}>
           <SyntaxHighlighter
             language="toml"
             style={prism}
@@ -32,7 +31,7 @@ export const TabDefinition = ({ job }: Props) => {
           >
             {definition}
           </SyntaxHighlighter>
-        </Typography>
+        </div>
       </CardContent>
     </Card>
   )

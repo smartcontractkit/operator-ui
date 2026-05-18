@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Tab, { TabProps } from '@material-ui/core/Tab'
+import Tab, { TabProps } from '@mui/material/Tab'
 
 interface TabLinkProps extends TabProps {
   to: string

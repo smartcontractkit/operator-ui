@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { Redirect, useLocation, useHistory } from 'react-router-dom'
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles } from 'src/utils/withStyles'
 import Button from 'components/Button'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField'
-import { Grid } from '@material-ui/core'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
+import TextField from '@mui/material/TextField'
+import { Grid } from '@mui/material'
 import { notifyErrorMsg, submitSignIn } from 'actionCreators'
 import { renderNotification } from 'pages/Notifications'
 import HexagonLogo from 'components/Logos/Hexagon'
@@ -22,11 +22,11 @@ const styles = (theme) => ({
     height: '100%',
   },
   cardContent: {
-    paddingTop: theme.spacing.unit * 6,
-    paddingLeft: theme.spacing.unit * 4,
-    paddingRight: theme.spacing.unit * 4,
+    paddingTop: theme.spacing(6),
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4),
     '&:last-child': {
-      paddingBottom: theme.spacing.unit * 6,
+      paddingBottom: theme.spacing(6),
     },
   },
   headerRow: {
@@ -34,7 +34,7 @@ const styles = (theme) => ({
   },
   error: {
     backgroundColor: theme.palette.error.light,
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
   },
   errorText: {
     color: theme.palette.error.main,
@@ -122,7 +122,7 @@ export const SignIn = (props) => {
   return (
     <Grid
       container
-      justify="center"
+      justifyContent="center"
       alignItems="center"
       className={classes.container}
       spacing={0}
@@ -131,7 +131,7 @@ export const SignIn = (props) => {
         <Card>
           <CardContent className={classes.cardContent}>
             <form noValidate onSubmit={onSubmit}>
-              <Grid container spacing={8}>
+              <Grid container spacing={1}>
                 <Grid item xs={12}>
                   <Grid container spacing={0}>
                     <Grid item xs={12} className={classes.headerRow}>
@@ -188,7 +188,7 @@ export const SignIn = (props) => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Grid container spacing={0} justify="center">
+                  <Grid container spacing={0} justifyContent="center">
                     <Grid item>
                       <Button type="submit" variant="primary">
                         Access Account
@@ -199,7 +199,7 @@ export const SignIn = (props) => {
 
                 {isOIDCEnabled && (
                   <Grid item xs={12}>
-                    <Grid container spacing={0} justify="center">
+                    <Grid container spacing={0} justifyContent="center">
                       <Grid item>
                         <Button
                           variant="secondary"

@@ -2,11 +2,11 @@ import React from 'react'
 
 import TOML from '@iarna/toml'
 import { Field, Form, Formik, FormikHelpers } from 'formik'
-import { TextField } from 'formik-material-ui'
+import { FormikTextField as TextField } from './FormikFields'
 import * as Yup from 'yup'
 
-import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid'
+import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
 
 export interface FormValues {
   toml: string
@@ -49,7 +49,7 @@ export const JobForm = ({ initialValues, onSubmit, onTOMLChange }: Props) => {
 
         return (
           <Form data-testid="job-form" noValidate>
-            <Grid container spacing={16}>
+            <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Field
                   component={TextField}
@@ -59,8 +59,8 @@ export const JobForm = ({ initialValues, onSubmit, onTOMLChange }: Props) => {
                   required
                   fullWidth
                   multiline
-                  rows={10}
-                  rowsMax={25}
+                  minRows={10}
+                  maxRows={25}
                   variant="outlined"
                   autoComplete="off"
                   FormHelperTextProps={{ 'data-testid': 'toml-helper-text' }}

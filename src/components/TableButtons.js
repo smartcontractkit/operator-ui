@@ -1,15 +1,16 @@
-import { IconButton, withStyles } from '@material-ui/core'
-import FirstPageIcon from '@material-ui/icons/FirstPage'
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
-import LastPageIcon from '@material-ui/icons/LastPage'
+import { IconButton } from '@mui/material'
+import { withStyles } from 'src/utils/withStyles'
+import FirstPageIcon from '@mui/icons-material/FirstPage'
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
+import LastPageIcon from '@mui/icons-material/LastPage'
 import React from 'react'
 
 const styles = (theme) => ({
   customButtons: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    marginLeft: theme.spacing.unit * 2.5,
+    marginLeft: theme.spacing(2.5),
   },
 })
 
@@ -30,6 +31,7 @@ const TableButtons = (props) => {
         onClick={handlePage(firstPage)}
         disabled={currentPage <= firstPage}
         aria-label="First Page"
+        size="large"
       >
         <FirstPageIcon />
       </IconButton>
@@ -37,6 +39,7 @@ const TableButtons = (props) => {
         onClick={handlePage(currentPage - 1)}
         disabled={currentPage <= firstPage}
         aria-label="Previous Page"
+        size="large"
       >
         <KeyboardArrowLeft />
       </IconButton>
@@ -44,6 +47,7 @@ const TableButtons = (props) => {
         onClick={handlePage(currentPage + 1)}
         disabled={currentPage >= lastPage}
         aria-label="Next Page"
+        size="large"
       >
         <KeyboardArrowRight />
       </IconButton>
@@ -51,6 +55,7 @@ const TableButtons = (props) => {
         onClick={handlePage(lastPage)}
         disabled={currentPage >= lastPage}
         aria-label="Last Page"
+        size="large"
       >
         <LastPageIcon />
       </IconButton>

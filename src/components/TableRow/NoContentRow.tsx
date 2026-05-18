@@ -1,12 +1,12 @@
 import React from 'react'
 
-import TableCell from '@material-ui/core/TableCell'
-import TableRow from '@material-ui/core/TableRow'
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
 
-export const NoContentRow: React.FC<{ visible: boolean }> = ({
+export const NoContentRow = ({
   children,
   visible,
-}) => {
+}: React.PropsWithChildren<{ visible: boolean }>) => {
   if (!visible) {
     return null
   }

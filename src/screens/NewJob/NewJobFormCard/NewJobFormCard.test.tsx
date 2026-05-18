@@ -35,7 +35,7 @@ describe('TaskListPreviewCard', () => {
     renderComponent()
 
     expect(
-      getByRole('textbox', { name: /job spec \(toml\) \*/i }),
+      getByRole('textbox', { name: /job spec \(toml\)/i }),
     ).toHaveTextContent('')
   })
 
@@ -43,7 +43,7 @@ describe('TaskListPreviewCard', () => {
     renderComponent('/jobs/new?definition=type%20%3D%20"webhook"')
 
     expect(
-      getByRole('textbox', { name: /job spec \(toml\) \*/i }),
+      getByRole('textbox', { name: /job spec \(toml\)/i }),
     ).toHaveTextContent('type = "webhook"')
   })
 
@@ -59,7 +59,7 @@ describe('TaskListPreviewCard', () => {
     renderComponent()
 
     expect(
-      getByRole('textbox', { name: /job spec \(toml\) \*/i }),
+      getByRole('textbox', { name: /job spec \(toml\)/i }),
     ).toHaveTextContent('type = "webhook"')
   })
 })

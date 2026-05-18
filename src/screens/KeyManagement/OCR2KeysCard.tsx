@@ -1,19 +1,19 @@
 import React from 'react'
 
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import Chip from '@material-ui/core/Chip'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import Chip from '@mui/material/Chip'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
 
 import { ConfirmationDialog } from 'src/components/Dialogs/ConfirmationDialog'
 import { LoadingRow } from 'src/components/TableRow/LoadingRow'
 import { NoContentRow } from 'src/components/TableRow/NoContentRow'
 import { OCR2KeyBundleRow } from './OCR2KeyBundleRow'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import { OCR2KeysCreate } from 'screens/KeyManagement/OCR2KeysCreate'
 
 export interface Props {

@@ -1,11 +1,14 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-import IconButton from '@material-ui/core/IconButton'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import { Theme, withStyles, WithStyles } from '@material-ui/core/styles'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import IconButton from '@mui/material/IconButton'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import { Theme } from '@mui/material/styles'
+
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
 
 import { beginRegistration, submitSignOut } from 'actionCreators'
 
@@ -18,6 +21,9 @@ const styles = (theme: Theme) => {
     menuList: {
       paddingTop: 0,
       paddingBottom: 0,
+    },
+    menuItem: {
+      minHeight: theme.spacing(6),
     },
   }
 }
@@ -48,14 +54,12 @@ export const AccountMenu = withStyles(styles)(({ classes }: Props) => {
 
   return (
     <React.Fragment>
-      <IconButton disableRipple onClick={handleOpen}>
+      <IconButton disableRipple onClick={handleOpen} size="large">
         <AccountCircleIcon className={classes.accountButton} />
       </IconButton>
-
       <Menu
         id="account-menu"
         anchorEl={anchorEl}
-        getContentAnchorEl={null}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         transformOrigin={{ vertical: 8, horizontal: 64 }}
         open={Boolean(anchorEl)}
@@ -65,9 +69,13 @@ export const AccountMenu = withStyles(styles)(({ classes }: Props) => {
           className: classes.menuList,
         }}
       >
-        <MenuItem onClick={handleRegisterMFA}>Register MFA Token</MenuItem>
+        <MenuItem className={classes.menuItem} onClick={handleRegisterMFA}>
+          Register MFA Token
+        </MenuItem>
 
-        <MenuItem onClick={handleLogOut}>Log out</MenuItem>
+        <MenuItem className={classes.menuItem} onClick={handleLogOut}>
+          Log out
+        </MenuItem>
       </Menu>
     </React.Fragment>
   )

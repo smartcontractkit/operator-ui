@@ -1,17 +1,17 @@
 import React from 'react'
 
-import Card from '@material-ui/core/Card'
-import Grid from '@material-ui/core/Grid'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
 
 import BaseLink from 'components/BaseLink'
 import Button from 'components/Button'
 import Content from 'components/Content'
-import { Heading1 } from 'src/components/Heading/Heading1'
+import { PageHeader } from 'src/components/PageHeader'
 import { JobDistributorsRow } from './JobDistributorsRow'
 
 interface Props {
@@ -22,13 +22,10 @@ export const JobDistributorsView: React.FC<Props> = ({ jobDistributors }) => {
   return (
     <Content>
       <Grid container>
-        <Grid item xs={9}>
-          <Heading1>Job Distributors</Heading1>
-        </Grid>
-
-        <Grid item xs={3}>
-          <Grid container justify="flex-end">
-            <Grid item>
+        <Grid item xs={12}>
+          <PageHeader
+            title="Job Distributors"
+            actions={
               <Button
                 variant="secondary"
                 component={BaseLink}
@@ -36,8 +33,8 @@ export const JobDistributorsView: React.FC<Props> = ({ jobDistributors }) => {
               >
                 New Job Distributor
               </Button>
-            </Grid>
-          </Grid>
+            }
+          />
         </Grid>
 
         <Grid item xs={12}>

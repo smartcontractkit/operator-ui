@@ -2,7 +2,7 @@ import React from 'react'
 
 import { gql } from '@apollo/client'
 
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 
 import Content from 'src/components/Content'
 import { Heading1 } from 'src/components/Heading/Heading1'
@@ -35,7 +35,7 @@ interface Props {
 export const TransactionView: React.FC<Props> = ({ tx }) => {
   return (
     <Content>
-      <Grid container spacing={16}>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Heading1>Transaction Details</Heading1>
         </Grid>

@@ -1,9 +1,8 @@
-import green from '@material-ui/core/colors/green'
-import red from '@material-ui/core/colors/red'
-import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import CancelIcon from '@material-ui/icons/Cancel'
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'
+import { green, red } from '@mui/material/colors'
+import { createStyles, WithStyles, withStyles } from 'src/utils/withStyles'
+import Typography from '@mui/material/Typography'
+import CancelIcon from '@mui/icons-material/Cancel'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import React from 'react'
 
 const statusStyles = () => {
@@ -43,7 +42,7 @@ export const StatusIndicator = withStyles(statusStyles)(({
         <CancelIcon fontSize="small" className={classes.inactiveIcon} />
       )}
 
-      <Typography variant="body1" inline className={classes.text}>
+      <Typography variant="body1" display="inline" className={classes.text}>
         {isActive ? activeText : inactiveText}
       </Typography>
     </div>

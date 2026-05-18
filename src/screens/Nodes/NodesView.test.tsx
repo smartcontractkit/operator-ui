@@ -65,4 +65,18 @@ describe('NodesView', () => {
     expect(getAllByRole('row')).toHaveLength(2)
     expect(queryByText('node2')).toBeInTheDocument()
   })
+
+  it('spans all columns for the empty state row', () => {
+    renderComponent({
+      nodes: [],
+      total: 0,
+      page: 1,
+      pageSize: 10,
+    })
+
+    expect(screen.getByText('No nodes found').closest('th')).toHaveAttribute(
+      'colspan',
+      '5',
+    )
+  })
 })

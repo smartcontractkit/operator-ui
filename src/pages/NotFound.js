@@ -1,6 +1,6 @@
 import React from 'react'
 import NotFoundSVG from 'images/four-oh-four.js'
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles } from 'src/utils/withStyles'
 
 const styles = () => ({
   logo: {

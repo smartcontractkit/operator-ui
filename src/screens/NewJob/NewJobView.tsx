@@ -1,7 +1,7 @@
 import React from 'react'
 
 import debounce from 'lodash/debounce'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 
 import Content from 'components/Content'
 import { Props as FormProps } from 'components/Form/JobForm'

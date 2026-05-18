@@ -7,20 +7,21 @@ import {
   FormikHelpers,
   useFormikContext,
 } from 'formik'
-import { CheckboxWithLabel, TextField } from 'formik-material-ui'
+import {
+  FormikCheckboxWithLabel as CheckboxWithLabel,
+  FormikTextField as TextField,
+} from './FormikFields'
 import * as Yup from 'yup'
 
-import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid'
-import MenuItem from '@material-ui/core/MenuItem'
-import Paper from '@material-ui/core/Paper'
-import {
-  createStyles,
-  Theme,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
+import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
+import MenuItem from '@mui/material/MenuItem'
+import Paper from '@mui/material/Paper'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
+import Typography from '@mui/material/Typography'
 import { ChainTypes } from './ChainTypes'
 
 export type FormValues = {
@@ -100,7 +101,7 @@ const ValidationSchema = Yup.object().shape({
 const styles = (theme: Theme) => {
   return createStyles({
     supportedJobOptionsPaper: {
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
     },
   })
 }
@@ -372,7 +373,7 @@ export const ChainConfigurationForm = withStyles(styles)(({
             id="chain-configuration-form"
             noValidate
           >
-            <Grid container spacing={16}>
+            <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <Field
                   component={TextField}
@@ -522,7 +523,7 @@ export const ChainConfigurationForm = withStyles(styles)(({
 
                 {values.ocr1Enabled && (
                   <Paper className={classes.supportedJobOptionsPaper}>
-                    <Grid container spacing={8}>
+                    <Grid container spacing={1}>
                       <>
                         <Grid item xs={12}>
                           <Field
@@ -616,7 +617,7 @@ export const ChainConfigurationForm = withStyles(styles)(({
 
                 {values.ocr2Enabled && (
                   <Paper className={classes.supportedJobOptionsPaper}>
-                    <Grid container spacing={8}>
+                    <Grid container spacing={1}>
                       <>
                         <Grid item xs={12}>
                           <Field

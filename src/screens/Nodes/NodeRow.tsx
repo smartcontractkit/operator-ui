@@ -3,9 +3,10 @@ import React from 'react'
 import { tableStyles } from 'components/Table'
 import Link from 'components/Link'
 
-import { withStyles, WithStyles } from '@material-ui/core/styles'
-import TableCell from '@material-ui/core/TableCell'
-import TableRow from '@material-ui/core/TableRow'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
 
 interface Props extends WithStyles<typeof tableStyles> {
   node: NodesPayload_ResultsFields

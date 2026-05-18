@@ -1,6 +1,6 @@
-import CardContent from '@material-ui/core/CardContent'
-import Divider from '@material-ui/core/Divider'
-import Typography from '@material-ui/core/Typography'
+import CardContent from '@mui/material/CardContent'
+import Divider from '@mui/material/Divider'
+import Typography from '@mui/material/Typography'
 import React from 'react'
 
 interface Props {

@@ -44,7 +44,7 @@ describe('NewJobView', () => {
     renderComponent()
 
     userEvent.paste(
-      getByRole('textbox', { name: /job spec \(toml\) \*/i }),
+      getByRole('textbox', { name: /job spec \(toml\)/i }),
       `observationSource="ds1 [type=bridge name=voter_turnout];"`,
     )
 
@@ -55,7 +55,7 @@ describe('NewJobView', () => {
     renderComponent()
 
     userEvent.paste(
-      getByRole('textbox', { name: /job spec \(toml\) \*/i }),
+      getByRole('textbox', { name: /job spec \(toml\)/i }),
       `observationSource="ds1 [type=bridge name=voter_turnout];"`,
     )
 

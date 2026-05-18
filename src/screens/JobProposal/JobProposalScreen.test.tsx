@@ -124,7 +124,7 @@ describe('JobProposalScreen', () => {
     userEvent.click(getByRole('button', { name: /edit/i }))
 
     const specInput = screen.getByRole('textbox', {
-      name: /job spec \*/i,
+      name: /job spec/i,
     })
     userEvent.clear(specInput)
     userEvent.type(specInput, 'name="updated spec"')
@@ -188,7 +188,7 @@ describe('JobProposalScreen', () => {
     userEvent.click(getByRole('button', { name: /edit/i }))
 
     const specInput = screen.getByRole('textbox', {
-      name: /job spec \*/i,
+      name: /job spec/i,
     })
     userEvent.clear(specInput)
     userEvent.type(specInput, 'name="updated spec"')

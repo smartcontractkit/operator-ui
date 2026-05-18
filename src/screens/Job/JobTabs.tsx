@@ -2,25 +2,23 @@ import React from 'react'
 
 import { useLocation } from 'react-router-dom'
 
-import Badge from '@material-ui/core/Badge'
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
-import Tabs from '@material-ui/core/Tabs'
+import Badge from '@mui/material/Badge'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
+import Tabs from '@mui/material/Tabs'
 import { TabLink } from 'src/components/Tab/TabLink'
 
 const styles = (theme: Theme) =>
   createStyles({
     tabs: {
-      marginTop: theme.spacing.unit * 4,
-      marginBottom: theme.spacing.unit * 2.5,
-      borderBottom: `1px solid ${theme.palette.grey['300']}`,
+      marginTop: theme.spacing(4),
+      marginBottom: theme.spacing(2.5),
+      borderBottom: `1px solid ${theme.palette.divider}`,
     },
     badge: {
-      padding: `0 ${theme.spacing.unit * 2}px`,
+      padding: `0 ${theme.spacing(2)}`,
     },
   })
 

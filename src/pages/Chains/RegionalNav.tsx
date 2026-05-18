@@ -3,36 +3,34 @@ import { connect } from 'react-redux'
 import { Chain, Resource } from 'core/store/models'
 import { localizedTimestamp, TimeAgo } from 'components/TimeAgo'
 import { useLocation } from 'react-router-dom'
-import Card from '@material-ui/core/Card'
-import Grid from '@material-ui/core/Grid'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import {
-  createStyles,
-  Theme,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
+import Typography from '@mui/material/Typography'
 import classNames from 'classnames'
 import Link from 'components/Link'
 
 const styles = (theme: Theme) =>
   createStyles({
     container: {
-      backgroundColor: theme.palette.common.white,
-      padding: theme.spacing.unit * 5,
+      backgroundColor: theme.palette.background.paper,
+      padding: theme.spacing(5),
       paddingBottom: 0,
     },
     mainRow: {
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
     },
     actions: {
       textAlign: 'right',
     },
     regionalNavButton: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
     },
     horizontalNav: {
       paddingBottom: 0,
@@ -43,11 +41,11 @@ const styles = (theme: Theme) =>
       paddingRight: 0,
     },
     horizontalNavLink: {
-      padding: `${theme.spacing.unit * 4}px ${theme.spacing.unit * 4}px`,
+      padding: `${theme.spacing(4)} ${theme.spacing(4)}`,
       textDecoration: 'none',
       display: 'inline-block',
       borderBottom: 'solid 1px',
-      borderBottomColor: theme.palette.common.white,
+      borderBottomColor: theme.palette.background.paper,
       '&:hover': {
         borderBottomColor: theme.palette.primary.main,
       },
@@ -61,10 +59,10 @@ const styles = (theme: Theme) =>
       textOverflow: 'ellipsis',
     },
     badgePadding: {
-      paddingLeft: theme.spacing.unit * 2,
-      paddingRight: theme.spacing.unit * 2,
-      marginLeft: theme.spacing.unit * -2,
-      marginRight: theme.spacing.unit * -2,
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      marginLeft: theme.spacing(-2),
+      marginRight: theme.spacing(-2),
       lineHeight: '1rem',
     },
     dialogPaper: {
@@ -73,31 +71,31 @@ const styles = (theme: Theme) =>
       minWidth: '670px',
       maxWidth: '670px',
       overflow: 'hidden',
-      borderRadius: theme.spacing.unit * 3,
+      borderRadius: theme.spacing(3),
     },
     warningText: {
       fontWeight: 500,
-      marginLeft: theme.spacing.unit * 3,
-      marginTop: theme.spacing.unit * 3,
-      marginBottom: theme.spacing.unit,
+      marginLeft: theme.spacing(3),
+      marginTop: theme.spacing(3),
+      marginBottom: theme.spacing(1),
     },
     closeButton: {
-      marginRight: theme.spacing.unit * 3,
-      marginTop: theme.spacing.unit * 3,
+      marginRight: theme.spacing(3),
+      marginTop: theme.spacing(3),
     },
     infoText: {
-      fontSize: theme.spacing.unit * 2,
+      fontSize: theme.spacing(2),
       fontWeight: 450,
-      marginLeft: theme.spacing.unit * 6,
+      marginLeft: theme.spacing(6),
     },
     modalTextarea: {
-      marginLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing(2),
     },
     modalContent: {
       width: 'inherit',
     },
     runJobButton: {
-      marginBottom: theme.spacing.unit * 3,
+      marginBottom: theme.spacing(3),
     },
     runJobModalContent: {
       overflow: 'hidden',

@@ -1,17 +1,17 @@
 import React from 'react'
 import { EthKey } from 'types/generated/graphql'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import {
   DetailsCardItemTitle,
   DetailsCardItemValue,
 } from 'components/Cards/DetailsCard'
 import { fromJuels } from 'utils/tokens/link'
-import CardContent from '@material-ui/core/CardContent'
-import CardHeader from '@material-ui/core/CardHeader'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import Divider from '@material-ui/core/Divider'
+import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import Divider from '@mui/material/Divider'
 
 export interface Props {
   keys: Array<EthKey>
@@ -45,7 +45,7 @@ export const ChainAccountBalanceCard: React.FC<Props> = ({
                     <ListItemText
                       primary={
                         <React.Fragment>
-                          <Grid container spacing={16}>
+                          <Grid container spacing={2}>
                             <Grid item xs={12}>
                               <DetailsCardItemTitle title="Address" />
                               <DetailsCardItemValue value={key.address} />

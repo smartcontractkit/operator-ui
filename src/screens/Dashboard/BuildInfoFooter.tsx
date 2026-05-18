@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react'
 
-import Paper from '@material-ui/core/Paper'
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
+import Paper from '@mui/material/Paper'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
+import Typography from '@mui/material/Typography'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { selectBuildInfo } from 'src/selectors/buildInfo'
 import { fetchBuildInfo } from 'src/actionCreators'
@@ -16,7 +14,7 @@ const styles = (theme: Theme) =>
   createStyles({
     style: {
       textAlign: 'center',
-      padding: theme.spacing.unit * 2.5,
+      padding: theme.spacing(2.5),
       position: 'fixed',
       left: '0',
       bottom: '0',
@@ -24,7 +22,7 @@ const styles = (theme: Theme) =>
       borderRadius: 0,
     },
     bareAnchor: {
-      color: theme.palette.common.black,
+      color: theme.palette.text.primary,
       textDecoration: 'none',
     },
   })

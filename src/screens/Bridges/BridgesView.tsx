@@ -2,20 +2,20 @@ import React from 'react'
 import { gql } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 
-import Card from '@material-ui/core/Card'
-import Grid from '@material-ui/core/Grid'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TablePagination from '@material-ui/core/TablePagination'
-import TableRow from '@material-ui/core/TableRow'
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableHead from '@mui/material/TableHead'
+import TablePagination from '@mui/material/TablePagination'
+import TableRow from '@mui/material/TableRow'
 
 import BaseLink from 'components/BaseLink'
 import { BridgeRow } from './BridgeRow'
 import Button from 'components/Button'
 import Content from 'components/Content'
-import { Heading1 } from 'src/components/Heading/Heading1'
+import { PageHeader } from 'src/components/PageHeader'
 
 export const BRIDGES_PAYLOAD__RESULTS_FIELDS = gql`
   fragment BridgesPayload_ResultsFields on Bridge {
@@ -44,13 +44,11 @@ export const BridgesView: React.FC<Props> = ({
 
   return (
     <Content>
-      <Grid container spacing={32}>
-        <Grid item xs={9}>
-          <Heading1>Bridges</Heading1>
-        </Grid>
-        <Grid item xs={3}>
-          <Grid container justify="flex-end">
-            <Grid item>
+      <Grid container>
+        <Grid item xs={12}>
+          <PageHeader
+            title="Bridges"
+            actions={
               <Button
                 variant="secondary"
                 component={BaseLink}
@@ -58,8 +56,8 @@ export const BridgesView: React.FC<Props> = ({
               >
                 New Bridge
               </Button>
-            </Grid>
-          </Grid>
+            }
+          />
         </Grid>
 
         <Grid item xs={12}>
@@ -85,10 +83,10 @@ export const BridgesView: React.FC<Props> = ({
               rowsPerPage={pageSize}
               rowsPerPageOptions={[pageSize]}
               page={page - 1}
-              onChangePage={(_, p) => {
+              onPageChange={(_, p) => {
                 history.push(`/bridges?page=${p + 1}&per=${pageSize}`)
               }}
-              onChangeRowsPerPage={() => {}} /* handler required by component, so make it a no-op */
+              onRowsPerPageChange={() => {}} /* handler required by component, so make it a no-op */
               backIconButtonProps={{ 'aria-label': 'prev-page' }}
               nextIconButtonProps={{ 'aria-label': 'next-page' }}
             />

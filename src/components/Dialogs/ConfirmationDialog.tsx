@@ -1,26 +1,27 @@
 import React from 'react'
 
-import Button from '@material-ui/core/Button'
-import Dialog, { DialogProps } from '@material-ui/core/Dialog'
-import MuiDialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import MuiDialogTitle from '@material-ui/core/DialogTitle'
-import { withStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
+import Button from '@mui/material/Button'
+import Dialog, { DialogProps } from '@mui/material/Dialog'
+import MuiDialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import MuiDialogTitle from '@mui/material/DialogTitle'
+import { Theme } from '@mui/material/styles'
+import { withStyles } from 'src/utils/withStyles'
+import Typography from '@mui/material/Typography'
 
-const DialogTitle = withStyles((theme) => ({
+const DialogTitle = withStyles((theme: Theme) => ({
   root: {
-    paddingTop: theme.spacing.unit * 3,
-    paddingBottom: theme.spacing.unit * 3,
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
   },
 }))(MuiDialogTitle)
 
-const DialogActions = withStyles((theme) => ({
+const DialogActions = withStyles((theme: Theme) => ({
   root: {
-    paddingLeft: theme.spacing.unit * 2,
-    paddingRight: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -51,7 +52,7 @@ export const ConfirmationDialog: React.FC<Props> = ({
 }) => {
   return (
     <Dialog open={open} onClose={onClose} maxWidth={maxWidth}>
-      <DialogTitle disableTypography>
+      <DialogTitle>
         <Typography variant="h5"> {title}</Typography>
       </DialogTitle>
       <DialogContent>

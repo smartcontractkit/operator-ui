@@ -1,12 +1,12 @@
 import React from 'react'
 
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
 
 const renderEntries = (entries: Array<Array<string>>) =>
   entries.map(([k, v]) => (
@@ -16,7 +16,7 @@ const renderEntries = (entries: Array<Array<string>>) =>
     </TableRow>
   ))
 
-const SpanRow: React.FC = ({ children }) => (
+const SpanRow = ({ children }: React.PropsWithChildren<{}>) => (
   <TableRow>
     <TableCell component="th" scope="row" colSpan={3}>
       {children}
@@ -24,7 +24,9 @@ const SpanRow: React.FC = ({ children }) => (
   </TableRow>
 )
 
-const ErrorRow: React.FC = ({ children }) => <SpanRow>{children}</SpanRow>
+const ErrorRow = ({ children }: React.PropsWithChildren<{}>) => (
+  <SpanRow>{children}</SpanRow>
+)
 
 const FetchingRow = () => <SpanRow>...</SpanRow>
 

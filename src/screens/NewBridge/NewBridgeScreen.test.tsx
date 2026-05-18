@@ -59,9 +59,9 @@ describe('NewBridgeScreen', () => {
     expect(getByText('New Bridge')).toBeInTheDocument()
     expect(getByTestId('bridge-form')).toBeInTheDocument()
 
-    userEvent.type(getByRole('textbox', { name: 'Name *' }), 'bridge1')
+    userEvent.type(getByRole('textbox', { name: /^name$/i }), 'bridge1')
     userEvent.type(
-      getByRole('textbox', { name: 'Bridge URL *' }),
+      getByRole('textbox', { name: /^bridge url$/i }),
       'https://www.test.com',
     )
 
@@ -95,9 +95,9 @@ describe('NewBridgeScreen', () => {
 
     renderComponent(mocks)
 
-    userEvent.type(getByRole('textbox', { name: 'Name *' }), 'bridge1')
+    userEvent.type(getByRole('textbox', { name: /^name$/i }), 'bridge1')
     userEvent.type(
-      getByRole('textbox', { name: 'Bridge URL *' }),
+      getByRole('textbox', { name: /^bridge url$/i }),
       'https://www.test.com',
     )
 

@@ -1,17 +1,14 @@
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
-import MuiTooltip from '@material-ui/core/Tooltip'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
+import MuiTooltip from '@mui/material/Tooltip'
 import React from 'react'
 
 const styles = ({ palette, shadows, typography }: Theme) =>
   createStyles({
     lightTooltip: {
       background: palette.primary.contrastText,
-      // @ts-expect-error color might be overwritten
       color: palette.text.primary,
       boxShadow: shadows[24],
       ...typography.h6,
@@ -31,4 +28,4 @@ const UnstyledTooltip = ({ title, children, classes }: Props) => {
   )
 }
 
-export const Tooltip = withStyles(styles)(UnstyledTooltip)
+export const Tooltip = withStyles(styles)(UnstyledTooltip) as typeof MuiTooltip

@@ -1,26 +1,56 @@
-import { MuiThemeProvider } from '@material-ui/core/styles'
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
+import createCache from '@emotion/cache'
+import { TssCacheProvider } from 'tss-react'
 import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import moment from 'moment'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import App from './App'
-import { theme } from './theme'
+import { createAppTheme } from './theme'
 import { ApolloProvider } from '@apollo/client'
 import { client } from './apollo'
+import { ThemeModeProvider, useThemeMode } from './context/ThemeModeContext'
 
 JavascriptTimeAgo.locale(en)
 moment.defaultFormat = 'YYYY-MM-DD h:mm:ss A'
 
 export default App
 
-if (typeof document !== 'undefined') {
-  ReactDOM.render(
+// Separate Emotion cache for tss-react (withStyles) styles.
+// MUI styles are injected via StyledEngineProvider injectFirst into a
+// prepend cache at the TOP of <head>.  By giving tss-react its own
+// non-prepend cache (key 'tss'), its styles land AFTER MUI's styles in
+// the document, so custom padding / colour overrides always win.
+const tssCssCache = createCache({ key: 'tss' })
+
+const Root = () => {
+  const { mode } = useThemeMode()
+  const theme = React.useMemo(() => createAppTheme(mode), [mode])
+
+  return (
     <ApolloProvider client={client}>
-      <MuiThemeProvider theme={theme}>
-        <App />
-      </MuiThemeProvider>
-    </ApolloProvider>,
-    document.getElementById('root'),
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <TssCacheProvider value={tssCssCache}>
+            <App />
+          </TssCacheProvider>
+        </ThemeProvider>
+      </StyledEngineProvider>
+    </ApolloProvider>
   )
+}
+
+if (typeof document !== 'undefined') {
+  const rootElement = document.getElementById('root')
+
+  if (rootElement) {
+    const root = createRoot(rootElement)
+
+    root.render(
+      <ThemeModeProvider>
+        <Root />
+      </ThemeModeProvider>,
+    )
+  }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Card from '@material-ui/core/Card'
+import Card from '@mui/material/Card'
 import { parseDot } from 'src/utils/parseDot'
 import { TaskRunItem } from './TaskRunItem'
 

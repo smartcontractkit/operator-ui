@@ -38,7 +38,7 @@ export enum NotifyActionType {
  */
 
 export interface NotifySuccessAction extends Action<NotifyActionType.NOTIFY_SUCCESS> {
-  component: React.FC<any>
+  component: (props: any) => React.ReactNode
   props: any
 }
 
@@ -55,7 +55,7 @@ export interface NotifySuccessMsgAction extends Action<NotifyActionType.NOTIFY_S
  */
 
 export interface NotifyErrorAction extends Action<NotifyActionType.NOTIFY_ERROR> {
-  component: React.FC<any>
+  component: (props: any) => React.ReactNode
   error: {
     errors: jsonapi.ErrorItem[]
   }

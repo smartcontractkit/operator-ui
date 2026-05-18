@@ -1,15 +1,13 @@
 import React from 'react'
 
-import Grid from '@material-ui/core/Grid'
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
-import TableCell from '@material-ui/core/TableCell'
-import TableRow from '@material-ui/core/TableRow'
-import Typography from '@material-ui/core/Typography'
+import Grid from '@mui/material/Grid'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
 
 import { TimeAgo } from 'src/components/TimeAgo'
 import Link from 'src/components/Link'
@@ -36,10 +34,10 @@ const styles = ({ palette, spacing }: Theme) =>
       height: '100%',
     },
     runDetails: {
-      paddingTop: spacing.unit * 3,
-      paddingBottom: spacing.unit * 3,
-      paddingLeft: spacing.unit * 4,
-      paddingRight: spacing.unit * 4,
+      paddingTop: spacing(3),
+      paddingBottom: spacing(3),
+      paddingLeft: spacing(4),
+      paddingRight: spacing(4),
     },
   })
 

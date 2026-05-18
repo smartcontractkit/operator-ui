@@ -1,5 +1,5 @@
 import { CardTitle } from 'components/CardTitle'
-import { Card, Grid } from '@material-ui/core'
+import { Card, Grid } from '@mui/material'
 import Content from 'components/Content'
 import React from 'react'
 import { ChainResource } from './Show'
@@ -20,7 +20,7 @@ export const ChainNodes = ({ nodes, chain }: Props) => {
   return (
     <Content>
       {chain && (
-        <Grid container spacing={40}>
+        <Grid container spacing={5}>
           <Grid item xs={12}>
             <Card>
               <CardTitle divider>Nodes</CardTitle>

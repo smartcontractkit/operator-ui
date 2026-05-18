@@ -1,5 +1,7 @@
 import React from 'react'
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
 
 const styles = createStyles({
   animate: {

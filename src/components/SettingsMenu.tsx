@@ -1,11 +1,18 @@
 import React from 'react'
 
-import IconButton from '@material-ui/core/IconButton'
-import Menu from '@material-ui/core/Menu'
-import SettingsIcon from '@material-ui/icons/Settings'
-import { Theme, withStyles, WithStyles } from '@material-ui/core/styles'
+import IconButton from '@mui/material/IconButton'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import ListItemText from '@mui/material/ListItemText'
+import Switch from '@mui/material/Switch'
+import SettingsIcon from '@mui/icons-material/Settings'
+import { Theme } from '@mui/material/styles'
+
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
 
 import { MenuItemLink } from 'components/MenuItemLink'
+import { useThemeMode } from 'src/context/ThemeModeContext'
 
 const styles = (theme: Theme) => {
   return {
@@ -17,6 +24,9 @@ const styles = (theme: Theme) => {
       paddingTop: 0,
       paddingBottom: 0,
     },
+    menuItem: {
+      minHeight: theme.spacing(6),
+    },
   }
 }
 
@@ -24,6 +34,8 @@ interface Props extends WithStyles<typeof styles> {}
 
 export const SettingsMenu = withStyles(styles)(({ classes }: Props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const { mode, toggleMode } = useThemeMode()
+  const isDarkMode = mode === 'dark'
 
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -33,16 +45,19 @@ export const SettingsMenu = withStyles(styles)(({ classes }: Props) => {
     setAnchorEl(null)
   }
 
+  const handleToggleMode = () => {
+    toggleMode()
+    handleClose()
+  }
+
   return (
     <React.Fragment>
-      <IconButton disableRipple onClick={handleOpen}>
+      <IconButton disableRipple onClick={handleOpen} size="large">
         <SettingsIcon className={classes.iconButton} />
       </IconButton>
-
       <Menu
         id="settings-menu"
         anchorEl={anchorEl}
-        getContentAnchorEl={null}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         transformOrigin={{ vertical: 8, horizontal: 128 }}
         open={Boolean(anchorEl)}
@@ -52,10 +67,22 @@ export const SettingsMenu = withStyles(styles)(({ classes }: Props) => {
           className: classes.menuList,
         }}
       >
-        <MenuItemLink onClick={handleClose} to="/keys">
+        <MenuItem className={classes.menuItem} onClick={handleToggleMode}>
+          <ListItemText>Dark mode</ListItemText>
+          <Switch checked={isDarkMode} edge="end" />
+        </MenuItem>
+        <MenuItemLink
+          className={classes.menuItem}
+          onClick={handleClose}
+          to="/keys"
+        >
           Key Management
         </MenuItemLink>
-        <MenuItemLink onClick={handleClose} to="/config">
+        <MenuItemLink
+          className={classes.menuItem}
+          onClick={handleClose}
+          to="/config"
+        >
           Configuration
         </MenuItemLink>
       </Menu>

@@ -1,6 +1,6 @@
 import React from 'react'
-import TextField from '@material-ui/core/TextField'
-import MenuItem from '@material-ui/core/MenuItem'
+import TextField from '@mui/material/TextField'
+import MenuItem from '@mui/material/MenuItem'
 import { ConfirmationDialog } from 'components/Dialogs/ConfirmationDialog'
 import { useOCR2KeyFamilyQuery } from 'hooks/queries/useOCR2KeysQuery'
 
@@ -62,7 +62,7 @@ export const OCR2KeysCreate: React.FC<Props> = ({
           helperText="Create OCR2 Key bundle"
         >
           {supportedChainFamilies?.map((chain) => (
-            <MenuItem key={chain} value={chain} name={chain}>
+            <MenuItem key={chain} value={chain}>
               {chain}
             </MenuItem>
           ))}

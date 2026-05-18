@@ -3,17 +3,22 @@ import { Provider, Provider as ReduxProvider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 import { render, RenderOptions, RenderResult } from '@testing-library/react'
 import configureStore from 'redux-mock-store'
-import { MuiThemeProvider } from '@material-ui/core/styles'
+import { ThemeProvider } from '@mui/material/styles'
 
 import createStore from 'src/createStore'
 import { theme } from 'src/theme'
+import { ThemeModeProvider } from 'src/context/ThemeModeContext'
 import thunk from 'redux-thunk'
 
-const AllTheProviders: React.FC = ({ children }) => {
+const Router = MemoryRouter as any
+
+const AllTheProviders = ({ children }: React.PropsWithChildren<{}>) => {
   return (
-    <MuiThemeProvider theme={theme}>
-      <ReduxProvider store={createStore()}>{children}</ReduxProvider>
-    </MuiThemeProvider>
+    <ThemeModeProvider>
+      <ThemeProvider theme={theme}>
+        <ReduxProvider store={createStore()}>{children}</ReduxProvider>
+      </ThemeProvider>
+    </ThemeModeProvider>
   )
 }
 
@@ -41,13 +46,13 @@ const renderWithRouter = (
 ): RenderResult => {
   return {
     ...customRender(
-      <MemoryRouter initialEntries={initialEntries}>{ui}</MemoryRouter>,
+      <Router initialEntries={initialEntries}>{ui}</Router>,
       options,
     ),
   }
 }
 
-export const BuildInfoProvider: React.FC = (props) => {
+export const BuildInfoProvider = (props: React.PropsWithChildren<{}>) => {
   const middlewares = [thunk]
   const store = configureStore(middlewares)({
     buildInfo: {

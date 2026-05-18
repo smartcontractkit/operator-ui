@@ -3,12 +3,14 @@ import React from 'react'
 import classNames from 'classnames'
 import { useHistory } from 'react-router-dom'
 
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableRow from '@material-ui/core/TableRow'
-import Typography from '@material-ui/core/Typography'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
 
 import { JobRunStatus } from 'src/types/generated/graphql'
 import { TimeAgo } from 'components/TimeAgo'
@@ -29,20 +31,20 @@ const styles = (theme: any) =>
       width: '30%',
     },
     runDetails: {
-      paddingTop: theme.spacing.unit * 2,
-      paddingBottom: theme.spacing.unit * 2,
-      paddingLeft: theme.spacing.unit * 2,
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+      paddingLeft: theme.spacing(2),
     },
     stamp: {
-      paddingLeft: theme.spacing.unit,
+      paddingLeft: theme.spacing(1),
     },
     status: {
-      paddingLeft: theme.spacing.unit * 1.5,
-      paddingRight: theme.spacing.unit * 1.5,
-      paddingTop: theme.spacing.unit / 2,
-      paddingBottom: theme.spacing.unit / 2,
-      borderRadius: theme.spacing.unit * 2,
-      marginRight: theme.spacing.unit,
+      paddingLeft: theme.spacing(1.5),
+      paddingRight: theme.spacing(1.5),
+      paddingTop: theme.spacing(0.5),
+      paddingBottom: theme.spacing(0.5),
+      borderRadius: theme.spacing(2),
+      marginRight: theme.spacing(1),
       width: 'fit-content',
       display: 'inline-block',
       textTransform: 'capitalize',
@@ -60,7 +62,7 @@ const styles = (theme: any) =>
       color: theme.palette.listCompletedStatus.color,
     },
     noRuns: {
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
     },
   })
 

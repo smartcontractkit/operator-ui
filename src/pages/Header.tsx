@@ -1,21 +1,19 @@
-import AppBar from '@material-ui/core/AppBar'
-import MuiDrawer from '@material-ui/core/Drawer'
-import Grid from '@material-ui/core/Grid'
-import Hidden from '@material-ui/core/Hidden'
-import IconButton from '@material-ui/core/IconButton'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import Portal from '@material-ui/core/Portal'
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import MenuIcon from '@material-ui/icons/Menu'
+import AppBar from '@mui/material/AppBar'
+import MuiDrawer from '@mui/material/Drawer'
+import Grid from '@mui/material/Grid'
+import Hidden from '@mui/material/Hidden'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import Portal from '@mui/material/Portal'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import MenuIcon from '@mui/icons-material/Menu'
 import classNames from 'classnames'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -30,6 +28,8 @@ import LoadingBar from '../components/LoadingBar'
 import MainLogo from '../components/Logos/Main'
 import fetchCountSelector from '../selectors/fetchCount'
 import { Feature, useFeatureFlag } from 'src/hooks/useFeatureFlag'
+
+const ResizeDetector = ReactResizeDetector as any
 
 const NAV_ITEMS = [
   ['/jobs', 'Jobs'],
@@ -51,13 +51,34 @@ const drawerWidth = 240
 const drawerStyles = ({ palette, spacing }: Theme) =>
   createStyles({
     menuitem: {
-      padding: spacing.unit * 3,
-      display: 'block',
+      minHeight: spacing(6),
+      paddingLeft: spacing(3),
+      paddingRight: spacing(3),
+      color: palette.text.primary,
+      textDecoration: 'none',
+      borderBottom: `1px solid ${palette.divider}`,
+      '&:hover': {
+        backgroundColor: palette.action.hover,
+        textDecoration: 'none',
+      },
+      '& .MuiListItemText-root': {
+        marginTop: 0,
+        marginBottom: 0,
+      },
+      '& .MuiListItemText-primary': {
+        color: 'inherit',
+        fontWeight: 500,
+      },
+    },
+    activeMenuitem: {
+      color: palette.primary.main,
+      backgroundColor: palette.action.hover,
     },
     drawerPaper: {
-      backgroundColor: palette.common.white,
-      paddingTop: spacing.unit * 7,
+      backgroundColor: palette.background.paper,
+      paddingTop: spacing(7),
       width: drawerWidth,
+      boxSizing: 'border-box',
     },
     drawerList: {
       padding: 0,
@@ -80,6 +101,16 @@ const Drawer = withStyles(drawerStyles)(({
   submitSignOut,
   isFeedsManagerFeatureEnabled,
 }: DrawerProps) => {
+  const { pathname } = useLocation()
+
+  const isActivePath = (itemPath: string) => {
+    if (itemPath === '/job_distributors') {
+      return pathname.includes(itemPath)
+    }
+
+    return pathname.startsWith(itemPath)
+  }
+
   return (
     <MuiDrawer
       anchor="right"
@@ -95,24 +126,28 @@ const Drawer = withStyles(drawerStyles)(({
             <ListItem
               key={href}
               button
-              component={() => (
-                <BaseLink href={href}>
-                  <ListItemText primary={text} />
-                </BaseLink>
+              component={BaseLink as any}
+              href={href}
+              className={classNames(
+                classes.menuitem,
+                isActivePath(href) && classes.activeMenuitem,
               )}
-              className={classes.menuitem}
-            />
+            >
+              <ListItemText primary={text} />
+            </ListItem>
           ))}
           {isFeedsManagerFeatureEnabled && (
             <ListItem
               button
-              component={() => (
-                <BaseLink href={'/job_distributors'}>
-                  <ListItemText primary="Job Distributors" />
-                </BaseLink>
+              component={BaseLink as any}
+              href={'/job_distributors'}
+              className={classNames(
+                classes.menuitem,
+                isActivePath('/job_distributors') && classes.activeMenuitem,
               )}
-              className={classes.menuitem}
-            />
+            >
+              <ListItemText primary="Job Distributors" />
+            </ListItem>
           )}
 
           {authenticated && (
@@ -141,12 +176,12 @@ const navStyles = ({ palette, spacing }: Theme) =>
     },
     horizontalNavLink: {
       color: palette.secondary.main,
-      paddingTop: spacing.unit * 3,
-      paddingBottom: spacing.unit * 3,
+      paddingTop: spacing(3),
+      paddingBottom: spacing(3),
       textDecoration: 'none',
       display: 'inline-block',
       borderBottom: 'solid 1px',
-      borderBottomColor: palette.common.white,
+      borderBottomColor: palette.background.paper,
       '&:hover': {
         borderBottomColor: palette.primary.main,
       },
@@ -217,12 +252,12 @@ const Nav = withStyles(navStyles)(({
 const styles = ({ palette, spacing, zIndex }: Theme) =>
   createStyles({
     appBar: {
-      backgroundColor: palette.common.white,
+      backgroundColor: palette.background.paper,
       zIndex: zIndex.modal - 1,
     },
     toolbar: {
-      paddingLeft: spacing.unit * 5,
-      paddingRight: spacing.unit * 5,
+      paddingLeft: spacing(5),
+      paddingRight: spacing(5),
     },
   })
 
@@ -251,43 +286,49 @@ const Header = withStyles(styles)(({
 
   return (
     <AppBar className={classes.appBar} color="default" position="absolute">
-      <ReactResizeDetector
+      <ResizeDetector
         refreshMode="debounce"
         refreshRate={200}
         onResize={onResize}
         handleHeight
       >
-        <LoadingBar fetchCount={fetchCount} />
+        <div>
+          <LoadingBar fetchCount={fetchCount} />
 
-        <Toolbar className={classes.toolbar}>
-          <Grid container alignItems="center">
-            <Grid item xs={11} sm={6} md={4}>
-              <BaseLink href="/">
-                <MainLogo width={200} />
-              </BaseLink>
-            </Grid>
-            <Grid item xs={1} sm={6} md={8}>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  <Hidden mdUp>
-                    <IconButton aria-label="open drawer" onClick={toggleDrawer}>
-                      <MenuIcon />
-                    </IconButton>
-                  </Hidden>
-                  <Hidden smDown>
-                    <Nav
-                      authenticated={authenticated}
-                      isFeedsManagerFeatureEnabled={
-                        isFeedsManagerFeatureEnabled
-                      }
-                    />
-                  </Hidden>
+          <Toolbar className={classes.toolbar}>
+            <Grid container alignItems="center">
+              <Grid item xs={11} sm={6} md={4}>
+                <BaseLink href="/">
+                  <MainLogo width={200} />
+                </BaseLink>
+              </Grid>
+              <Grid item xs={1} sm={6} md={8}>
+                <Grid container justifyContent="flex-end">
+                  <Grid item>
+                    <Hidden mdUp>
+                      <IconButton
+                        aria-label="open drawer"
+                        onClick={toggleDrawer}
+                        size="large"
+                      >
+                        <MenuIcon />
+                      </IconButton>
+                    </Hidden>
+                    <Hidden mdDown>
+                      <Nav
+                        authenticated={authenticated}
+                        isFeedsManagerFeatureEnabled={
+                          isFeedsManagerFeatureEnabled
+                        }
+                      />
+                    </Hidden>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </Toolbar>
-      </ReactResizeDetector>
+          </Toolbar>
+        </div>
+      </ResizeDetector>
       <Portal container={drawerContainer}>
         <Drawer
           isFeedsManagerFeatureEnabled={isFeedsManagerFeatureEnabled}
@@ -312,4 +353,4 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
 
 const ConnectedHeader = connect(mapStateToProps, mapDispatchToProps)(Header)
 
-export default withStyles(styles)(ConnectedHeader)
+export default ConnectedHeader

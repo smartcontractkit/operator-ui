@@ -4,9 +4,10 @@ import { render, screen } from '@testing-library/react'
 import BaseLink from '../../src/components/BaseLink'
 
 const { getByRole, getByText } = screen
+const Router = MemoryRouter as any
 
 const renderBaseLink = (link: React.ReactNode) =>
-  render(<MemoryRouter>{link}</MemoryRouter>)
+  render(<Router>{link}</Router>)
 
 describe('components/BaseLink', () => {
   it('renders an anchor', () => {

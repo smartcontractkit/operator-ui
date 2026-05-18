@@ -1,39 +1,37 @@
 import React from 'react'
 
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
+import Typography from '@mui/material/Typography'
 
-import Paper from '@material-ui/core/Paper'
+import Paper from '@mui/material/Paper'
 
 const styles = (theme: Theme) =>
   createStyles({
     paper: {
       display: 'flex',
-      margin: `${theme.spacing.unit * 2.5}px 0`,
-      padding: `${theme.spacing.unit * 3}px  ${theme.spacing.unit * 3.5}px`,
+      margin: `${theme.spacing(2.5)} 0`,
+      padding: `${theme.spacing(3)}  ${theme.spacing(3.5)}`,
     },
     content: {
       flex: 1,
       width: '100%',
     },
     actions: {
-      marginTop: -theme.spacing.unit * 1.5,
-      marginLeft: -theme.spacing.unit * 4,
+      marginTop: -theme.spacing(1.5),
+      marginLeft: -theme.spacing(4),
       [theme.breakpoints.up('sm')]: {
         marginLeft: 0,
-        marginRight: -theme.spacing.unit * 1.5,
+        marginRight: -theme.spacing(1.5),
       },
     },
     itemBlock: {
       border: '1px solid rgba(224, 224, 224, 1)',
       borderRadius: theme.shape.borderRadius,
-      padding: theme.spacing.unit * 2,
-      marginTop: theme.spacing.unit,
+      padding: theme.spacing(2),
+      marginTop: theme.spacing(1),
     },
     itemBlockText: {
       overflowWrap: 'anywhere',
@@ -74,9 +72,10 @@ export const DetailsCardItemTitle = ({ title }: { title: string }) => (
 
 // DetailsCardItemValue provides default styles for an item value in the details
 // card.
-export const DetailsCardItemValue: React.FC<{
-  value?: string | number | null
-}> = ({ children, value }) => (
+export const DetailsCardItemValue = ({
+  children,
+  value,
+}: React.PropsWithChildren<{ value?: string | number | null }>) => (
   <Typography variant="body1" noWrap>
     {children ? children : value}
   </Typography>

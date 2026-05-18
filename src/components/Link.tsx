@@ -1,19 +1,20 @@
 import React from 'react'
 import BaseLink from './BaseLink'
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import { grey } from '@material-ui/core/colors'
-import { ThemeStyle } from '@material-ui/core/styles/createTypography'
-import { PropTypes } from '@material-ui/core'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
+import Typography from '@mui/material/Typography'
+import { TypographyProps } from '@mui/material/Typography'
+import { Theme } from '@mui/material/styles'
 import classNames from 'classnames'
 
-type Variant = ThemeStyle | 'srOnly'
-type Color = PropTypes.Color | 'textPrimary' | 'textSecondary' | 'error'
+type Variant = TypographyProps['variant']
+type Color = TypographyProps['color']
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     link: {
-      color: grey[900],
+      color: theme.palette.text.primary,
       textDecoration: 'none',
     },
     linkContent: {

@@ -294,10 +294,12 @@ describe('SpecsView', () => {
           hidden: true,
         }),
       ).not.toBeInTheDocument()
+
+      // Expansion panel contents render on expand; open panel 3 before asserting its actions.
+      userEvent.click(within(panels[2]).getAllByRole('button')[0])
       expect(
         within(panels[2]).queryByRole('button', {
           name: 'Approve',
-          hidden: true,
         }),
       ).toBeInTheDocument()
       expect(
@@ -343,10 +345,12 @@ describe('SpecsView', () => {
           hidden: true,
         }),
       ).not.toBeInTheDocument()
+
+      // Expansion panel contents render on expand; open panel 3 before asserting its actions.
+      userEvent.click(within(panels[2]).getAllByRole('button')[0])
       expect(
         within(panels[2]).queryByRole('button', {
           name: 'Approve',
-          hidden: true,
         }),
       ).toBeInTheDocument()
     })

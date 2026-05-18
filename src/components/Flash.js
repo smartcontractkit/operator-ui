@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Card from '@material-ui/core/Card'
-import Typography from '@material-ui/core/Typography'
+import Card from '@mui/material/Card'
+import Typography from '@mui/material/Typography'
 import classNames from 'classnames'
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles } from 'src/utils/withStyles'
 
 const styles = (theme) => {
   const success = theme.palette.success || {}
@@ -11,8 +11,8 @@ const styles = (theme) => {
 
   return {
     base: {
-      paddingLeft: theme.spacing.unit * 5,
-      paddingRight: theme.spacing.unit * 5,
+      paddingLeft: theme.spacing(5),
+      paddingRight: theme.spacing(5),
     },
     success: {
       backgroundColor: success.main,
@@ -58,6 +58,7 @@ Flash.defaultProps = {
 }
 
 Flash.propTypes = {
+  children: PropTypes.node,
   success: PropTypes.bool,
   error: PropTypes.bool,
   warning: PropTypes.bool,

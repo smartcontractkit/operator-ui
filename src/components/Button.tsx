@@ -1,13 +1,9 @@
 import React from 'react'
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
-import MuiButton, {
-  ButtonProps as MuiButtonProps,
-} from '@material-ui/core/Button'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
+import MuiButton, { ButtonProps as MuiButtonProps } from '@mui/material/Button'
 import classNames from 'classnames'
 
 const styles = ({ palette }: Theme) =>
@@ -51,7 +47,7 @@ const styles = ({ palette }: Theme) =>
     },
   })
 
-// Unfortunately @material-ui/core does not export the type so we have to redefine it.
+// Unfortunately @mui/material does not export the type so we have to redefine it.
 type MuiButtonVariant =
   | 'text'
   | 'flat'
@@ -93,7 +89,7 @@ const muiProps = (variant: ButtonVariant, classes: any): MuiButtonProps => {
 
 interface Props extends WithStyles<typeof styles> {
   children: React.ReactNode
-  component?: React.ReactNode
+  component?: React.ElementType
   onClick?: React.MouseEventHandler<JSX.Element>
   type?: string
   disabled?: boolean

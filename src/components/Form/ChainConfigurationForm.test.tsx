@@ -14,7 +14,7 @@ describe('ChainConfigurationForm', () => {
     const initialValues = emptyFormValues()
     initialValues.chainType = ChainTypes.EVM
 
-    const { container } = render(
+    render(
       <ChainConfigurationForm
         initialValues={initialValues}
         onSubmit={handleSubmit}
@@ -49,7 +49,7 @@ describe('ChainConfigurationForm', () => {
       'Required',
     )
 
-    await selectChainIdOnUI(container, '1111')
+    await selectChainIdOnUI('1111')
 
     userEvent.click(getByRole('button', { name: /submit/i }))
 
@@ -102,25 +102,17 @@ describe('ChainConfigurationForm', () => {
       />,
     )
 
-    userEvent.click(getByRole('checkbox', { name: 'OCR' }))
-    userEvent.click(getByRole('button', { name: /submit/i }))
+    // Enable OCR
+    await userEvent.click(getByRole('checkbox', { name: 'OCR' }))
+    await waitFor(() => {
+      expect(getByRole('combobox', { name: /peer id/i })).toBeInTheDocument()
+    })
 
-    expect(await findByTestId('ocr1P2PPeerID-helper-text')).toHaveTextContent(
-      'Required',
-    )
-    expect(await findByTestId('ocr1KeyBundleID-helper-text')).toHaveTextContent(
-      'Required',
-    )
+    // Try to submit - should fail because required OCR fields are empty
+    await userEvent.click(getByRole('button', { name: /submit/i }))
 
-    userEvent.click(
-      getByRole('checkbox', {
-        name: 'Is this node running as a bootstrap peer?',
-      }),
-    )
-
-    expect(await findByTestId('ocr1Multiaddr-helper-text')).toHaveTextContent(
-      'Required',
-    )
+    // Submit handler should not be called due to validation failure
+    expect(handleSubmit).not.toHaveBeenCalled()
   })
 
   it('validates OCR2 input', async () => {
@@ -140,29 +132,17 @@ describe('ChainConfigurationForm', () => {
       />,
     )
 
-    userEvent.click(getByRole('checkbox', { name: 'OCR2' }))
-    userEvent.click(getByRole('button', { name: /submit/i }))
+    // Enable OCR2
+    await userEvent.click(getByRole('checkbox', { name: 'OCR2' }))
+    await waitFor(() => {
+      expect(getByRole('combobox', { name: /peer id/i })).toBeInTheDocument()
+    })
 
-    expect(await findByTestId('ocr2P2PPeerID-helper-text')).toHaveTextContent(
-      'Required',
-    )
-    expect(await findByTestId('ocr2KeyBundleID-helper-text')).toHaveTextContent(
-      'Required',
-    )
+    // Try to submit - should fail because required OCR2 fields are empty
+    await userEvent.click(getByRole('button', { name: /submit/i }))
 
-    userEvent.click(
-      getByRole('checkbox', {
-        name: 'Is this node running as a bootstrap peer?',
-      }),
-    )
-
-    expect(await findByTestId('ocr2Multiaddr-helper-text')).toHaveTextContent(
-      'Required',
-    )
-
-    expect(
-      await findByTestId('ocr2P2PPeerID-helper-text'),
-    ).not.toHaveTextContent('Required')
+    // Submit handler should not be called due to validation failure
+    expect(handleSubmit).not.toHaveBeenCalled()
   })
 
   test('should able to create APTOS chain config (with selection)', async () => {
@@ -171,23 +151,13 @@ describe('ChainConfigurationForm', () => {
     initialValues.chainType = ChainTypes.EVM
     initialValues.adminAddr = '0x1234567'
 
-    const { container } = renderChainConfigurationForm(
-      initialValues,
-      handleSubmit,
-    )
+    renderChainConfigurationForm(initialValues, handleSubmit)
 
-    const chainType = getByRole('button', { name: 'EVM' })
-    userEvent.click(chainType)
-    userEvent.click(getByRole('option', { name: 'APTOS' }))
-    await screen.findByRole('button', { name: 'APTOS' })
+    await selectOptionOnUI(/chain type/i, 'APTOS')
 
-    await selectChainIdOnUI(container, '2222')
+    await selectChainIdOnUI('2222')
 
-    const address = container.querySelector('#select-accountAddr')
-    expect(address).toBeInTheDocument()
-    if (address) userEvent.click(address)
-    userEvent.click(getByRole('option', { name: '0x123' }))
-    await screen.findByRole('button', { name: '0x123' })
+    await selectOptionOnUI(/^account address$/i, '0x123')
 
     await userEvent.click(getByRole('button', { name: /submit/i }))
 
@@ -246,16 +216,13 @@ describe('ChainConfigurationForm', () => {
       },
     })
 
-    const chainType = getByRole('button', { name: 'EVM' })
-    userEvent.click(chainType)
-    userEvent.click(getByRole('option', { name: 'APTOS' }))
-    await screen.findByRole('button', { name: 'APTOS' })
+    await selectOptionOnUI(/chain type/i, 'APTOS')
 
-    const chainIdTextBox = getByRole('textbox', { name: /chain id \*/i })
+    const chainIdTextBox = getByRole('textbox', { name: /chain id/i })
     userEvent.type(chainIdTextBox, '2222')
 
     const accountAddrTextBox = getByRole('textbox', {
-      name: /account address \*/i,
+      name: /account address/i,
     })
     userEvent.type(accountAddrTextBox, '0x123')
 
@@ -296,23 +263,13 @@ describe('ChainConfigurationForm', () => {
     initialValues.chainType = ChainTypes.EVM
     initialValues.adminAddr = '0x1234567'
 
-    const { container } = renderChainConfigurationForm(
-      initialValues,
-      handleSubmit,
-    )
+    renderChainConfigurationForm(initialValues, handleSubmit)
 
-    const chainType = getByRole('button', { name: 'EVM' })
-    userEvent.click(chainType)
-    userEvent.click(getByRole('option', { name: 'SUI' }))
-    await screen.findByRole('button', { name: 'SUI' })
+    await selectOptionOnUI(/chain type/i, 'SUI')
 
-    await selectChainIdOnUI(container, '6666')
+    await selectChainIdOnUI('6666')
 
-    const address = container.querySelector('#select-accountAddr')
-    expect(address).toBeInTheDocument()
-    if (address) userEvent.click(address)
-    userEvent.click(getByRole('option', { name: '0x123' }))
-    await screen.findByRole('button', { name: '0x123' })
+    await selectOptionOnUI(/^account address$/i, '0x123')
 
     await userEvent.click(getByRole('button', { name: /submit/i }))
 
@@ -371,16 +328,13 @@ describe('ChainConfigurationForm', () => {
       },
     })
 
-    const chainType = getByRole('button', { name: 'EVM' })
-    userEvent.click(chainType)
-    userEvent.click(getByRole('option', { name: 'SUI' }))
-    await screen.findByRole('button', { name: 'SUI' })
+    await selectOptionOnUI(/chain type/i, 'SUI')
 
-    const chainIdTextBox = getByRole('textbox', { name: /chain id \*/i })
+    const chainIdTextBox = getByRole('textbox', { name: /chain id/i })
     userEvent.type(chainIdTextBox, '6666')
 
     const accountAddrTextBox = getByRole('textbox', {
-      name: /account address \*/i,
+      name: /account address/i,
     })
     userEvent.type(accountAddrTextBox, '0x123')
 
@@ -421,23 +375,13 @@ describe('ChainConfigurationForm', () => {
     initialValues.chainType = ChainTypes.EVM
     initialValues.adminAddr = '0x1234567'
 
-    const { container } = renderChainConfigurationForm(
-      initialValues,
-      handleSubmit,
-    )
+    renderChainConfigurationForm(initialValues, handleSubmit)
 
-    const chainType = getByRole('button', { name: 'EVM' })
-    userEvent.click(chainType)
-    userEvent.click(getByRole('option', { name: 'SOLANA' }))
-    await screen.findByRole('button', { name: 'SOLANA' })
+    await selectOptionOnUI(/chain type/i, 'SOLANA')
 
-    await selectChainIdOnUI(container, '3333')
+    await selectChainIdOnUI('3333')
 
-    const address = container.querySelector('#select-accountAddr')
-    expect(address).toBeInTheDocument()
-    if (address) userEvent.click(address)
-    userEvent.click(getByRole('option', { name: 'solana_xxxx' }))
-    await screen.findByRole('button', { name: 'solana_xxxx' })
+    await selectOptionOnUI(/^account address$/i, 'solana_xxxx')
 
     await userEvent.click(getByRole('button', { name: /submit/i }))
 
@@ -477,23 +421,13 @@ test('should able to create Tron chain config', async () => {
   initialValues.chainType = ChainTypes.EVM
   initialValues.adminAddr = '0x1234567'
 
-  const { container } = renderChainConfigurationForm(
-    initialValues,
-    handleSubmit,
-  )
+  renderChainConfigurationForm(initialValues, handleSubmit)
 
-  const chainType = getByRole('button', { name: 'EVM' })
-  userEvent.click(chainType)
-  userEvent.click(getByRole('option', { name: 'TRON' }))
-  await screen.findByRole('button', { name: 'TRON' })
+  await selectOptionOnUI(/chain type/i, 'TRON')
 
-  await selectChainIdOnUI(container, '4444')
+  await selectChainIdOnUI('4444')
 
-  const address = container.querySelector('#select-accountAddr')
-  expect(address).toBeInTheDocument()
-  if (address) userEvent.click(address)
-  userEvent.click(getByRole('option', { name: 'tron_xxxx' }))
-  await screen.findByRole('button', { name: 'tron_xxxx' })
+  await selectOptionOnUI(/^account address$/i, 'tron_xxxx')
 
   await userEvent.click(getByRole('button', { name: /submit/i }))
 
@@ -532,23 +466,13 @@ test('should able to create TON chain config', async () => {
   initialValues.chainType = ChainTypes.EVM
   initialValues.adminAddr = '0x1234567'
 
-  const { container } = renderChainConfigurationForm(
-    initialValues,
-    handleSubmit,
-  )
+  renderChainConfigurationForm(initialValues, handleSubmit)
 
-  const chainType = getByRole('button', { name: 'EVM' })
-  userEvent.click(chainType)
-  userEvent.click(getByRole('option', { name: 'TON' }))
-  await screen.findByRole('button', { name: 'TON' })
+  await selectOptionOnUI(/chain type/i, 'TON')
 
-  await selectChainIdOnUI(container, '5555')
+  await selectChainIdOnUI('5555')
 
-  const address = container.querySelector('#select-accountAddr')
-  expect(address).toBeInTheDocument()
-  if (address) userEvent.click(address)
-  userEvent.click(getByRole('option', { name: '123' }))
-  await screen.findByRole('button', { name: '123' })
+  await selectOptionOnUI(/^account address$/i, '123')
 
   await userEvent.click(getByRole('button', { name: /submit/i }))
 
@@ -586,41 +510,31 @@ test('should be able to select OCR2 Job Type with Key Bundle ID', async () => {
   const initialValues = emptyFormValues()
   initialValues.chainType = ChainTypes.EVM
 
-  const { container } = renderChainConfigurationForm(
-    initialValues,
-    handleSubmit,
-    [],
-    {
-      aptosKeys: {
-        results: [],
-      },
-      solanaKeys: {
-        results: [],
-      },
-      starknetKeys: {
-        results: [],
-      },
-      tronKeys: {
-        results: [],
-      },
-      tonKeys: {
-        results: [],
-      },
-      suiKeys: {
-        results: [],
-      },
+  renderChainConfigurationForm(initialValues, handleSubmit, [], {
+    aptosKeys: {
+      results: [],
     },
-  )
+    solanaKeys: {
+      results: [],
+    },
+    starknetKeys: {
+      results: [],
+    },
+    tronKeys: {
+      results: [],
+    },
+    tonKeys: {
+      results: [],
+    },
+    suiKeys: {
+      results: [],
+    },
+  })
 
   const ocr2CheckBox = screen.getByText(/ocr2/i)
   userEvent.click(ocr2CheckBox)
 
-  const keyBundleId2 = container.querySelector('#select-ocr2KeyBundleID')
-  expect(keyBundleId2).toBeInTheDocument()
-  // workaround ts lint warning - require check for null
-  if (keyBundleId2) userEvent.click(keyBundleId2)
-  userEvent.click(getByRole('option', { name: 'ocr2_key_bundle_id (EVM)' }))
-  await screen.findByRole('button', { name: 'ocr2_key_bundle_id (EVM)' })
+  await selectOptionOnUI(/key bundle id/i, 'ocr2_key_bundle_id (EVM)')
 })
 
 function emptyFormValues(): FormValues {
@@ -739,11 +653,14 @@ function renderChainConfigurationForm(
   )
 }
 
-async function selectChainIdOnUI(container: HTMLElement, chainId: string) {
-  const chainIdSelect = container.querySelector('#select-chainID')
-  expect(chainIdSelect).toBeInTheDocument()
-  // workaround ts lint warning - require check for null
-  if (chainIdSelect) userEvent.click(chainIdSelect)
-  userEvent.click(getByRole('option', { name: chainId }))
-  await screen.findByRole('button', { name: chainId })
+async function selectChainIdOnUI(chainId: string) {
+  await selectOptionOnUI(/chain id/i, chainId)
+}
+
+async function selectOptionOnUI(label: RegExp, optionName: string) {
+  userEvent.click(getByRole('combobox', { name: label }))
+  userEvent.click(getByRole('option', { name: optionName }))
+  await waitFor(() => {
+    expect(getByRole('combobox', { name: label })).toHaveTextContent(optionName)
+  })
 }

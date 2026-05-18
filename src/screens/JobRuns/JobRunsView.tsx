@@ -3,14 +3,14 @@ import React from 'react'
 import { gql } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 
-import Card from '@material-ui/core/Card'
-import Grid from '@material-ui/core/Grid'
-import TablePagination from '@material-ui/core/TablePagination'
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
+import TablePagination from '@mui/material/TablePagination'
 
 import Content from 'src/components/Content'
-import { Heading1 } from 'src/components/Heading/Heading1'
 import { JobRunsTable } from 'src/components/Table/JobRunsTable'
 import { Loading } from 'src/components/Feedback/Loading'
+import { PageHeader } from 'src/components/PageHeader'
 
 export const JOB_RUNS_PAYLOAD__RESULTS_FIELDS = gql`
   fragment JobRunsPayload_ResultsFields on JobRun {
@@ -56,9 +56,9 @@ export const JobRunsView: React.FC<Props> = ({
 
   return (
     <Content>
-      <Grid container spacing={32}>
+      <Grid container>
         <Grid item xs={12}>
-          <Heading1>Job Runs</Heading1>
+          <PageHeader title="Job Runs" />
         </Grid>
 
         {loading && <Loading />}
@@ -73,10 +73,10 @@ export const JobRunsView: React.FC<Props> = ({
                 rowsPerPage={pageSize}
                 rowsPerPageOptions={[pageSize]}
                 page={page - 1}
-                onChangePage={(_, p) => {
+                onPageChange={(_, p) => {
                   history.push(`/runs?page=${p + 1}&per=${pageSize}`)
                 }}
-                onChangeRowsPerPage={() => {}} /* handler required by component, so make it a no-op */
+                onRowsPerPageChange={() => {}} /* handler required by component, so make it a no-op */
                 backIconButtonProps={{ 'aria-label': 'prev-page' }}
                 nextIconButtonProps={{ 'aria-label': 'next-page' }}
               />

@@ -1,12 +1,15 @@
 import React from 'react'
 
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Grid from '@material-ui/core/Grid'
-import { Theme, withStyles, WithStyles } from '@material-ui/core/styles'
+import CircularProgress from '@mui/material/CircularProgress'
+import Grid from '@mui/material/Grid'
+import { Theme } from '@mui/material/styles'
+
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
 
 const styles = (theme: Theme) => ({
   root: {
-    margin: theme.spacing.unit * 2,
+    margin: theme.spacing(2),
   },
   gridItem: {
     display: 'flex',

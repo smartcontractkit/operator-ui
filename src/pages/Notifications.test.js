@@ -4,6 +4,8 @@ import { MemoryRouter } from 'react-router-dom'
 import configureStore from 'redux-mock-store'
 import Notifications from 'pages/Notifications'
 import { render, screen } from '@testing-library/react'
+import { ThemeProvider } from '@mui/material/styles'
+import { theme } from 'src/theme'
 
 const { queryByText } = screen
 
@@ -12,11 +14,13 @@ const mockStore = configureStore()
 
 const mountNotifications = (store) =>
   render(
-    <Provider store={store}>
-      <MemoryRouter>
-        <Notifications classes={classes} />
-      </MemoryRouter>
-    </Provider>,
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <MemoryRouter>
+          <Notifications classes={classes} />
+        </MemoryRouter>
+      </Provider>
+    </ThemeProvider>,
   )
 
 describe('pages/Notifications', () => {

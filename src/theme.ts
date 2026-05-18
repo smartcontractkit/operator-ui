@@ -1,20 +1,18 @@
-import { common, green, grey } from '@material-ui/core/colors'
-import { createMuiTheme } from '@material-ui/core/styles'
-import { darken } from '@material-ui/core/styles/colorManipulator'
-import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme'
-import spacing from '@material-ui/core/styles/spacing'
+import { common, green, grey } from '@mui/material/colors'
+import { createTheme, ThemeOptions, darken } from '@mui/material/styles'
+import type { ThemeMode } from 'src/utils/storage'
 
-declare module '@material-ui/core/styles/createPalette' {
+const spacingUnit = 8
+
+declare module '@mui/material/styles/createPalette' {
   interface ListStatus {
     background: string
     color: string
   }
 
   interface PaletteOptions {
-    success: PaletteColorOptions
-    warning: PaletteColorOptions
-    listPendingStatus: ListStatus
-    listCompletedStatus: ListStatus
+    listPendingStatus?: ListStatus
+    listCompletedStatus?: ListStatus
   }
 
   interface TypeBackground {
@@ -22,8 +20,15 @@ declare module '@material-ui/core/styles/createPalette' {
   }
 }
 
-declare module '@material-ui/core/styles/createTypography' {
-  type AdditionalThemeStyle = 'body1Next' | 'body2Next'
+declare module '@mui/material/styles/createTypography' {
+  type AdditionalThemeStyle =
+    | 'body1Next'
+    | 'body2Next'
+    | 'display1'
+    | 'display2'
+    | 'display3'
+    | 'display4'
+    | 'subheading'
   interface TypographyStyleOptions {
     fontWeightLight?: number
     fontWeightMedium?: number
@@ -34,20 +39,91 @@ declare module '@material-ui/core/styles/createTypography' {
   interface TypographyOptions extends Partial<
     Record<AdditionalThemeStyle, TypographyStyleOptions> & FontStyleOptions
   > {}
+
+  interface Typography extends Record<AdditionalThemeStyle, TypographyStyle> {}
 }
 
 const mainTheme: ThemeOptions = {
-  props: {
+  components: {
     MuiGrid: {
-      spacing: (spacing.unit * 3) as any as Required<
-        Required<Required<ThemeOptions>['props']>['MuiGrid']
-      >['spacing'],
+      defaultProps: {
+        spacing: 3,
+      },
     },
     MuiCardHeader: {
-      titleTypographyProps: { color: 'secondary' },
+      defaultProps: {
+        titleTypographyProps: { color: 'secondary' },
+      },
+      styleOverrides: {
+        root: ({ theme }) => ({
+          borderBottom: `1px solid ${theme.palette.divider}`,
+        }),
+        action: {
+          marginTop: -2,
+          marginRight: 0,
+          '& >*': {
+            marginLeft: spacingUnit * 2,
+          },
+        },
+        subheader: {
+          marginTop: spacingUnit * 0.5,
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: spacingUnit / 2,
+          textTransform: 'none',
+        },
+        sizeLarge: {
+          padding: undefined,
+          fontSize: undefined,
+          paddingTop: spacingUnit,
+          paddingBottom: spacingUnit,
+          paddingLeft: spacingUnit * 5,
+          paddingRight: spacingUnit * 5,
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        body: {
+          fontSize: '1rem',
+          fontWeight: 400,
+        },
+        head: ({ theme }) => ({
+          fontSize: '1rem',
+          fontWeight: 400,
+          // Only apply secondary (gray) color in light mode to match legacy style.
+          // Dark mode keeps MUI's default text.primary for contrast.
+          ...(theme.palette.mode === 'light' && {
+            color: theme.palette.text.secondary,
+          }),
+        }),
+      },
+    },
+    MuiTablePagination: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          // Only mute pagination color in light mode.
+          ...(theme.palette.mode === 'light' && {
+            color: theme.palette.text.secondary,
+          }),
+        }),
+        selectLabel: {
+          fontSize: '0.75rem',
+          fontWeight: 400,
+        },
+        displayedRows: {
+          fontSize: '0.75rem',
+          fontWeight: 400,
+        },
+      },
     },
   },
   palette: {
+    mode: 'light',
     action: {
       hoverOpacity: 0.3,
     },
@@ -94,50 +170,9 @@ const mainTheme: ThemeOptions = {
     },
   },
   shape: {
-    borderRadius: spacing.unit,
-  },
-  overrides: {
-    MuiButton: {
-      root: {
-        borderRadius: spacing.unit / 2,
-        textTransform: 'none',
-      },
-      sizeLarge: {
-        padding: undefined,
-        fontSize: undefined,
-        paddingTop: spacing.unit,
-        paddingBottom: spacing.unit,
-        paddingLeft: spacing.unit * 5,
-        paddingRight: spacing.unit * 5,
-      },
-    },
-    MuiTableCell: {
-      body: {
-        fontSize: '1rem',
-      },
-      head: {
-        fontSize: '1rem',
-        fontWeight: 400,
-      },
-    },
-    MuiCardHeader: {
-      root: {
-        borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-      },
-      action: {
-        marginTop: -2,
-        marginRight: 0,
-        '& >*': {
-          marginLeft: spacing.unit * 2,
-        },
-      },
-      subheader: {
-        marginTop: spacing.unit * 0.5,
-      },
-    },
+    borderRadius: spacingUnit,
   },
   typography: {
-    useNextVariants: true,
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',
@@ -297,4 +332,77 @@ const mainTheme: ThemeOptions = {
   ],
 }
 
-export const theme = createMuiTheme(mainTheme)
+const darkThemeOverrides: ThemeOptions = {
+  palette: {
+    mode: 'dark',
+    primary: {
+      light: '#99A8FF',
+      main: '#7B89FF',
+      contrastText: '#0B1020',
+    },
+    secondary: {
+      main: '#CDD5EA',
+    },
+    warning: {
+      light: '#413518',
+      main: '#806324',
+      contrastText: '#FFDEA1',
+    },
+    background: {
+      default: '#131722',
+      paper: '#1D2332',
+      appBar: '#1A2134',
+    },
+    text: {
+      primary: '#E8EEFF',
+      secondary: '#B6C0DB',
+    },
+    listPendingStatus: {
+      background: '#4A3A16',
+      color: '#FFCD66',
+    },
+    listCompletedStatus: {
+      background: '#1C3B2D',
+      color: '#79E5B2',
+    },
+  },
+  typography: {
+    body1: { color: '#E8EEFF' },
+    body2: { color: '#E8EEFF' },
+    body1Next: { color: '#E8EEFF' },
+    body2Next: { color: '#E8EEFF' },
+    display1: { color: '#B6C0DB' },
+    display2: { color: '#B6C0DB' },
+    display3: { color: '#B6C0DB' },
+    h1: { color: '#E8EEFF' },
+    h2: { color: '#E8EEFF' },
+    h3: { color: '#E8EEFF' },
+    h4: { color: '#E8EEFF' },
+    h5: { color: '#E8EEFF' },
+    h6: { color: '#E8EEFF' },
+    subheading: { color: '#E8EEFF' },
+    subtitle1: { color: '#E8EEFF' },
+    subtitle2: { color: '#E8EEFF' },
+  },
+}
+
+export const createAppTheme = (mode: ThemeMode = 'light') => {
+  if (mode === 'dark') {
+    return createTheme({
+      ...mainTheme,
+      ...darkThemeOverrides,
+      palette: {
+        ...mainTheme.palette,
+        ...darkThemeOverrides.palette,
+      },
+      typography: {
+        ...mainTheme.typography,
+        ...darkThemeOverrides.typography,
+      },
+    })
+  }
+
+  return createTheme(mainTheme)
+}
+
+export const theme = createAppTheme('light')

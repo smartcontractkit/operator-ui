@@ -2,7 +2,7 @@ import React from 'react'
 
 import { gql } from '@apollo/client'
 
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 
 import { BridgeCard } from './BridgeCard'
 import Content from 'components/Content'
@@ -31,7 +31,7 @@ export const BridgeView = ({ bridge, onDelete }: Props) => {
   return (
     <>
       <Content>
-        <Grid container spacing={16}>
+        <Grid container spacing={2}>
           <Grid item xs={12}>
             <Heading1>{bridge.name}</Heading1>
           </Grid>

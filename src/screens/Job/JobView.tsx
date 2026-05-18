@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import Button from 'src/components/Button'
@@ -238,7 +238,7 @@ export const JobView: React.FC<Props> = ({
   return (
     <>
       <Content>
-        <Grid container spacing={32}>
+        <Grid container spacing={4}>
           <Grid item xs={9}>
             <Heading1>{job.name || '--'}</Heading1>
           </Grid>

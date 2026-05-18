@@ -3,17 +3,17 @@ import React from 'react'
 import { gql } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 
-import Card from '@material-ui/core/Card'
-import Grid from '@material-ui/core/Grid'
-import Table from '@material-ui/core/Table'
-import TableHead from '@material-ui/core/TableHead'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TablePagination from '@material-ui/core/TablePagination'
-import TableRow from '@material-ui/core/TableRow'
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
+import Table from '@mui/material/Table'
+import TableHead from '@mui/material/TableHead'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TablePagination from '@mui/material/TablePagination'
+import TableRow from '@mui/material/TableRow'
 
 import Content from 'src/components/Content'
-import { Heading1 } from 'src/components/Heading/Heading1'
+import { PageHeader } from 'src/components/PageHeader'
 import { NodeRow } from './NodeRow'
 import { SearchTextField } from 'src/components/Search/SearchTextField'
 
@@ -81,8 +81,8 @@ export const NodesView: React.FC<Props> = ({
   return (
     <Content>
       <Grid container>
-        <Grid item xs={9}>
-          <Heading1>Nodes</Heading1>
+        <Grid item xs={12}>
+          <PageHeader title="Nodes" />
         </Grid>
 
         <Grid item xs={12}>
@@ -107,7 +107,7 @@ export const NodesView: React.FC<Props> = ({
               <TableBody>
                 {filteredNodes.length === 0 && (
                   <TableRow>
-                    <TableCell component="th" scope="row" colSpan={4}>
+                    <TableCell component="th" scope="row" colSpan={5}>
                       No nodes found
                     </TableCell>
                   </TableRow>
@@ -124,10 +124,10 @@ export const NodesView: React.FC<Props> = ({
               rowsPerPage={pageSize}
               rowsPerPageOptions={[pageSize]}
               page={page - 1}
-              onChangePage={(_, p) => {
+              onPageChange={(_, p) => {
                 history.push(`/nodes?page=${p + 1}&per=${pageSize}`)
               }}
-              onChangeRowsPerPage={() => {}} /* handler required by component, so make it a no-op */
+              onRowsPerPageChange={() => {}} /* handler required by component, so make it a no-op */
               backIconButtonProps={{ 'aria-label': 'prev-page' }}
               nextIconButtonProps={{ 'aria-label': 'next-page' }}
             />

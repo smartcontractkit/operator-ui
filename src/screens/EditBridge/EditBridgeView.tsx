@@ -1,9 +1,9 @@
 import React from 'react'
 
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardHeader from '@material-ui/core/CardHeader'
-import Grid from '@material-ui/core/Grid'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
+import Grid from '@mui/material/Grid'
 
 import BaseLink from 'src/components/BaseLink'
 import { BridgeForm, Props as FormProps } from 'src/components/Form/BridgeForm'
@@ -24,7 +24,7 @@ export const EditBridgeView: React.FC<Props> = ({ bridge, onSubmit }) => {
 
   return (
     <Content>
-      <Grid container spacing={40}>
+      <Grid container spacing={5}>
         <Grid item xs={12} md={11} lg={9}>
           <Card>
             <CardHeader

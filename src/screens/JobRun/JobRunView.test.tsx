@@ -2,11 +2,13 @@ import React from 'react'
 
 import { Route } from 'react-router-dom'
 import { renderWithRouter, screen } from 'test-utils'
+import { createAppTheme } from 'src/theme'
 
 import { JobRunView } from './JobRunView'
 import { buildRun, buildTaskRun } from 'support/factories/gql/fetchJobRun'
 
 const { queryByRole, queryByText } = screen
+const lightTheme = createAppTheme('light')
 
 describe('JobView', () => {
   function renderComponent(run: JobRunPayload_Fields) {
@@ -92,7 +94,7 @@ describe('JobView', () => {
     const ds1 = queryByText(/ds1/, { selector: 'text' })
     const ds2 = queryByText(/ds2/, { selector: 'text' })
 
-    expect(ds1).toHaveAttribute('fill', 'black')
-    expect(ds2).toHaveAttribute('fill', 'black')
+    expect(ds1).toHaveAttribute('fill', lightTheme.palette.text.primary)
+    expect(ds2).toHaveAttribute('fill', lightTheme.palette.text.primary)
   })
 })

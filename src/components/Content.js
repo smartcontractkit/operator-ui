@@ -1,9 +1,9 @@
 import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles } from 'src/utils/withStyles'
 
 const styles = (theme) => ({
   content: {
-    padding: theme.spacing.unit * 5,
+    padding: theme.spacing(5),
   },
 })
 

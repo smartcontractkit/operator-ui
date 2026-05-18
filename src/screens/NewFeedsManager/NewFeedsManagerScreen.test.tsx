@@ -78,11 +78,11 @@ describe('NewFeedsManagerScreen', () => {
     renderComponent(mocks)
 
     userEvent.type(
-      getByRole('textbox', { name: 'Name *' }),
+      getByRole('textbox', { name: /^name$/i }),
       'Chainlink Feeds Manager',
     )
-    userEvent.type(getByRole('textbox', { name: 'URI *' }), 'localhost:8080')
-    userEvent.type(getByRole('textbox', { name: 'Public Key *' }), '1111')
+    userEvent.type(getByRole('textbox', { name: /^uri$/i }), 'localhost:8080')
+    userEvent.type(getByRole('textbox', { name: /^public key$/i }), '1111')
 
     userEvent.click(getByRole('button', { name: /submit/i }))
 
@@ -135,11 +135,11 @@ describe('NewFeedsManagerScreen', () => {
     renderComponent(mocks)
 
     userEvent.type(
-      getByRole('textbox', { name: 'Name *' }),
+      getByRole('textbox', { name: /^name$/i }),
       'Chainlink Feeds Manager',
     )
-    userEvent.type(getByRole('textbox', { name: 'URI *' }), 'localhost:8080')
-    userEvent.type(getByRole('textbox', { name: 'Public Key *' }), '1111')
+    userEvent.type(getByRole('textbox', { name: /^uri$/i }), 'localhost:8080')
+    userEvent.type(getByRole('textbox', { name: /^public key$/i }), '1111')
 
     userEvent.click(getByRole('button', { name: /submit/i }))
 
@@ -171,11 +171,11 @@ describe('NewFeedsManagerScreen', () => {
     renderComponent(mocks)
 
     userEvent.type(
-      getByRole('textbox', { name: 'Name *' }),
+      getByRole('textbox', { name: /^name$/i }),
       'Chainlink Feeds Manager',
     )
-    userEvent.type(getByRole('textbox', { name: 'URI *' }), 'localhost:8080')
-    userEvent.type(getByRole('textbox', { name: 'Public Key *' }), '1111')
+    userEvent.type(getByRole('textbox', { name: /^uri$/i }), 'localhost:8080')
+    userEvent.type(getByRole('textbox', { name: /^public key$/i }), '1111')
 
     userEvent.click(getByRole('button', { name: /submit/i }))
 

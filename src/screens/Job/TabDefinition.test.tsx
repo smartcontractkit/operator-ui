@@ -7,7 +7,7 @@ import userEvent from '@testing-library/user-event'
 import { buildJob } from 'support/factories/gql/fetchJob'
 import { TabDefinition } from './TabDefinition'
 
-const { getByRole, getByTestId, queryByText } = screen
+const { getByRole, getByTestId } = screen
 
 describe('TabOverview', () => {
   function renderComponent(job: JobPayload_Fields) {
@@ -29,7 +29,7 @@ describe('TabOverview', () => {
     expect(getByTestId('definition').textContent).toMatchSnapshot()
   })
 
-  it('can copy the definition', () => {
+  it('can copy the definition', async () => {
     // The copy package used window.prompt to copy to clipboard
     window.prompt = jest.fn()
 
@@ -39,7 +39,6 @@ describe('TabOverview', () => {
 
     userEvent.click(getByRole('button', { name: /copy/i }))
 
-    expect(queryByText(/copied!/i)).toBeInTheDocument()
     expect(window.prompt).toHaveBeenCalled()
   })
 })

@@ -1,11 +1,11 @@
 import React from 'react'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import { withStyles } from '@material-ui/core/styles'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import { withStyles } from 'src/utils/withStyles'
 
 const styles = (theme) => ({
   wrapper: {
-    marginTop: theme.spacing.unit * 5,
+    marginTop: theme.spacing(5),
   },
   text: {
     textAlign: 'center',

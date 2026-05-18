@@ -2,10 +2,12 @@ import React from 'react'
 
 import classNames from 'classnames'
 
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
+import Typography from '@mui/material/Typography'
 
 import { ElapsedDuration } from 'components/ElapsedDuration'
 import { JobRunStatus } from 'src/types/generated/graphql'
@@ -17,7 +19,7 @@ const styles = (theme: any) =>
     cardContent: {
       display: 'flex',
       '&:last-child': {
-        paddingBottom: theme.spacing.unit * 2,
+        paddingBottom: theme.spacing(2),
       },
     },
     completed: {
@@ -30,7 +32,7 @@ const styles = (theme: any) =>
       backgroundColor: theme.palette.warning.light,
     },
     body: {
-      marginLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing(2),
     },
     statusText: {
       display: 'inline-block',

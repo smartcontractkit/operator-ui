@@ -82,7 +82,7 @@ const reducer: Reducer<State, Actions> = (state = INITIAL_STATE, action) => {
 export type TextNotification = string
 
 export interface ComponentNotification {
-  component: React.FC<any>
+  component: (props: any) => React.ReactNode
   props: PropsWithChildren<{ msg?: string }>
 }
 

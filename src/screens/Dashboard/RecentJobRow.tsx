@@ -1,15 +1,13 @@
 import React from 'react'
 
-import Grid from '@material-ui/core/Grid'
-import {
-  createStyles,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core/styles'
-import TableCell from '@material-ui/core/TableCell'
-import TableRow from '@material-ui/core/TableRow'
-import Typography from '@material-ui/core/Typography'
+import Grid from '@mui/material/Grid'
+import { Theme } from '@mui/material/styles'
+import { WithStyles } from 'src/utils/withStyles'
+import { withStyles } from 'src/utils/withStyles'
+import { createStyles } from 'src/utils/withStyles'
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
 
 import Link from 'src/components/Link'
 import { TimeAgo } from 'src/components/TimeAgo'
@@ -20,9 +18,9 @@ const styles = (theme: Theme) =>
       borderColor: theme.palette.divider,
       borderTop: `1px solid`,
       borderBottom: 'none',
-      paddingTop: theme.spacing.unit * 2,
-      paddingBottom: theme.spacing.unit * 2,
-      paddingLeft: theme.spacing.unit * 2,
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+      paddingLeft: theme.spacing(2),
     },
     block: { display: 'block' },
     overflowEllipsis: { textOverflow: 'ellipsis', overflow: 'hidden' },

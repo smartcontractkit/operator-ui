@@ -3,10 +3,7 @@
  * Publish snapshot releases as a tarball to github releases
  */
 import 'zx/globals'
-import _readChangesets from '@changesets/read'
-// See https://github.com/changesets/changesets/issues/622
-const readChangesets =
-  _readChangesets.default as (typeof import('@changesets/read/dist/declarations/src/index.js'))['default']
+import readChangesets from '@changesets/read'
 
 // These paths are relative to the git root
 const ASSETS_DIR = './assets'
@@ -131,15 +128,19 @@ async function maybeConsumeVersions() {
  * Checks if a release already exists under the given git tag.
  */
 async function checkIfReleaseExists(gitTag: string): Promise<boolean> {
-  return await $`gh release view ${gitTag}`
-    .then((p) => {
-      debug(p.stdout)
-      return true
-    })
-    .catch((p: ProcessOutput) => {
+  try {
+    const processOutput = await $`gh release view ${gitTag}`
+    debug(processOutput.stdout)
+    return true
+  } catch(err: unknown) {
+    if (err && typeof err === "object" && "stderr" in err) {
+      const p = err as ProcessOutput
       debug(p.stderr)
-      return false
-    })
+    } else {
+      console.error("Unknown error occurred while checking if release exists.", err)
+    }
+    return false
+  }
 }
 
 async function pkgToTarball(packDir: string) {
@@ -149,7 +150,7 @@ async function pkgToTarball(packDir: string) {
   const packOutput = await $`npm pack --pack-destination ${packDir} --json`
   const packInfos: NpmPack[] = JSON.parse(packOutput.stdout)
   const [packInfo] = packInfos
-  // The actual file name that `npm pack` creates has @ and / symbols replaced
+  // The actual file name that `yarn pack` creates has @ and / symbols replaced
   const filename = packInfo.filename.replace('@', '').replace('/', '-')
   const gitTag = `v${packInfo.version}`
 
@@ -157,10 +158,7 @@ async function pkgToTarball(packDir: string) {
 }
 
 async function setup() {
-  // Set zx verbosity based on DEBUG env var
-  if (!process.env.DEBUG) {
-    $.verbose = false
-  }
+  $.verbose = !!process.env.DEBUG // Set zx verbosity based on DEBUG env var
   await runAtGitRoot()
   await checkExternalScriptDependencies()
 }

@@ -15,22 +15,12 @@ jobs:
     name: Upsert PR
     runs-on: ubuntu-latest
     steps:
-      - name: Collect Metrics
-        id: collect-gha-metrics
-        uses: smartcontractkit/push-gha-metrics-action@dea9b546553cb4ca936607c2267a09c004e4ab3f # v3.0.0
-        with:
-          id: upsert-pull-request
-          org-id: ${{ secrets.GRAFANA_INTERNAL_TENANT_ID }}
-          basic-auth: ${{ secrets.GRAFANA_INTERNAL_BASIC_AUTH }}
-          hostname: ${{ secrets.GRAFANA_INTERNAL_HOST }}
-          this-job-name: Upsert PR
-        continue-on-error: true
 
       - name: Checkout the repo
-        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+        uses: actions/checkout@v6
 
       - name: Setup node
-        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        uses: actions/setup-node@v6
         with:
           node-version-file: .tool-versions
           cache: yarn
@@ -40,7 +30,7 @@ jobs:
 
       - name: Upsert Release Pull Request
         id: changesets
-        uses: smartcontractkit/.github/actions/signed-commits@ff80d56f5301dc8a65f66c4d47d746ee956beed9 # changesets-signed-commits@1.2.3
+        uses: smartcontractkit/.github/actions/signed-commits@changesets-signed-commits/v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -48,22 +38,12 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      - name: Collect Metrics
-        id: collect-gha-metrics
-        uses: smartcontractkit/push-gha-metrics-action@dea9b546553cb4ca936607c2267a09c004e4ab3f # v3.0.0
-        with:
-          id: release
-          org-id: ${{ secrets.GRAFANA_INTERNAL_TENANT_ID }}
-          basic-auth: ${{ secrets.GRAFANA_INTERNAL_BASIC_AUTH }}
-          hostname: ${{ secrets.GRAFANA_INTERNAL_HOST }}
-          this-job-name: Release
-        continue-on-error: true
 
       - name: Checkout the repo
-        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+        uses: actions/checkout@v6
 
       - name: Setup node
-        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        uses: actions/setup-node@v6
         with:
           node-version-file: .tool-versions
           cache: yarn

@@ -37,6 +37,7 @@ describe('BridgeCard', () => {
     expect(queryByText(bridge.outgoingToken)).toBeInTheDocument()
     expect(queryByText(bridge.confirmations)).toBeInTheDocument()
     expect(queryByText(bridge.minimumContractPayment)).toBeInTheDocument()
+    expect(queryByText('Use gRPC transport')).toBeInTheDocument()
   })
 
   it('calls delete', () => {

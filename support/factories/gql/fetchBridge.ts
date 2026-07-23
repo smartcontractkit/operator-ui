@@ -10,6 +10,7 @@ export function buildBridgePayloadFields(
     confirmations: 1,
     minimumContractPayment: '0',
     outgoingToken: 'outgoing1',
+    useConnectionManager: false,
     ...overrides,
   }
 }

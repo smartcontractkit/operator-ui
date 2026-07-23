@@ -1,7 +1,10 @@
 import React from 'react'
 
 import { Field, Form, Formik, FormikHelpers } from 'formik'
-import { FormikTextField as TextField } from './FormikFields'
+import {
+  FormikTextField as TextField,
+  FormikCheckboxWithLabel as CheckboxWithLabel,
+} from './FormikFields'
 import * as Yup from 'yup'
 
 import Button from '@mui/material/Button'
@@ -12,6 +15,7 @@ export interface FormValues {
   minimumContractPayment: string
   confirmations: number
   url: string
+  useConnectionManager: boolean
 }
 
 const ValidationSchema = Yup.object().shape({
@@ -103,6 +107,18 @@ export const BridgeForm = ({
                     />
                   </Grid>
                 </Grid>
+              </Grid>
+
+              <Grid item xs={12} md={7}>
+                <Field
+                  component={CheckboxWithLabel}
+                  name="useConnectionManager"
+                  type="checkbox"
+                  data-testid="useConnectionManager"
+                  Label={{
+                    label: 'Use gRPC transport',
+                  }}
+                />
               </Grid>
 
               <Grid item xs={12} md={7}>

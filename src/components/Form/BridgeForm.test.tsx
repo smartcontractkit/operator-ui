@@ -15,6 +15,7 @@ describe('BridgeForm', () => {
       url: '',
       minimumContractPayment: '0',
       confirmations: 0,
+      useConnectionManager: false,
     }
 
     render(
@@ -38,6 +39,7 @@ describe('BridgeForm', () => {
       url: '',
       minimumContractPayment: '0',
       confirmations: 0,
+      useConnectionManager: false,
     }
 
     render(
@@ -59,6 +61,7 @@ describe('BridgeForm', () => {
       url: '',
       minimumContractPayment: '0',
       confirmations: 0,
+      useConnectionManager: false,
     }
 
     render(
@@ -92,7 +95,43 @@ describe('BridgeForm', () => {
           url: 'https://www.test.com',
           minimumContractPayment: '1',
           confirmations: 2,
+          useConnectionManager: false,
         },
+        expect.anything(),
+      ),
+    )
+  })
+
+  it('submits useConnectionManager when checked', async () => {
+    const handleSubmit = jest.fn()
+    const initialValues: FormValues = {
+      name: '',
+      url: '',
+      minimumContractPayment: '0',
+      confirmations: 0,
+      useConnectionManager: false,
+    }
+
+    render(
+      <BridgeForm
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        submitButtonText="Submit"
+      />,
+    )
+
+    userEvent.type(getByRole('textbox', { name: /name */i }), 'bridge1')
+    userEvent.type(
+      getByRole('textbox', { name: /bridge url */i }),
+      'https://www.test.com',
+    )
+    userEvent.click(getByRole('checkbox', { name: /use grpc transport/i }))
+
+    userEvent.click(getByRole('button', { name: /submit/i }))
+
+    await waitFor(() =>
+      expect(handleSubmit).toHaveBeenCalledWith(
+        expect.objectContaining({ useConnectionManager: true }),
         expect.anything(),
       ),
     )

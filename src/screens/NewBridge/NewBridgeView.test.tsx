@@ -18,6 +18,7 @@ describe('NewBridgeView', () => {
       url: '',
       minimumContractPayment: '0',
       confirmations: 0,
+      useConnectionManager: false,
     })
   })
 })

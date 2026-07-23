@@ -17,6 +17,7 @@ export const BRIDGE_PAYLOAD_FIELDS = gql`
     confirmations
     outgoingToken
     minimumContractPayment
+    useConnectionManager
   }
 `
 

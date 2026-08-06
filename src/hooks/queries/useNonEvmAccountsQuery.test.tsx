@@ -34,6 +34,10 @@ const mockData = {
         { __typename: 'SuiKey', account: 'account7', id: '7' },
       ],
     },
+    stellarKeys: {
+      __typename: 'StellarKeys',
+      results: [{ __typename: 'StellarKey', account: 'account8', id: '8' }],
+    },
   },
 }
 
@@ -85,6 +89,13 @@ const TestComponent: React.FC = () => {
           <p>Sui ID: {key.id}</p>
         </div>
       ))}
+
+      {data?.stellarKeys.results.map((key, i) => (
+        <div key={i}>
+          <p>Account: {key.account}</p>
+          <p>Stellar ID: {key.id}</p>
+        </div>
+      ))}
     </div>
   )
 }
@@ -111,6 +122,9 @@ describe('useNonEvmAccountsQuery', () => {
       expect(screen.getByText('Sui ID: 6')).toBeInTheDocument()
       expect(screen.getByText('Account: account7')).toBeInTheDocument()
       expect(screen.getByText('Sui ID: 7')).toBeInTheDocument()
+
+      expect(screen.getByText('Account: account8')).toBeInTheDocument()
+      expect(screen.getByText('Stellar ID: 8')).toBeInTheDocument()
     })
   })
 })

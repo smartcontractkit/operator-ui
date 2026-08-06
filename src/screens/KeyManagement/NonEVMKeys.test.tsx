@@ -7,6 +7,7 @@ import { NonEVMKeys } from './NonEVMKeys'
 import { NON_EVM_KEYS_QUERY } from 'hooks/queries/useNonEvmAccountsQuery'
 import {
   buildAptosKeys,
+  buildStellarKeys,
   buildSuiKeys,
 } from 'support/factories/gql/fetchNonEVMKeys'
 import Notifications from 'pages/Notifications'
@@ -59,6 +60,23 @@ function fetchNonEVMKeysQuerySui(
   }
 }
 
+function fetchNonEVMKeysQueryStellar(
+  stellarKeys: ReadonlyArray<StellarKeysPayload_ResultsFields>,
+) {
+  return {
+    request: {
+      query: NON_EVM_KEYS_QUERY,
+    },
+    result: {
+      data: {
+        stellarKeys: {
+          results: stellarKeys,
+        },
+      },
+    },
+  }
+}
+
 describe('NonEVMKeys', () => {
   it('renders the page', async () => {
     const payload = buildAptosKeys()
@@ -84,5 +102,21 @@ describe('NonEVMKeys_Sui', () => {
 
     expect(await findByText(payload[0].id)).toBeInTheDocument()
     expect(await findByText(payload[0].account)).toBeInTheDocument()
+  })
+})
+
+describe('NonEVMKeys_Stellar', () => {
+  it('renders the page', async () => {
+    const payload = buildStellarKeys()
+    const mocks: MockedResponse[] = [fetchNonEVMKeysQueryStellar(payload)]
+
+    renderComponent(mocks)
+
+    await waitForLoading()
+
+    // Only the account is asserted: the Stellar card renders a single field,
+    // since a key's ID is its "G..." account address.
+    expect(await findByText(payload[0].account)).toBeInTheDocument()
+    expect(await findByText(payload[1].account)).toBeInTheDocument()
   })
 })

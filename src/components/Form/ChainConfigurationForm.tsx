@@ -360,6 +360,11 @@ export const ChainConfigurationForm = withStyles(styles)(({
             chainPublicKeys =
               accountsNonEvm?.suiKeys.results.map((acc) => acc.id) ?? []
             break
+          case ChainTypes.STELLAR:
+            chainAccountAddresses =
+              accountsNonEvm?.stellarKeys.results.map((acc) => acc.account) ??
+              []
+            break
           default:
             chainAccountAddresses = []
         }
@@ -403,6 +408,9 @@ export const ChainConfigurationForm = withStyles(styles)(({
                   </MenuItem>
                   <MenuItem key={ChainTypes.SUI} value={ChainTypes.SUI}>
                     SUI
+                  </MenuItem>
+                  <MenuItem key={ChainTypes.STELLAR} value={ChainTypes.STELLAR}>
+                    STELLAR
                   </MenuItem>
                 </Field>
               </Grid>

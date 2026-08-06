@@ -214,6 +214,9 @@ describe('ChainConfigurationForm', () => {
       suiKeys: {
         results: [],
       },
+      stellarKeys: {
+        results: [],
+      },
     })
 
     await selectOptionOnUI(/chain type/i, 'APTOS')
@@ -326,6 +329,9 @@ describe('ChainConfigurationForm', () => {
       suiKeys: {
         results: [],
       },
+      stellarKeys: {
+        results: [],
+      },
     })
 
     await selectOptionOnUI(/chain type/i, 'SUI')
@@ -347,6 +353,84 @@ describe('ChainConfigurationForm', () => {
         adminAddr: '',
         chainID: '6666',
         chainType: 'SUI',
+        fluxMonitorEnabled: false,
+        ocr1Enabled: false,
+        ocr1IsBootstrap: false,
+        ocr1KeyBundleID: '',
+        ocr1Multiaddr: '',
+        ocr1P2PPeerID: '',
+        ocr2CommitPluginEnabled: false,
+        ocr2Enabled: false,
+        ocr2ExecutePluginEnabled: false,
+        ocr2ForwarderAddress: '',
+        ocr2IsBootstrap: false,
+        ocr2KeyBundleID: '',
+        ocr2MedianPluginEnabled: false,
+        ocr2MercuryPluginEnabled: false,
+        ocr2Multiaddr: '',
+        ocr2P2PPeerID: '',
+        ocr2RebalancerPluginEnabled: false,
+      })
+      expect(handleSubmit).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  test('should able to create STELLAR chain config (with manual input)', async () => {
+    const handleSubmit = jest.fn()
+    const initialValues = emptyFormValues()
+    initialValues.chainType = ChainTypes.EVM
+
+    renderChainConfigurationForm(initialValues, handleSubmit, [], {
+      aptosKeys: {
+        results: [],
+      },
+      solanaKeys: {
+        results: [],
+      },
+      starknetKeys: {
+        results: [],
+      },
+      tronKeys: {
+        results: [],
+      },
+      tonKeys: {
+        results: [],
+      },
+      suiKeys: {
+        results: [],
+      },
+      stellarKeys: {
+        results: [],
+      },
+    })
+
+    await selectOptionOnUI(/chain type/i, 'STELLAR')
+
+    // A Stellar chain ID is the SHA-256 of the network passphrase.
+    const chainIdTextBox = getByRole('textbox', { name: /chain id/i })
+    userEvent.type(
+      chainIdTextBox,
+      'cee0302d59844d32bdca915c8203dd44b33fbb7edc19051ea37abedf28ecd472',
+    )
+
+    const accountAddrTextBox = getByRole('textbox', {
+      name: /account address/i,
+    })
+    userEvent.type(
+      accountAddrTextBox,
+      'GBRPYHIL2CI3FNQ4BXLFMNDLFJUNPU2HY3ZMFSHONUCEOASW7QC7OX2H',
+    )
+
+    await userEvent.click(getByRole('button', { name: /submit/i }))
+
+    await waitFor(() => {
+      expect(handleSubmit).toHaveBeenCalledWith({
+        accountAddr: 'GBRPYHIL2CI3FNQ4BXLFMNDLFJUNPU2HY3ZMFSHONUCEOASW7QC7OX2H',
+        accountAddrPubKey: '',
+        adminAddr: '',
+        chainID:
+          'cee0302d59844d32bdca915c8203dd44b33fbb7edc19051ea37abedf28ecd472',
+        chainType: 'STELLAR',
         fluxMonitorEnabled: false,
         ocr1Enabled: false,
         ocr1IsBootstrap: false,
@@ -529,6 +613,9 @@ test('should be able to select OCR2 Job Type with Key Bundle ID', async () => {
     suiKeys: {
       results: [],
     },
+    stellarKeys: {
+      results: [],
+    },
   })
 
   const ocr2CheckBox = screen.getByText(/ocr2/i)
@@ -617,6 +704,14 @@ function renderChainConfigurationForm(
     },
     suiKeys: {
       results: [{ account: '0x123', id: '6666' }],
+    },
+    stellarKeys: {
+      results: [
+        {
+          account: 'GBRPYHIL2CI3FNQ4BXLFMNDLFJUNPU2HY3ZMFSHONUCEOASW7QC7OX2H',
+          id: '7777',
+        },
+      ],
     },
   },
 ) {

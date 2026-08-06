@@ -40,6 +40,13 @@ export const SUI_KEYS_PAYLOAD__RESULTS_FIELDS = gql`
   }
 `
 
+export const STELLAR_KEYS_PAYLOAD__RESULTS_FIELDS = gql`
+  fragment StellarKeysPayload_ResultsFields on StellarKey {
+    account
+    id
+  }
+`
+
 export const NON_EVM_KEYS_QUERY = gql`
   ${APTOS_KEYS_PAYLOAD__RESULTS_FIELDS}
   ${SOLANA_KEYS_PAYLOAD__RESULTS_FIELDS}
@@ -47,6 +54,7 @@ export const NON_EVM_KEYS_QUERY = gql`
   ${TRON_KEYS_PAYLOAD__RESULTS_FIELDS}
   ${TON_KEYS_PAYLOAD__RESULTS_FIELDS}
   ${SUI_KEYS_PAYLOAD__RESULTS_FIELDS}
+  ${STELLAR_KEYS_PAYLOAD__RESULTS_FIELDS}
   query FetchNonEvmKeys {
     aptosKeys {
       results {
@@ -76,6 +84,11 @@ export const NON_EVM_KEYS_QUERY = gql`
     suiKeys {
       results {
         ...SuiKeysPayload_ResultsFields
+      }
+    }
+    stellarKeys {
+      results {
+        ...StellarKeysPayload_ResultsFields
       }
     }
   }

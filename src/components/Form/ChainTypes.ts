@@ -7,4 +7,5 @@ export const ChainTypes = {
   TRON: 'TRON',
   TON: 'TON',
   SUI: 'SUI',
+  STELLAR: 'STELLAR',
 }

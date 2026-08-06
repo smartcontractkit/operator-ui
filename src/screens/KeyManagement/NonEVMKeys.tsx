@@ -41,6 +41,12 @@ const SCHEMAS = {
       { label: 'Account', key: 'account', copy: true },
     ],
   },
+  // Only one field: a Stellar account address is the StrKey ("G...") encoding
+  // of the ed25519 public key, so `id` and `account` are the same string.
+  stellarKeys: {
+    title: 'Stellar',
+    fields: [{ label: 'Account', key: 'account', copy: true }],
+  },
 }
 
 export const NonEVMKeys = () => {

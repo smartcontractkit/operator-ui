@@ -53,3 +53,32 @@ export function buildSuiKeys(): ReadonlyArray<SuiKeysPayload_ResultsFields> {
     }),
   ]
 }
+
+// buildStellarKey builds a Stellar Key for the FetchNonEVMKeys query.
+//
+// `id` and `account` are deliberately the same value: a Stellar account is the
+// StrKey ("G...") encoding of the ed25519 public key, and the node's key ID is
+// that same address.
+export function buildStellarKey(
+  overrides?: Partial<StellarKeysPayload_ResultsFields>,
+): StellarKeysPayload_ResultsFields {
+  const account = 'GBRPYHIL2CI3FNQ4BXLFMNDLFJUNPU2HY3ZMFSHONUCEOASW7QC7OX2H'
+
+  return {
+    __typename: 'StellarKey',
+    id: account,
+    account,
+    ...overrides,
+  }
+}
+
+// buildStellarKeys builds a list of stellar keys.
+export function buildStellarKeys(): ReadonlyArray<StellarKeysPayload_ResultsFields> {
+  return [
+    buildStellarKey(),
+    buildStellarKey({
+      id: 'GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN',
+      account: 'GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN',
+    }),
+  ]
+}

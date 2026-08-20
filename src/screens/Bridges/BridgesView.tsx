@@ -24,6 +24,7 @@ export const BRIDGES_PAYLOAD__RESULTS_FIELDS = gql`
     url
     confirmations
     minimumContractPayment
+    useConnectionManager
   }
 `
 
@@ -69,6 +70,7 @@ export const BridgesView: React.FC<Props> = ({
                   <TableCell>URL</TableCell>
                   <TableCell>Default Confirmations</TableCell>
                   <TableCell>Minimum Contract Payment</TableCell>
+                  <TableCell>Use gRPC transport</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

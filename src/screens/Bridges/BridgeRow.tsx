@@ -33,6 +33,11 @@ export const BridgeRow = withStyles(tableStyles)(({
       <TableCell>
         <Typography variant="body1">{bridge.minimumContractPayment}</Typography>
       </TableCell>
+      <TableCell>
+        <Typography variant="body1">
+          {bridge.useConnectionManager ? 'Yes' : 'No'}
+        </Typography>
+      </TableCell>
     </TableRow>
   )
 })

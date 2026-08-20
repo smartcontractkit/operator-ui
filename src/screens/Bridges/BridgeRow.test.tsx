@@ -36,6 +36,15 @@ describe('BridgeRow', () => {
     expect(queryByText('http://bridge.com')).toBeInTheDocument()
     expect(queryByText('1')).toBeInTheDocument()
     expect(queryByText('0')).toBeInTheDocument()
+    expect(queryByText('No')).toBeInTheDocument()
+  })
+
+  it('renders gRPC transport as Yes when enabled', () => {
+    const bridge = buildBridge({ useConnectionManager: true })
+
+    renderComponent(bridge)
+
+    expect(queryByText('Yes')).toBeInTheDocument()
   })
 
   it('links to the row details', async () => {

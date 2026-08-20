@@ -38,6 +38,7 @@ describe('EditBridgeView', () => {
       url: 'http://bridge.com',
       minimumContractPayment: '0',
       confirmations: 1,
+      useConnectionManager: false,
     })
   })
 

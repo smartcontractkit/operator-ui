@@ -9,6 +9,7 @@ export function buildBridge(
     url: 'http://bridge.com',
     confirmations: 1,
     minimumContractPayment: '0',
+    useConnectionManager: false,
     ...overrides,
   }
 }

@@ -20,6 +20,7 @@ export const EditBridgeView: React.FC<Props> = ({ bridge, onSubmit }) => {
     url: bridge.url,
     minimumContractPayment: bridge.minimumContractPayment,
     confirmations: bridge.confirmations,
+    useConnectionManager: bridge.useConnectionManager,
   }
 
   return (

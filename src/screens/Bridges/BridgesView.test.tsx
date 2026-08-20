@@ -40,6 +40,7 @@ describe('BridgesView', () => {
     expect(queryByText('URL')).toBeInTheDocument()
     expect(queryByText('Default Confirmations')).toBeInTheDocument()
     expect(queryByText('Minimum Contract Payment')).toBeInTheDocument()
+    expect(queryByText('Use gRPC transport')).toBeInTheDocument()
 
     expect(queryByText('bridge-api1')).toBeInTheDocument()
     expect(queryByText('http://bridge1.com')).toBeInTheDocument()

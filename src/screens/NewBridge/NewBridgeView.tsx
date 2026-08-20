@@ -13,6 +13,7 @@ const initialValues = {
   url: '',
   minimumContractPayment: '0',
   confirmations: 0,
+  useConnectionManager: false,
 }
 
 type Props = Pick<FormProps, 'onSubmit'>

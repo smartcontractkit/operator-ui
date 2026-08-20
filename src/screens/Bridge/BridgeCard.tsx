@@ -91,6 +91,13 @@ export const BridgeCard: React.FC<Props> = ({ bridge, onDelete }) => {
           <DetailsCardItemTitle title="Min. Contract Payment" />
           <DetailsCardItemValue value={bridge.minimumContractPayment} />
         </Grid>
+
+        <Grid item xs={12} sm={4} md={3}>
+          <DetailsCardItemTitle title="Use gRPC transport" />
+          <DetailsCardItemValue
+            value={bridge.useConnectionManager ? 'Yes' : 'No'}
+          />
+        </Grid>
       </Grid>
     </DetailsCard>
   )

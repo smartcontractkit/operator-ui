@@ -31,7 +31,6 @@ describe('OCR2KeysCard creation', () => {
           __typename: '__Type',
           enumValues: [
             { __typename: '__EnumValue', name: 'EVM' },
-            { __typename: '__EnumValue', name: 'COSMOS' },
             { __typename: '__EnumValue', name: 'SOLANA' },
             { __typename: '__EnumValue', name: 'STARKNET' },
             { __typename: '__EnumValue', name: 'NEW-CHAIN-1' },
@@ -69,7 +68,6 @@ describe('OCR2KeysCard creation', () => {
 
     userEvent.click(screen.getByRole('combobox', { name: /chain type/i }))
 
-    expect(screen.getByText(`COSMOS`)).toBeInTheDocument()
     expect(screen.getAllByText(`SOLANA`).length).toBeGreaterThan(0)
     expect(screen.getByText(`STARKNET`)).toBeInTheDocument()
     expect(screen.getByText(`NEW-CHAIN-1`)).toBeInTheDocument()

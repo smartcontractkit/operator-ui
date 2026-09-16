@@ -3,7 +3,6 @@ export const ChainTypes = {
   APTOS: 'APTOS',
   SOLANA: 'SOLANA',
   STARKNET: 'STARKNET',
-  COSMOS: 'COSMOS',
   TRON: 'TRON',
   TON: 'TON',
   SUI: 'SUI',
